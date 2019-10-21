@@ -32,7 +32,3 @@ jobs:
       # - run:
       #     name: Run Tests
       #     command: yarn test --ci --runInBand
-
-      - run:
-          name: Check size
-          command: yarn size
