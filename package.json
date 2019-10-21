@@ -1,0 +1,40 @@
+{
+  "name": "vue-composable",
+  "version": "1.0.0",
+  "description": "Vue composition api helpers",
+  "main": "dist/vue-composable.umd.js",
+  "author": "pikax",
+  "license": "MIT",
+  "module": "dist/vue-composable.es5.js",
+  "typings": "dist/types/vue-composable.d.ts",
+  "files": [
+    "dist"
+  ],
+  "private": false,
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts",
+    "start": "rollup -c rollup.config.ts -w",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
+    "test:prod": "npm run lint && npm run test -- --no-cache"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "@vue/composition-api": "^0.3.2",
+    "lodash-es": "^4.17.15",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "lodash.camelcase": "^4.3.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.25.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "typescript": "^3.6.4"
+  }
+}
