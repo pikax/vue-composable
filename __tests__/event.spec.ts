@@ -1,5 +1,5 @@
-const Vue = require("vue/dist/vue.common.js");
 import { onMounted, onUnmounted, Ref, ref } from "@vue/composition-api";
+import { Vue } from "./utils";
 import { useEvent } from "../src/event";
 
 describe("event", () => {

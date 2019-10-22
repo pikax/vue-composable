@@ -3,7 +3,7 @@ import { unwrap, RefElement } from "./utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "./debounce";
 
-type ScrollResult = {
+export interface ScrollResult {
   scrollTop: Ref<number>;
   scrollLeft: Ref<number>;
   remove: RemoveEventFunction;
@@ -12,12 +12,12 @@ type ScrollResult = {
 export function useOnScroll(el: RefElement, wait: number): ScrollResult;
 export function useOnScroll(
   el: RefElement,
-  options: boolean | AddEventListenerOptions,
+  options?: boolean | AddEventListenerOptions,
   wait?: number
 ): ScrollResult;
 export function useOnScroll(
   el: RefElement,
-  options: number | boolean | AddEventListenerOptions,
+  options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ScrollResult {
   const element = unwrap(el);

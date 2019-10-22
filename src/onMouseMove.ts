@@ -3,21 +3,21 @@ import { unwrap, RefElement } from "./utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "./debounce";
 
-type MouseMoveResult = {
+export interface MouseMoveResult {
   mouseX: Ref<number>;
   mouseY: Ref<number>;
   remove: RemoveEventFunction;
 };
 
-export function useMouseResize(el: RefElement, wait: number): MouseMoveResult;
-export function useMouseResize(
+export function useMouseMove(el: RefElement, wait: number): MouseMoveResult;
+export function useMouseMove(
   el: RefElement,
-  options: boolean | AddEventListenerOptions,
+  options?: boolean | AddEventListenerOptions,
   wait?: number
 ): MouseMoveResult;
-export function useMouseResize(
+export function useMouseMove(
   el: RefElement,
-  options: number | boolean | AddEventListenerOptions,
+  options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): MouseMoveResult {
   const element = unwrap(el);

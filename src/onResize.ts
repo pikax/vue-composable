@@ -3,7 +3,7 @@ import { unwrap, RefElement } from "./utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "./debounce";
 
-type ResizeResult = {
+export interface ResizeResult {
   height: Ref<number>;
   width: Ref<number>;
   remove: RemoveEventFunction;
@@ -12,12 +12,12 @@ type ResizeResult = {
 export function useOnResize(el: RefElement, wait: number): ResizeResult;
 export function useOnResize(
   el: RefElement,
-  options: boolean | AddEventListenerOptions,
+  options?: boolean | AddEventListenerOptions,
   wait?: number
 ): ResizeResult;
 export function useOnResize(
   el: RefElement,
-  options: number | boolean | AddEventListenerOptions,
+  options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ResizeResult {
   const element = unwrap(el);
