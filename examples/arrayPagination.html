@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.config.devtools = true
+    </script>
+</head>
+<body>
+
+  <div id="app">
+    <p>page {{currentPage}} of {{ lastPage }}</p>
+    <p> 
+      <label for="pageSize">Page size</label>
+      <input name="pageSize" v-model.number="pageSize" type="number">
+    </p>
+    <ul>
+      <li v-for="n in result" :key="n">
+        {{ n }}
+      </li>
+    </ul>
+    <button @click="prev">prev</button>
+    <button @click="next">next</button>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
+  <script>
+    window.compositionApi = vueCompositionApi
+  </script>
+  <script src="../dist/vue-composable.umd.js"></script>
+  <script>
+    Vue.use(vueCompositionApi.default);
+    const {
+      useArrayPagination 
+    } = vueComposable;
+
+    new Vue({
+      el: "#app",
+
+      setup(){
+        const array = new Array(1000).fill(0).map((_, i)=> i);
+
+        const { next, prev, currentPage, lastPage, result, pageSize} = useArrayPagination(array, {})
+
+        return {
+          next, 
+          prev,
+          currentPage,
+          lastPage,
+          pageSize,
+          result
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

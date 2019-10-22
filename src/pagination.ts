@@ -29,7 +29,6 @@ export function usePagination(options: PaginationOptions): PaginationResult {
   const pageSize = wrap(options.pageSize);
   const total = wrap(options.total);
 
-
   const currentPage: Ref<number> = computed<number>({
     get() {
       return _currentPage.value;

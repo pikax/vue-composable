@@ -1,0 +1,28 @@
+<html>
+
+<body>
+
+  <div id="app">
+    {{ n }}
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
+  <script>
+    Vue.use(vueCompositionApi.default);
+
+
+    new Vue({
+      el: "#app",
+
+      setup(){
+        return {
+          n: 2
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

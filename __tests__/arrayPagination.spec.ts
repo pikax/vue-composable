@@ -3,8 +3,6 @@ import { nextTick } from "./utils";
 import { ref } from "@vue/composition-api";
 
 describe("arrayPagination", () => {
-  
-
   it("should get correct array slice", async () => {
     const array = new Array(100).map((x, i) => i);
     const use = useArrayPagination(array, {
@@ -45,4 +43,13 @@ describe("arrayPagination", () => {
     arr.value = 1 as any;
     expect(use.result.value).toHaveLength(0);
   });
+
+  // TODO
+  it("should warn when you try to assign an string", async () => {
+    
+  });
+
+  it('when changing the pageSize we should keep the current page results', ()=>{
+
+  })
 });

@@ -11,13 +11,13 @@
 | composable | description | arguments | return |
 |---|---|---|---|
 | [useArrayPagination](src/arrayPagination.ts) | provides pagination for an array |  |  |
-| [useDebounce](src/useDebounce.ts) | debounces function |  |  |
-| [useEvent](src/useEvent.ts) | handles the lifecycle of addEventListener/removeEventListener for a component. |  |  |
-| [useOnMouseMove](src/useOnMouseMove.ts) | gets data from element `movemove` |  |  |
-| [useOnResize](src/useOnResize.ts) | gets data from element `resize` |  |  |
-| [useOnScroll](src/useOnScroll.ts) | gets data from element `scroll` |  |  |
-| [usePagination](src/usePagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
-| [usePromise](src/usePromise.ts) | provides information about the state of the promise |  |  |
+| [useDebounce](src/debounce.ts) | debounces function |  |  |
+| [useEvent](src/event.ts) | handles the lifecycle of addEventListener/removeEventListener for a component. |  |  |
+| [useOnMouseMove](src/onMouseMove.ts) | gets data from element `movemove` |  |  |
+| [useOnResize](src/onResize.ts) | gets data from element `resize` |  |  |
+| [useOnScroll](src/onScroll.ts) | gets data from element `scroll` |  |  |
+| [usePagination](src/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
+| [usePromise](src/promise.ts) | provides information about the state of the promise |  |  |
 
 
 ## Types
