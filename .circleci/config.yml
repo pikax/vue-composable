@@ -36,3 +36,6 @@ jobs:
       - store_artifacts:
           path: coverage
 
+      - run: 
+          name: "Publish coverage to coveralls"
+          command: yarn coveralls < coverage/lcov.info

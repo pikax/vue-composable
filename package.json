@@ -22,6 +22,7 @@
   "dependencies": {
     "@types/node": "^12.11.2",
     "@vue/composition-api": "^0.3.2",
+    "coveralls": "^3.0.7",
     "vue": "^2.6.10"
   },
   "devDependencies": {
