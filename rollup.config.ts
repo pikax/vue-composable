@@ -12,8 +12,8 @@ const libraryName = pkg.name;
 export default {
   input: `src/${libraryName}.ts`,
   output: [
-    { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
-    { file: pkg.module, format: 'es', sourcemap: true },
+    { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: false },
+    { file: pkg.module, format: 'es', sourcemap: false },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: ['vue', '@vue/composition-api'],
@@ -24,7 +24,11 @@ export default {
     // Allow json resolution
     json(),
     // Compile TypeScript files
-    typescript(),
+    typescript({
+      tsconfigOverride: {
+        exclude: ['__tests__']
+      }
+    }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     // commonjs(),
     // Allow node_modules resolution, so you can use 'external' to control
