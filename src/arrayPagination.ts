@@ -13,11 +13,11 @@ export interface ArrayPaginationResult<T extends Array<any>>
 
 export function useArrayPagination<T extends Array<TR>, TR>(
   array: RefTyped<T>,
-  options: PaginationOptions
+  options: Omit<PaginationOptions, 'total'>
 ): ArrayPaginationResult<T>;
 export function useArrayPagination<T extends Array<TR>, TR>(
   array: RefTyped<T>,
-  options?: PaginationOptions
+  options?: Omit<PaginationOptions, 'total'>
 ): ArrayPaginationResult<T> {
   const arrayRef = wrap(array);
 

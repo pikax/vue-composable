@@ -29,9 +29,10 @@ export function usePagination(options: PaginationOptions): PaginationResult {
   const pageSize = wrap(options.pageSize);
   const total = wrap(options.total);
 
+
   const currentPage: Ref<number> = computed<number>({
     get() {
-      return currentPage.value;
+      return _currentPage.value;
     },
     set(v) {
       if (typeof v !== "number") return;
@@ -40,6 +41,9 @@ export function usePagination(options: PaginationOptions): PaginationResult {
   });
 
   const lastPage = computed(() => Math.ceil(total.value / pageSize.value));
+  
+  // make sure the current page is the correct value
+  currentPage.value = _currentPage.value;
 
   const offset = computed(() =>
     Math.min((currentPage.value - 1) * pageSize.value, total.value)
@@ -54,8 +58,8 @@ export function usePagination(options: PaginationOptions): PaginationResult {
   watch(
     [total, pageSize],
     () => {
-      if (_currentPage.value > lastPage.value) {
-        _currentPage.value = lastPage.value;
+      if (currentPage.value > lastPage.value) {
+        currentPage.value = lastPage.value;
       }
     },
     { lazy: true } // no need to run on first render
