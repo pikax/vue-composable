@@ -31,7 +31,7 @@ jobs:
 
       - run:
           name: "Run Jest and Collect Coverage Reports"
-          command: jest --coverage --ci --runInBand
+          command: yarn test --coverage --ci --runInBand
           
       - store_artifacts:
           path: coverage
