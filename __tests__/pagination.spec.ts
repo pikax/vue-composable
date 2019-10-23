@@ -6,6 +6,14 @@ describe("pagination", () => {
   beforeAll(() => {
     warnSpy = jest.spyOn(console, "warn").mockImplementation();
   });
+  
+  beforeEach(()=>{
+    warnSpy.mockReset();
+  })
+  
+  afterAll(()=>{
+    warnSpy.mockReset();
+  })
 
   it("should return pagination", () => {
     const use = usePagination({

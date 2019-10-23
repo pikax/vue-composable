@@ -12,17 +12,17 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TR, TArgs> & CancellablePromiseResult<TR>;
+): PromiseResultFactory<T, TArgs> & CancellablePromiseResult<TR>;
 export function useCancellablePromise<T extends Promise<TR>, TR>(
   fn: () => T
-): PromiseResultFactory<T, TR> & CancellablePromiseResult<TR>;
+): PromiseResultFactory<T> & CancellablePromiseResult<TR>;
 export function useCancellablePromise<
   T extends Promise<TR>,
   TR,
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TR, TArgs> & CancellablePromiseResult<TR> {
+): PromiseResultFactory<T, TArgs> & CancellablePromiseResult<TR> {
   const cancelled = ref(false);
   let _cancel: ((result?: TR) => void) | undefined = undefined;
 
@@ -37,7 +37,7 @@ export function useCancellablePromise<
       p.then(res).catch(rej);
     }) as T;
 
-  const use = usePromise<T, TR, TArgs>((...args: TArgs) =>
+  const use = usePromise<T, TArgs>((...args: TArgs) =>
     promise(fn(...args))
   );
 

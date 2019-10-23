@@ -1,6 +1,9 @@
 import { ref, Ref } from "@vue/composition-api";
 
-interface PromiseResult<T extends Promise<TR>, TR, TError = any> {
+
+type PromiseType<T extends Promise<any>> = T extends Promise<infer R>  ? R : never;
+
+interface PromiseResult<T extends Promise<any>, TR = PromiseType<T>, TError = any> {
   promise: Ref<T | undefined>;
   result: Ref<TR | null>;
 
@@ -9,22 +12,24 @@ interface PromiseResult<T extends Promise<TR>, TR, TError = any> {
 }
 
 export interface PromiseResultFactory<
-  T extends Promise<TR>,
-  TR,
+  T extends Promise<any>,
   TArgs extends Array<any> = never
-> extends PromiseResult<T, TR> {
-  exec: (...args: TArgs) => Promise<TR | undefined>;
+> extends PromiseResult<T> {
+  exec: (
+    ...args: TArgs
+  ) => Promise<PromiseType<T> | undefined>;
 }
 
-export function usePromise<T extends Promise<TR>, TR, TArgs extends Array<any>>(
+
+export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TR, TArgs>;
-export function usePromise<T extends Promise<TR>, TR>(
+): PromiseResultFactory<T, TArgs>;
+export function usePromise<T extends Promise<any>>(
   fn: () => T
-): PromiseResultFactory<T, TR>;
-export function usePromise<T extends Promise<TR>, TR, TArgs extends Array<any>>(
+): PromiseResultFactory<T>;
+export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TR, TArgs> {
+): PromiseResultFactory<T, TArgs>{
   if (!fn) {
     throw new Error(`[usePromise] argument can't be '${fn}'`);
   }
@@ -34,11 +39,11 @@ export function usePromise<T extends Promise<TR>, TR, TArgs extends Array<any>>(
 
   const loading = ref(false);
   const error = ref(null);
-  const result = ref<TR>(null);
+  const result = ref<PromiseType<T> | null>(null);
   const promise = ref<T>();
 
   let lastPromise: T | null = null;
-  const exec = async (...args: TArgs) => {
+  const exec = async (...args: TArgs) : Promise<PromiseType<T> | undefined>  => {
     loading.value = true;
     error.value = null;
     result.value = null;
@@ -55,7 +60,7 @@ export function usePromise<T extends Promise<TR>, TR, TArgs extends Array<any>>(
         error.value = er;
         result.value = null;
       }
-      return undefined; 
+      return undefined;
     } finally {
       if (lastPromise === currentPromise) {
         loading.value = false;

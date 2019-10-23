@@ -18,6 +18,7 @@
 | [useOnScroll](src/onScroll.ts) | gets data from element `scroll` |  |  |
 | [usePagination](src/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
 | [usePromise](src/promise.ts) | provides information about the state of the promise |  |  |
+| [useFetch](src/fetch.ts) | handles the fetch request |  |  |
 
 
 ## Types

@@ -272,11 +272,43 @@
       };
   }
 
+  function useFetch(init) {
+      const json = compositionApi.ref(null);
+      // TODO add text = ref<string> ??
+      const jsonError = compositionApi.ref(null);
+      const use = usePromise(async (request) => {
+          const response = await fetch(request, init);
+          if (!init || init.isJson !== false) {
+              const pJson = response
+                  .json()
+                  .then(x => (json.value = x))
+                  .catch(x => {
+                  json.value = null;
+                  jsonError.value = x;
+              });
+              if (!init || init.parseImmediate !== false) {
+                  await pJson;
+              }
+          }
+          return response;
+      });
+      const status = compositionApi.computed(() => (use.result.value && use.result.value.status) || null);
+      const statusText = compositionApi.computed(() => (use.result.value && use.result.value.statusText) || null);
+      return {
+          ...use,
+          json,
+          jsonError,
+          status,
+          statusText
+      };
+  }
+
   exports.debounce = debounce;
   exports.useArrayPagination = useArrayPagination;
   exports.useCancellablePromise = useCancellablePromise;
   exports.useDebounce = useDebounce;
   exports.useEvent = useEvent;
+  exports.useFetch = useFetch;
   exports.useMouseMove = useMouseMove;
   exports.useOnResize = useOnResize;
   exports.useOnScroll = useOnScroll;

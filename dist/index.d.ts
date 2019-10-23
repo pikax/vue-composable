@@ -7,3 +7,4 @@ export * from './onScroll';
 export * from './pagination';
 export * from './promise';
 export * from './cancellablePromise';
+export * from './fetch';
