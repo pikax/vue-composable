@@ -2,13 +2,30 @@
 
 [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
+[![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
+
 
 ## Introduction
 
 `vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components, eg: [useFetch](examples/fetch.html)
 
+100% typescript based composable components and full type support out-of-box.
 
-## NOTE 
+
+## Installing
+
+```bash
+yarn add vue-composable
+```
+
+## Examples
+
+Check out the [examples folder](examples) or start hacking on [codesandbox](https://codesandbox.io/s/vue-composable-examples-yuusf).
+
+[![Edit Vue Composable Examples](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/vue-template-yuusf?fontsize=14)
+
+
+### NOTE 
 Currently only works with [composition-api](https://github.com/vuejs/composition-api), when [Vue3](https://github.com/vuejs/vue-next) gets release I will update to use the new reactive system (using [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity))
 
 
