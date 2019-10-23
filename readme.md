@@ -40,6 +40,7 @@ Currently only works with [composition-api](https://github.com/vuejs/composition
 | [usePagination](src/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
 | [usePromise](src/promise.ts) | provides information about the state of the promise |  |  |
 | [useFetch](src/fetch.ts) | handles the fetch request | [fetch.html](examples/fetch.html) |  |
+| [useCancellablePromise](src/cancellablePromise.ts) | allow to cancel promise. **NOTE** javascript doesn't support cancel of promises natively, when you cancel it will only prevent the `result` to be modified | [fetch.html](examples/fetch.html) |  |
 
 
 ## Types
