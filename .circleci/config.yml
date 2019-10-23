@@ -37,7 +37,7 @@ jobs:
           command: yarn coveralls < coverage/lcov.info
 
       - store_test_results:
-          path: junit.xml
+          path: test-results
 
       - store_artifacts:
           path: dist
