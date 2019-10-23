@@ -1,4 +1,4 @@
-import { useArrayPagination } from "../src/vue-composable";
+import { useArrayPagination } from "../src";
 import { nextTick } from "./utils";
 import { ref } from "@vue/composition-api";
 
@@ -43,13 +43,4 @@ describe("arrayPagination", () => {
     arr.value = 1 as any;
     expect(use.result.value).toHaveLength(0);
   });
-
-  // TODO
-  it("should warn when you try to assign an string", async () => {
-    
-  });
-
-  it('when changing the pageSize we should keep the current page results', ()=>{
-
-  })
 });

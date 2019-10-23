@@ -1,7 +1,11 @@
+const pkg = require("./package.json");
+
 module.exports = {
     preset: 'ts-jest',
     globals: {
-      __DEV__: true
+      __DEV__: true,
+      __VERSION__: pkg.version,
+      __JSDOM__: true,
     },
     setupFiles: [
       "<rootDir>/__tests__/setupTest.js"

@@ -1,18 +1,22 @@
-import { isRef, onMounted, onUnmounted, ref, computed, watch } from '@vue/composition-api';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var compositionApi = require('@vue/composition-api');
 
 function useEvent(el, name, listener, options) {
-    const element = isRef(el) ? el.value : el;
+    const element = compositionApi.isRef(el) ? el.value : el;
     const remove = () => element.removeEventListener(name, listener);
-    onMounted(() => element.addEventListener(name, listener, options));
-    onUnmounted(remove);
+    compositionApi.onMounted(() => element.addEventListener(name, listener, options));
+    compositionApi.onUnmounted(remove);
     return remove;
 }
 
 function unwrap(o) {
-    return isRef(o) ? o.value : o;
+    return compositionApi.isRef(o) ? o.value : o;
 }
 function wrap(o) {
-    return isRef(o) ? o : ref(o);
+    return compositionApi.isRef(o) ? o : compositionApi.ref(o);
 }
 function minMax(val, min, max) {
     if (val < min)
@@ -24,28 +28,64 @@ function minMax(val, min, max) {
 
 function usePagination(options) {
     const _currentPage = wrap(options.currentPage);
-    const pageSize = wrap(options.pageSize);
+    const _pageSize = wrap(options.pageSize);
+    const _offset = compositionApi.ref(0);
     const total = wrap(options.total);
-    const currentPage = computed({
+    const offset = compositionApi.computed({
+        get() {
+            return _offset.value;
+        },
+        set(v) {
+            if (typeof v !== "number") {
+                /* istanbul ignore else */
+                if (process.env.NODE_ENV !== "production") {
+                    console.warn(`[offset] expected number but got: '${typeof v}' value: '${v}'`);
+                }
+                return;
+            }
+            _offset.value = Math.min(v, total.value);
+        }
+    });
+    const currentPage = compositionApi.computed({
         get() {
             return _currentPage.value;
         },
         set(v) {
-            if (typeof v !== "number")
+            if (typeof v !== "number") {
+                /* istanbul ignore else  */
+                if (process.env.NODE_ENV !== "production") {
+                    console.warn(`[currentPage] expected number but got: '${typeof v}' value: '${v}'`);
+                }
                 return;
+            }
             _currentPage.value = minMax(v, 1, lastPage.value);
+            // set the offset
+            offset.value = (_currentPage.value - 1) * pageSize.value;
         }
     });
-    const lastPage = computed(() => Math.ceil(total.value / pageSize.value));
+    const pageSize = compositionApi.computed({
+        get() {
+            return _pageSize.value;
+        },
+        set(v) {
+            if (typeof v !== "number") {
+                /* istanbul ignore else */
+                if (process.env.NODE_ENV !== "production") {
+                    console.warn(`[pageSize] expected number but got: '${typeof v}' value: '${v}'`);
+                }
+                return;
+            }
+            _pageSize.value = v;
+        }
+    });
+    const lastPage = compositionApi.computed(() => Math.ceil(total.value / pageSize.value));
     // make sure the current page is the correct value
     currentPage.value = _currentPage.value;
-    const offset = computed(() => Math.min((currentPage.value - 1) * pageSize.value, total.value));
     const prev = () => --currentPage.value;
     const next = () => ++currentPage.value;
     const first = () => (currentPage.value = 1);
     const last = () => (currentPage.value = lastPage.value);
-    // lastPage may never be < currentPage
-    watch([total, pageSize], () => {
+    compositionApi.watch([total, pageSize], () => {
         if (currentPage.value > lastPage.value) {
             currentPage.value = lastPage.value;
         }
@@ -56,9 +96,9 @@ function usePagination(options) {
         pageSize,
         total,
         currentPage,
-        //Computed
-        lastPage,
         offset,
+        // Computed
+        lastPage,
         // Functions
         next,
         prev,
@@ -75,9 +115,9 @@ function useArrayPagination(array, options) {
             pageSize: 10,
         },
         ...options,
-        total: computed(() => arrayRef.value.length)
+        total: compositionApi.computed(() => arrayRef.value.length)
     });
-    const result = computed(() => {
+    const result = compositionApi.computed(() => {
         const array = arrayRef.value;
         if (!Array.isArray(array))
             return [];
@@ -92,6 +132,7 @@ function useArrayPagination(array, options) {
 function useDebounce(handler, wait) {
     return debounce(handler, wait);
 }
+/* istanbul ignore next */
 function debounce(func, waitMilliseconds = 50, options = {
     isImmediate: false
 }) {
@@ -115,10 +156,10 @@ function debounce(func, waitMilliseconds = 50, options = {
     };
 }
 
-function useMouseResize(el, options, wait) {
+function useMouseMove(el, options, wait) {
     const element = unwrap(el);
-    const mouseX = ref(0);
-    const mouseY = ref(0);
+    const mouseX = compositionApi.ref(0);
+    const mouseY = compositionApi.ref(0);
     let handler = (ev) => {
         mouseX.value = ev.x;
         mouseY.value = ev.y;
@@ -138,8 +179,8 @@ function useMouseResize(el, options, wait) {
 
 function useOnResize(el, options, wait) {
     const element = unwrap(el);
-    const height = ref(element.clientHeight);
-    const width = ref(element.clientWidth);
+    const height = compositionApi.ref(element.clientHeight);
+    const width = compositionApi.ref(element.clientWidth);
     let handler = (ev) => {
         height.value = element.clientHeight;
         width.value = element.clientWidth;
@@ -159,8 +200,8 @@ function useOnResize(el, options, wait) {
 
 function useOnScroll(el, options, wait) {
     const element = unwrap(el);
-    const scrollTop = ref(element.scrollTop);
-    const scrollLeft = ref(element.scrollLeft);
+    const scrollTop = compositionApi.ref(element.scrollTop);
+    const scrollLeft = compositionApi.ref(element.scrollLeft);
     let handler = (ev) => {
         scrollTop.value = element.scrollTop;
         scrollLeft.value = element.scrollLeft;
@@ -185,10 +226,10 @@ function usePromise(fn) {
     if (typeof fn !== "function") {
         throw new Error(`[usePromise] expects function, but received ${typeof fn}`);
     }
-    const loading = ref(false);
-    const error = ref(null);
-    const result = ref(null);
-    const promise = ref();
+    const loading = compositionApi.ref(false);
+    const error = compositionApi.ref(null);
+    const result = compositionApi.ref(null);
+    const promise = compositionApi.ref();
     let lastPromise = null;
     const exec = async (...args) => {
         loading.value = true;
@@ -225,7 +266,7 @@ function usePromise(fn) {
 }
 
 function useCancellablePromise(fn) {
-    const cancelled = ref(false);
+    const cancelled = compositionApi.ref(false);
     let _cancel = undefined;
     const cancel = (result) => _cancel(result); // TODO add warning if cancel is undefined
     const promise = (p) => new Promise((res, rej) => {
@@ -243,4 +284,13 @@ function useCancellablePromise(fn) {
     };
 }
 
-export { debounce, useArrayPagination, useCancellablePromise, useDebounce, useEvent, useMouseResize, useOnResize, useOnScroll, usePagination, usePromise };
+exports.debounce = debounce;
+exports.useArrayPagination = useArrayPagination;
+exports.useCancellablePromise = useCancellablePromise;
+exports.useDebounce = useDebounce;
+exports.useEvent = useEvent;
+exports.useMouseMove = useMouseMove;
+exports.useOnResize = useOnResize;
+exports.useOnScroll = useOnScroll;
+exports.usePagination = usePagination;
+exports.usePromise = usePromise;

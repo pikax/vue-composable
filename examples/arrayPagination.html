@@ -12,25 +12,27 @@
     <p>page {{currentPage}} of {{ lastPage }}</p>
     <p> 
       <label for="pageSize">Page size</label>
-      <input name="pageSize" v-model.number="pageSize" type="number">
+      <input name="pageSize" v-model="pageSize" type="number">
+    </p>
+    <p>
+      <button @click="prev">prev</button>
+      <button @click="next">next</button>
     </p>
     <ul>
       <li v-for="n in result" :key="n">
         {{ n }}
       </li>
     </ul>
-    <button @click="prev">prev</button>
-    <button @click="next">next</button>
   </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
   <script>
-    window.compositionApi = vueCompositionApi
+    // add composition api to vue
+    Vue.use(vueCompositionApi.default);
   </script>
   <script src="../dist/vue-composable.umd.js"></script>
   <script>
-    Vue.use(vueCompositionApi.default);
     const {
       useArrayPagination 
     } = vueComposable;
@@ -40,8 +42,7 @@
 
       setup(){
         const array = new Array(1000).fill(0).map((_, i)=> i);
-
-        const { next, prev, currentPage, lastPage, result, pageSize} = useArrayPagination(array, {})
+        const { next, prev, currentPage, lastPage, result, pageSize, offset} = useArrayPagination(array, {})
 
         return {
           next, 
@@ -49,7 +50,8 @@
           currentPage,
           lastPage,
           pageSize,
-          result
+          result,
+          offset
         }
       }
     })

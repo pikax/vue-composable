@@ -17,6 +17,7 @@
     ]
   },
   "include": [
+    "types/global.d.ts",
     "src",
     "__tests__"
   ]

@@ -37,10 +37,6 @@
           },
           set(v) {
               if (typeof v !== "number") {
-                  /* istanbul ignore else */
-                  {
-                      console.warn(`[offset] expected number but got: '${typeof v}' value: '${v}'`);
-                  }
                   return;
               }
               _offset.value = Math.min(v, total.value);
@@ -52,10 +48,6 @@
           },
           set(v) {
               if (typeof v !== "number") {
-                  /* istanbul ignore else  */
-                  {
-                      console.warn(`[currentPage] expected number but got: '${typeof v}' value: '${v}'`);
-                  }
                   return;
               }
               _currentPage.value = minMax(v, 1, lastPage.value);
@@ -69,10 +61,6 @@
           },
           set(v) {
               if (typeof v !== "number") {
-                  /* istanbul ignore else */
-                  {
-                      console.warn(`[pageSize] expected number but got: '${typeof v}' value: '${v}'`);
-                  }
                   return;
               }
               _pageSize.value = v;

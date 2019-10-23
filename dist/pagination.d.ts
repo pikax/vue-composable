@@ -5,8 +5,8 @@ export interface PaginationResult {
     pageSize: Ref<number>;
     total: Ref<number>;
     currentPage: Ref<number>;
+    offset: Ref<number>;
     lastPage: Readonly<Ref<number>>;
-    offset: Readonly<Ref<number>>;
     next: PaginationControl;
     prev: PaginationControl;
     first: PaginationControl;
