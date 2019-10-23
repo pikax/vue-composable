@@ -1,12 +1,19 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0",
-  "description": "Vue composition api helpers",
+  "version": "0.1.0",
+  "description": "Vue composition-api composable components",
   "main": "index.js",
-  "author": "pikax",
+  "author": {
+    "name": "pikax",
+    "email": "carlos@hypermob.co.uk"
+  },
   "license": "MIT",
-  "module": "dist/vue-composable.es5.js",
-  "typings": "dist/types/vue-composable.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikax/vue-composable.git"
+  },
+  "module": "dist/vue-composable.es.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -19,13 +26,18 @@
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache"
   },
-  "dependencies": {
+  "bugs": {
+    "url": "https://github.com/pikax/vue-composable/issues"
+  },
+  "homepage": "https://github.com/pikax/vue-composable/blob/master/readme.md",
+  "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@types/node": "^12.11.5",
+    "@vue/composition-api": "^0.3.2",
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
@@ -40,6 +52,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.3",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "vue": "^2.6.10"
   }
 }

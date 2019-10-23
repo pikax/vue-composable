@@ -5,12 +5,16 @@
 
 ## Introduction
 
-`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components, eg: [usePromise](src/promise.ts)
+`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components, eg: [useFetch](examples/fetch.html)
 
 
-| composable | description | arguments | return |
+## NOTE 
+Currently only works with [composition-api](https://github.com/vuejs/composition-api), when [Vue3](https://github.com/vuejs/vue-next) gets release I will update to use the new reactive system (using [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity))
+
+
+| composable | description | example | extra |
 |---|---|---|---|
-| [useArrayPagination](src/arrayPagination.ts) | provides pagination for an array |  |  |
+| [useArrayPagination](src/arrayPagination.ts) | provides pagination for an array | [arrayPagination.html](examples/arrayPagination.html) |  |
 | [useDebounce](src/debounce.ts) | debounces function |  |  |
 | [useEvent](src/event.ts) | handles the lifecycle of addEventListener/removeEventListener for a component. |  |  |
 | [useOnMouseMove](src/onMouseMove.ts) | gets data from element `movemove` |  |  |
@@ -18,7 +22,7 @@
 | [useOnScroll](src/onScroll.ts) | gets data from element `scroll` |  |  |
 | [usePagination](src/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
 | [usePromise](src/promise.ts) | provides information about the state of the promise |  |  |
-| [useFetch](src/fetch.ts) | handles the fetch request |  |  |
+| [useFetch](src/fetch.ts) | handles the fetch request | [fetch.html](examples/fetch.html) |  |
 
 
 ## Types
