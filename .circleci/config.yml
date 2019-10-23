@@ -30,7 +30,7 @@ jobs:
 
       - run:
           name: "Run Jest and Collect Coverage Reports"
-          command: yarn test --coverage --ci --runInBand
+          command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit
 
       - run:
           name: "Publish coverage to coveralls"
