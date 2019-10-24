@@ -39,9 +39,9 @@ describe("fetch", () => {
         test: "test"
       }
     };
-    const { exec } = useFetch(init);
+    const { exec } = useFetch();
 
-    exec("./api/1");
+    exec("./api/1", init);
 
     expect(fetchSpy).toHaveBeenCalledWith("./api/1", init);
   });
