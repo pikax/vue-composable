@@ -42,27 +42,26 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   const result = ref<PromiseType<T> | null>(null);
   const promise = ref<T>();
 
-  let lastPromise: T | null = null;
   const exec = async (...args: TArgs) : Promise<PromiseType<T> | undefined>  => {
     loading.value = true;
     error.value = null;
     result.value = null;
 
-    const currentPromise = (promise.value = lastPromise = fn(...args));
+    const currentPromise = (promise.value = fn(...args));
     try {
       const r = await currentPromise;
-      if (lastPromise === currentPromise) {
+      if (promise.value === currentPromise) {
         result.value = r;
       }
       return r;
     } catch (er) {
-      if (lastPromise === currentPromise) {
+      if (promise.value === currentPromise) {
         error.value = er;
         result.value = null;
       }
       return undefined;
     } finally {
-      if (lastPromise === currentPromise) {
+      if (promise.value === currentPromise) {
         loading.value = false;
       }
     }

@@ -14,15 +14,18 @@ export interface UseFetchOptions {
   parseImmediate?: boolean;
 }
 
-export function useFetch<T = any>(init?: RequestInit & UseFetchOptions) {
+export function useFetch<T = any>(options?: UseFetchOptions) {
   const json = ref<T>(null);
   // TODO add text = ref<string> ??
   const jsonError = ref<any | null>(null);
+  const isJson = options && options.isJson !== false;
+  const parseImmediate = options && options.parseImmediate !== false;
 
-  const use = usePromise(async (request: RequestInfo) => {
+
+  const use = usePromise(async (request: RequestInfo, init?: RequestInit ) => {
     const response = await fetch(request, init);
 
-    if (!init || init.isJson !== false) {
+    if (isJson) {
       const pJson = response
         .json()
         .then(x => (json.value = x))
@@ -30,7 +33,7 @@ export function useFetch<T = any>(init?: RequestInit & UseFetchOptions) {
           json.value = null;
           jsonError.value = x;
         });
-      if (!init || init.parseImmediate !== false) {
+      if (parseImmediate) {
         await pJson;
       }
     }
