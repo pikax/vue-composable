@@ -1,60 +1,56 @@
-import { Vue, nextTick } from "./utils";
-import { useOnScroll, ScrollResult } from "../src/onScroll";
-import { promisedTimeout } from "../src/utils";
+import { Vue, nextTick } from "../utils";
+import { useMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
+import { promisedTimeout } from "../../src/utils";
+import { ref, Ref } from "@vue/composition-api";
 
-describe("onScroll", () => {
-  it("should add the correct event", async () => {
+describe("onMouseMove", () => {
+  it("should add the correct event", () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("scroll");
+        expect(name).toBe("mousemove");
         handler = listener;
       }),
-      removeEventListener: jest.fn(),
-      scrollTop: 0,
-      scrollLeft: 0
+      removeEventListener: jest.fn()
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
-    let use: ScrollResult | undefined = undefined;
+    let use: MouseMoveResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element);
+        use = useMouseMove(element);
       }
     }).$mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
     expect(use).toMatchObject({
-      scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      mouseX: { value: 0 },
+      mouseY: { value: 0 }
     });
 
-    (element as any).scrollTop = 50;
-    (element as any).scrollLeft = 50;
-
-    handler!({});
-    await nextTick();
+    handler!({
+      x: 50,
+      y: 50
+    });
 
     expect(use).toMatchObject({
-      scrollTop: { value: 50 },
-      scrollLeft: { value: 50 }
+      mouseX: { value: 50 },
+      mouseY: { value: 50 }
     });
   });
 
   it("should removeEventListener if `remove` is called", () => {
     const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      scrollTop: 0,
-      scrollLeft: 0
+      removeEventListener: jest.fn()
     } as any;
-    let use: ScrollResult | undefined = undefined;
+    let use: MouseMoveResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element);
+        use = useMouseMove(element);
       }
     }).$mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
@@ -67,55 +63,51 @@ describe("onScroll", () => {
   it("should debounce if wait is passed", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("scroll");
+        expect(name).toBe("mousemove");
         handler = listener;
       }),
-      removeEventListener: jest.fn(),
-      scrollTop: 0,
-      scrollLeft: 0
+      removeEventListener: jest.fn()
     } as any;
-    let use: ScrollResult | undefined = undefined;
+    let use: MouseMoveResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element, wait);
+        use = useMouseMove(element, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
-      (element as any).scrollTop = 10 + i;
-      (element as any).scrollLeft = 10 + i;
-
-      handler!({});
+      handler!({
+        x: 10 + i,
+        y: 10 + i
+      });
     }
 
     await nextTick();
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      mouseX: { value: 0 },
+      mouseY: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      scrollTop: { value: 19 },
-      scrollLeft: { value: 19 }
+      mouseX: { value: 19 },
+      mouseY: { value: 19 }
     });
   });
 
   it("should pass options to the event listener", () => {
-    const element: Element = {
+    const element: Ref<Element> = ref({
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      scrollTop: 0,
-      scrollLeft: 0
-    } as any;
-    let use: ScrollResult | undefined = undefined;
+      removeEventListener: jest.fn()
+    }) as any;
+    let use: MouseMoveResult | undefined = undefined;
     const options = {
       passive: true
     };
@@ -123,11 +115,11 @@ describe("onScroll", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element, options);
+        use = useMouseMove(element, options);
       }
     }).$mount();
-    expect(element.addEventListener).toHaveBeenCalledWith(
-      "scroll",
+    expect(element.value.addEventListener).toHaveBeenCalledWith(
+      "mousemove",
       expect.any(Function),
       options
     );
@@ -136,14 +128,12 @@ describe("onScroll", () => {
   it("should pass options to the event listener and be debounced", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("scroll");
+        expect(name).toBe("mousemove");
         handler = listener;
       }),
-      removeEventListener: jest.fn(),
-      scrollTop: 0,
-      scrollLeft: 0
+      removeEventListener: jest.fn()
     } as any;
-    let use: ScrollResult | undefined = undefined;
+    let use: MouseMoveResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
     const options = {
@@ -153,34 +143,34 @@ describe("onScroll", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element, options, wait);
+        use = useMouseMove(element, options, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
-      "scroll",
+      "mousemove",
       expect.any(Function),
       options
     );
 
     for (let i = 0; i < 10; i++) {
-      (element as any).scrollTop = 10 + i;
-      (element as any).scrollLeft = 10 + i;
-
-      handler!({});
+      handler!({
+        x: 10 + i,
+        y: 10 + i
+      });
     }
 
     await nextTick();
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      mouseX: { value: 0 },
+      mouseY: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      scrollTop: { value: 19 },
-      scrollLeft: { value: 19 }
+      mouseX: { value: 19 },
+      mouseY: { value: 19 }
     });
   });
 });

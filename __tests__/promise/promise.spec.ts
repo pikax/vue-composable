@@ -1,5 +1,5 @@
-import { usePromise } from "../src/promise";
-import { nextTick } from "./utils";
+import { usePromise } from "../../src/promise/promise";
+import { nextTick } from "../utils";
 
 describe("promise", () => {
   let cb: ((...args: any[]) => void) | null = null;

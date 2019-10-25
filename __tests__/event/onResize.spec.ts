@@ -1,56 +1,60 @@
-import { Vue, nextTick } from "./utils";
-import { useMouseMove, MouseMoveResult } from "../src/onMouseMove";
-import { promisedTimeout } from "../src/utils";
-import { ref, Ref } from "@vue/composition-api";
+import { Vue, nextTick } from "../utils";
+import { useOnResize, ResizeResult } from "../../src/event/onResize";
+import { promisedTimeout } from "../../src/utils";
 
-describe("onMouseMove", () => {
-  it("should add the correct event", () => {
+describe("onResize", () => {
+  it("should add the correct event", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("mousemove");
+        expect(name).toBe("resize");
         handler = listener;
       }),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
+      clientHeight: 0,
+      clientWidth: 0
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
-    let use: MouseMoveResult | undefined = undefined;
+    let use: ResizeResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element);
+        use = useOnResize(element);
       }
     }).$mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
     expect(use).toMatchObject({
-      mouseX: { value: 0 },
-      mouseY: { value: 0 }
+      height: { value: 0 },
+      width: { value: 0 }
     });
 
-    handler!({
-      x: 50,
-      y: 50
-    });
+    (element as any).clientHeight = 50;
+    (element as any).clientWidth = 50;
+
+    handler!({});
+    await nextTick();
 
     expect(use).toMatchObject({
-      mouseX: { value: 50 },
-      mouseY: { value: 50 }
+      height: { value: 50 },
+      width: { value: 50 }
     });
   });
 
   it("should removeEventListener if `remove` is called", () => {
     const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
+      clientHeight: 0,
+      clientWidth: 0
     } as any;
-    let use: MouseMoveResult | undefined = undefined;
+    let use: ResizeResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element);
+        use = useOnResize(element);
       }
     }).$mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
@@ -63,51 +67,55 @@ describe("onMouseMove", () => {
   it("should debounce if wait is passed", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("mousemove");
+        expect(name).toBe("resize");
         handler = listener;
       }),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
+      clientHeight: 0,
+      clientWidth: 0
     } as any;
-    let use: MouseMoveResult | undefined = undefined;
+    let use: ResizeResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, wait);
+        use = useOnResize(element, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
-      handler!({
-        x: 10 + i,
-        y: 10 + i
-      });
+      (element as any).clientHeight = 10 + i;
+      (element as any).clientWidth = 10 + i;
+
+      handler!({});
     }
 
     await nextTick();
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      mouseX: { value: 0 },
-      mouseY: { value: 0 }
+      height: { value: 0 },
+      width: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      mouseX: { value: 19 },
-      mouseY: { value: 19 }
+      height: { value: 19 },
+      width: { value: 19 }
     });
   });
 
   it("should pass options to the event listener", () => {
-    const element: Ref<Element> = ref({
+    const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
-    }) as any;
-    let use: MouseMoveResult | undefined = undefined;
+      removeEventListener: jest.fn(),
+      clientHeight: 0,
+      clientWidth: 0
+    } as any;
+    let use: ResizeResult | undefined = undefined;
     const options = {
       passive: true
     };
@@ -115,11 +123,11 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, options);
+        use = useOnResize(element, options);
       }
     }).$mount();
-    expect(element.value.addEventListener).toHaveBeenCalledWith(
-      "mousemove",
+    expect(element.addEventListener).toHaveBeenCalledWith(
+      "resize",
       expect.any(Function),
       options
     );
@@ -128,12 +136,14 @@ describe("onMouseMove", () => {
   it("should pass options to the event listener and be debounced", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("mousemove");
+        expect(name).toBe("resize");
         handler = listener;
       }),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
+      clientHeight: 0,
+      clientWidth: 0
     } as any;
-    let use: MouseMoveResult | undefined = undefined;
+    let use: ResizeResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
     const options = {
@@ -143,34 +153,34 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, options, wait);
+        use = useOnResize(element, options, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
-      "mousemove",
+      "resize",
       expect.any(Function),
       options
     );
 
     for (let i = 0; i < 10; i++) {
-      handler!({
-        x: 10 + i,
-        y: 10 + i
-      });
+      (element as any).clientHeight = 10 + i;
+      (element as any).clientWidth = 10 + i;
+
+      handler!({});
     }
 
     await nextTick();
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      mouseX: { value: 0 },
-      mouseY: { value: 0 }
+      height: { value: 0 },
+      width: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      mouseX: { value: 19 },
-      mouseY: { value: 19 }
+      height: { value: 19 },
+      width: { value: 19 }
     });
   });
 });

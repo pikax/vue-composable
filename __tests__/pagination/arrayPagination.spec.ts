@@ -1,5 +1,5 @@
-import { useArrayPagination } from "../src";
-import { nextTick } from "./utils";
+import { useArrayPagination } from "../../src";
+import { nextTick } from "../utils";
 import { ref } from "@vue/composition-api";
 
 describe("arrayPagination", () => {

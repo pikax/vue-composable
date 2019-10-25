@@ -1,4 +1,4 @@
-import { usePromise } from "./promise";
+import { usePromise } from "../promise/promise";
 import { ref, computed, watch } from "@vue/composition-api";
 
 export interface UseFetchOptions {

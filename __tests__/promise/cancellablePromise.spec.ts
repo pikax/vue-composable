@@ -1,6 +1,6 @@
-import { useCancellablePromise } from "../src/cancellablePromise";
-import { promisedTimeout } from "../src/utils";
-import { nextTick } from "./utils";
+import { useCancellablePromise } from "../../src/promise/cancellablePromise";
+import { promisedTimeout } from "../../src/utils";
+import { nextTick } from "../utils";
 
 describe("cancellablePromise", () => {
   it("should resolve promise", async () => {

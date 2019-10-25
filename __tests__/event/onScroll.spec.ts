@@ -1,44 +1,44 @@
-import { Vue, nextTick } from "./utils";
-import { useOnResize, ResizeResult } from "../src/onResize";
-import { promisedTimeout } from "../src/utils";
+import { Vue, nextTick } from "../utils";
+import { useOnScroll, ScrollResult } from "../../src/event/onScroll";
+import { promisedTimeout } from "../../src/utils";
 
-describe("onResize", () => {
+describe("onScroll", () => {
   it("should add the correct event", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("resize");
+        expect(name).toBe("scroll");
         handler = listener;
       }),
       removeEventListener: jest.fn(),
-      clientHeight: 0,
-      clientWidth: 0
+      scrollTop: 0,
+      scrollLeft: 0
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
-    let use: ResizeResult | undefined = undefined;
+    let use: ScrollResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element);
+        use = useOnScroll(element);
       }
     }).$mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
     expect(use).toMatchObject({
-      height: { value: 0 },
-      width: { value: 0 }
+      scrollTop: { value: 0 },
+      scrollLeft: { value: 0 }
     });
 
-    (element as any).clientHeight = 50;
-    (element as any).clientWidth = 50;
+    (element as any).scrollTop = 50;
+    (element as any).scrollLeft = 50;
 
     handler!({});
     await nextTick();
 
     expect(use).toMatchObject({
-      height: { value: 50 },
-      width: { value: 50 }
+      scrollTop: { value: 50 },
+      scrollLeft: { value: 50 }
     });
   });
 
@@ -46,15 +46,15 @@ describe("onResize", () => {
     const element: Element = {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
-      clientHeight: 0,
-      clientWidth: 0
+      scrollTop: 0,
+      scrollLeft: 0
     } as any;
-    let use: ResizeResult | undefined = undefined;
+    let use: ScrollResult | undefined = undefined;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element);
+        use = useOnScroll(element);
       }
     }).$mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
@@ -67,28 +67,28 @@ describe("onResize", () => {
   it("should debounce if wait is passed", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("resize");
+        expect(name).toBe("scroll");
         handler = listener;
       }),
       removeEventListener: jest.fn(),
-      clientHeight: 0,
-      clientWidth: 0
+      scrollTop: 0,
+      scrollLeft: 0
     } as any;
-    let use: ResizeResult | undefined = undefined;
+    let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element, wait);
+        use = useOnScroll(element, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
-      (element as any).clientHeight = 10 + i;
-      (element as any).clientWidth = 10 + i;
+      (element as any).scrollTop = 10 + i;
+      (element as any).scrollLeft = 10 + i;
 
       handler!({});
     }
@@ -97,14 +97,14 @@ describe("onResize", () => {
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      height: { value: 0 },
-      width: { value: 0 }
+      scrollTop: { value: 0 },
+      scrollLeft: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      height: { value: 19 },
-      width: { value: 19 }
+      scrollTop: { value: 19 },
+      scrollLeft: { value: 19 }
     });
   });
 
@@ -112,10 +112,10 @@ describe("onResize", () => {
     const element: Element = {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
-      clientHeight: 0,
-      clientWidth: 0
+      scrollTop: 0,
+      scrollLeft: 0
     } as any;
-    let use: ResizeResult | undefined = undefined;
+    let use: ScrollResult | undefined = undefined;
     const options = {
       passive: true
     };
@@ -123,11 +123,11 @@ describe("onResize", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element, options);
+        use = useOnScroll(element, options);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
-      "resize",
+      "scroll",
       expect.any(Function),
       options
     );
@@ -136,14 +136,14 @@ describe("onResize", () => {
   it("should pass options to the event listener and be debounced", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
-        expect(name).toBe("resize");
+        expect(name).toBe("scroll");
         handler = listener;
       }),
       removeEventListener: jest.fn(),
-      clientHeight: 0,
-      clientWidth: 0
+      scrollTop: 0,
+      scrollLeft: 0
     } as any;
-    let use: ResizeResult | undefined = undefined;
+    let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
     const options = {
@@ -153,18 +153,18 @@ describe("onResize", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element, options, wait);
+        use = useOnScroll(element, options, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
-      "resize",
+      "scroll",
       expect.any(Function),
       options
     );
 
     for (let i = 0; i < 10; i++) {
-      (element as any).clientHeight = 10 + i;
-      (element as any).clientWidth = 10 + i;
+      (element as any).scrollTop = 10 + i;
+      (element as any).scrollLeft = 10 + i;
 
       handler!({});
     }
@@ -173,14 +173,14 @@ describe("onResize", () => {
 
     // still waiting to set the values
     expect(use).toMatchObject({
-      height: { value: 0 },
-      width: { value: 0 }
+      scrollTop: { value: 0 },
+      scrollLeft: { value: 0 }
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
-      height: { value: 19 },
-      width: { value: 19 }
+      scrollTop: { value: 19 },
+      scrollLeft: { value: 19 }
     });
   });
 });

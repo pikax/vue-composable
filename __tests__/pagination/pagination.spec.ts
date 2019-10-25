@@ -1,5 +1,5 @@
-import { usePagination } from "../src/pagination";
-import { nextTick } from "./utils";
+import { usePagination } from "../../src/pagination/pagination";
+import { nextTick } from "../utils";
 
 describe("pagination", () => {
   let warnSpy: jest.SpyInstance = undefined as any;

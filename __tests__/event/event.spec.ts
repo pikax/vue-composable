@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, Ref, ref } from "@vue/composition-api";
-import { Vue } from "./utils";
-import { useEvent } from "../src/event";
+import { Vue } from "../utils";
+import { useEvent } from "../../src/event/event";
 
 describe("event", () => {
   jest.mock("@vue/composition-api");
