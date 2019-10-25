@@ -86,13 +86,6 @@ export default [
   createConfig("umd", false),
   createConfig("umd", true),
 
-  createConfig("cjs", true, false),
-  createConfig("cjs", true, true),
-  createConfig("cjs", false, false),
-  createConfig("cjs", false, true),
-
-  createConfig("es", true, false),
-  createConfig("es", true, true),
-  createConfig("es", false, false),
-  createConfig("es", false, true)
+  createConfig("cjs", false),
+  createConfig("es", false),
 ];

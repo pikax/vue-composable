@@ -8,3 +8,4 @@ export * from './pagination/pagination'
 export * from './promise/promise'
 export * from './promise/cancellablePromise'
 export * from './web/fetch';
+export * from './web/websocket';
