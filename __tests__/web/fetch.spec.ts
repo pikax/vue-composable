@@ -1,7 +1,6 @@
 import { useFetch } from "../../src";
 import { promisedTimeout } from "../../src/utils";
 import { nextTick } from "../utils";
-import { promises } from "dns";
 
 describe("fetch", () => {
   let fetchSpy: jest.SpyInstance = undefined as any;

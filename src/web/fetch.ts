@@ -4,12 +4,12 @@ import { ref, computed, watch } from "@vue/composition-api";
 export interface UseFetchOptions {
   /**
    * @description if the value is `true` it will parse the response automatically `json`
-   * **default**: `true`
+   * @default true
    */
   isJson?: boolean;
   /**
    * @description if the value is `true` it will parse the `json` before resolving the promise
-   * **default**: `true`
+   * @default true
    */
   parseImmediate?: boolean;
 }

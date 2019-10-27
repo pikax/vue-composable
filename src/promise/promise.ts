@@ -1,9 +1,14 @@
 import { ref, Ref } from "@vue/composition-api";
 
+type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
+  ? R
+  : never;
 
-type PromiseType<T extends Promise<any>> = T extends Promise<infer R>  ? R : never;
-
-interface PromiseResult<T extends Promise<any>, TR = PromiseType<T>, TError = any> {
+interface PromiseResult<
+  T extends Promise<any>,
+  TR = PromiseType<T>,
+  TError = any
+> {
   promise: Ref<T | undefined>;
   result: Ref<TR | null>;
 
@@ -15,11 +20,10 @@ export interface PromiseResultFactory<
   T extends Promise<any>,
   TArgs extends Array<any> = never
 > extends PromiseResult<T> {
-  exec: (
-    ...args: TArgs
-  ) => Promise<PromiseType<T> | undefined>;
+  exec: (...args: TArgs) => Promise<PromiseType<T> | undefined>;
 }
 
+// TODO fix the typings, T doesn't need to extend Promise<any>
 
 export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T
@@ -29,7 +33,7 @@ export function usePromise<T extends Promise<any>>(
 ): PromiseResultFactory<T>;
 export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TArgs>{
+): PromiseResultFactory<T, TArgs> {
   if (!fn) {
     throw new Error(`[usePromise] argument can't be '${fn}'`);
   }
@@ -42,7 +46,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   const result = ref<PromiseType<T> | null>(null);
   const promise = ref<T>();
 
-  const exec = async (...args: TArgs) : Promise<PromiseType<T> | undefined>  => {
+  const exec = async (...args: TArgs): Promise<PromiseType<T> | undefined> => {
     loading.value = true;
     error.value = null;
     result.value = null;
