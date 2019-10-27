@@ -58,8 +58,7 @@ function createConfig(format, isDev, minify) {
             __DEV__:
               format !== "umd"
                 ? 'process.env.NODE_ENV !== "production"'
-                : (!isProd).toString(),
-            __JSDOM__: "false"
+                : (!isProd).toString()
           }
         }),
 

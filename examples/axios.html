@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.config.devtools = true
+    </script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+
+  <div id="app">
+    <p>current Id {{id}}</p>
+    <p>
+      <button @click="id--">prev</button>
+      <button @click="id++">next</button>
+    </p>
+    <p v-if="loading">
+        loading...
+    </p>
+    <div v-else>
+        <p> Status: {{status}} </p>
+        {{ data }}
+    </div>
+
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
+  <script>
+    // add composition api to vue
+    Vue.use(vueCompositionApi.default);
+  </script>
+  <script src="../dist/vue-composable.umd.js"></script>
+  <script>
+    const {
+      useAxios 
+    } = vueComposable;
+    const { computed, ref, watch} = vueCompositionApi;
+    
+    new Vue({
+      el: "#app",
+
+      setup(){
+        const id = ref(1);
+        const {data , loading, exec, error, status} = useAxios();
+
+        watch(id, (id)=>{
+            exec({
+              method: 'GET',
+              url: 'https://reqres.in/api/user/'+id
+            });
+        })
+
+        return {
+            id,
+            data,
+            loading,
+            status
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

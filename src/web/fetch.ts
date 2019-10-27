@@ -18,11 +18,10 @@ export function useFetch<T = any>(options?: UseFetchOptions) {
   const json = ref<T>(null);
   // TODO add text = ref<string> ??
   const jsonError = ref<any | null>(null);
-  const isJson = options && options.isJson !== false;
-  const parseImmediate = options && options.parseImmediate !== false;
+  const isJson = options ? options.isJson !== false : true;
+  const parseImmediate = options ? options.parseImmediate !== false : true;
 
-
-  const use = usePromise(async (request: RequestInfo, init?: RequestInit ) => {
+  const use = usePromise(async (request: RequestInfo, init?: RequestInit) => {
     const response = await fetch(request, init);
 
     if (isJson) {

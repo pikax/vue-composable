@@ -31,16 +31,17 @@ Currently only works with [composition-api](https://github.com/vuejs/composition
 
 | composable | description | example | extra |
 |---|---|---|---|
-| [useArrayPagination](src/arrayPagination.ts) | provides pagination for an array | [arrayPagination.html](examples/arrayPagination.html) |  |
+| [useArrayPagination](src/pagination/arrayPagination.ts) | provides pagination for an array | [arrayPagination.html](examples/arrayPagination.html) |  |
 | [useDebounce](src/debounce.ts) | debounces function |  |  |
-| [useEvent](src/event.ts) | handles the lifecycle of addEventListener/removeEventListener for a component. |  |  |
-| [useOnMouseMove](src/onMouseMove.ts) | gets data from element `movemove` |  |  |
-| [useOnResize](src/onResize.ts) | gets data from element `resize` |  |  |
-| [useOnScroll](src/onScroll.ts) | gets data from element `scroll` |  |  |
-| [usePagination](src/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
-| [usePromise](src/promise.ts) | provides information about the state of the promise |  |  |
-| [useFetch](src/fetch.ts) | handles the fetch request | [fetch.html](examples/fetch.html) |  |
-| [useCancellablePromise](src/cancellablePromise.ts) | allow to cancel promise. **NOTE** javascript doesn't support cancel of promises natively, when you cancel it will only prevent the `result` to be modified |  |  |
+| [useEvent](src/event/event.ts) | handles the lifecycle of addEventListener/removeEventListener for a component. |  |  |
+| [useOnMouseMove](src/event/onMouseMove.ts) | gets data from element `movemove` |  |  |
+| [useOnResize](src/event/onResize.ts) | gets data from element `resize` |  |  |
+| [useOnScroll](src/event/onScroll.ts) | gets data from element `scroll` |  |  |
+| [usePagination](src/pagination/pagination.ts) | provides pagination controls. *NOTE: base type*  |  |  |
+| [usePromise](src/promise/promise.ts) | provides information about the state of the promise |  |  |
+| [useFetch](src/web/fetch.ts) | handles the fetch request | [fetch.html](examples/fetch.html) |  |
+| [useAxios](src/web/axios.ts) | handles the axios requests | [axios.html](examples/axios.html) |  |
+| [useCancellablePromise](src/web/cancellablePromise.ts) | allow to cancel promise. **NOTE** javascript doesn't support cancel of promises natively, when you cancel it will only prevent the `result` to be modified |  |  |
 
 
 ## Types

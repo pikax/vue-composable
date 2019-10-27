@@ -1,5 +1,5 @@
 import { Ref } from "@vue/composition-api";
-import { RefTyped } from "./utils";
+import { RefTyped } from "./../utils";
 declare type PaginationControl = () => void;
 export interface PaginationResult {
     pageSize: Ref<number>;

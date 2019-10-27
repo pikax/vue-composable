@@ -1,4 +1,5 @@
 import { isRef, onMounted, onUnmounted, ref, computed, watch } from '@vue/composition-api';
+import _axios from 'axios';
 
 function useEvent(el, name, listener, options) {
     const element = isRef(el) ? el.value : el;
@@ -226,28 +227,27 @@ function usePromise(fn) {
     const error = ref(null);
     const result = ref(null);
     const promise = ref();
-    let lastPromise = null;
     const exec = async (...args) => {
         loading.value = true;
         error.value = null;
         result.value = null;
-        const currentPromise = (promise.value = lastPromise = fn(...args));
+        const currentPromise = (promise.value = fn(...args));
         try {
             const r = await currentPromise;
-            if (lastPromise === currentPromise) {
+            if (promise.value === currentPromise) {
                 result.value = r;
             }
             return r;
         }
         catch (er) {
-            if (lastPromise === currentPromise) {
+            if (promise.value === currentPromise) {
                 error.value = er;
                 result.value = null;
             }
             return undefined;
         }
         finally {
-            if (lastPromise === currentPromise) {
+            if (promise.value === currentPromise) {
                 loading.value = false;
             }
         }
@@ -280,13 +280,15 @@ function useCancellablePromise(fn) {
     };
 }
 
-function useFetch(init) {
+function useFetch(options) {
     const json = ref(null);
     // TODO add text = ref<string> ??
     const jsonError = ref(null);
-    const use = usePromise(async (request) => {
+    const isJson = options ? options.isJson !== false : true;
+    const parseImmediate = options ? options.parseImmediate !== false : true;
+    const use = usePromise(async (request, init) => {
         const response = await fetch(request, init);
-        if (!init || init.isJson !== false) {
+        if (isJson) {
             const pJson = response
                 .json()
                 .then(x => (json.value = x))
@@ -294,7 +296,7 @@ function useFetch(init) {
                 json.value = null;
                 jsonError.value = x;
             });
-            if (!init || init.parseImmediate !== false) {
+            if (parseImmediate) {
                 await pJson;
             }
         }
@@ -311,4 +313,87 @@ function useFetch(init) {
     };
 }
 
-export { debounce, useArrayPagination, useCancellablePromise, useDebounce, useEvent, useFetch, useMouseMove, useOnResize, useOnScroll, usePagination, usePromise };
+/* istanbul ignore next  */
+const axios = _axios || (globalThis && globalThis.axios);
+function useAxios(config) {
+    /* istanbul ignore next  */
+    process.env.NODE_ENV !== "production" && !axios && console.warn(`[axios] not installed, please install it`);
+    const axiosClient = axios.create(config);
+    const client = computed(() => axiosClient);
+    const use = usePromise(async (request) => {
+        return axiosClient.request(request);
+    });
+    const data = computed(() => (use.result.value && use.result.value.data) ||
+        (use.error.value &&
+            use.error.value.response &&
+            use.error.value.response.data) ||
+        null);
+    const status = computed(() => (use.result.value && use.result.value.status) ||
+        (use.error.value &&
+            use.error.value.response &&
+            use.error.value.response.status) ||
+        null);
+    const statusText = computed(() => (use.result.value && use.result.value.statusText) ||
+        (use.error.value &&
+            use.error.value.response &&
+            use.error.value.response.statusText) ||
+        null);
+    return {
+        ...use,
+        client,
+        data,
+        status,
+        statusText
+    };
+}
+
+function useWebSocket(url, protocols) {
+    const ws = new WebSocket(url, protocols);
+    const messageEvent = ref(null);
+    const errorEvent = ref();
+    const data = ref(null);
+    const isOpen = ref(false);
+    const isClosed = ref(false);
+    const errored = ref(false);
+    /* istanbul ignore next  */
+    let lastMessage = (process.env.NODE_ENV !== "production" && Date.now()) || undefined;
+    ws.addEventListener("message", x => {
+        messageEvent.value = x;
+        data.value = x.data;
+        // if the messages are to quick, we need to warn
+        /* istanbul ignore else  */
+        if (process.env.NODE_ENV !== "production") {
+            if (Date.now() - lastMessage < 2) {
+                console.warn('[useWebSocket] message rate is too high, if you are using "data" or "messageEvent"' +
+                    " you might not get updated of all the messages." +
+                    ' Use "ws..addEventListener("message", handler)" instead');
+            }
+            lastMessage = Date.now();
+        }
+    });
+    ws.addEventListener("error", error => {
+        errorEvent.value = error;
+        errored.value = true;
+    });
+    ws.addEventListener("close", () => {
+        isOpen.value = false;
+        isClosed.value = true;
+    });
+    ws.addEventListener("open", () => {
+        isOpen.value = true;
+        isClosed.value = false;
+    });
+    const send = (data) => ws.send(data);
+    return {
+        ws,
+        send,
+        messageEvent,
+        errorEvent,
+        data,
+        isOpen,
+        isClosed,
+        errored
+    };
+}
+
+export { debounce, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useWebSocket };

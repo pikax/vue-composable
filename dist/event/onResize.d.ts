@@ -1,5 +1,5 @@
 import { Ref } from "@vue/composition-api";
-import { RefElement } from "./utils";
+import { RefElement } from "../utils";
 import { RemoveEventFunction } from "./event";
 export interface ResizeResult {
     height: Ref<number>;
