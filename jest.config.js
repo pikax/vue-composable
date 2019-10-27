@@ -4,8 +4,7 @@ module.exports = {
     preset: 'ts-jest',
     globals: {
       __DEV__: true,
-      __VERSION__: pkg.version,
-      __JSDOM__: true,
+      __VERSION__: pkg.version
     },
     setupFiles: [
       "<rootDir>/__tests__/setupTest.js"

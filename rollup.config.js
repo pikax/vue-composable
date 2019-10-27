@@ -36,7 +36,7 @@ function createConfig(format, isDev, minify) {
       globals
     },
     // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-    external: ["vue", "@vue/composition-api"],
+    external: ["vue", "@vue/composition-api", 'axios'],
 
     watch: {
       include: "src/**"
