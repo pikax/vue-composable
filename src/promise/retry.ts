@@ -1,4 +1,4 @@
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref, computed } from "@vue/composition-api";
 import { isPromise, promisedTimeout } from "../utils";
 
 const MAX_RETRIES = 9000;
@@ -10,9 +10,10 @@ interface RetryOptions {
 }
 
 interface RetryContext {
-  retry: Ref<number>;
+  retryCount: Ref<number>;
   nextRetry: Ref<number | undefined>;
   isRetrying: Ref<boolean>;
+  retryErrors: Ref<object[]>;
 }
 
 type Factory<T, TArgs extends Array<any>, TReturn = T> = (
@@ -38,8 +39,12 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
   }
   let nextRetry: number | undefined = undefined;
   do {
-    if (options.maxRetries && context.retry.value > options.maxRetries) {
-      throw new Error("[useRetry] max retries reached " + context.retry.value);
+    if (options.maxRetries && context.retryCount.value > options.maxRetries) {
+      context.isRetrying.value = false;
+      context.nextRetry.value = undefined;
+      throw new Error(
+        `[useRetry] max retries reached ${options.maxRetries}`
+      );
     }
 
     try {
@@ -56,9 +61,9 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
 
       return result as any;
     } catch (error) {
-      context.retry.value++;
+      context.retryErrors.value.push(error);
       nextRetry =
-        (options.retryDelay && options.retryDelay(context.retry.value)) ||
+        (options.retryDelay && options.retryDelay(context.retryCount.value)) ||
         Date.now();
 
       nextRetry = nextRetry > Date.now() ? nextRetry : Date.now() + nextRetry;
@@ -66,7 +71,7 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
       context.nextRetry.value = nextRetry;
       context.isRetrying.value = true;
     }
-    const ms = Math.max(nextRetry - Date.now() , 1);
+    const ms = Math.max(nextRetry - Date.now(), 1);
     await promisedTimeout(ms);
 
     // exec has been called again
@@ -90,13 +95,15 @@ export function useRetry<T, TArgs extends Array<any>>(
     throw new Error("[useRetry] requires an function as second argument");
   }
   const isRetrying = ref(false);
-  const retry = ref(0);
   const nextRetry = ref<number>();
+  const retryErrors = ref<object[]>([]);
+  const retryCount = computed(() => retryErrors.value.length);
 
   const context: RetryContext = {
     isRetrying,
-    retry,
-    nextRetry
+    retryCount,
+    nextRetry,
+    retryErrors
   };
 
   const exec: RetryFactoryResult<T, TArgs> = (...args) =>

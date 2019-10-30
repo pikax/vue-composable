@@ -19,19 +19,19 @@ describe("retry", () => {
   });
 
   it("should execute factory", async () => {
-    const { exec, isRetrying, retry, nextRetry } = useRetry({}, fnFactory);
+    const { exec, isRetrying, retryCount, nextRetry } = useRetry({}, fnFactory);
 
     await exec();
     await nextTick();
 
     expect(isRetrying.value).toBe(false);
-    expect(retry.value).toBe(0);
+    expect(retryCount.value).toBe(0);
     expect(nextRetry.value).toBeUndefined();
     expect(fnFactory).toBeCalledTimes(1);
   });
 
   it("should execute retry", async () => {
-    const { exec, isRetrying, retry, nextRetry } = useRetry(
+    const { exec, isRetrying, retryCount, nextRetry, retryErrors } = useRetry(
       { maxRetries: 1, retryDelay: () => 100 },
       fnFactory
     );
@@ -46,17 +46,36 @@ describe("retry", () => {
     await nextTick();
 
     expect(isRetrying.value).toBe(true);
-    expect(retry.value).toBe(1);
+    expect(retryCount.value).toBe(1);
     expect(nextRetry.value).toBeGreaterThanOrEqual(now);
     expect(nextRetry.value).toBeLessThanOrEqual(now + 100);
+    expect(retryErrors.value).toHaveLength(1);
     expect(fnFactory).toBeCalledTimes(1);
 
     await p;
     await nextTick();
 
     expect(isRetrying.value).toBe(false);
-    expect(retry.value).toBe(1);
+    expect(retryCount.value).toBe(1);
     expect(nextRetry.value).toBeUndefined();
     expect(fnFactory).toBeCalledTimes(2);
   });
+
+  it("should retry until it fails", async ()=> {
+    const { exec, isRetrying, retryCount, nextRetry } = useRetry(
+        { maxRetries: 2 },
+        fnFactory
+      );
+      fnFactory.mockImplementation(() => {
+        throw new Error();
+      });
+
+      await expect(exec()).rejects.toThrow("[useRetry] max retries reached 2");
+      await nextTick();
+      
+      expect(isRetrying.value).toBe(false);
+      expect(retryCount.value).toBe(3);
+      expect(nextRetry.value).toBeUndefined();
+      expect(fnFactory).toBeCalledTimes(3);
+  })
 });
