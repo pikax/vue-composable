@@ -42,9 +42,7 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
     if (options.maxRetries && context.retryCount.value > options.maxRetries) {
       context.isRetrying.value = false;
       context.nextRetry.value = undefined;
-      throw new Error(
-        `[useRetry] max retries reached ${options.maxRetries}`
-      );
+      throw new Error(`[useRetry] max retries reached ${options.maxRetries}`);
     }
 
     try {
@@ -52,15 +50,13 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
       if (isPromise(result)) {
         result = await result;
       }
-      // exec has been called again
-      if (context.nextRetry.value !== nextRetry) {
-        return null;
-      }
+
       context.isRetrying.value = false;
       context.nextRetry.value = undefined;
 
       return result as any;
     } catch (error) {
+      ++i;
       context.retryErrors.value.push(error);
       nextRetry =
         (options.retryDelay && options.retryDelay(context.retryCount.value)) ||
@@ -71,9 +67,10 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
       context.nextRetry.value = nextRetry;
       context.isRetrying.value = true;
     }
-    const ms = Math.max(nextRetry - Date.now(), 1);
-    await promisedTimeout(ms);
-
+    const ms = Math.max(nextRetry - Date.now(), 0);
+    if (ms > 0) {
+      await promisedTimeout(ms);
+    }
     // exec has been called again
     if (context.nextRetry.value !== nextRetry) {
       return null;
