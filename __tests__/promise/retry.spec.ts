@@ -290,7 +290,7 @@ describe("retry", () => {
     expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
   });
 
-  it("should throw if retryDelay returns", () => {
+  it("should throw if retryDelay returns 'string'", () => {
     Date.now = dateNow;
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => "error" as any },
@@ -300,6 +300,19 @@ describe("retry", () => {
 
     return expect(exec()).rejects.toThrowError(
       "[useRetry] invalid value received from options.retryDelay 'string'"
+    );
+  });
+
+  it("should throw if retryDelay returns 'object'", () => {
+    Date.now = dateNow;
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => ({ foo: "error" } as any) },
+      fnFactory
+    );
+    fnFactory.mockImplementation(() => Promise.reject());
+
+    return expect(exec()).rejects.toThrowError(
+      "[useRetry] invalid value received from options.retryDelay 'object'"
     );
   });
 });

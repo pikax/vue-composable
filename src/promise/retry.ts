@@ -186,7 +186,7 @@ export function useRetry<T, TArgs extends Array<any>>(
 
   const exec: RetryFactoryResult<T, TArgs> = (...args) => {
     ++context[RetryId].value;
-    return defaultStrategy(options, context, factory, args) as any;
+    return defaultStrategy(options, context, factory, args);
   };
 
   const cancel = () => {
