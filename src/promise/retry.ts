@@ -3,17 +3,32 @@ import { isPromise, promisedTimeout } from "../utils";
 
 const MAX_RETRIES = 9000;
 
+const RetryId = Symbol(
+  /* istanbul ignore else */ __DEV__ ? "RetryId" : undefined
+);
+const CancellationToken = Symbol(
+  /* istanbul ignore else */ __DEV__ ? "CancellationToken" : undefined
+);
+
+type RetryDelayFactory = (retry: number) => number;
+
 interface RetryOptions {
   maxRetries?: number;
 
-  retryDelay?: (retry: number) => number;
+  retryDelay?: RetryDelayFactory;
 }
 
 interface RetryContext {
+  /**
+   * Current retry number
+   */
   retryCount: Ref<number>;
   nextRetry: Ref<number | undefined>;
   isRetrying: Ref<boolean>;
   retryErrors: Ref<object[]>;
+
+  [RetryId]: { value: number };
+  [CancellationToken]: { value: boolean };
 }
 
 type Factory<T, TArgs extends Array<any>, TReturn = T> = (
@@ -26,54 +41,86 @@ type RetryFactoryResult<T, TArgs extends Array<any>> = Factory<
   Promise<(T extends Promise<infer R> ? R : T) | null>
 >;
 
-const defaultStrategy = async <T, TArgs extends Array<any>>(
+type RetryStrategy<T = any, TArgs extends Array<any> = any> = (
   options: RetryOptions,
   context: RetryContext,
   factory: Factory<T, TArgs>,
   args: TArgs
-): Promise<(T extends Promise<infer R> ? R : T) | null> => {
-  let i = 0;
-  if (context.nextRetry.value! >= 0) {
-    // reset nextRetry
-    context.nextRetry.value = undefined;
-  }
+) => Promise<(T extends Promise<infer R> ? R : T) | null>;
+
+const defaultStrategy: RetryStrategy = async (
+  options,
+  context,
+  factory,
+  args
+) => {
+  const retryId = context[RetryId].value;
+  let i = -1;
+  const maxRetries = options.maxRetries || MAX_RETRIES + 1;
+  const delay = options.retryDelay || noDelay;
+
+  context.retryErrors.value = [];
+  context.isRetrying.value = false;
+  context.nextRetry.value = undefined;
+
   let nextRetry: number | undefined = undefined;
   do {
-    if (options.maxRetries && context.retryCount.value > options.maxRetries) {
-      context.isRetrying.value = false;
-      context.nextRetry.value = undefined;
-      throw new Error(`[useRetry] max retries reached ${options.maxRetries}`);
-    }
-
+    let success = false;
+    let result: any | null = null;
     try {
-      let result = factory(...args);
+      ++i;
+      result = factory(...args);
       if (isPromise(result)) {
         result = await result;
       }
 
+      // is cancelled?
+      if (context[CancellationToken].value) {
+        return null;
+      }
+
+      success = true;
+    } catch (error) {
+      context.retryErrors.value.push(error);
+    }
+
+    // is our retry current one?
+    if (retryId !== context[RetryId].value) {
+      return result;
+    }
+
+    if (success) {
       context.isRetrying.value = false;
       context.nextRetry.value = undefined;
-
-      return result as any;
-    } catch (error) {
-      ++i;
-      context.retryErrors.value.push(error);
-      nextRetry =
-        (options.retryDelay && options.retryDelay(context.retryCount.value)) ||
-        Date.now();
-
-      nextRetry = nextRetry > Date.now() ? nextRetry : Date.now() + nextRetry;
-
-      context.nextRetry.value = nextRetry;
-      context.isRetrying.value = true;
+      return result;
     }
-    const ms = Math.max(nextRetry - Date.now(), 0);
-    if (ms > 0) {
-      await promisedTimeout(ms);
+
+    if (i >= maxRetries) {
+      context.isRetrying.value = false;
+      context.nextRetry.value = undefined;
+      return Promise.reject(
+        new Error(`[useRetry] max retries reached ${maxRetries}`)
+      );
     }
-    // exec has been called again
-    if (context.nextRetry.value !== nextRetry) {
+
+    context.isRetrying.value = true;
+
+    nextRetry = delay(i);
+    context.nextRetry.value =
+      nextRetry < Date.now() ? Date.now() + nextRetry : nextRetry;
+
+    if (nextRetry > 0) {
+      await promisedTimeout(nextRetry);
+    }
+
+    // is cancelled?
+    if (context[CancellationToken].value) {
       return null;
+    }
+
+    // is our retry current one?
+    if (retryId !== context[RetryId].value) {
+      return result;
     }
   } while (i < MAX_RETRIES);
 
@@ -82,6 +129,7 @@ const defaultStrategy = async <T, TArgs extends Array<any>>(
 
 export interface RetryReturn<T, TArgs extends Array<any>> extends RetryContext {
   exec: RetryFactoryResult<T, TArgs>;
+  cancel: () => void;
 }
 
 export function useRetry<T, TArgs extends Array<any>>(
@@ -94,20 +142,44 @@ export function useRetry<T, TArgs extends Array<any>>(
   const isRetrying = ref(false);
   const nextRetry = ref<number>();
   const retryErrors = ref<object[]>([]);
+  const cancellationToken = { value: false };
+  const retryId = { value: 0 };
+
   const retryCount = computed(() => retryErrors.value.length);
 
   const context: RetryContext = {
     isRetrying,
     retryCount,
     nextRetry,
-    retryErrors
+    retryErrors,
+    [RetryId]: retryId,
+    [CancellationToken]: cancellationToken
   };
 
-  const exec: RetryFactoryResult<T, TArgs> = (...args) =>
-    defaultStrategy(options, context, factory, args) as any;
+  const exec: RetryFactoryResult<T, TArgs> = (...args) => {
+    ++context[RetryId].value;
+    return defaultStrategy(options, context, factory, args) as any;
+  };
+
+  const cancel = () => {
+    context.isRetrying.value = false;
+    context.retryErrors.value.push(new Error("[useRetry] cancelled"));
+    context.nextRetry.value = undefined;
+
+    cancellationToken.value = true;
+  };
 
   return {
     ...context,
+    cancel,
     exec
   };
 }
+
+export const exponentialDelay: RetryDelayFactory = retryNumber => {
+  const delay = Math.pow(2, retryNumber) * 100;
+  const randomSum = delay * 0.2 * Math.random(); // 0-20% of the delay
+  return delay + randomSum;
+};
+
+export const noDelay: RetryDelayFactory = () => 0;
