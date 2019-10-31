@@ -17,13 +17,20 @@ export const isFunction = (val: unknown): val is Function =>
 //   typeof val === "string";
 // export const isSymbol = (val: unknown): val is symbol =>
 //   typeof val === "symbol";
+
+export const isDate = (val: unknown): val is Date =>
+  isObject(val) && isFunction(val.getTime);
+
+export const isNumber = (val: unknown): val is number =>
+  typeof val === "number";
+
 export const isObject = (val: unknown): val is Record<any, any> =>
   val !== null && typeof val === "object";
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
-export function promisedTimeout(timeout: number) {
+export function promisedTimeout(timeout: number): Promise<void> {
   return new Promise(res => {
     setTimeout(res, timeout);
   });

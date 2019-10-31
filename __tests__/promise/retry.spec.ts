@@ -226,7 +226,7 @@ describe("retry", () => {
     }
   });
 
-  it('should delay until date', async ()=> {
+  it("should delay until date", async () => {
     Date.now = dateNow;
     const untilDate = Date.now() + 500;
 
@@ -240,5 +240,66 @@ describe("retry", () => {
     await expect(exec(1)).resolves.toBe(1);
 
     expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
-  })
+  });
+
+  it("should retryDelay can return Date object", async () => {
+    Date.now = dateNow;
+    const untilDate = Date.now() + 500;
+
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => new Date(untilDate) },
+      fnFactory
+    );
+    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementationOnce(() => Promise.reject());
+
+    await expect(exec(1)).resolves.toBe(1);
+
+    expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
+  });
+
+  it("should retryDelay can return [Promise]", async () => {
+    Date.now = dateNow;
+    const untilDate = Date.now() + 500;
+
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => Promise.resolve(untilDate) },
+      fnFactory
+    );
+    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementationOnce(() => Promise.reject());
+
+    await expect(exec(1)).resolves.toBe(1);
+
+    expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
+  });
+
+  it("should allow Promise<void> to override the delay", async () => {
+    Date.now = dateNow;
+    const untilDate = Date.now() + 50;
+
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => promisedTimeout(50) },
+      fnFactory
+    );
+    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementationOnce(() => Promise.reject());
+
+    await expect(exec(1)).resolves.toBe(1);
+
+    expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
+  });
+
+  it("should throw if retryDelay returns", () => {
+    Date.now = dateNow;
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => "error" as any },
+      fnFactory
+    );
+    fnFactory.mockImplementation(() => Promise.reject());
+
+    return expect(exec()).rejects.toThrowError(
+      "[useRetry] invalid value received from options.retryDelay 'string'"
+    );
+  });
 });

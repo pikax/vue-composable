@@ -1,5 +1,6 @@
 import { ref, Ref, computed } from "@vue/composition-api";
 import { isPromise, promisedTimeout } from "../utils";
+import { isNumber, isDate } from "util";
 
 const MAX_RETRIES = 9000;
 
@@ -8,11 +9,19 @@ const RetryId = Symbol(__DEV__ ? "RetryId" : undefined);
 /* istanbul ignore next */
 const CancellationToken = Symbol(__DEV__ ? "CancellationToken" : undefined);
 
-type RetryDelayFactory = (retry: number) => number;
+type RetryDelayFactory = (
+  retry: number
+) => number | Date | Promise<void> | Promise<number> | Promise<Date>;
 
 interface RetryOptions {
+  /**
+   * @description Maximum of times it should retry
+   */
   maxRetries?: number;
 
+  /**
+   * @description How long should it delay or
+   */
   retryDelay?: RetryDelayFactory;
 }
 
@@ -105,18 +114,31 @@ const defaultStrategy: RetryStrategy = async (
     context.isRetrying.value = true;
 
     const now = Date.now();
-    nextRetry = delay(i);
+    const pDelayBy = delay(i); // wrapped
+    const delayBy = isPromise(pDelayBy) ? await pDelayBy : pDelayBy; // unwrap promise
 
-    // if the retry is in the past, means we need to await that amount
-    if (nextRetry < now) {
-      context.nextRetry.value = now + nextRetry;
-    } else {
-      context.nextRetry.value = nextRetry;
-      nextRetry = nextRetry - now;
-    }
+    if (!isPromise(pDelayBy) || !!delayBy) {
+      if (isNumber(delayBy)) {
+        nextRetry = delayBy;
+      } else if (isDate(delayBy)) {
+        nextRetry = delayBy.getTime();
+      } else {
+        throw new Error(
+          `[useRetry] invalid value received from options.retryDelay '${typeof delayBy}'`
+        );
+      }
 
-    if (nextRetry > 0) {
-      await promisedTimeout(nextRetry);
+      // if the retry is in the past, means we need to await that amount
+      if (nextRetry < now) {
+        context.nextRetry.value = now + nextRetry;
+      } else {
+        context.nextRetry.value = nextRetry;
+        nextRetry = nextRetry - now;
+      }
+
+      if (nextRetry > 0) {
+        await promisedTimeout(nextRetry);
+      }
     }
 
     // is cancelled?
