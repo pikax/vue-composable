@@ -8,7 +8,7 @@ describe("retry", () => {
 
   fnFactory.mockImplementation();
   beforeAll(() => {
-    Date.now = jest.fn(() => 0);
+    Date.now = jest.fn(() => 1000);
   });
 
   afterAll(() => {
@@ -93,15 +93,13 @@ describe("retry", () => {
     await nextTick();
 
     expect(isRetrying.value).toBe(true);
-    expect(nextRetry.value).toBe(200);
+    expect(nextRetry.value).toBe(Date.now() + 200);
 
     const b = exec("b");
     await nextTick();
 
-    expect(a).resolves.toBe("a"); // it should
-    expect(b).resolves.toBe("b");
-
-    await b;
+    expect(a).resolves.toBeNull(); // it should
+    await expect(b).resolves.toBe("b");
 
     expect(isRetrying.value).toBe(false);
     expect(retryCount.value).toBe(0);
@@ -150,7 +148,7 @@ describe("retry", () => {
 
     expect(isRetrying.value).toBe(true);
     expect(retryErrors.value).toHaveLength(1);
-    expect(nextRetry.value).toBe(200);
+    expect(nextRetry.value).toBe(Date.now() + 200);
 
     cancel();
     await nextTick();
@@ -227,4 +225,20 @@ describe("retry", () => {
       Math.random = random;
     }
   });
+
+  it('should delay until date', async ()=> {
+    Date.now = dateNow;
+    const untilDate = Date.now() + 500;
+
+    const { exec } = useRetry(
+      { maxRetries: 10, retryDelay: () => untilDate },
+      fnFactory
+    );
+    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementationOnce(() => Promise.reject());
+
+    await expect(exec(1)).resolves.toBe(1);
+
+    expect(Date.now()).toBeGreaterThanOrEqual(untilDate);
+  })
 });

@@ -3,12 +3,10 @@ import { isPromise, promisedTimeout } from "../utils";
 
 const MAX_RETRIES = 9000;
 
-const RetryId = Symbol(
-  /* istanbul ignore else */ __DEV__ ? "RetryId" : undefined
-);
-const CancellationToken = Symbol(
-  /* istanbul ignore else */ __DEV__ ? "CancellationToken" : undefined
-);
+/* istanbul ignore next */
+const RetryId = Symbol(__DEV__ ? "RetryId" : undefined);
+/* istanbul ignore next */
+const CancellationToken = Symbol(__DEV__ ? "CancellationToken" : undefined);
 
 type RetryDelayFactory = (retry: number) => number;
 
@@ -81,6 +79,7 @@ const defaultStrategy: RetryStrategy = async (
 
       success = true;
     } catch (error) {
+      result = null;
       context.retryErrors.value.push(error);
     }
 
@@ -105,9 +104,16 @@ const defaultStrategy: RetryStrategy = async (
 
     context.isRetrying.value = true;
 
+    const now = Date.now();
     nextRetry = delay(i);
-    context.nextRetry.value =
-      nextRetry < Date.now() ? Date.now() + nextRetry : nextRetry;
+
+    // if the retry is in the past, means we need to await that amount
+    if (nextRetry < now) {
+      context.nextRetry.value = now + nextRetry;
+    } else {
+      context.nextRetry.value = nextRetry;
+      nextRetry = nextRetry - now;
+    }
 
     if (nextRetry > 0) {
       await promisedTimeout(nextRetry);
