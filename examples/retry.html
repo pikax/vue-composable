@@ -23,20 +23,20 @@
           <option value="backoff">Exponential backoff</option>
         </select>
       </div>
-      <div>
+      <div v-if="mode === 'delay'">
         <label for="delay">Delay</label>
         <input type="number" name="delay" v-model.number="delay" />
       </div>
       <p v-if="loading">
         loading...
       </p>
-      <p v-if="isRetrying">
+      <p v-else-if="isRetrying">
         retrying in {{ Math.floor(nextRetry - dateNow) }}ms
         <span>Current: {{ retryCount }} retries</span>
       </p>
       <div v-else>
         <p>Status: {{ status }}</p>
-        {{ json }}
+        <span>{{ json }}</span>
       </div>
     </div>
 
@@ -75,7 +75,7 @@
           });
 
           watch(id, id => {
-            useRetry(() => {
+            exec(() => {
               if (throwError.value) {
                 throw new Error("blocked");
               }

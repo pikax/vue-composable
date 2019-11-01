@@ -42,6 +42,8 @@ Currently only works with [composition-api](https://github.com/vuejs/composition
 | [useFetch](src/web/fetch.ts) | handles the fetch request | [fetch.html](examples/fetch.html) |  |
 | [useAxios](src/web/axios.ts) | handles the axios requests | [axios.html](examples/axios.html) |  |
 | [useCancellablePromise](src/web/cancellablePromise.ts) | allow to cancel promise. **NOTE** javascript doesn't support cancel of promises natively, when you cancel it will only prevent the `result` to be modified |  |  |
+| [useRetry](src/promise/retry.ts) | handles retry login on failure | [retry.html](examples/retry.html) |  |
+
 
 
 ## Types

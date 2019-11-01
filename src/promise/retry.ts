@@ -97,7 +97,12 @@ const defaultStrategy: RetryStrategy = async (
     let result: any | null = null;
     try {
       ++i;
-      result = factory(...args);
+      if (args) {
+        result = factory(...args);
+      } else {
+        result = factory();
+      }
+      
       if (isPromise(result)) {
         result = await result;
       }
