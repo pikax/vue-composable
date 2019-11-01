@@ -147,15 +147,16 @@ module.exports = {
     docsDir: "docs",
     editLinks: true,
     sidebarDepth: 2,
-    sidebar: [
-      {
-        title: "Group 1", // required
-        path: "/guide/", // optional, which should be a absolute path.
-        collapsable: false, // optional, defaults to true
-        sidebarDepth: 1, // optional, defaults to 1
-        children: ["/"]
-      }
-    ],
+    sidebar: {
+      "/guide": [
+        "",
+        ['guide/web/fetch', "fetch"]
+      ],
+      "/examples/": [],
+      '/':[
+          "fetch"
+      ]
+    },
     locales: {
       "/": {
         label: "English",
