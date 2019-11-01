@@ -1,6 +1,9 @@
 import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
 import _axios from 'axios';
 
+// export function unwrap<T>(o: RefTyped<T>): T {
+//   return isRef(o) ? o.value : o;
+// }
 function wrap(o) {
     return isRef(o) ? o : ref(o);
 }

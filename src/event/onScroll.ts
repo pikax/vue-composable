@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { unwrap, RefElement, wrap } from "../utils";
+import { RefElement, wrap } from "../utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "../debounce";
 
@@ -7,7 +7,7 @@ export interface ScrollResult {
   scrollTop: Ref<number>;
   scrollLeft: Ref<number>;
   remove: RemoveEventFunction;
-};
+}
 
 export function useOnScroll(el: RefElement, wait: number): ScrollResult;
 export function useOnScroll(

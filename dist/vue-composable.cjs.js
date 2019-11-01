@@ -7,6 +7,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var compositionApi = require('@vue/composition-api');
 var _axios = _interopDefault(require('axios'));
 
+// export function unwrap<T>(o: RefTyped<T>): T {
+//   return isRef(o) ? o.value : o;
+// }
 function wrap(o) {
     return compositionApi.isRef(o) ? o : compositionApi.ref(o);
 }
