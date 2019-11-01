@@ -15,6 +15,11 @@ const RetryId = Symbol(__DEV__ ? "RetryId" : undefined);
 /* istanbul ignore next */
 const CancellationToken = Symbol(__DEV__ ? "CancellationToken" : undefined);
 
+/**
+ * @description How long should it delay or what time it should execute, it also supports Promises
+ * @param {number} retry - Current retry number
+ * @returns {number | Date | Promise<void> | Promise<number> | Promise<Date>} - Should wait until `Date`, wait until `Promise` finish or wait `number` ms
+ */
 type RetryDelayFactory = (
   retry: number
 ) => number | Date | Promise<void> | Promise<number> | Promise<Date>;
@@ -26,33 +31,43 @@ interface RetryOptions {
   maxRetries?: number;
 
   /**
-   * @description How long should it delay or
+   * @description How long should it delay or what time it should execute, it also supports Promises
    */
   retryDelay?: RetryDelayFactory;
 }
 
 interface RetryContext {
   /**
-   * Current retry number
+   * @description Current attempt number
    */
   retryCount: Ref<number>;
+  /**
+   * @description When it should retry
+   * @example new Date(nextRetry.value)
+   */
   nextRetry: Ref<number | undefined>;
+  /**
+   * @description Get the current state, set to true after the first failure
+   */
   isRetrying: Ref<boolean>;
+  /**
+   * @description List of all the errors occurred in since the last `exec` call
+   */
   retryErrors: Ref<object[]>;
 
+  /**
+   * @description **INTERNAL** incremented every time `exec` is called
+   */
   [RetryId]: { value: number };
+  /**
+   * @description **INTERNAL** Used to cancel last retry
+   */
   [CancellationToken]: { value: boolean };
 }
 
 type Factory<T, TArgs extends Array<any>, TReturn = T> = (
   ...args: TArgs
 ) => TReturn;
-
-type RetryFactoryResult<T, TArgs extends Array<any>> = Factory<
-  T,
-  TArgs,
-  Promise<(T extends Promise<infer R> ? R : T) | null>
->;
 
 type RetryStrategy<T = any, TArgs extends Array<any> = any> = (
   options: RetryOptions,
@@ -162,15 +177,26 @@ const defaultStrategy: RetryStrategy = async (
 };
 
 interface RetryReturn extends RetryContext {
+  /**
+   * @description Cancels last retry
+   */
   cancel: () => void;
 }
 
 export interface RetryReturnNoFactory extends RetryReturn {
-  exec<T, TArgs extends Array<any>>(fn: Factory<T, TArgs>): T;
+  /**
+   * Executes factory until success
+   * @param fn Factory function
+   */
+  exec<T>(fn: () => T): T;
 }
 
 export interface RetryReturnFactory<T, TArgs extends Array<any>>
   extends RetryReturn {
+  /**
+   * Executes factory with the arguments passed
+   * @param args Arguments for the execution of the factory function passed at `useRetry`
+   */
   exec(...args: TArgs): T;
 }
 
@@ -214,11 +240,6 @@ export function useRetry(
     [CancellationToken]: cancellationToken
   };
 
-  // const exec: any = (...args: any[]) => {
-  //   ++context[RetryId].value;
-  //   return defaultStrategy(opt, context, fn(...args), args);
-  // };
-
   const exec: any = fn
     ? (...args: any[]) => {
         ++context[RetryId].value;
@@ -228,11 +249,6 @@ export function useRetry(
         ++context[RetryId].value;
         return defaultStrategy(opt, context, f, undefined);
       };
-
-  // const exec: RetryFactoryResult<T, TArgs> = (...args) => {
-  //   ++context[RetryId].value;
-  //   return defaultStrategy(opt, context, factory, args);
-  // };
 
   const cancel = () => {
     context.isRetrying.value = false;
