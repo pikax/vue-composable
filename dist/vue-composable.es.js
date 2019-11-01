@@ -1,5 +1,5 @@
 import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
-import _axios from 'axios';
+import axios from 'axios';
 
 // export function unwrap<T>(o: RefTyped<T>): T {
 //   return isRef(o) ? o.value : o;
@@ -314,11 +314,11 @@ function useFetch(options) {
 }
 
 /* istanbul ignore next  */
-const axios = _axios || (globalThis && globalThis.axios);
+const _axios = axios || (globalThis && globalThis.axios);
 function useAxios(config) {
     /* istanbul ignore next  */
-    process.env.NODE_ENV !== "production" && !axios && console.warn(`[axios] not installed, please install it`);
-    const axiosClient = axios.create(config);
+    process.env.NODE_ENV !== "production" && !_axios && console.warn(`[axios] not installed, please install it`);
+    const axiosClient = _axios.create(config);
     const client = computed(() => axiosClient);
     const use = usePromise(async (request) => {
         return axiosClient.request(request);

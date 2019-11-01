@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@vue/composition-api'), require('axios')) :
   typeof define === 'function' && define.amd ? define(['exports', '@vue/composition-api', 'axios'], factory) :
-  (global = global || self, factory(global.vueComposable = {}, global.vueCompositionApi, global._axios));
-}(this, (function (exports, compositionApi, _axios) { 'use strict';
+  (global = global || self, factory(global.vueComposable = {}, global.vueCompositionApi, global.axios));
+}(this, (function (exports, compositionApi, axios) { 'use strict';
 
-  _axios = _axios && _axios.hasOwnProperty('default') ? _axios['default'] : _axios;
+  axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
 
   // export function unwrap<T>(o: RefTyped<T>): T {
   //   return isRef(o) ? o.value : o;
@@ -319,11 +319,11 @@
   }
 
   /* istanbul ignore next  */
-  const axios = _axios || (globalThis && globalThis.axios);
+  const _axios = axios || (globalThis && globalThis.axios);
   function useAxios(config) {
       /* istanbul ignore next  */
-       !axios && console.warn(`[axios] not installed, please install it`);
-      const axiosClient = axios.create(config);
+       !_axios && console.warn(`[axios] not installed, please install it`);
+      const axiosClient = _axios.create(config);
       const client = compositionApi.computed(() => axiosClient);
       const use = usePromise(async (request) => {
           return axiosClient.request(request);

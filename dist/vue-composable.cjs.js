@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var compositionApi = require('@vue/composition-api');
-var _axios = _interopDefault(require('axios'));
+var axios = _interopDefault(require('axios'));
 
 // export function unwrap<T>(o: RefTyped<T>): T {
 //   return isRef(o) ? o.value : o;
@@ -320,11 +320,11 @@ function useFetch(options) {
 }
 
 /* istanbul ignore next  */
-const axios = _axios || (globalThis && globalThis.axios);
+const _axios = axios || (globalThis && globalThis.axios);
 function useAxios(config) {
     /* istanbul ignore next  */
-    process.env.NODE_ENV !== "production" && !axios && console.warn(`[axios] not installed, please install it`);
-    const axiosClient = axios.create(config);
+    process.env.NODE_ENV !== "production" && !_axios && console.warn(`[axios] not installed, please install it`);
+    const axiosClient = _axios.create(config);
     const client = compositionApi.computed(() => axiosClient);
     const use = usePromise(async (request) => {
         return axiosClient.request(request);
