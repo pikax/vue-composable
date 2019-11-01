@@ -166,8 +166,29 @@ module.exports = {
           ]
         },
         {
+          title: "Pagination",
+          sidebarDepth: 0,
+          children: [
+            ["composable/pagination/pagination", "pagination"],
+            ["composable/pagination/arrayPagination", "arrayPagination"]
+          ]
+        },
+
+        {
+          title: "Promise",
+          sidebarDepth: 0,
+          children: [
+            ["composable/promise/promise", "promise"],
+            ["composable/promise/cancellablePromise", "cancellablePromise"]
+          ]
+        },
+        {
           title: "Web",
-          children: [["composable/web/fetch", "fetch"]]
+          children: [
+            ["composable/web/fetch", "fetch"],
+            ["composable/web/axios", "axios"],
+            ["composable/web/webSockets", "webSockets"]
+          ]
         },
         ["composable/web/fetch", "fetch"]
       ]

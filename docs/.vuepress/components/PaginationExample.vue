@@ -6,28 +6,42 @@
       <button @click="next">next</button>
     </p>
     <ul>
-      <li v-for="n in result" :key="n">
-        {{ n }}
-      </li>
+      <li v-for="n in result" :key="n">{{ n }}</li>
     </ul>
   </div>
 </template>
 
 <script>
-import { useArrayPagination } from '../../../';
+import { reactive, ref, computed } from "@vue/composition-api";
+import { usePagination } from "../../..";
 
 export default {
-  name:"pagination-example",
+  name: "pagination-example",
   setup() {
-    const array = new Array(1000).fill(0).map((_, i) => i);
-    const { result, next, prev, currentPage, lastPage } = useArrayPagination(
-      array,
-      {
-        pageSize: 3
-      }
-    );
+    const arrayRef = ref(new Array(100).fill(1).map((_, i) => i));
+    // paginate array
+    const { currentPage, lastPage, next, prev, offset, pageSize } = usePagination({
+      currentPage: 1,
+      pageSize: 10,
+      total: computed(() => arrayRef.value.length)
+    });
 
-    return { result, next, prev, currentPage, lastPage };
+    const result = computed(() => {
+      const array = arrayRef.value;
+      if (!Array.isArray(array)) return [];
+      return array.slice(
+        offset.value,
+        offset.value + pageSize.value
+      );
+    });
+
+    return {
+      currentPage,
+      lastPage,
+      next,
+      prev,
+      result
+    };
   }
 };
 </script>

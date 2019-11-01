@@ -58,8 +58,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 > Pagination related
 
-- Pagination <Badge text="WIP" type="warn" />
-- Array Pagination <Badge text="WIP" type="warn" />
+- [Pagination](/composable/pagination/pagination)
+- [Array Pagination](/composable/pagination/arrayPagination)
 
 ### Promise
 
@@ -114,4 +114,5 @@ export default {
 ```
 
 ### Pagination example
-<pagination-example/>
+
+<array-pagination-example/>
