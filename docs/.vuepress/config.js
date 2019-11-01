@@ -154,10 +154,11 @@ module.exports = {
       // ],
       "/examples/": [],
       "/": [
-        "",
+        // "",
         {
           title: "Event",
-          sidebarDepth: 0,
+          collapsable: false,
+          sidebarDepth: 1,
           children: [
             ["composable/event/event", "event"],
             ["composable/event/onMouseMove", "onMouseMove"],
@@ -167,16 +168,17 @@ module.exports = {
         },
         {
           title: "Pagination",
-          sidebarDepth: 0,
+          collapsable: false,
+          sidebarDepth: 1,
           children: [
             ["composable/pagination/pagination", "pagination"],
             ["composable/pagination/arrayPagination", "arrayPagination"]
           ]
         },
-
         {
           title: "Promise",
-          sidebarDepth: 0,
+          sidebarDepth: 1,
+          collapsable: false,
           children: [
             ["composable/promise/promise", "promise"],
             ["composable/promise/cancellablePromise", "cancellablePromise"]
@@ -184,13 +186,14 @@ module.exports = {
         },
         {
           title: "Web",
+          sidebarDepth: 1,
+          collapsable: false,
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/axios", "axios"],
-            ["composable/web/webSockets", "webSockets"]
+            ["composable/web/webSocket", "webSocket"]
           ]
-        },
-        ["composable/web/fetch", "fetch"]
+        }
       ]
     },
     locales: {

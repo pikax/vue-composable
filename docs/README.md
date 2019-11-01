@@ -4,7 +4,7 @@ lang: en-US
 home: true
 # heroImage:
 actionText: Get Started →
-actionLink: ./composable/
+actionLink: ./composable/event/event
 features:
   - title: Composition
     details: General purpose composable components that fits your needs.
@@ -47,8 +47,6 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Event
 
-> Event based
-
 - [Event](/composable/event/event)
 - [Mouse Move](/composable/event/onMoveMove)
 - [Resize](/composable/event/onResize)
@@ -56,25 +54,19 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Pagination
 
-> Pagination related
-
 - [Pagination](/composable/pagination/pagination)
 - [Array Pagination](/composable/pagination/arrayPagination)
 
 ### Promise
 
-> Promise based
-
-- Promise <Badge text="WIP" type="warn" />
-- Cancellable Promise <Badge text="WIP" type="warn" />
+- [Promise](/composable/promise)
+- [Cancellable Promise](/composable/promise/cancellablePromise)
 
 ### Web
 
-> Web based
-
-- Axios <Badge text="WIP" type="warn" />
+- [Axios](/composable/web/axios)
 - [Fetch](/composable/web/fetch)
-- WebSocket <Badge text="WIP" type="warn" />
+- [WebSocket](/composable/web/webSocket)
 
 ## Usage
 

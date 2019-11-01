@@ -387,9 +387,13 @@ function useWebSocket(url, protocols) {
         isClosed.value = false;
     });
     const send = (data) => ws.send(data);
+    const close = (code, reason) => {
+        ws.close(code, reason);
+    };
     return {
         ws,
         send,
+        close,
         messageEvent,
         errorEvent,
         data,
