@@ -49,9 +49,14 @@ export function useWebSocket(url: string, protocols?: string | string[]) {
   const send = (data: string | ArrayBufferLike | Blob | ArrayBufferView) =>
     ws.send(data);
 
+  const close = (code?: number, reason?: string) => {
+    ws.close(code, reason);
+  };
+
   return {
     ws,
     send,
+    close,
 
     messageEvent,
     errorEvent,

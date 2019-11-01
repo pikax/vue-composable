@@ -5,19 +5,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var compositionApi = require('@vue/composition-api');
-var _axios = _interopDefault(require('axios'));
+var axios = _interopDefault(require('axios'));
 
-function useEvent(el, name, listener, options) {
-    const element = compositionApi.isRef(el) ? el.value : el;
-    const remove = () => element.removeEventListener(name, listener);
-    compositionApi.onMounted(() => element.addEventListener(name, listener, options));
-    compositionApi.onUnmounted(remove);
-    return remove;
-}
-
-function unwrap(o) {
-    return compositionApi.isRef(o) ? o.value : o;
-}
+// export function unwrap<T>(o: RefTyped<T>): T {
+//   return isRef(o) ? o.value : o;
+// }
 function wrap(o) {
     return compositionApi.isRef(o) ? o : compositionApi.ref(o);
 }
@@ -27,6 +19,14 @@ function minMax(val, min, max) {
     if (val > max)
         return max;
     return val;
+}
+
+function useEvent(el, name, listener, options) {
+    const element = wrap(el);
+    const remove = () => element.value.removeEventListener(name, listener);
+    compositionApi.onMounted(() => element.value.addEventListener(name, listener, options));
+    compositionApi.onUnmounted(remove);
+    return remove;
 }
 
 function usePagination(options) {
@@ -159,8 +159,7 @@ function debounce(func, waitMilliseconds = 50, options = {
     };
 }
 
-function useMouseMove(el, options, wait) {
-    const element = unwrap(el);
+function useOnMouseMove(el, options, wait) {
     const mouseX = compositionApi.ref(0);
     const mouseY = compositionApi.ref(0);
     let handler = (ev) => {
@@ -172,7 +171,7 @@ function useMouseMove(el, options, wait) {
     if (ms) {
         handler = useDebounce(handler, wait);
     }
-    const remove = useEvent(element, "mousemove", handler, eventOptions);
+    const remove = useEvent(el, "mousemove", handler, eventOptions);
     return {
         mouseX,
         mouseY,
@@ -181,12 +180,13 @@ function useMouseMove(el, options, wait) {
 }
 
 function useOnResize(el, options, wait) {
-    const element = unwrap(el);
-    const height = compositionApi.ref(element.clientHeight);
-    const width = compositionApi.ref(element.clientWidth);
-    let handler = (ev) => {
-        height.value = element.clientHeight;
-        width.value = element.clientWidth;
+    const element = wrap(el);
+    const height = compositionApi.ref(element.value && element.value.clientHeight);
+    const width = compositionApi.ref(element.value && element.value.clientWidth);
+    let handler = () => {
+        debugger;
+        height.value = element.value.clientHeight;
+        width.value = element.value.clientWidth;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -202,12 +202,12 @@ function useOnResize(el, options, wait) {
 }
 
 function useOnScroll(el, options, wait) {
-    const element = unwrap(el);
-    const scrollTop = compositionApi.ref(element.scrollTop);
-    const scrollLeft = compositionApi.ref(element.scrollLeft);
+    const element = wrap(el);
+    const scrollTop = compositionApi.ref(element.value && element.value.scrollTop);
+    const scrollLeft = compositionApi.ref(element.value && element.value.scrollLeft);
     let handler = (ev) => {
-        scrollTop.value = element.scrollTop;
-        scrollLeft.value = element.scrollLeft;
+        scrollTop.value = element.value.scrollTop;
+        scrollLeft.value = element.value.scrollLeft;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -320,11 +320,11 @@ function useFetch(options) {
 }
 
 /* istanbul ignore next  */
-const axios = _axios || (globalThis && globalThis.axios);
+const _axios = axios || (globalThis && globalThis.axios);
 function useAxios(config) {
     /* istanbul ignore next  */
-    process.env.NODE_ENV !== "production" && !axios && console.warn(`[axios] not installed, please install it`);
-    const axiosClient = axios.create(config);
+    process.env.NODE_ENV !== "production" && !_axios && console.warn(`[axios] not installed, please install it`);
+    const axiosClient = _axios.create(config);
     const client = compositionApi.computed(() => axiosClient);
     const use = usePromise(async (request) => {
         return axiosClient.request(request);
@@ -390,9 +390,13 @@ function useWebSocket(url, protocols) {
         isClosed.value = false;
     });
     const send = (data) => ws.send(data);
+    const close = (code, reason) => {
+        ws.close(code, reason);
+    };
     return {
         ws,
         send,
+        close,
         messageEvent,
         errorEvent,
         data,
@@ -409,7 +413,7 @@ exports.useCancellablePromise = useCancellablePromise;
 exports.useDebounce = useDebounce;
 exports.useEvent = useEvent;
 exports.useFetch = useFetch;
-exports.useMouseMove = useMouseMove;
+exports.useOnMouseMove = useOnMouseMove;
 exports.useOnResize = useOnResize;
 exports.useOnScroll = useOnScroll;
 exports.usePagination = usePagination;

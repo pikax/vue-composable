@@ -1,5 +1,5 @@
 import { Vue, nextTick } from "../utils";
-import { useMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
+import { useOnMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
 import { promisedTimeout } from "../../src/utils";
 import { ref, Ref } from "@vue/composition-api";
 
@@ -18,7 +18,7 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element);
+        use = useOnMouseMove(element);
       }
     }).$mount();
 
@@ -50,7 +50,7 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element);
+        use = useOnMouseMove(element);
       }
     }).$mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, wait);
+        use = useOnMouseMove(element, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, options);
+        use = useOnMouseMove(element, options);
       }
     }).$mount();
     expect(element.value.addEventListener).toHaveBeenCalledWith(
@@ -143,7 +143,7 @@ describe("onMouseMove", () => {
     const vm = new Vue({
       template: "<div></div>",
       setup() {
-        use = useMouseMove(element, options, wait);
+        use = useOnMouseMove(element, options, wait);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(

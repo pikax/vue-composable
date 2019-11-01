@@ -6,5 +6,5 @@ export interface MouseMoveResult {
     mouseY: Ref<number>;
     remove: RemoveEventFunction;
 }
-export declare function useMouseMove(el: RefElement, wait: number): MouseMoveResult;
-export declare function useMouseMove(el: RefElement, options?: boolean | AddEventListenerOptions, wait?: number): MouseMoveResult;
+export declare function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
+export declare function useOnMouseMove(el: RefElement, options?: boolean | AddEventListenerOptions, wait?: number): MouseMoveResult;
