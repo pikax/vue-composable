@@ -18,11 +18,9 @@ export const isFunction = (val: unknown): val is Function =>
 // export const isSymbol = (val: unknown): val is symbol =>
 //   typeof val === "symbol";
 
-/* istanbul ignore next */
 export const isDate = (val: unknown): val is Date =>
   isObject(val) && isFunction(val.getTime);
 
-/* istanbul ignore next */
 export const isNumber = (val: unknown): val is number =>
   typeof val === "number";
 

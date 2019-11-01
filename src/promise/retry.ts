@@ -1,6 +1,12 @@
 import { ref, Ref, computed } from "@vue/composition-api";
-import { isPromise, promisedTimeout } from "../utils";
-import { isNumber, isDate } from "util";
+import {
+  isPromise,
+  promisedTimeout,
+  isNumber,
+  isDate,
+  isObject,
+  isFunction
+} from "../utils";
 
 const MAX_RETRIES = 9000;
 
@@ -155,18 +161,42 @@ const defaultStrategy: RetryStrategy = async (
   return null;
 };
 
-export interface RetryReturn<T, TArgs extends Array<any>> extends RetryContext {
-  exec: RetryFactoryResult<T, TArgs>;
+interface RetryReturn extends RetryContext {
   cancel: () => void;
 }
 
+export interface RetryReturnNoFactory extends RetryReturn {
+  exec<T, TArgs extends Array<any>>(fn: Factory<T, TArgs>): T;
+}
+
+export interface RetryReturnFactory<T, TArgs extends Array<any>>
+  extends RetryReturn {
+  exec(...args: TArgs): T;
+}
+
+export function useRetry(options?: RetryOptions): RetryReturnNoFactory;
 export function useRetry<T, TArgs extends Array<any>>(
-  options: RetryOptions = {},
   factory: Factory<T, TArgs>
-): RetryReturn<T, TArgs> {
-  if (typeof factory !== "function") {
-    throw new Error("[useRetry] requires an function as second argument");
+): RetryReturnFactory<T, TArgs>;
+export function useRetry<T, TArgs extends Array<any>>(
+  options: RetryOptions,
+  factory: Factory<T, TArgs>
+): RetryReturnFactory<T, TArgs>;
+export function useRetry(
+  options?: RetryOptions | Factory<any, any>,
+  factory?: Factory<any, any>
+): RetryReturnNoFactory {
+  const opt = !options || isFunction(options) ? {} : options;
+  const fn = isFunction(options) ? options : factory;
+
+  if (!isFunction(options) && !isObject(options)) {
+    throw new Error("[useRetry] options needs to be 'object'");
   }
+
+  if (!!fn && !isFunction(fn)) {
+    throw new Error("[useRetry] factory needs to be 'function'");
+  }
+
   const isRetrying = ref(false);
   const nextRetry = ref<number>();
   const retryErrors = ref<object[]>([]);
@@ -184,10 +214,25 @@ export function useRetry<T, TArgs extends Array<any>>(
     [CancellationToken]: cancellationToken
   };
 
-  const exec: RetryFactoryResult<T, TArgs> = (...args) => {
-    ++context[RetryId].value;
-    return defaultStrategy(options, context, factory, args);
-  };
+  // const exec: any = (...args: any[]) => {
+  //   ++context[RetryId].value;
+  //   return defaultStrategy(opt, context, fn(...args), args);
+  // };
+
+  const exec: any = fn
+    ? (...args: any[]) => {
+        ++context[RetryId].value;
+        return defaultStrategy(opt, context, fn, args);
+      }
+    : (f: Factory<any, any>) => {
+        ++context[RetryId].value;
+        return defaultStrategy(opt, context, f, undefined);
+      };
+
+  // const exec: RetryFactoryResult<T, TArgs> = (...args) => {
+  //   ++context[RetryId].value;
+  //   return defaultStrategy(opt, context, factory, args);
+  // };
 
   const cancel = () => {
     context.isRetrying.value = false;

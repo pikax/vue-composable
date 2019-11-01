@@ -129,21 +129,20 @@ describe("retry", () => {
   });
 
   it("should not retry forever", () => {
-    const { exec } = useRetry({}, jest.fn(() => Promise.reject("err")));
+    const { exec } = useRetry(jest.fn(() => Promise.reject("err")));
 
     return expect(exec()).resolves.toBeNull();
   });
 
-  it("should cancel retry, when call cancel()", async () => {
+  it("should cancel retry after call cancel()", async () => {
     const { exec, isRetrying, retryErrors, nextRetry, cancel } = useRetry(
-      { maxRetries: 2, retryDelay: () => 200 },
-      fnFactory
+      { maxRetries: 2, retryDelay: () => 200 }
     );
 
     fnFactory.mockImplementation(arg => promisedTimeout(50).then(x => arg));
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
-    const r = exec(1);
+    const r = exec(fnFactory);
     await nextTick();
 
     expect(isRetrying.value).toBe(true);
@@ -169,11 +168,10 @@ describe("retry", () => {
       fnFactory
     );
 
-    fnFactory.mockImplementation(arg => {
-      return promisedTimeout(50).then(x => {
-        cancel();
-        return arg;
-      });
+    fnFactory.mockImplementation(async arg => {
+      await promisedTimeout(50);
+      cancel();
+      return arg;
     });
 
     return expect(exec()).resolves.toBeNull();
@@ -193,9 +191,15 @@ describe("retry", () => {
     return expect(exec()).resolves.toBeNull();
   });
 
-  it("should required a function for the factory", () => {
-    expect(() => useRetry(undefined, 1 as any)).toThrowError(
-      "[useRetry] requires an function as second argument"
+  it("should throw if options is not an factory", () => {
+    expect(() => useRetry(1 as any)).toThrowError(
+      "[useRetry] options needs to be 'object'"
+    );
+  });
+
+  it("should throw if factory is not a function", () => {
+    expect(() => useRetry({}, 1 as any)).toThrowError(
+      "[useRetry] factory needs to be 'function'"
     );
   });
 
