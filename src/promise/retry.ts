@@ -11,7 +11,7 @@ import {
 const MAX_RETRIES = 9000;
 
 /* istanbul ignore next */
-const RetryId = Symbol(__DEV__ ? "RetryId" : undefined);
+const ExecutionId = Symbol(__DEV__ ? "RetryId" : undefined);
 /* istanbul ignore next */
 const CancellationToken = Symbol(__DEV__ ? "CancellationToken" : undefined);
 
@@ -58,7 +58,7 @@ interface RetryContext {
   /**
    * @description **INTERNAL** incremented every time `exec` is called
    */
-  [RetryId]: { value: number };
+  [ExecutionId]: { value: number };
   /**
    * @description **INTERNAL** Used to cancel last retry
    */
@@ -82,7 +82,7 @@ const defaultStrategy: RetryStrategy = async (
   factory,
   args
 ) => {
-  const retryId = context[RetryId].value;
+  const retryId = context[ExecutionId].value;
   let i = -1;
   const maxRetries = options.maxRetries || MAX_RETRIES + 1;
   const delay = options.retryDelay || noDelay;
@@ -119,7 +119,7 @@ const defaultStrategy: RetryStrategy = async (
     }
 
     // is our retry current one?
-    if (retryId !== context[RetryId].value) {
+    if (retryId !== context[ExecutionId].value) {
       return result;
     }
 
@@ -173,7 +173,7 @@ const defaultStrategy: RetryStrategy = async (
     }
 
     // is our retry current one?
-    if (retryId !== context[RetryId].value) {
+    if (retryId !== context[ExecutionId].value) {
       return result;
     }
   } while (i < MAX_RETRIES);
@@ -241,17 +241,17 @@ export function useRetry(
     retryCount,
     nextRetry,
     retryErrors,
-    [RetryId]: retryId,
+    [ExecutionId]: retryId,
     [CancellationToken]: cancellationToken
   };
 
   const exec: any = fn
     ? (...args: any[]) => {
-        ++context[RetryId].value;
+        ++context[ExecutionId].value;
         return defaultStrategy(opt, context, fn, args);
       }
     : (f: Factory<any, any>) => {
-        ++context[RetryId].value;
+        ++context[ExecutionId].value;
         return defaultStrategy(opt, context, f, undefined);
       };
 
