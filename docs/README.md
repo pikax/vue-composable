@@ -4,7 +4,7 @@ lang: en-US
 home: true
 # heroImage:
 actionText: Get Started →
-actionLink: ./guide/
+actionLink: ./composable/
 features:
   - title: Composition
     details: General purpose composable components that fits your needs.
@@ -49,10 +49,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 > Event based
 
-- Event <Badge text="WIP" type="warn" />
-- Mouse Move <Badge text="WIP" type="warn" />
-- Resize <Badge text="WIP" type="warn" />
-- Scroll <Badge text="WIP" type="warn" />
+- [Event](/composable/event/event)
+- [Mouse Move](/composable/event/onMoveMove)
+- [Resize](/composable/event/onResize)
+- [Scroll](/composable/event/onScroll)
 
 ### Pagination
 
@@ -73,7 +73,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 > Web based
 
 - Axios <Badge text="WIP" type="warn" />
-- [Fetch](/guide/web/fetch)
+- [Fetch](/composable/web/fetch)
 - WebSocket <Badge text="WIP" type="warn" />
 
 ## Usage
@@ -95,14 +95,16 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 </template>
 
 <script>
-import { useArrayPagination } from 'vue-composable';
+import { useArrayPagination } from "vue-composable";
 
 export default {
   setup() {
     const array = new Array(1000).fill(0).map((_, i) => i);
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
       array,
-      {}
+      {
+        pageSize: 3
+      }
     );
 
     return { result, next, prev, currentPage, lastPage };
@@ -111,4 +113,5 @@ export default {
 </script>
 ```
 
-<!-- TODO: Insert geolocation example -->
+### Pagination example
+<pagination-example/>

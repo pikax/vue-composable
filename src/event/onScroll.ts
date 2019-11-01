@@ -22,8 +22,8 @@ export function useOnScroll(
 ): ScrollResult {
   const element = wrap(el);
 
-  const scrollTop = ref(element.value.scrollTop);
-  const scrollLeft = ref(element.value.scrollLeft);
+  const scrollTop = ref(element.value && element.value.scrollTop);
+  const scrollLeft = ref(element.value && element.value.scrollLeft);
 
   let handler = (ev: Event) => {
     scrollTop.value = element.value.scrollTop;

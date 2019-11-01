@@ -22,10 +22,11 @@ export function useOnResize(
 ): ResizeResult {
   const element = wrap(el);
 
-  const height = ref(element.value.clientHeight);
-  const width = ref(element.value.clientWidth);
+  const height = ref(element.value && element.value.clientHeight);
+  const width = ref(element.value && element.value.clientWidth);
 
   let handler = () => {
+    debugger
     height.value = element.value.clientHeight;
     width.value = element.value.clientWidth;
   };

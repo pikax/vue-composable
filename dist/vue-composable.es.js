@@ -1,17 +1,6 @@
-import { isRef, onMounted, onUnmounted, ref, computed, watch } from '@vue/composition-api';
+import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
 import _axios from 'axios';
 
-function useEvent(el, name, listener, options) {
-    const element = isRef(el) ? el.value : el;
-    const remove = () => element.removeEventListener(name, listener);
-    onMounted(() => element.addEventListener(name, listener, options));
-    onUnmounted(remove);
-    return remove;
-}
-
-function unwrap(o) {
-    return isRef(o) ? o.value : o;
-}
 function wrap(o) {
     return isRef(o) ? o : ref(o);
 }
@@ -21,6 +10,14 @@ function minMax(val, min, max) {
     if (val > max)
         return max;
     return val;
+}
+
+function useEvent(el, name, listener, options) {
+    const element = wrap(el);
+    const remove = () => element.value.removeEventListener(name, listener);
+    onMounted(() => element.value.addEventListener(name, listener, options));
+    onUnmounted(remove);
+    return remove;
 }
 
 function usePagination(options) {
@@ -153,8 +150,7 @@ function debounce(func, waitMilliseconds = 50, options = {
     };
 }
 
-function useMouseMove(el, options, wait) {
-    const element = unwrap(el);
+function useOnMouseMove(el, options, wait) {
     const mouseX = ref(0);
     const mouseY = ref(0);
     let handler = (ev) => {
@@ -166,7 +162,7 @@ function useMouseMove(el, options, wait) {
     if (ms) {
         handler = useDebounce(handler, wait);
     }
-    const remove = useEvent(element, "mousemove", handler, eventOptions);
+    const remove = useEvent(el, "mousemove", handler, eventOptions);
     return {
         mouseX,
         mouseY,
@@ -175,12 +171,13 @@ function useMouseMove(el, options, wait) {
 }
 
 function useOnResize(el, options, wait) {
-    const element = unwrap(el);
-    const height = ref(element.clientHeight);
-    const width = ref(element.clientWidth);
-    let handler = (ev) => {
-        height.value = element.clientHeight;
-        width.value = element.clientWidth;
+    const element = wrap(el);
+    const height = ref(element.value && element.value.clientHeight);
+    const width = ref(element.value && element.value.clientWidth);
+    let handler = () => {
+        debugger;
+        height.value = element.value.clientHeight;
+        width.value = element.value.clientWidth;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -196,12 +193,12 @@ function useOnResize(el, options, wait) {
 }
 
 function useOnScroll(el, options, wait) {
-    const element = unwrap(el);
-    const scrollTop = ref(element.scrollTop);
-    const scrollLeft = ref(element.scrollLeft);
+    const element = wrap(el);
+    const scrollTop = ref(element.value && element.value.scrollTop);
+    const scrollLeft = ref(element.value && element.value.scrollLeft);
     let handler = (ev) => {
-        scrollTop.value = element.scrollTop;
-        scrollLeft.value = element.scrollLeft;
+        scrollTop.value = element.value.scrollTop;
+        scrollLeft.value = element.value.scrollLeft;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -396,4 +393,4 @@ function useWebSocket(url, protocols) {
     };
 }
 
-export { debounce, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useWebSocket };
+export { debounce, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useWebSocket };

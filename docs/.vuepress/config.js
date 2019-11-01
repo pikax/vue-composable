@@ -148,13 +148,28 @@ module.exports = {
     editLinks: true,
     sidebarDepth: 2,
     sidebar: {
-      "/guide": [
-        "",
-        ['guide/web/fetch', "fetch"]
-      ],
+      // "/composable": [
+      //   "",
+      //   ['guide/web/fetch', "fetch"]
+      // ],
       "/examples/": [],
-      '/':[
-          "fetch"
+      "/": [
+        "",
+        {
+          title: "Event",
+          sidebarDepth: 0,
+          children: [
+            ["composable/event/event", "event"],
+            ["composable/event/onMouseMove", "onMouseMove"],
+            ["composable/event/onResize", "onResize"],
+            ["composable/event/onScroll", "onScroll"]
+          ]
+        },
+        {
+          title: "Web",
+          children: [["composable/web/fetch", "fetch"]]
+        },
+        ["composable/web/fetch", "fetch"]
       ]
     },
     locales: {
