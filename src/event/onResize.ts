@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { unwrap, RefElement } from "../utils";
+import { unwrap, RefElement, wrap } from "../utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "../debounce";
 
@@ -20,14 +20,14 @@ export function useOnResize(
   options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ResizeResult {
-  const element = unwrap(el);
+  const element = wrap(el);
 
-  const height = ref(element.clientHeight);
-  const width = ref(element.clientWidth);
+  const height = ref(element.value.clientHeight);
+  const width = ref(element.value.clientWidth);
 
-  let handler = (ev: UIEvent) => {
-    height.value = element.clientHeight;
-    width.value = element.clientWidth;
+  let handler = () => {
+    height.value = element.value.clientHeight;
+    width.value = element.value.clientWidth;
   };
 
   const eventOptions = typeof options === "number" ? undefined : options;
