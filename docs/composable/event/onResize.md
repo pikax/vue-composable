@@ -67,4 +67,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <on-resize-example/>
+</ClientOnly>

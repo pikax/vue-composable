@@ -83,4 +83,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <web-socket-example/>
+</ClientOnly>

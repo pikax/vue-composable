@@ -4,7 +4,7 @@ lang: en-US
 home: true
 # heroImage:
 actionText: Get Started →
-actionLink: ./composable/event/event
+actionLink: ./composable/
 features:
   - title: Composition
     details: General purpose composable components that fits your needs.
