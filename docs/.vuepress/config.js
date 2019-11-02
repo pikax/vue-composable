@@ -167,6 +167,12 @@ module.exports = {
           ]
         },
         {
+          title: "Misc",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/misc/localStorage", "localStorage"]]
+        },
+        {
           title: "Pagination",
           collapsable: false,
           sidebarDepth: 1,

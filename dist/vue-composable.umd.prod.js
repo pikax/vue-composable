@@ -535,6 +535,66 @@
       };
   }
 
+  // used to store all the instances of weakMap
+  const keyedMap = new Map();
+  const weakMap = new WeakMap();
+  function useLocalStorage(key, defaultValue) {
+      let lazy = false;
+      let k = keyedMap.get(key);
+      const json = localStorage.getItem(key);
+      const storage = (k && weakMap.get(k)) ||
+          (!!defaultValue && wrap(defaultValue)) ||
+          compositionApi.ref(null);
+      if (json && !k) {
+          try {
+              storage.value = JSON.parse(json);
+              lazy = false;
+          }
+          catch (e) {
+              /* istanbul ignore next */
+              console.warn("[useLocalStorage] error parsing value from localStorage", key, e);
+          }
+      }
+      // do not watch if we already created the instance
+      if (!k) {
+          k = {};
+          keyedMap.set(key, k);
+          weakMap.set(k, storage);
+          compositionApi.watch(storage, storage => {
+              if (storage === undefined) {
+                  localStorage.removeItem(key);
+                  return;
+              }
+              // do not overflow localStorage with updates nor keep doing stringify
+              debounce(() => localStorage.setItem(key, JSON.stringify(storage)), 100)();
+          }, {
+              deep: true,
+              lazy
+          });
+      }
+      const clear = () => {
+          keyedMap.forEach((v) => {
+              const obj = weakMap.get(v);
+              /* istanbul ignore else */
+              if (obj) {
+                  obj.value = undefined;
+              }
+              weakMap.delete(v);
+          });
+          keyedMap.clear();
+      };
+      const remove = () => {
+          keyedMap.delete(key);
+          weakMap.delete(k);
+          storage.value = undefined;
+      };
+      return {
+          storage,
+          clear,
+          remove
+      };
+  }
+
   exports.debounce = debounce;
   exports.exponentialDelay = exponentialDelay;
   exports.noDelay = noDelay;
@@ -544,6 +604,7 @@
   exports.useDebounce = useDebounce;
   exports.useEvent = useEvent;
   exports.useFetch = useFetch;
+  exports.useLocalStorage = useLocalStorage;
   exports.useOnMouseMove = useOnMouseMove;
   exports.useOnResize = useOnResize;
   exports.useOnScroll = useOnScroll;

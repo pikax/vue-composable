@@ -21,7 +21,6 @@ export interface LocalStorageReturn<T> {
   clear: () => void;
 }
 
-// export function useLocalStorage<T = any>(): LocalStorageReturn<T>;
 export function useLocalStorage<T = any>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>

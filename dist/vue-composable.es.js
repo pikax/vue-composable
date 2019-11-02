@@ -556,4 +556,64 @@ function useWebSocket(url, protocols) {
     };
 }
 
-export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };
+// used to store all the instances of weakMap
+const keyedMap = new Map();
+const weakMap = new WeakMap();
+function useLocalStorage(key, defaultValue) {
+    let lazy = false;
+    let k = keyedMap.get(key);
+    const json = localStorage.getItem(key);
+    const storage = (k && weakMap.get(k)) ||
+        (!!defaultValue && wrap(defaultValue)) ||
+        ref(null);
+    if (json && !k) {
+        try {
+            storage.value = JSON.parse(json);
+            lazy = false;
+        }
+        catch (e) {
+            /* istanbul ignore next */
+            console.warn("[useLocalStorage] error parsing value from localStorage", key, e);
+        }
+    }
+    // do not watch if we already created the instance
+    if (!k) {
+        k = {};
+        keyedMap.set(key, k);
+        weakMap.set(k, storage);
+        watch(storage, storage => {
+            if (storage === undefined) {
+                localStorage.removeItem(key);
+                return;
+            }
+            // do not overflow localStorage with updates nor keep doing stringify
+            debounce(() => localStorage.setItem(key, JSON.stringify(storage)), 100)();
+        }, {
+            deep: true,
+            lazy
+        });
+    }
+    const clear = () => {
+        keyedMap.forEach((v) => {
+            const obj = weakMap.get(v);
+            /* istanbul ignore else */
+            if (obj) {
+                obj.value = undefined;
+            }
+            weakMap.delete(v);
+        });
+        keyedMap.clear();
+    };
+    const remove = () => {
+        keyedMap.delete(key);
+        weakMap.delete(k);
+        storage.value = undefined;
+    };
+    return {
+        storage,
+        clear,
+        remove
+    };
+}
+
+export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };

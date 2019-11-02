@@ -52,6 +52,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Resize](composable/event/onResize)
 - [Scroll](composable/event/onScroll)
 
+### MISC
+
+- [localStorage](composable/misc/localStorage)
+
 ### Pagination
 
 - [Pagination](composable/pagination/pagination)
