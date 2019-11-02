@@ -47,26 +47,27 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Event
 
-- [Event](/composable/event/event)
-- [Mouse Move](/composable/event/onMoveMove)
-- [Resize](/composable/event/onResize)
-- [Scroll](/composable/event/onScroll)
+- [Event](composable/event/event)
+- [Mouse Move](composable/event/onMoveMove)
+- [Resize](composable/event/onResize)
+- [Scroll](composable/event/onScroll)
 
 ### Pagination
 
-- [Pagination](/composable/pagination/pagination)
-- [Array Pagination](/composable/pagination/arrayPagination)
+- [Pagination](composable/pagination/pagination)
+- [Array Pagination](composable/pagination/arrayPagination)
 
 ### Promise
 
-- [Promise](/composable/promise)
-- [Cancellable Promise](/composable/promise/cancellablePromise)
+- [Promise](composable/promise/promise)
+- [Cancellable Promise](composable/promise/cancellablePromise)
+- [Retry](composable/promise/retry)
 
 ### Web
 
-- [Axios](/composable/web/axios)
-- [Fetch](/composable/web/fetch)
-- [WebSocket](/composable/web/webSocket)
+- [Axios](composable/web/axios)
+- [Fetch](composable/web/fetch)
+- [WebSocket](composable/web/webSocket)
 
 ## Usage
 

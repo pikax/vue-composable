@@ -12,6 +12,22 @@
   function wrap(o) {
       return compositionApi.isRef(o) ? o : compositionApi.ref(o);
   }
+  const isFunction = (val) => typeof val === "function";
+  // export const isString = (val: unknown): val is string =>
+  //   typeof val === "string";
+  // export const isSymbol = (val: unknown): val is symbol =>
+  //   typeof val === "symbol";
+  const isDate = (val) => isObject(val) && isFunction(val.getTime);
+  const isNumber = (val) => typeof val === "number";
+  const isObject = (val) => val !== null && typeof val === "object";
+  function isPromise(val) {
+      return isObject(val) && isFunction(val.then) && isFunction(val.catch);
+  }
+  function promisedTimeout(timeout) {
+      return new Promise(res => {
+          setTimeout(res, timeout);
+      });
+  }
   function minMax(val, min, max) {
       if (val < min)
           return min;
@@ -285,6 +301,146 @@
       };
   }
 
+  const MAX_RETRIES = 9000;
+  /* istanbul ignore next */
+  const ExecutionId = Symbol( "RetryId" );
+  /* istanbul ignore next */
+  const CancellationToken = Symbol( "CancellationToken" );
+  const defaultStrategy = async (options, context, factory, args) => {
+      const retryId = context[ExecutionId].value;
+      let i = -1;
+      const maxRetries = options.maxRetries || MAX_RETRIES + 1;
+      const delay = options.retryDelay || noDelay;
+      context.retryErrors.value = [];
+      context.isRetrying.value = false;
+      context.nextRetry.value = undefined;
+      let nextRetry = undefined;
+      do {
+          let success = false;
+          let result = null;
+          try {
+              ++i;
+              if (args) {
+                  result = factory(...args);
+              }
+              else {
+                  result = factory();
+              }
+              if (isPromise(result)) {
+                  result = await result;
+              }
+              // is cancelled?
+              if (context[CancellationToken].value) {
+                  return null;
+              }
+              success = true;
+          }
+          catch (error) {
+              result = null;
+              context.retryErrors.value.push(error);
+          }
+          // is our retry current one?
+          if (retryId !== context[ExecutionId].value) {
+              return result;
+          }
+          if (success) {
+              context.isRetrying.value = false;
+              context.nextRetry.value = undefined;
+              return result;
+          }
+          if (i >= maxRetries) {
+              context.isRetrying.value = false;
+              context.nextRetry.value = undefined;
+              return Promise.reject(new Error(`[useRetry] max retries reached ${maxRetries}`));
+          }
+          context.isRetrying.value = true;
+          const now = Date.now();
+          const pDelayBy = delay(i); // wrapped
+          const delayBy = isPromise(pDelayBy) ? await pDelayBy : pDelayBy; // unwrap promise
+          if (!isPromise(pDelayBy) || !!delayBy) {
+              if (isNumber(delayBy)) {
+                  nextRetry = delayBy;
+              }
+              else if (isDate(delayBy)) {
+                  nextRetry = delayBy.getTime();
+              }
+              else {
+                  throw new Error(`[useRetry] invalid value received from options.retryDelay '${typeof delayBy}'`);
+              }
+              // if the retry is in the past, means we need to await that amount
+              if (nextRetry < now) {
+                  context.nextRetry.value = now + nextRetry;
+              }
+              else {
+                  context.nextRetry.value = nextRetry;
+                  nextRetry = nextRetry - now;
+              }
+              if (nextRetry > 0) {
+                  await promisedTimeout(nextRetry);
+              }
+          }
+          // is cancelled?
+          if (context[CancellationToken].value) {
+              return null;
+          }
+          // is our retry current one?
+          if (retryId !== context[ExecutionId].value) {
+              return result;
+          }
+      } while (i < MAX_RETRIES);
+      return null;
+  };
+  function useRetry(options, factory) {
+      const opt = !options || isFunction(options) ? {} : options;
+      const fn = isFunction(options) ? options : factory;
+      if (!isFunction(options) && !isObject(options)) {
+          throw new Error("[useRetry] options needs to be 'object'");
+      }
+      if (!!fn && !isFunction(fn)) {
+          throw new Error("[useRetry] factory needs to be 'function'");
+      }
+      const isRetrying = compositionApi.ref(false);
+      const nextRetry = compositionApi.ref();
+      const retryErrors = compositionApi.ref([]);
+      const cancellationToken = { value: false };
+      const retryId = { value: 0 };
+      const retryCount = compositionApi.computed(() => retryErrors.value.length);
+      const context = {
+          isRetrying,
+          retryCount,
+          nextRetry,
+          retryErrors,
+          [ExecutionId]: retryId,
+          [CancellationToken]: cancellationToken
+      };
+      const exec = fn
+          ? (...args) => {
+              ++context[ExecutionId].value;
+              return defaultStrategy(opt, context, fn, args);
+          }
+          : (f) => {
+              ++context[ExecutionId].value;
+              return defaultStrategy(opt, context, f, undefined);
+          };
+      const cancel = () => {
+          context.isRetrying.value = false;
+          context.retryErrors.value.push(new Error("[useRetry] cancelled"));
+          context.nextRetry.value = undefined;
+          cancellationToken.value = true;
+      };
+      return {
+          ...context,
+          cancel,
+          exec
+      };
+  }
+  const exponentialDelay = retryNumber => {
+      const delay = Math.pow(2, retryNumber) * 100;
+      const randomSum = delay * 0.2 * Math.random(); // 0-20% of the delay
+      return delay + randomSum;
+  };
+  const noDelay = () => 0;
+
   function useFetch(options) {
       const json = compositionApi.ref(null);
       // TODO add text = ref<string> ??
@@ -406,6 +562,8 @@
   }
 
   exports.debounce = debounce;
+  exports.exponentialDelay = exponentialDelay;
+  exports.noDelay = noDelay;
   exports.useArrayPagination = useArrayPagination;
   exports.useAxios = useAxios;
   exports.useCancellablePromise = useCancellablePromise;
@@ -417,6 +575,7 @@
   exports.useOnScroll = useOnScroll;
   exports.usePagination = usePagination;
   exports.usePromise = usePromise;
+  exports.useRetry = useRetry;
   exports.useWebSocket = useWebSocket;
 
   Object.defineProperty(exports, '__esModule', { value: true });
