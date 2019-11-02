@@ -15,7 +15,11 @@
 ## Installing
 
 ```bash
-yarn add vue-composable
+# install with yarn
+yarn add @vue/composition-api vue-composable
+
+# install with npm
+npm install @vue/composition-api vue-composable
 ```
 
 ## Examples

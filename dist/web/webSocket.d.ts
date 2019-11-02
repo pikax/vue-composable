@@ -1,6 +1,7 @@
 export declare function useWebSocket(url: string, protocols?: string | string[]): {
     ws: WebSocket;
     send: (data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) => void;
+    close: (code?: number | undefined, reason?: string | undefined) => void;
     messageEvent: import("@vue/composition-api").Ref<MessageEvent | null>;
     errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
     data: import("@vue/composition-api").Ref<any>;
