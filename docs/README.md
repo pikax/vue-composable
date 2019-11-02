@@ -25,7 +25,7 @@ meta:
 
 `vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.
 
-100% typescript based composable components and full type support out-of-box.
+:100: typescript based composable components and full type support out-of-box.
 
 ## Installation
 

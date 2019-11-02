@@ -1,42 +1,12 @@
-# [Template]
+# Introduction
 
-> The [mousemove event](https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event).
+## What is vue-composable
 
-## State
+`vue-composable` is ready to use generic `composition-api` components. Meant to be "one stop shop" for new projects.
 
-The `useOnScroll` function exposes the following reactive state:
+## Inspiration
 
-```js
-import { useOnScroll } from "vue-composable";
+This library is inspired by [@LinusBorg](https://github.com/LinusBorg) work and [composition-api-demos](https://github.com/LinusBorg/composition-api-demos)  also other similar projects.
 
-const { scrollTop, scrollLeft } = useOnScroll();
-```
 
-| State      | Type     | Description         |
-| ---------- | -------- | ------------------- |
-| scrollTop  | `Number` | Scroll top position |
-| scrollLeft | `Number` | Scroll let position |
 
-## Methods
-
-The `useOnScroll` function exposes the following methods:
-
-```js
-import { useOnScroll } from "vue-composable";
-
-const { remove } = useOnScroll();
-```
-
-| Signature | Description                         |
-| --------- | ----------------------------------- |
-| `remove`  | Manually removes the event listener |
-
-## Example
-
-```vue
-
-```
-
-### Code
-
-<on-scroll-example/>

@@ -154,7 +154,7 @@ module.exports = {
       // ],
       "/examples/": [],
       "/": [
-        // "",
+        "",
         {
           title: "Event",
           collapsable: false,
@@ -202,7 +202,7 @@ module.exports = {
         selectText: "Languages",
         editLinkText: "Help us improve this page!",
         nav: [
-          { text: "Guide", link: "/guide/" },
+          { text: "Composable", link: "/composable/" },
           { text: "Examples", link: "/examples/" }
         ]
       }
