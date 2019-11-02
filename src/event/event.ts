@@ -1,5 +1,5 @@
 import { Ref, isRef, onMounted, onUnmounted } from "@vue/composition-api";
-import { RefTyped } from "../utils";
+import { RefTyped , wrap} from "../utils";
 
 export type RemoveEventFunction = () => void;
 
@@ -15,11 +15,11 @@ export function useEvent(
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction {
-  const element = isRef(el) ? el.value : el;
+  const element = wrap(el);
 
-  const remove = () => element.removeEventListener(name, listener);
+  const remove = () => element.value.removeEventListener(name, listener);
 
-  onMounted(() => element.addEventListener(name, listener, options));
+  onMounted(() => element.value.addEventListener(name, listener, options));
   onUnmounted(remove);
 
   return remove;

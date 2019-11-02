@@ -24,7 +24,9 @@
     "start": "rollup -c rollup.config.js -w",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
-    "test:prod": "npm run lint && npm run test -- --no-cache"
+    "test:prod": "npm run lint && npm run test -- --no-cache",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "bugs": {
     "url": "https://github.com/pikax/vue-composable/issues"
@@ -38,6 +40,8 @@
     "@types/jest": "^24.0.19",
     "@types/node": "^12.11.5",
     "@vue/composition-api": "^0.3.2",
+    "@vuepress/plugin-back-to-top": "^1.2.0",
+    "@vuepress/plugin-pwa": "^1.2.0",
     "axios": "^0.19.0",
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
@@ -56,6 +60,7 @@
     "rollup-plugin-typescript2": "^0.25.1",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuepress": "^1.2.0"
   }
 }

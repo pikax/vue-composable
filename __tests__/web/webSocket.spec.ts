@@ -66,6 +66,17 @@ describe("WebSocket", () => {
     expect(errored.value).toBe(true);
   });
 
+  it("should close", async () => {
+    const { close, isClosed } = useWebSocket(FAKE_URL);
+    await server.connected;
+
+    // server.error()
+    close();
+    await server.closed;
+
+    expect(isClosed).toBeTruthy();
+  });
+
   it("should warn if the rate of messaging is too high", async () => {
     const messages = ["test", "test1", "test2"];
     const received: string[] = [];

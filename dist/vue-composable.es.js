@@ -1,19 +1,27 @@
-import { isRef, onMounted, onUnmounted, ref, computed, watch } from '@vue/composition-api';
-import _axios from 'axios';
+import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
+import axios from 'axios';
 
-function useEvent(el, name, listener, options) {
-    const element = isRef(el) ? el.value : el;
-    const remove = () => element.removeEventListener(name, listener);
-    onMounted(() => element.addEventListener(name, listener, options));
-    onUnmounted(remove);
-    return remove;
-}
-
-function unwrap(o) {
-    return isRef(o) ? o.value : o;
-}
+// export function unwrap<T>(o: RefTyped<T>): T {
+//   return isRef(o) ? o.value : o;
+// }
 function wrap(o) {
     return isRef(o) ? o : ref(o);
+}
+const isFunction = (val) => typeof val === "function";
+// export const isString = (val: unknown): val is string =>
+//   typeof val === "string";
+// export const isSymbol = (val: unknown): val is symbol =>
+//   typeof val === "symbol";
+const isDate = (val) => isObject(val) && isFunction(val.getTime);
+const isNumber = (val) => typeof val === "number";
+const isObject = (val) => val !== null && typeof val === "object";
+function isPromise(val) {
+    return isObject(val) && isFunction(val.then) && isFunction(val.catch);
+}
+function promisedTimeout(timeout) {
+    return new Promise(res => {
+        setTimeout(res, timeout);
+    });
 }
 function minMax(val, min, max) {
     if (val < min)
@@ -21,6 +29,14 @@ function minMax(val, min, max) {
     if (val > max)
         return max;
     return val;
+}
+
+function useEvent(el, name, listener, options) {
+    const element = wrap(el);
+    const remove = () => element.value.removeEventListener(name, listener);
+    onMounted(() => element.value.addEventListener(name, listener, options));
+    onUnmounted(remove);
+    return remove;
 }
 
 function usePagination(options) {
@@ -153,8 +169,7 @@ function debounce(func, waitMilliseconds = 50, options = {
     };
 }
 
-function useMouseMove(el, options, wait) {
-    const element = unwrap(el);
+function useOnMouseMove(el, options, wait) {
     const mouseX = ref(0);
     const mouseY = ref(0);
     let handler = (ev) => {
@@ -166,7 +181,7 @@ function useMouseMove(el, options, wait) {
     if (ms) {
         handler = useDebounce(handler, wait);
     }
-    const remove = useEvent(element, "mousemove", handler, eventOptions);
+    const remove = useEvent(el, "mousemove", handler, eventOptions);
     return {
         mouseX,
         mouseY,
@@ -175,12 +190,13 @@ function useMouseMove(el, options, wait) {
 }
 
 function useOnResize(el, options, wait) {
-    const element = unwrap(el);
-    const height = ref(element.clientHeight);
-    const width = ref(element.clientWidth);
-    let handler = (ev) => {
-        height.value = element.clientHeight;
-        width.value = element.clientWidth;
+    const element = wrap(el);
+    const height = ref(element.value && element.value.clientHeight);
+    const width = ref(element.value && element.value.clientWidth);
+    let handler = () => {
+        debugger;
+        height.value = element.value.clientHeight;
+        width.value = element.value.clientWidth;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -196,12 +212,12 @@ function useOnResize(el, options, wait) {
 }
 
 function useOnScroll(el, options, wait) {
-    const element = unwrap(el);
-    const scrollTop = ref(element.scrollTop);
-    const scrollLeft = ref(element.scrollLeft);
+    const element = wrap(el);
+    const scrollTop = ref(element.value && element.value.scrollTop);
+    const scrollLeft = ref(element.value && element.value.scrollLeft);
     let handler = (ev) => {
-        scrollTop.value = element.scrollTop;
-        scrollLeft.value = element.scrollLeft;
+        scrollTop.value = element.value.scrollTop;
+        scrollLeft.value = element.value.scrollLeft;
     };
     const eventOptions = typeof options === "number" ? undefined : options;
     const ms = typeof options === "number" ? options : wait;
@@ -280,6 +296,146 @@ function useCancellablePromise(fn) {
     };
 }
 
+const MAX_RETRIES = 9000;
+/* istanbul ignore next */
+const ExecutionId = Symbol(process.env.NODE_ENV !== "production" ? "RetryId" : undefined);
+/* istanbul ignore next */
+const CancellationToken = Symbol(process.env.NODE_ENV !== "production" ? "CancellationToken" : undefined);
+const defaultStrategy = async (options, context, factory, args) => {
+    const retryId = context[ExecutionId].value;
+    let i = -1;
+    const maxRetries = options.maxRetries || MAX_RETRIES + 1;
+    const delay = options.retryDelay || noDelay;
+    context.retryErrors.value = [];
+    context.isRetrying.value = false;
+    context.nextRetry.value = undefined;
+    let nextRetry = undefined;
+    do {
+        let success = false;
+        let result = null;
+        try {
+            ++i;
+            if (args) {
+                result = factory(...args);
+            }
+            else {
+                result = factory();
+            }
+            if (isPromise(result)) {
+                result = await result;
+            }
+            // is cancelled?
+            if (context[CancellationToken].value) {
+                return null;
+            }
+            success = true;
+        }
+        catch (error) {
+            result = null;
+            context.retryErrors.value.push(error);
+        }
+        // is our retry current one?
+        if (retryId !== context[ExecutionId].value) {
+            return result;
+        }
+        if (success) {
+            context.isRetrying.value = false;
+            context.nextRetry.value = undefined;
+            return result;
+        }
+        if (i >= maxRetries) {
+            context.isRetrying.value = false;
+            context.nextRetry.value = undefined;
+            return Promise.reject(new Error(`[useRetry] max retries reached ${maxRetries}`));
+        }
+        context.isRetrying.value = true;
+        const now = Date.now();
+        const pDelayBy = delay(i); // wrapped
+        const delayBy = isPromise(pDelayBy) ? await pDelayBy : pDelayBy; // unwrap promise
+        if (!isPromise(pDelayBy) || !!delayBy) {
+            if (isNumber(delayBy)) {
+                nextRetry = delayBy;
+            }
+            else if (isDate(delayBy)) {
+                nextRetry = delayBy.getTime();
+            }
+            else {
+                throw new Error(`[useRetry] invalid value received from options.retryDelay '${typeof delayBy}'`);
+            }
+            // if the retry is in the past, means we need to await that amount
+            if (nextRetry < now) {
+                context.nextRetry.value = now + nextRetry;
+            }
+            else {
+                context.nextRetry.value = nextRetry;
+                nextRetry = nextRetry - now;
+            }
+            if (nextRetry > 0) {
+                await promisedTimeout(nextRetry);
+            }
+        }
+        // is cancelled?
+        if (context[CancellationToken].value) {
+            return null;
+        }
+        // is our retry current one?
+        if (retryId !== context[ExecutionId].value) {
+            return result;
+        }
+    } while (i < MAX_RETRIES);
+    return null;
+};
+function useRetry(options, factory) {
+    const opt = !options || isFunction(options) ? {} : options;
+    const fn = isFunction(options) ? options : factory;
+    if (!isFunction(options) && !isObject(options)) {
+        throw new Error("[useRetry] options needs to be 'object'");
+    }
+    if (!!fn && !isFunction(fn)) {
+        throw new Error("[useRetry] factory needs to be 'function'");
+    }
+    const isRetrying = ref(false);
+    const nextRetry = ref();
+    const retryErrors = ref([]);
+    const cancellationToken = { value: false };
+    const retryId = { value: 0 };
+    const retryCount = computed(() => retryErrors.value.length);
+    const context = {
+        isRetrying,
+        retryCount,
+        nextRetry,
+        retryErrors,
+        [ExecutionId]: retryId,
+        [CancellationToken]: cancellationToken
+    };
+    const exec = fn
+        ? (...args) => {
+            ++context[ExecutionId].value;
+            return defaultStrategy(opt, context, fn, args);
+        }
+        : (f) => {
+            ++context[ExecutionId].value;
+            return defaultStrategy(opt, context, f, undefined);
+        };
+    const cancel = () => {
+        context.isRetrying.value = false;
+        context.retryErrors.value.push(new Error("[useRetry] cancelled"));
+        context.nextRetry.value = undefined;
+        cancellationToken.value = true;
+    };
+    return {
+        ...context,
+        cancel,
+        exec
+    };
+}
+const exponentialDelay = retryNumber => {
+    const delay = Math.pow(2, retryNumber) * 100;
+    const randomSum = delay * 0.2 * Math.random(); // 0-20% of the delay
+    return delay + randomSum;
+};
+const noDelay = () => 0;
+
 function useFetch(options) {
     const json = ref(null);
     // TODO add text = ref<string> ??
@@ -314,11 +470,11 @@ function useFetch(options) {
 }
 
 /* istanbul ignore next  */
-const axios = _axios || (globalThis && globalThis.axios);
+const _axios = axios || (globalThis && globalThis.axios);
 function useAxios(config) {
     /* istanbul ignore next  */
-    process.env.NODE_ENV !== "production" && !axios && console.warn(`[axios] not installed, please install it`);
-    const axiosClient = axios.create(config);
+    process.env.NODE_ENV !== "production" && !_axios && console.warn(`[axios] not installed, please install it`);
+    const axiosClient = _axios.create(config);
     const client = computed(() => axiosClient);
     const use = usePromise(async (request) => {
         return axiosClient.request(request);
@@ -384,9 +540,13 @@ function useWebSocket(url, protocols) {
         isClosed.value = false;
     });
     const send = (data) => ws.send(data);
+    const close = (code, reason) => {
+        ws.close(code, reason);
+    };
     return {
         ws,
         send,
+        close,
         messageEvent,
         errorEvent,
         data,
@@ -396,4 +556,4 @@ function useWebSocket(url, protocols) {
     };
 }
 
-export { debounce, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useWebSocket };
+export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };
