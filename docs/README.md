@@ -47,31 +47,31 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Event
 
-- [Event](composable/event/event)
-- [Mouse Move](composable/event/onMoveMove)
-- [Resize](composable/event/onResize)
-- [Scroll](composable/event/onScroll)
+- [Event](composable/event/event) - Attach event listener to a DOM element
+- [Mouse Move](composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
+- [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
+- [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
 ### MISC
 
-- [localStorage](composable/misc/localStorage)
+- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
 
 ### Pagination
 
-- [Pagination](composable/pagination/pagination)
-- [Array Pagination](composable/pagination/arrayPagination)
+- [Pagination](composable/pagination/pagination) - Generic reactive pagination controls
+- [Array Pagination](composable/pagination/arrayPagination) - Array pagination
 
 ### Promise
 
-- [Promise](composable/promise/promise)
-- [Cancellable Promise](composable/promise/cancellablePromise)
-- [Retry](composable/promise/retry)
+- [Promise](composable/promise/promise) - `Promise` reactive resolve and reject
+- [Cancellable Promise](composable/promise/cancellablePromise) - Allow to cancel promises
+- [Retry](composable/promise/retry) - Provides functionality to retry `promise`
 
 ### Web
 
-- [Axios](composable/web/axios)
-- [Fetch](composable/web/fetch)
-- [WebSocket](composable/web/webSocket)
+- [Axios](composable/web/axios) - reactive `axios` wrapper client
+- [Fetch](composable/web/fetch) - reactive `fetch` wrapper
+- [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 
 ## Usage
 
