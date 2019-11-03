@@ -36,9 +36,9 @@ const { remove, clear } = useLocalStorage(key);
 ```vue
 <template>
   <div>
-    localStorage: {{storage}}
+    localStorage: {{ storage }}
     <p>
-      <b>Check the value in the dev tools: `{{key}}`</b>
+      <b>Check the value in the dev tools: `{{ key }}`</b>
     </p>
     <label for="storage">
       <input name="storage" v-model="storage" />
@@ -66,4 +66,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <local-storage-example/>
+</ClientOnly>
