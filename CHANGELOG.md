@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [UNRELEASED]
+
+### Added 
+- [breakpoint](https://pikax.me/vue-composable/composable/web/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+
 ## 0.2.0
 ------------------------------
 *2019-11-03*

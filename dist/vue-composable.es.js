@@ -616,4 +616,49 @@ function useLocalStorage(key, defaultValue) {
     };
 }
 
-export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };
+function useBreakpoint(breakpoints) {
+    const result = {};
+    const map = new Map();
+    const current = ref();
+    let sorted = [];
+    for (const key in breakpoints) {
+        const bp = breakpoints[key];
+        const r = ref(false);
+        result[key] = r;
+        map.set(bp, {
+            name: key,
+            valid: r
+        });
+        sorted.push(bp);
+    }
+    sorted = sorted.sort((a, b) => b - a);
+    const resize = () => {
+        const width = window.innerWidth;
+        let c = undefined;
+        for (let i = 0; i < sorted.length; i++) {
+            const bp = sorted[i];
+            const r = map.get(bp);
+            r.valid.value = width >= bp;
+            if (width >= bp && c === undefined) {
+                c = r.name;
+            }
+        }
+        current.value = c;
+    };
+    const processResize = useDebounce(resize, 10);
+    const remove = () => window.removeEventListener("resize", processResize);
+    onMounted(() => {
+        resize();
+        window.addEventListener("resize", processResize, {
+            passive: true
+        });
+    });
+    onUnmounted(() => remove());
+    return {
+        ...result,
+        remove,
+        current
+    };
+}
+
+export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useBreakpoint, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };

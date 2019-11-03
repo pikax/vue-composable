@@ -622,11 +622,57 @@ function useLocalStorage(key, defaultValue) {
     };
 }
 
+function useBreakpoint(breakpoints) {
+    const result = {};
+    const map = new Map();
+    const current = compositionApi.ref();
+    let sorted = [];
+    for (const key in breakpoints) {
+        const bp = breakpoints[key];
+        const r = compositionApi.ref(false);
+        result[key] = r;
+        map.set(bp, {
+            name: key,
+            valid: r
+        });
+        sorted.push(bp);
+    }
+    sorted = sorted.sort((a, b) => b - a);
+    const resize = () => {
+        const width = window.innerWidth;
+        let c = undefined;
+        for (let i = 0; i < sorted.length; i++) {
+            const bp = sorted[i];
+            const r = map.get(bp);
+            r.valid.value = width >= bp;
+            if (width >= bp && c === undefined) {
+                c = r.name;
+            }
+        }
+        current.value = c;
+    };
+    const processResize = useDebounce(resize, 10);
+    const remove = () => window.removeEventListener("resize", processResize);
+    compositionApi.onMounted(() => {
+        resize();
+        window.addEventListener("resize", processResize, {
+            passive: true
+        });
+    });
+    compositionApi.onUnmounted(() => remove());
+    return {
+        ...result,
+        remove,
+        current
+    };
+}
+
 exports.debounce = debounce;
 exports.exponentialDelay = exponentialDelay;
 exports.noDelay = noDelay;
 exports.useArrayPagination = useArrayPagination;
 exports.useAxios = useAxios;
+exports.useBreakpoint = useBreakpoint;
 exports.useCancellablePromise = useCancellablePromise;
 exports.useDebounce = useDebounce;
 exports.useEvent = useEvent;

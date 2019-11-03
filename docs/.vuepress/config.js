@@ -163,7 +163,8 @@ module.exports = {
             ["composable/event/event", "event"],
             ["composable/event/onMouseMove", "onMouseMove"],
             ["composable/event/onResize", "onResize"],
-            ["composable/event/onScroll", "onScroll"]
+            ["composable/event/onScroll", "onScroll"],
+            ["composable/event/breakpoint", "breakpoint"],
           ]
         },
         {
@@ -197,7 +198,7 @@ module.exports = {
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/axios", "axios"],
-            ["composable/web/webSocket", "webSocket"]
+            ["composable/web/webSocket", "webSocket"],
           ]
         }
       ]

@@ -51,6 +51,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Mouse Move](composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
 - [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
+- [Breakpoint](composable/event/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ### MISC
 

@@ -30,6 +30,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Mouse Move](https://pikax.me/vue-composable/composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
+- [Breakpoint](docs/composable/event/breakpoint.md) - reactive `breakpoints` based on `window.innerWidth`
 
 ### MISC
 
