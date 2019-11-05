@@ -1,4 +1,4 @@
-import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
+import { isRef, ref, computed, watch, onMounted, onUnmounted } from '@vue/composition-api';
 import axios from 'axios';
 
 // export function unwrap<T>(o: RefTyped<T>): T {
@@ -8,8 +8,7 @@ function wrap(o) {
     return isRef(o) ? o : ref(o);
 }
 const isFunction = (val) => typeof val === "function";
-// export const isString = (val: unknown): val is string =>
-//   typeof val === "string";
+const isString = (val) => typeof val === "string";
 // export const isSymbol = (val: unknown): val is symbol =>
 //   typeof val === "symbol";
 const isDate = (val) => isObject(val) && isFunction(val.getTime);
@@ -29,14 +28,6 @@ function minMax(val, min, max) {
     if (val > max)
         return max;
     return val;
-}
-
-function useEvent(el, name, listener, options) {
-    const element = wrap(el);
-    const remove = () => element.value.removeEventListener(name, listener);
-    onMounted(() => element.value.addEventListener(name, listener, options));
-    onUnmounted(remove);
-    return remove;
 }
 
 function usePagination(options) {
@@ -140,6 +131,14 @@ function useArrayPagination(array, options) {
         ...pagination,
         result
     };
+}
+
+function useEvent(el, name, listener, options) {
+    const element = wrap(el);
+    const remove = () => element.value.removeEventListener(name, listener);
+    onMounted(() => element.value.addEventListener(name, listener, options));
+    onUnmounted(remove);
+    return remove;
 }
 
 function useDebounce(handler, wait) {
@@ -556,6 +555,38 @@ function useWebSocket(url, protocols) {
     };
 }
 
+function useScript(options) {
+    const loading = ref(true);
+    const error = ref(false);
+    const success = ref(false);
+    const opts = isString(options) ? { src: options } : options;
+    const script = document.createElement("script");
+    script.async = opts.async || false;
+    script.defer = opts.defer || false;
+    if (opts.module) {
+        script.type = "module";
+    }
+    script.addEventListener("load", () => {
+        loading.value = false;
+        success.value = true;
+        error.value = false;
+    }, { passive: true });
+    script.addEventListener("error", () => {
+        loading.value = false;
+        success.value = false;
+        error.value = true;
+    }, {
+        passive: true
+    });
+    script.src = opts.src;
+    document.body.appendChild(script);
+    return {
+        loading,
+        error,
+        success
+    };
+}
+
 // used to store all the instances of weakMap
 const keyedMap = new Map();
 const weakMap = new WeakMap();
@@ -616,4 +647,4 @@ function useLocalStorage(key, defaultValue) {
     };
 }
 
-export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };
+export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useScript, useWebSocket };

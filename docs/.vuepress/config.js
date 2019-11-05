@@ -197,7 +197,8 @@ module.exports = {
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/axios", "axios"],
-            ["composable/web/webSocket", "webSocket"]
+            ["composable/web/webSocket", "webSocket"],
+            ["composable/web/script", "script"],
           ]
         }
       ]

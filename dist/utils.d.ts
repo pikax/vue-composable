@@ -4,6 +4,7 @@ export declare type RefElement = RefTyped<Element>;
 export declare function wrap<T>(o: RefTyped<T>): Ref<T>;
 export declare const isArray: (arg: any) => arg is any[];
 export declare const isFunction: (val: unknown) => val is Function;
+export declare const isString: (val: unknown) => val is string;
 export declare const isDate: (val: unknown) => val is Date;
 export declare const isNumber: (val: unknown) => val is number;
 export declare const isObject: (val: unknown) => val is Record<any, any>;

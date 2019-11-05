@@ -13,8 +13,7 @@
       return compositionApi.isRef(o) ? o : compositionApi.ref(o);
   }
   const isFunction = (val) => typeof val === "function";
-  // export const isString = (val: unknown): val is string =>
-  //   typeof val === "string";
+  const isString = (val) => typeof val === "string";
   // export const isSymbol = (val: unknown): val is symbol =>
   //   typeof val === "symbol";
   const isDate = (val) => isObject(val) && isFunction(val.getTime);
@@ -34,14 +33,6 @@
       if (val > max)
           return max;
       return val;
-  }
-
-  function useEvent(el, name, listener, options) {
-      const element = wrap(el);
-      const remove = () => element.value.removeEventListener(name, listener);
-      compositionApi.onMounted(() => element.value.addEventListener(name, listener, options));
-      compositionApi.onUnmounted(remove);
-      return remove;
   }
 
   function usePagination(options) {
@@ -133,6 +124,14 @@
           ...pagination,
           result
       };
+  }
+
+  function useEvent(el, name, listener, options) {
+      const element = wrap(el);
+      const remove = () => element.value.removeEventListener(name, listener);
+      compositionApi.onMounted(() => element.value.addEventListener(name, listener, options));
+      compositionApi.onUnmounted(remove);
+      return remove;
   }
 
   function useDebounce(handler, wait) {
@@ -535,6 +534,38 @@
       };
   }
 
+  function useScript(options) {
+      const loading = compositionApi.ref(true);
+      const error = compositionApi.ref(false);
+      const success = compositionApi.ref(false);
+      const opts = isString(options) ? { src: options } : options;
+      const script = document.createElement("script");
+      script.async = opts.async || false;
+      script.defer = opts.defer || false;
+      if (opts.module) {
+          script.type = "module";
+      }
+      script.addEventListener("load", () => {
+          loading.value = false;
+          success.value = true;
+          error.value = false;
+      }, { passive: true });
+      script.addEventListener("error", () => {
+          loading.value = false;
+          success.value = false;
+          error.value = true;
+      }, {
+          passive: true
+      });
+      script.src = opts.src;
+      document.body.appendChild(script);
+      return {
+          loading,
+          error,
+          success
+      };
+  }
+
   // used to store all the instances of weakMap
   const keyedMap = new Map();
   const weakMap = new WeakMap();
@@ -611,6 +642,7 @@
   exports.usePagination = usePagination;
   exports.usePromise = usePromise;
   exports.useRetry = useRetry;
+  exports.useScript = useScript;
   exports.useWebSocket = useWebSocket;
 
   Object.defineProperty(exports, '__esModule', { value: true });
