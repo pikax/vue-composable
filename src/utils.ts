@@ -3,9 +3,9 @@ import { Ref, isRef, ref } from "@vue/composition-api";
 export type RefTyped<T> = T | Ref<T>;
 export type RefElement = RefTyped<Element>;
 
-// export function unwrap<T>(o: RefTyped<T>): T {
-//   return isRef(o) ? o.value : o;
-// }
+export function unwrap<T>(o: RefTyped<T>): T {
+  return isRef(o) ? o.value : o;
+}
 export function wrap<T>(o: RefTyped<T>): Ref<T> {
   return isRef(o) ? o : ref(o);
 }
@@ -26,6 +26,9 @@ export const isNumber = (val: unknown): val is number =>
 
 export const isObject = (val: unknown): val is Record<any, any> =>
   val !== null && typeof val === "object";
+
+export const isElement = (val: unknown): val is Element =>
+  isObject(val) && !!val.tagName;
 
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return isObject(val) && isFunction(val.then) && isFunction(val.catch);
