@@ -22,12 +22,12 @@ export function useOnScroll(
 ): ScrollResult {
   const element = wrap(el);
 
-  const scrollTop = ref(element.value && element.value.scrollTop);
-  const scrollLeft = ref(element.value && element.value.scrollLeft);
+  const scrollTop = ref(element.value?.scrollTop || 0);
+  const scrollLeft = ref(element.value?.scrollLeft || 0);
 
   let handler = (ev: Event) => {
-    scrollTop.value = element.value.scrollTop;
-    scrollLeft.value = element.value.scrollLeft;
+    scrollTop.value = element.value!.scrollTop;
+    scrollLeft.value = element.value!.scrollLeft;
   };
 
   const eventOptions = typeof options === "number" ? undefined : options;

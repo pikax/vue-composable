@@ -1,5 +1,5 @@
 import { usePromise } from "../promise/promise";
-import { ref, computed, watch } from "@vue/composition-api";
+import { ref, computed } from "@vue/composition-api";
 
 export interface UseFetchOptions {
   /**

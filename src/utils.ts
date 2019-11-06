@@ -1,7 +1,7 @@
 import { Ref, isRef, ref } from "@vue/composition-api";
 
 export type RefTyped<T> = T | Ref<T>;
-export type RefElement = RefTyped<Element>;
+export type RefElement = RefTyped<Element | null>;
 
 // export function unwrap<T>(o: RefTyped<T>): T {
 //   return isRef(o) ? o.value : o;

@@ -27,7 +27,7 @@ export function useArrayPagination<T extends Array<TR>, TR>(
       pageSize: 10,
     },
     ...options,
-    total: computed(() => arrayRef.value.length)
+    total: computed(() => arrayRef.value?.length || 0)
   });
 
   const result = computed(() => {

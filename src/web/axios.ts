@@ -1,5 +1,5 @@
-import { ref, computed, watch } from "@vue/composition-api";
-import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import { computed } from "@vue/composition-api";
+import axios, { AxiosRequestConfig } from "axios";
 import { usePromise } from "../promise/promise";
 
 /* istanbul ignore next  */
@@ -7,7 +7,9 @@ const _axios = axios || (globalThis && (globalThis as any).axios);
 
 export function useAxios<TData = any>(config?: AxiosRequestConfig) {
   /* istanbul ignore next  */
-  __DEV__ && !_axios && console.warn(`[axios] not installed, please install it`);
+  __DEV__ &&
+    !_axios &&
+    console.warn(`[axios] not installed, please install it`);
 
   const axiosClient = _axios.create(config);
   const client = computed(() => axiosClient);
