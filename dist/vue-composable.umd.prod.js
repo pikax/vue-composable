@@ -595,20 +595,43 @@
       };
   }
 
+  function useMatchMedia(query) {
+      const mediaQueryList = compositionApi.ref(matchMedia(query));
+      const matches = compositionApi.ref(false);
+      const process = (e) => {
+          matches.value = e.matches;
+      };
+      mediaQueryList.value.addEventListener("change", process, { passive: true });
+      const remove = () => mediaQueryList.value.removeEventListener("change", process);
+      return {
+          mediaQueryList,
+          remove,
+          matches
+      };
+  }
+
   function useBreakpoint(breakpoints) {
       const result = {};
       const map = new Map();
       const current = compositionApi.ref();
       let sorted = [];
+      const removeMedia = [];
       for (const key in breakpoints) {
           const bp = breakpoints[key];
-          const r = compositionApi.ref(false);
-          result[key] = r;
-          map.set(bp, {
-              name: key,
-              valid: r
-          });
-          sorted.push(bp);
+          if (isNumber(bp)) {
+              const r = compositionApi.ref(false);
+              result[key] = r;
+              map.set(bp, {
+                  name: key,
+                  valid: r
+              });
+              sorted.push(bp);
+          }
+          else {
+              const { matches, remove } = useMatchMedia(bp);
+              result[key] = matches;
+              removeMedia.push(remove);
+          }
       }
       sorted = sorted.sort((a, b) => b - a);
       const resize = () => {
@@ -632,7 +655,10 @@
               passive: true
           });
       });
-      compositionApi.onUnmounted(() => remove());
+      compositionApi.onUnmounted(() => {
+          remove();
+          removeMedia.forEach(x => x());
+      });
       return {
           ...result,
           remove,

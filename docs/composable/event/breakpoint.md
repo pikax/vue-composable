@@ -3,8 +3,9 @@
 Allows to get reactive object on the current windows size.
 
 ::: warning
-It checks the defined breakpoint against window.innerWidth.
+If `Number` it checks the defined breakpoint against window.innerWidth.
 `bp >= window.innerWidth`
+If `MediaQuery` is passed it will not be able to resolve the current breakpoint
 :::
 
 ## State
@@ -16,13 +17,14 @@ import { useBreakpoint } from "vue-composable";
 
 const { current, /* properties from the arguments */ L, XL } = useBreakpoint({
   L: 720,
-  XL: 1280
+  XL: 1280,
+  S: "(min-width: 320px)" // also supports media query - it uses `useMatchMedia`
 });
 ```
 
 | State   | Type     | Description                                                           |
 | ------- | -------- | --------------------------------------------------------------------- |
-| current | `String` | Smallest breakpoint key                                               |
+| current | `String` | Smallest breakpoint key. where the breakpoint is an `Number`          |
 | ...args | `Args`   | returns the object with the same keys but with reactive boolean value |
 
 ## Methods
@@ -44,7 +46,7 @@ const { remove } = useBreakpoint();
 ```vue
 <template>
   <div>
-    <div>Current breakpoint {{current || 'none'}}</div>
+    <div>Current breakpoint {{ current || "none" }}</div>
     <div>valid breakpoints:</div>
     <p><b v-if="S">Small</b></p>
     <p><b v-if="L">Large</b></p>
@@ -58,7 +60,7 @@ export default {
   name: "breakpoint-example",
   setup() {
     // it will return object with reactive properties {XL: boolean, L: boolean, S: boolean}
-    return useBreakpoint({ XL: 1280, L: 768, S: 320 });
+    return useBreakpoint({ XL: 1280, L: 768, S: "(min-width: 320px)" });
   }
 };
 </script>

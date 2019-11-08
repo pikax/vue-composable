@@ -12,4 +12,4 @@ export * from "./web/fetch";
 export * from "./web/axios";
 export * from "./web/webSocket";
 export * from "./localStorage";
-export * from "./event/breakpoint";
+export * from "./web/breakpoint";
