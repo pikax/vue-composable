@@ -2,7 +2,7 @@ import { ref } from "@vue/composition-api";
 
 export function useMatchMedia(query: string) {
   const mediaQueryList = ref<MediaQueryList>(matchMedia(query));
-  const matches = ref(false);
+  const matches = ref(mediaQueryList.value.matches);
 
   const process = (e: MediaQueryListEvent) => {
     matches.value = e.matches;

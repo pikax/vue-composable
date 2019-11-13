@@ -1,9 +1,32 @@
-import { onMounted, onUnmounted, Ref, ref } from "@vue/composition-api";
 import { Vue, nextTick } from "../utils";
 import { useBreakpoint } from "../../src";
 import { promisedTimeout } from "../../src/utils";
 
 describe("breakpoint", () => {
+  let matchMediaSpy: jest.SpyInstance = undefined as any;
+  beforeAll(() => {
+    matchMediaSpy = window.matchMedia = jest.fn(query => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(), // deprecated
+        removeListener: jest.fn(), // deprecated
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      };
+    });
+  });
+
+  beforeEach(() => {
+    matchMediaSpy.mockClear();
+  });
+
+  // afterAll(() => {
+  //   matchMediaSpy.mockRestore();
+  // });
+
   let callback: () => void;
   const addEventListenerMock = jest.fn((_, cb) => (callback = cb));
   const removeEventListenerMock = jest.fn();
@@ -68,7 +91,7 @@ describe("breakpoint", () => {
     await setWindowInnerWidth(30);
     expect(breakpoint).toMatchObject({
       S: { value: true },
-      L: { value: false },
+      L: { value: false },  
       XL: { value: false },
       current: { value: "S" }
     });
@@ -89,13 +112,12 @@ describe("breakpoint", () => {
       current: { value: undefined }
     });
 
-    
     await setWindowInnerWidth(85);
     expect(breakpoint).toMatchObject({
       S: { value: true },
       L: { value: true },
       XL: { value: false },
-      current: { value: 'L' }
+      current: { value: "L" }
     });
 
     await setWindowInnerWidth(200);
@@ -103,10 +125,32 @@ describe("breakpoint", () => {
       S: { value: true },
       L: { value: true },
       XL: { value: true },
-      current: { value: 'XL' }
+      current: { value: "XL" }
     });
 
     vm.$destroy();
   });
 
+  it("should useMatchMedia if string is passed", () => {
+    const breakpoints = {
+      S: "(min-width: 320px)"
+    };
+
+    let breakpoint: any;
+    const vm = new Vue({
+      template: "<div></div>",
+      setup() {
+        return (breakpoint = useBreakpoint(breakpoints));
+      }
+    });
+
+    vm.$mount();
+    vm.$destroy();
+
+    expect(matchMedia).toHaveBeenCalledWith(breakpoints.S);
+
+    expect(breakpoint).toMatchObject({
+      S: { value: true }
+    });
+  });
 });
