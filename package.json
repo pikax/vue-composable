@@ -46,7 +46,7 @@
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
-    "jest-websocket-mock": "^1.5.1",
+    "jest-websocket-mock": "^2.0.0",
     "lodash.camelcase": "^4.3.0",
     "mock-socket": "^9.0.2",
     "rimraf": "^3.0.0",
