@@ -1,9 +1,9 @@
 import { isRef, ref, onMounted, onUnmounted, computed, watch } from '@vue/composition-api';
 import axios from 'axios';
 
-// export function unwrap<T>(o: RefTyped<T>): T {
-//   return isRef(o) ? o.value : o;
-// }
+function unwrap(o) {
+    return isRef(o) ? o.value : o;
+}
 function wrap(o) {
     return isRef(o) ? o : ref(o);
 }
@@ -15,6 +15,7 @@ const isFunction = (val) => typeof val === "function";
 const isDate = (val) => isObject(val) && isFunction(val.getTime);
 const isNumber = (val) => typeof val === "number";
 const isObject = (val) => val !== null && typeof val === "object";
+const isElement = (val) => isObject(val) && !!val.tagName;
 function isPromise(val) {
     return isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
@@ -556,6 +557,76 @@ function useWebSocket(url, protocols) {
     };
 }
 
+function useIntersectionObserver(refEl, refOptions) {
+    const wrappedElement = refEl ? wrap(refEl) : undefined;
+    const element = wrappedElement && (isElement(wrappedElement.value) || !wrappedElement.value)
+        ? wrappedElement
+        : undefined;
+    const options = computed(() => refOptions
+        ? unwrap(refOptions)
+        : !element
+            ? unwrap(refEl)
+            : undefined);
+    const elements = ref(element && element.value ? [element.value] : []);
+    const isIntersecting = computed(() => elements.value.every(x => x.isIntersecting));
+    const handling = (entries, observer) => {
+        elements.value = entries;
+    };
+    let observer = ref();
+    watch(() => options, options => {
+        if (observer.value) {
+            observer.value.disconnect();
+        }
+        const opts = (options &&
+            options.value && {
+            root: unwrap(options.value.root),
+            rootMargin: unwrap(options.value.rootMargin),
+            threshold: unwrap(options.value.threshold)
+        }) ||
+            undefined;
+        observer.value = new IntersectionObserver(handling, opts);
+        const targets = elements.value.map(x => x.target);
+        targets.forEach(observer.value.observe);
+    }, { deep: true });
+    const observe = (element) => {
+        const e = unwrap(element);
+        observer.value.observe(e);
+    };
+    const unobserve = (element) => {
+        const e = unwrap(element);
+        observer.value.unobserve(e);
+    };
+    const disconnect = () => observer.value.disconnect();
+    // if the element is passed we should add hooks
+    if (element) {
+        onMounted(() => {
+            if (isElement(element.value)) {
+                observe(element);
+            }
+        });
+        onUnmounted(() => {
+            if (isElement(element.value)) {
+                observe(element);
+            }
+        });
+    }
+    const debug = () => {
+        if (elements.value.length === 0) {
+            process.env.NODE_ENV !== "production" && console.warn('[IntersectionObserver] no elements provided, did you mount the component?');
+            return;
+        }
+        // TODO: add border to the elements 
+    };
+    return {
+        elements,
+        observe,
+        unobserve,
+        disconnect,
+        isIntersecting,
+        debug
+    };
+}
+
 // used to store all the instances of weakMap
 const keyedMap = new Map();
 const weakMap = new WeakMap();
@@ -616,4 +687,4 @@ function useLocalStorage(key, defaultValue) {
     };
 }
 
-export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };
+export { debounce, exponentialDelay, noDelay, useArrayPagination, useAxios, useCancellablePromise, useDebounce, useEvent, useFetch, useIntersectionObserver, useLocalStorage, useOnMouseMove, useOnResize, useOnScroll, usePagination, usePromise, useRetry, useWebSocket };

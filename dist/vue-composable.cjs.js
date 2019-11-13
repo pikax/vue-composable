@@ -7,9 +7,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var compositionApi = require('@vue/composition-api');
 var axios = _interopDefault(require('axios'));
 
-// export function unwrap<T>(o: RefTyped<T>): T {
-//   return isRef(o) ? o.value : o;
-// }
+function unwrap(o) {
+    return compositionApi.isRef(o) ? o.value : o;
+}
 function wrap(o) {
     return compositionApi.isRef(o) ? o : compositionApi.ref(o);
 }
@@ -21,6 +21,7 @@ const isFunction = (val) => typeof val === "function";
 const isDate = (val) => isObject(val) && isFunction(val.getTime);
 const isNumber = (val) => typeof val === "number";
 const isObject = (val) => val !== null && typeof val === "object";
+const isElement = (val) => isObject(val) && !!val.tagName;
 function isPromise(val) {
     return isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
@@ -562,6 +563,76 @@ function useWebSocket(url, protocols) {
     };
 }
 
+function useIntersectionObserver(refEl, refOptions) {
+    const wrappedElement = refEl ? wrap(refEl) : undefined;
+    const element = wrappedElement && (isElement(wrappedElement.value) || !wrappedElement.value)
+        ? wrappedElement
+        : undefined;
+    const options = compositionApi.computed(() => refOptions
+        ? unwrap(refOptions)
+        : !element
+            ? unwrap(refEl)
+            : undefined);
+    const elements = compositionApi.ref(element && element.value ? [element.value] : []);
+    const isIntersecting = compositionApi.computed(() => elements.value.every(x => x.isIntersecting));
+    const handling = (entries, observer) => {
+        elements.value = entries;
+    };
+    let observer = compositionApi.ref();
+    compositionApi.watch(() => options, options => {
+        if (observer.value) {
+            observer.value.disconnect();
+        }
+        const opts = (options &&
+            options.value && {
+            root: unwrap(options.value.root),
+            rootMargin: unwrap(options.value.rootMargin),
+            threshold: unwrap(options.value.threshold)
+        }) ||
+            undefined;
+        observer.value = new IntersectionObserver(handling, opts);
+        const targets = elements.value.map(x => x.target);
+        targets.forEach(observer.value.observe);
+    }, { deep: true });
+    const observe = (element) => {
+        const e = unwrap(element);
+        observer.value.observe(e);
+    };
+    const unobserve = (element) => {
+        const e = unwrap(element);
+        observer.value.unobserve(e);
+    };
+    const disconnect = () => observer.value.disconnect();
+    // if the element is passed we should add hooks
+    if (element) {
+        compositionApi.onMounted(() => {
+            if (isElement(element.value)) {
+                observe(element);
+            }
+        });
+        compositionApi.onUnmounted(() => {
+            if (isElement(element.value)) {
+                observe(element);
+            }
+        });
+    }
+    const debug = () => {
+        if (elements.value.length === 0) {
+            process.env.NODE_ENV !== "production" && console.warn('[IntersectionObserver] no elements provided, did you mount the component?');
+            return;
+        }
+        // TODO: add border to the elements 
+    };
+    return {
+        elements,
+        observe,
+        unobserve,
+        disconnect,
+        isIntersecting,
+        debug
+    };
+}
+
 // used to store all the instances of weakMap
 const keyedMap = new Map();
 const weakMap = new WeakMap();
@@ -631,6 +702,7 @@ exports.useCancellablePromise = useCancellablePromise;
 exports.useDebounce = useDebounce;
 exports.useEvent = useEvent;
 exports.useFetch = useFetch;
+exports.useIntersectionObserver = useIntersectionObserver;
 exports.useLocalStorage = useLocalStorage;
 exports.useOnMouseMove = useOnMouseMove;
 exports.useOnResize = useOnResize;

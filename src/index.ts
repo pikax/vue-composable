@@ -11,4 +11,5 @@ export * from "./promise/retry";
 export * from "./web/fetch";
 export * from "./web/axios";
 export * from "./web/webSocket";
+export * from "./web/intersectionObserver";
 export * from "./localStorage";

@@ -1,7 +1,14 @@
 import { RefTyped, wrap, unwrap, isElement } from "../utils";
-import { ref, computed } from "@vue/composition-api";
+import {
+  ref,
+  computed,
+  watch,
+  onMounted,
+  onUnmounted,
+  Ref
+} from "@vue/composition-api";
 
-interface IntersectionObserverOptions {
+export interface IntersectionObserverOptions {
   root?: RefTyped<Element> | null;
   rootMargin?: RefTyped<string> | string;
   threshold?: RefTyped<number | number[]> | number | number[];
@@ -18,15 +25,23 @@ export function useIntersectionObserver(
   refEl?: RefTyped<Element> | RefTyped<IntersectionObserverOptions>,
   refOptions?: RefTyped<IntersectionObserverOptions>
 ) {
-  const element = isElement(unwrap(refEl)) ? wrap(refEl) : undefined;
+  const wrappedElement = refEl ? wrap(refEl) : undefined;
+  const element =
+    wrappedElement && (isElement(wrappedElement.value) || !wrappedElement.value)
+      ? (wrappedElement as Ref<Element>)
+      : undefined;
 
-  const options = refOptions
-    ? wrap(refOptions)
-    : !element
-    ? wrap(refEl as RefTyped<IntersectionObserverOptions>)
-    : undefined;
+  const options = computed(() =>
+    refOptions
+      ? unwrap(refOptions)
+      : !element
+      ? unwrap(refEl as RefTyped<IntersectionObserverOptions>)
+      : undefined
+  );
 
-  const elements = ref<IntersectionObserverEntry[]>(element ? [element] : []);
+  const elements = ref<IntersectionObserverEntry[]>(
+    element && element.value ? [element.value] : []
+  );
 
   const isIntersecting = computed(() =>
     elements.value.every(x => x.isIntersecting)
@@ -39,30 +54,72 @@ export function useIntersectionObserver(
     elements.value = entries;
   };
 
-  // const observer = computed(() => {
-  //   return new IntersectionObserver(handling);
-  // });
-  const observer = new IntersectionObserver(
-    handling,
-    (options && options.value) || undefined
+  let observer = ref<IntersectionObserver>();
+
+  watch(
+    () => options,
+    options => {
+      if (observer.value) {
+        observer.value.disconnect();
+      }
+
+      const opts: IntersectionObserverInit | undefined =
+        (options &&
+          options.value && {
+            root: unwrap(options.value.root),
+            rootMargin: unwrap(options.value.rootMargin),
+            threshold: unwrap(options.value.threshold)
+          }) ||
+        undefined;
+      observer.value = new IntersectionObserver(handling, opts);
+
+      const targets = elements.value.map(x => x.target);
+      targets.forEach(observer.value.observe);
+    },
+    { deep: true }
   );
 
   const observe = (element: RefTyped<Element>) => {
     const e = unwrap(element);
-    observer.value.observe(e);
+    observer.value!.observe(e);
   };
   const unobserve = (element: RefTyped<Element>) => {
     const e = unwrap(element);
-    observer.value.unobserve(e);
+    observer.value!.unobserve(e);
   };
 
-  const disconect = () => observer.value.disconnect();
+  const disconnect = () => observer.value!.disconnect();
 
-  observer.value.rootMargin;
+  // if the element is passed we should add hooks
+  if (element) {
+    onMounted(() => {
+      if (isElement(element.value)) {
+        observe(element);
+      }
+    });
+
+    onUnmounted(() => {
+      if (isElement(element.value)) {
+        observe(element);
+      }
+    });
+  }
+
+  const debug = () => {
+    if(elements.value.length === 0){ 
+      __DEV__ && console.warn('[IntersectionObserver] no elements provided, did you mount the component?')
+      return;
+    }
+    // TODO: add border to the elements 
+  };
 
   return {
     elements,
+    observe,
+    unobserve,
+    disconnect,
 
-    isIntersecting
+    isIntersecting,
+    debug
   };
 }
