@@ -34,6 +34,7 @@
   "homepage": "https://github.com/pikax/vue-composable/blob/master/readme.md",
   "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
+    "axios": "^0.19.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -42,7 +43,6 @@
     "@vue/composition-api": "^0.3.2",
     "@vuepress/plugin-back-to-top": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
-    "axios": "^0.19.0",
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
     "jest-junit": "^10.0.0",
