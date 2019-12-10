@@ -9,9 +9,9 @@ Base composable used in the other element composables
 The `useEvent` function exposes the following methods:
 
 ```js
-import { useFetch } from "vue-composable";
+import { useEvent } from "vue-composable";
 
-const { cancel } = useFetch(elem);
+const { remove } = useEvent(element, name, listener);
 ```
 
 ## Example
