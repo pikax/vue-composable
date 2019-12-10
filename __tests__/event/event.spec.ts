@@ -37,6 +37,39 @@ describe("event", () => {
     );
   });
 
+  it("should add event on window lifecycle", () => {
+    const element: Window = {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn()
+    } as any;
+    const mockHandler = jest.fn();
+    const options = {};
+
+    const vm = new Vue({
+      template: "<div></div>",
+      setup() {
+        useEvent(element, "load", mockHandler, options);
+      }
+    });
+    expect(element.addEventListener).not.toHaveBeenCalled();
+    expect(element.removeEventListener).not.toHaveBeenCalled();
+
+    vm.$mount();
+    expect(element.addEventListener).toHaveBeenCalledWith(
+      "load",
+      mockHandler,
+      options
+    );
+    expect(element.removeEventListener).not.toHaveBeenCalled();
+
+    vm.$destroy();
+    expect(element.removeEventListener).toHaveBeenCalledWith(
+      "load",
+      mockHandler
+    );
+  });
+
+
   it("should add event on ref", () => {
     const element: Ref<Element> = ref({
       addEventListener: jest.fn(),
@@ -68,6 +101,18 @@ describe("event", () => {
       mockHandler
     );
   });
+
+  it('should add event on `window`', ()=>{
+    const mockHandler = jest.fn();
+    const options = {};
+
+    const vm = new Vue({
+      template: "<div></div>",
+      setup() {
+        useEvent(window, "load", mockHandler, options);
+      }
+    });
+  })
 
   it("should remove event listener when return function is called", () => {
     const element: Element = {
