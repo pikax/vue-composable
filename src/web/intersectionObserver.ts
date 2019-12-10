@@ -1,4 +1,4 @@
-import { RefTyped, wrap, unwrap, isElement } from "../utils";
+import { RefTyped, wrap, unwrap, isElement, RefElement } from "../utils";
 import {
   ref,
   computed,
@@ -17,8 +17,8 @@ export interface IntersectionObserverOptions {
 export interface IntersectionObserverResult {
   elements: Ref<IntersectionObserverEntry[]>;
 
-  observe: (el: Element) => void;
-  unobserve: (el: Element) => void;
+  observe: (el: RefTyped<Element>) => void;
+  unobserve: (el: RefTyped<Element>) => void;
   disconnect: () => void;
   readonly isIntersecting: Ref<boolean>;
 
@@ -26,14 +26,14 @@ export interface IntersectionObserverResult {
 }
 
 export function useIntersectionObserver(
-  el: RefTyped<Element>,
+  el: RefElement,
   options?: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult;
 export function useIntersectionObserver(
   options: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult;
 export function useIntersectionObserver(
-  refEl?: RefTyped<Element> | RefTyped<IntersectionObserverOptions>,
+  refEl?: any,
   refOptions?: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult {
   const wrappedElement = refEl ? wrap(refEl) : undefined;
@@ -55,12 +55,11 @@ export function useIntersectionObserver(
   );
 
   const isIntersecting = computed(() =>
-    elements.value.every(x => x.isIntersecting)
+    elements.value.length > 0 && elements.value.every(x => x.isIntersecting)
   );
 
   const handling = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
+    entries: IntersectionObserverEntry[]
   ) => {
     elements.value = entries;
   };
@@ -68,7 +67,7 @@ export function useIntersectionObserver(
   let observer = ref<IntersectionObserver>();
 
   watch(
-    () => options,
+    options,
     options => {
       if (observer.value) {
         observer.value.disconnect();
@@ -76,10 +75,10 @@ export function useIntersectionObserver(
 
       const opts: IntersectionObserverInit | undefined =
         (options &&
-          options.value && {
-          root: unwrap(options.value.root),
-          rootMargin: unwrap(options.value.rootMargin),
-          threshold: unwrap(options.value.threshold)
+          options && {
+          root: unwrap(options.root),
+          rootMargin: unwrap(options.rootMargin),
+          threshold: unwrap(options.threshold)
         }) ||
         undefined;
       observer.value = new IntersectionObserver(handling, opts);
@@ -103,19 +102,23 @@ export function useIntersectionObserver(
 
   // if the element is passed we should add hooks
   if (element) {
-    onMounted(() => {
-      if (isElement(element.value)) {
-        observe(element);
-      }
-    });
+    // if value is defined it is already being observed
+    if (!element.value) {
+      onMounted(() => {
+        if (element.value) {
+          observe(element);
+        }
+      });
+    }
 
     onUnmounted(() => {
-      if (isElement(element.value)) {
-        observe(element);
-      }
+      disconnect();
     });
   }
 
+  // debug is still work in progress, would be nice to provide some
+  // information about the target
+  /* istanbul ignore next */
   const debug = () => {
     if (elements.value.length === 0) {
       __DEV__ && console.warn('[IntersectionObserver] no elements provided, did you mount the component?')

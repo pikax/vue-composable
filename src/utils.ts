@@ -1,11 +1,16 @@
 import { Ref, isRef, ref } from "@vue/composition-api";
 
 export type RefTyped<T> = T | Ref<T>;
-export type RefElement = RefTyped<Element>;
+export type RefElement = Element | Ref<Element | undefined>;
 
+export function unwrap(o: RefElement): Element;
+export function unwrap<T>(o: RefTyped<T>): T;
 export function unwrap<T>(o: RefTyped<T>): T {
   return isRef(o) ? o.value : o;
 }
+
+export function wrap(o: RefElement): Ref<Element>;
+export function wrap<T>(o: RefTyped<T>): Ref<T>;
 export function wrap<T>(o: RefTyped<T>): Ref<T> {
   return isRef(o) ? o : ref(o);
 }
