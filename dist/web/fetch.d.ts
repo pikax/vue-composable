@@ -13,8 +13,8 @@ export interface UseFetchOptions {
 export declare function useFetch<T = any>(options?: UseFetchOptions): {
     json: import("@vue/composition-api").Ref<T | null>;
     jsonError: import("@vue/composition-api").Ref<any>;
-    status: import("@vue/composition-api").Ref<number | null>;
-    statusText: import("@vue/composition-api").Ref<string | null>;
+    status: Readonly<import("@vue/composition-api").Ref<number | null>>;
+    statusText: Readonly<import("@vue/composition-api").Ref<string | null>>;
     exec: (request: RequestInfo, init?: RequestInit | undefined) => Promise<Response | undefined>;
     promise: import("@vue/composition-api").Ref<Promise<Response> | undefined>;
     result: import("@vue/composition-api").Ref<Response | null>;

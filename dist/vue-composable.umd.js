@@ -200,7 +200,6 @@
       const height = compositionApi.ref(element.value && element.value.clientHeight);
       const width = compositionApi.ref(element.value && element.value.clientWidth);
       let handler = () => {
-          debugger;
           height.value = element.value.clientHeight;
           width.value = element.value.clientWidth;
       };

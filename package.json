@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Vue composition-api composable components",
   "main": "index.js",
   "author": {
@@ -34,6 +34,7 @@
   "homepage": "https://github.com/pikax/vue-composable/blob/master/readme.md",
   "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
+    "axios": "^0.19.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -45,7 +46,7 @@
     "axios": "^0.19.0",
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
-    "jest-junit": "^9.0.0",
+    "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.0",
     "lodash.camelcase": "^4.3.0",
     "mock-socket": "^9.0.2",

@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import {  RefElement, wrap } from "../utils";
+import {  RefElement, wrap, RefTyped } from "../utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "../debounce";
 
@@ -9,6 +9,12 @@ export interface ResizeResult {
   remove: RemoveEventFunction;
 };
 
+export function useOnResize(el: RefTyped<Window>, wait: number): ResizeResult;
+export function useOnResize(
+  el: RefTyped<Window>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ResizeResult;
 export function useOnResize(el: RefElement, wait: number): ResizeResult;
 export function useOnResize(
   el: RefElement,
@@ -16,7 +22,7 @@ export function useOnResize(
   wait?: number
 ): ResizeResult;
 export function useOnResize(
-  el: RefElement,
+  el: any,
   options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ResizeResult {
@@ -26,7 +32,6 @@ export function useOnResize(
   const width = ref(element.value && element.value.clientWidth);
 
   let handler = () => {
-    debugger
     height.value = element.value.clientHeight;
     width.value = element.value.clientWidth;
   };
