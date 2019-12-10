@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { RefElement } from "../utils";
+import { RefElement, RefTyped } from "../utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "../debounce";
 
@@ -9,6 +9,13 @@ export interface MouseMoveResult {
   remove: RemoveEventFunction;
 }
 
+
+export function useOnMouseMove(el: RefTyped<Window>, wait: number): MouseMoveResult;
+export function useOnMouseMove(
+  el: RefTyped<Window>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): MouseMoveResult;
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
 export function useOnMouseMove(
   el: RefElement,
@@ -16,7 +23,7 @@ export function useOnMouseMove(
   wait?: number
 ): MouseMoveResult;
 export function useOnMouseMove(
-  el: RefElement,
+  el: any,
   options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): MouseMoveResult {
