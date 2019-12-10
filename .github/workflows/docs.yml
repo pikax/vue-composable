@@ -2,12 +2,14 @@ name: github pages
 
 on:
   push:
+    paths: 
+      - "docs"
     branches:
     - master
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v1
 
