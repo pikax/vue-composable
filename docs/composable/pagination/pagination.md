@@ -37,7 +37,6 @@ const { next, prev, first, last } = usePagination();
 | `first()` | Sets currentPage to `1`       |
 | `last()`  | Sets currentPage = `lastPage` |
 
-
 ## Example
 
 Array pagination
@@ -98,4 +97,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <pagination-example/>
+</ClientOnly>

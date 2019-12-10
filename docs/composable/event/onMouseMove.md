@@ -68,4 +68,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <on-mouse-move-example/>
+</ClientOnly>

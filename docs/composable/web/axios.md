@@ -97,4 +97,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <axios-example/>
+<ClientOnly>

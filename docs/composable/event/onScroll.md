@@ -37,11 +37,11 @@ const { remove } = useOnScroll();
 <template>
   <div>
     Scroll
-    <p>top: {{scrollTop}}</p>
-    <p>left: {{scrollLeft}}</p>
+    <p>top: {{ scrollTop }}</p>
+    <p>left: {{ scrollLeft }}</p>
 
     <div ref="elref" style="overflow:scroll;height:70px;background:gray">
-      <p v-for="x in 10" :key="x">{{x}}</p>
+      <p v-for="x in 10" :key="x">{{ x }}</p>
     </div>
 
     <button @click="remove">remove</button>
@@ -72,4 +72,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <on-scroll-example/>
+</ClientOnly>

@@ -56,4 +56,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <event-example/>
+</ClientOnly>

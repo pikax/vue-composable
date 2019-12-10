@@ -100,4 +100,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <cancellable-promise-example/>
+<ClientOnly>

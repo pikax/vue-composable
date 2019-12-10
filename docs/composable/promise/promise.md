@@ -89,4 +89,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <promise-example/>
+<ClientOnly>

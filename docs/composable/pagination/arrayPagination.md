@@ -85,4 +85,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <array-pagination-example/>
+</ClientOnly>

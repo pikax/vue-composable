@@ -87,4 +87,6 @@ export default {
 
 ### Fetch example
 
+<ClientOnly>
 <fetch-example/>
+<ClientOnly>
