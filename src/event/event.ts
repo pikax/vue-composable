@@ -16,12 +16,12 @@ export function useEvent<K extends keyof DocumentEventMap>(
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 export function useEvent(
-  el: RefElement| RefTyped<Window>,
+  el: any,
   name: string,
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction {
-  const element = wrap(el);
+  const element = wrap(el as Element);
 
   const remove = () => element.value!.removeEventListener(name, listener);
 
