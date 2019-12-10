@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Vue composition-api composable components",
   "main": "index.js",
   "author": {
