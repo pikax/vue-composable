@@ -22,7 +22,7 @@ export function useOnScroll(
   wait?: number
 ): ScrollResult;
 export function useOnScroll(
-  el: RefElement,
+  el: any,
   options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ScrollResult {
