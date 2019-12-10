@@ -14,17 +14,28 @@ export interface IntersectionObserverOptions {
   threshold?: RefTyped<number | number[]> | number | number[];
 }
 
+export interface IntersectionObserverResult {
+  elements: Ref<IntersectionObserverEntry[]>;
+
+  observe: (el: Element) => void;
+  unobserve: (el: Element) => void;
+  disconnect: () => void;
+  readonly isIntersecting: Ref<boolean>;
+
+  debug: () => void;
+}
+
 export function useIntersectionObserver(
   el: RefTyped<Element>,
   options?: RefTyped<IntersectionObserverOptions>
-): any;
+): IntersectionObserverResult;
 export function useIntersectionObserver(
   options: RefTyped<IntersectionObserverOptions>
-): any;
+): IntersectionObserverResult;
 export function useIntersectionObserver(
   refEl?: RefTyped<Element> | RefTyped<IntersectionObserverOptions>,
   refOptions?: RefTyped<IntersectionObserverOptions>
-) {
+): IntersectionObserverResult {
   const wrappedElement = refEl ? wrap(refEl) : undefined;
   const element =
     wrappedElement && (isElement(wrappedElement.value) || !wrappedElement.value)
@@ -35,8 +46,8 @@ export function useIntersectionObserver(
     refOptions
       ? unwrap(refOptions)
       : !element
-      ? unwrap(refEl as RefTyped<IntersectionObserverOptions>)
-      : undefined
+        ? unwrap(refEl as RefTyped<IntersectionObserverOptions>)
+        : undefined
   );
 
   const elements = ref<IntersectionObserverEntry[]>(
@@ -66,10 +77,10 @@ export function useIntersectionObserver(
       const opts: IntersectionObserverInit | undefined =
         (options &&
           options.value && {
-            root: unwrap(options.value.root),
-            rootMargin: unwrap(options.value.rootMargin),
-            threshold: unwrap(options.value.threshold)
-          }) ||
+          root: unwrap(options.value.root),
+          rootMargin: unwrap(options.value.rootMargin),
+          threshold: unwrap(options.value.threshold)
+        }) ||
         undefined;
       observer.value = new IntersectionObserver(handling, opts);
 
@@ -106,7 +117,7 @@ export function useIntersectionObserver(
   }
 
   const debug = () => {
-    if(elements.value.length === 0){ 
+    if (elements.value.length === 0) {
       __DEV__ && console.warn('[IntersectionObserver] no elements provided, did you mount the component?')
       return;
     }
@@ -123,3 +134,4 @@ export function useIntersectionObserver(
     debug
   };
 }
+

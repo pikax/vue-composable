@@ -1,11 +1,16 @@
 <template>
   <div>
-    {{ isIntersecting }}
-    test
+    Visible: {{ isIntersecting }}
 
-    <div ref="el">
-      Element
+    <p>Scroll down</p>
+
+    <div style="height:500px"/>
+
+    <div ref="el" style="background:lightgreen">
+      Hide me
     </div>
+    
+    <p>Scroll up</p>
   </div>
 </template>
 
