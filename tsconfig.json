@@ -15,10 +15,12 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "removeComments": false,
-    "jsx": "preserve",
     "lib": ["esnext", "dom"],
     "types": ["jest", "node"],
     "rootDir": ".",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "paths": {
       "@vue/axios": ["packages/axios/src"],
       "@vue/core": ["packages/core/src"],

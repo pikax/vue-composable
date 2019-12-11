@@ -3,16 +3,19 @@
   "version": "1.0.0-dev.0",
   "description": "@vue-composable/axios",
   "main": "index.js",
-  "module": "dist/core.esm-bundler.js",
+  "module": "dist/axios.esm-bundler.js",
+  "unpkg": "dist/axios.global.js",
   "files": [
     "index.js",
     "dist"
   ],
   "types": "dist/axios.d.ts",
   "buildOptions": {
+    "name": "vueComposableAxios",
     "formats": [
       "esm-bundler",
-      "cjs"
+      "cjs",
+      "global"
     ]
   },
   "repository": {

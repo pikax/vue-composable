@@ -45,7 +45,7 @@
       // add composition api to vue
       Vue.use(vueCompositionApi.default);
     </script>
-    <script src="../dist/vue-composable.umd.js"></script>
+    <script src="../packages/vue-composable/dist/vue-composable.global.js"></script>
     <script>
       const { useFetch, useRetry, exponentialDelay } = vueComposable;
       const { computed, ref, watch } = vueCompositionApi;
