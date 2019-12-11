@@ -1,7 +1,7 @@
 import { Ref, ref } from "@vue/composition-api";
-import {  RefElement, wrap, RefTyped } from "../utils";
+import { RefElement, wrap, RefTyped, useDebounce } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
-import { useDebounce } from "../debounce";
+
 
 export interface ResizeResult {
   height: Ref<number>;

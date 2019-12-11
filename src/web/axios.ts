@@ -1,5 +1,5 @@
-import { ref, computed, watch } from "@vue/composition-api";
-import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import { computed } from "@vue/composition-api";
+import axios, { AxiosRequestConfig } from "axios";
 import { usePromise } from "../promise/promise";
 
 /* istanbul ignore next  */

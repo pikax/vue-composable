@@ -1,5 +1,5 @@
 import { useFetch } from "../../src";
-import { promisedTimeout } from "../../src/utils";
+import { promisedTimeout } from "@vue-composable/core";
 import { nextTick } from "../utils";
 
 describe("fetch", () => {

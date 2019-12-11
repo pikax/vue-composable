@@ -1,6 +1,6 @@
 import { Vue, nextTick } from "../utils";
 import { useOnResize, ResizeResult } from "../../src/event/onResize";
-import { promisedTimeout } from "../../src/utils";
+import { promisedTimeout } from "@vue-composable/core";
 
 describe("onResize", () => {
   it("should add the correct event", async () => {
@@ -16,7 +16,7 @@ describe("onResize", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ResizeResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
@@ -51,7 +51,7 @@ describe("onResize", () => {
     } as any;
     let use: ResizeResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
@@ -78,7 +78,7 @@ describe("onResize", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element, wait);
@@ -115,15 +115,14 @@ describe("onResize", () => {
       clientHeight: 0,
       clientWidth: 0
     } as any;
-    let use: ResizeResult | undefined = undefined;
     const options = {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnResize(element, options);
+        return useOnResize(element, options);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
@@ -150,7 +149,7 @@ describe("onResize", () => {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element, options, wait);

@@ -1,6 +1,6 @@
 import { Ref, ref } from "@vue/composition-api";
 import { Vue } from "../utils";
-import { useEvent } from "../../src/event/event";
+import { useEvent } from "../../src";
 
 describe("event", () => {
   jest.mock("@vue/composition-api");
@@ -123,7 +123,7 @@ describe("event", () => {
 
     let remove: (() => void) | null = null;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         remove = useEvent(element, "load", mockHandler, options);

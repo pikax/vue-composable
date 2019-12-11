@@ -1,6 +1,6 @@
 import { Vue, nextTick } from "../utils";
 import { useOnScroll, ScrollResult } from "../../src/event/onScroll";
-import { promisedTimeout } from "../../src/utils";
+import { promisedTimeout } from "@vue-composable/core";
 
 describe("onScroll", () => {
   it("should add the correct event", async () => {
@@ -16,7 +16,7 @@ describe("onScroll", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ScrollResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
@@ -51,7 +51,7 @@ describe("onScroll", () => {
     } as any;
     let use: ScrollResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
@@ -78,7 +78,7 @@ describe("onScroll", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, wait);
@@ -115,15 +115,14 @@ describe("onScroll", () => {
       scrollTop: 0,
       scrollLeft: 0
     } as any;
-    let use: ScrollResult | undefined = undefined;
     const options = {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnScroll(element, options);
+        return useOnScroll(element, options);
       }
     }).$mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
@@ -150,7 +149,7 @@ describe("onScroll", () => {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, options, wait);

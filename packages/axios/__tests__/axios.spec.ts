@@ -1,7 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { useAxios } from "../../src";
-import { promisedTimeout } from "../../src/utils";
-import { nextTick } from "../utils";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { useAxios } from "../src";
 
 jest.mock("axios");
 
@@ -66,7 +64,6 @@ describe("axios", () => {
       exec,
       client,
       error,
-      result,
       data,
       status,
       statusText
@@ -104,8 +101,6 @@ describe("axios", () => {
     const {
       exec,
       client,
-      error,
-      result,
       data,
       status,
       statusText

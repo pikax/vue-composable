@@ -1,6 +1,6 @@
-import { useLocalStorage } from "../src/localStorage";
-import { nextTick } from "./utils";
-import { promisedTimeout } from "../src/utils";
+import { useLocalStorage } from "../../src";
+import { nextTick } from "../utils";
+import { promisedTimeout } from "@vue-composable/core";
 
 describe("localStorage", () => {
   const _localStorage = localStorage;
@@ -136,7 +136,7 @@ describe("localStorage", () => {
     });
   });
 
-  
+
   it("should load from localStorage", () => {
     const key = "hello";
     localStorage.setItem(key, JSON.stringify({ k: 1 }));

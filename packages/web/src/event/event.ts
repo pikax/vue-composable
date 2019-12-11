@@ -1,5 +1,5 @@
-import { Ref, isRef, onMounted, onUnmounted } from "@vue/composition-api";
-import { RefTyped , wrap} from "../utils";
+import { onMounted, onUnmounted } from "@vue/composition-api";
+import { RefTyped, wrap } from "@vue-composable/core";
 
 export type RemoveEventFunction = () => void;
 

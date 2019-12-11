@@ -1,6 +1,6 @@
 import { Vue, nextTick } from "../utils";
 import { useOnMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
-import { promisedTimeout } from "../../src/utils";
+import { promisedTimeout } from '@vue-composable/core'
 import { ref, Ref } from "@vue/composition-api";
 
 describe("onMouseMove", () => {
@@ -15,7 +15,7 @@ describe("onMouseMove", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: MouseMoveResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element);
@@ -47,7 +47,7 @@ describe("onMouseMove", () => {
     } as any;
     let use: MouseMoveResult | undefined = undefined;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element);
@@ -72,7 +72,7 @@ describe("onMouseMove", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element, wait);
@@ -107,15 +107,14 @@ describe("onMouseMove", () => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn()
     }) as any;
-    let use: MouseMoveResult | undefined = undefined;
     const options = {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
-        use = useOnMouseMove(element, options);
+        return useOnMouseMove(element, options);
       }
     }).$mount();
     expect(element.value.addEventListener).toHaveBeenCalledWith(
@@ -124,7 +123,7 @@ describe("onMouseMove", () => {
       options
     );
   });
-  
+
   it("should pass options to the event listener and be debounced", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
@@ -140,7 +139,7 @@ describe("onMouseMove", () => {
       passive: true
     };
 
-    const vm = new Vue({
+    new Vue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element, options, wait);
