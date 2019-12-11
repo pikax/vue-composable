@@ -1,0 +1,44 @@
+{
+  "name": "@vue-composable/core",
+  "version": "1.0.0-dev.0",
+  "description": "@vue-composable/core",
+  "main": "index.js",
+  "module": "dist/core.esm-bundler.js",
+  "browser": "dist/core.global.js",
+  "unpkg": "dist/core.global.js",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/core.d.ts",
+  "buildOptions": {
+    "priority": 1,
+    "name": "VueComposableCore",
+    "formats": [
+      "esm-bundler",
+      "cjs",
+      "global"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikax/vue-composable.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "pikax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pikax/vue-composable/issues"
+  },
+  "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
+  "dependencies": {
+    "@vue/composition-api": "^0.3.4",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/composition-api": "^0.3.4",
+    "vue": "^2.6.10"
+  }
+}

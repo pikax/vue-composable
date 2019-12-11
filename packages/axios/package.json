@@ -1,0 +1,36 @@
+{
+  "name": "@vue-composable/axios",
+  "version": "1.0.0-dev.0",
+  "description": "@vue-composable/axios",
+  "main": "index.js",
+  "module": "dist/core.esm-bundler.js",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/axios.d.ts",
+  "buildOptions": {
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikax/vue-composable.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "pikax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pikax/vue-composable/issues"
+  },
+  "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/axios#readme",
+  "dependencies": {
+    "@vue-composable/core": "1.0.0-dev.0",
+    "@vue/composition-api": "^0.3.4",
+    "axios": "^0.19.0"
+  }
+}

@@ -1,24 +1,33 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "moduleResolution": "node",
-    "target": "esnext",
-    "module":"esnext",
-    "lib": ["es2015", "es2016", "es2017", "dom"],
-    "strict": true,
-    "sourceMap": false,
-    "declaration": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "sourceMap": false,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
+    "types": ["jest", "node"],
+    "rootDir": ".",
+    "paths": {
+      "@vue/axios": ["packages/axios/src"],
+      "@vue/core": ["packages/core/src"],
+      "@vue/shared": ["packages/shared/src"]
+    }
   },
   "include": [
-    "types/global.d.ts",
-    "src",
-    "__tests__"
+    "packages/global.d.ts",
+    "packages/*/src",
+    "packages/*/__tests__"
   ]
 }

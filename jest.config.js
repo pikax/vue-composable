@@ -13,9 +13,10 @@ module.exports = {
     coverageReporters: ['html', 'lcov', 'text'],
     collectCoverageFrom: [
       'src/**/*.ts',
+      'packages/*/src/**/*.ts',
     ],
     watchPathIgnorePatterns: ['/node_modules/'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
     rootDir: __dirname,
-    testMatch: ['<rootDir>/__tests__/**/*spec.[jt]s?(x)']
+    testMatch: ['<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)']
   }
