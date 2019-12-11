@@ -1,1 +1,2 @@
-console.log(1);
+export * from "./event";
+export * from "./web";
