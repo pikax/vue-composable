@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.2",
+  "version": "1.0.0-dev.0",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
@@ -10,7 +10,6 @@
     "index.js",
     "dist"
   ],
-  "private": false,
   "types": "dist/core.d.ts",
   "buildOptions": {
     "priority": 1,

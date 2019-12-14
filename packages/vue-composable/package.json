@@ -1,11 +1,10 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-dev.2",
+  "version": "1.0.0-dev.0",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
   "unpkg": "dist/vue-composable.global.js",
-  "private": false,
   "files": [
     "index.js",
     "dist"
@@ -35,8 +34,8 @@
   },
   "homepage": "https://github.com/pikax/vue-composable",
   "dependencies": {
-    "@vue-composable/core": "^1.0.0-dev.2",
-    "@vue-composable/web": "^1.0.0-dev.2",
+    "@vue-composable/core": "^1.0.0-dev.0",
+    "@vue-composable/web": "^1.0.0-dev.0",
     "@vue/composition-api": "^0.3.4",
     "vue": "^2.6.10"
   }
