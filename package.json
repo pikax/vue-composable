@@ -19,7 +19,6 @@
   "files": [
     "dist"
   ],
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
