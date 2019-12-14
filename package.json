@@ -1,8 +1,9 @@
 {
-  "name": "vue-composable",
   "version": "1.0.0-dev.0",
+  "name": "vue-composable-monorepo",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "description": "Vue composition-api composable components",
   "main": "index.js",
