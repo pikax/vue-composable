@@ -5,6 +5,7 @@
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
   "unpkg": "dist/vue-composable.global.js",
+  "private": false,
   "files": [
     "index.js",
     "dist"

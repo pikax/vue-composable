@@ -8,6 +8,7 @@
     "index.js",
     "dist"
   ],
+  "private": false,
   "types": "dist/web.d.ts",
   "buildOptions": {
     "formats": [
