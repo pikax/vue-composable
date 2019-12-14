@@ -1,5 +1,4 @@
 {
-  "name": "vue-composable",
   "version": "1.0.0-dev.0",
   "workspaces": [
     "packages/*"
@@ -24,6 +23,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
+    "release": "node scripts/release.js",
     "old:build": "rollup -c rollup.config.js",
     "old:start": "rollup -c rollup.config.js -w",
     "test": "jest --coverage",
@@ -54,11 +54,13 @@
     "axios": "^0.19.0",
     "chalk": "^3.0.0",
     "coveralls": "^3.0.7",
+    "enquirer": "^2.3.2",
     "execa": "^3.4.0",
     "fs-extra": "^8.1.0",
     "jest": "^24.9.0",
     "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.0",
+    "lerna": "^3.19.0",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.0",
     "mock-socket": "^9.0.2",
@@ -67,8 +69,10 @@
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.25.1",
     "ts-jest": "^24.1.0",
+    "tsd": "^0.11.0",
     "typescript": "^3.6.4",
     "vue": "^2.6.10",
     "vuepress": "^1.2.0"
-  }
+  },
+  "name": "vue-composable"
 }
