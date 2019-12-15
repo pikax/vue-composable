@@ -35,9 +35,5 @@
   "peerDependencies": {
     "@vue/composition-api": "^0.3.4",
     "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/composition-api": "^0.3.4",
-    "vue": "^2.6.10"
   }
 }
