@@ -25,7 +25,10 @@
     "url": "git+https://github.com/pikax/vue-composable.git"
   },
   "keywords": [
-    "vue"
+    "vue",
+    "composition-api",
+    "vue-composable",
+    "composable"
   ],
   "author": "pikax",
   "license": "MIT",
