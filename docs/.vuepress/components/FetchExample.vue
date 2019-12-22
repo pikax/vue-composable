@@ -18,7 +18,7 @@
 
 <script>
 import {ref, watch} from '@vue/composition-api';
-import {useFetch} from '../../../';
+import {useFetch} from '../../../packages/web';
 
 export default {
   name: "fetch-example",

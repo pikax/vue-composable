@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { useLocalStorage } from "../../../";
+import { useLocalStorage } from "../../../packages/web";
 export default {
   name: "local-storage-example",
 

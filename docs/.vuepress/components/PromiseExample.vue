@@ -21,7 +21,7 @@
 
 <script>
 import { ref } from "@vue/composition-api";
-import { usePromise } from "../../..";
+import { usePromise } from "../../../packages/core";
 
 export default {
   name: "promise-example",

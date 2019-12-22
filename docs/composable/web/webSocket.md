@@ -60,7 +60,7 @@ const { send, close } = useWebSocket();
 </template>
 
 <script>
-import { useWebSocket } from "../../../";
+import { useWebSocket } from "vue-composable";
 export default {
   name: "web-socket-example",
   setup() {

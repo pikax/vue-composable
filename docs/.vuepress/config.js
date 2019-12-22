@@ -196,9 +196,14 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/web/fetch", "fetch"],
-            ["composable/web/axios", "axios"],
             ["composable/web/webSocket", "webSocket"]
           ]
+        },
+        {
+          title: "External",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/external/axios", "axios"]]
         }
       ]
     },

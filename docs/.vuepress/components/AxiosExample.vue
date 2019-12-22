@@ -15,7 +15,7 @@
 
 <script>
 import { ref, watch } from '@vue/composition-api';
-import { useAxios } from '../../../';
+import { useAxios } from '../../../packages/axios';
 
 export default {
   name: "axios-example",

@@ -43,7 +43,8 @@ export function useOnResize(
     handler = useDebounce(handler, wait);
   }
 
-  const remove = useEvent(element, "resize", handler, eventOptions);
+  // resize seems only to be fired against the window
+  const remove = useEvent(window, "resize", handler, eventOptions);
 
   return {
     height,

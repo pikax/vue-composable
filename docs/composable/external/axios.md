@@ -4,6 +4,17 @@
 
 Provides a wrapper to use [axios](https://github.com/axios/axios).
 
+## Installing
+
+```bash
+# install with yarn
+yarn add @vue-composable/axios
+
+# install with npm
+npm install @vue-composable/axios
+```
+
+
 ## State
 
 The `useAxios` function exposes the following reactive state:
@@ -69,7 +80,7 @@ const { exec } = useAxios();
 
 <script>
 import { ref, watch } from "@vue/composition-api";
-import { useAxios } from "../../../";
+import { useAxios } from "@vue-composable/axios";
 
 export default {
   name: "axios-example",
@@ -99,4 +110,4 @@ export default {
 
 <ClientOnly>
 <axios-example/>
-<ClientOnly>
+</ClientOnly>

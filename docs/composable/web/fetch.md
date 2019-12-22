@@ -89,4 +89,4 @@ export default {
 
 <ClientOnly>
 <fetch-example/>
-<ClientOnly>
+</ClientOnly>

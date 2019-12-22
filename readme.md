@@ -48,9 +48,14 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### Web
 
-- [Axios](https://pikax.me/vue-composable/composable/web/axios) - reactive `axios` wrapper client
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
+
+### External
+
+> New packages needed
+
+- [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 
 ## Examples
 

@@ -48,7 +48,7 @@ const { remove } = useOnResize();
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnResize } from "../../../";
+import { useOnResize } from "vue-composable";
 
 export default {
   name: "on-resize-example",

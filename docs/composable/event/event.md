@@ -29,7 +29,7 @@ const { remove } = useEvent(element, name, listener);
 
 <script>
 import { reactive, ref } from '@vue/composition-api';
-import { useEvent } from "../../../";
+import { useEvent } from "vue-composable";
 
 export default {
   name: 'event-example',

@@ -1,8 +1,8 @@
 <template>
   <div>
     Window Resize
-    <p>height: {{height}}</p>
-    <p>width: {{width}}</p>
+    <p>height: {{ height }}</p>
+    <p>width: {{ width }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnResize } from "../../../";
+import { useOnResize } from "../../../packages/web";
 
 export default {
   name: "on-resize-example",

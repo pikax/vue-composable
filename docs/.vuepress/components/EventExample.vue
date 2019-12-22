@@ -10,7 +10,7 @@
 
 <script>
 import { reactive, ref } from '@vue/composition-api';
-import { useEvent } from "../../../";
+import { useEvent } from "../../../packages/web";
 
 export default {
   name: 'event-example',

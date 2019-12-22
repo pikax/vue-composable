@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { useArrayPagination } from '../../../';
+import { useArrayPagination } from '../../../packages/core';
 
 export default {
   name:"array-pagination-example",

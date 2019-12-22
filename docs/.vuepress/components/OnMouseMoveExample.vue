@@ -10,7 +10,7 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnMouseMove } from "../../../";
+import { useOnMouseMove } from "../../../packages/web";
 
 export default {
   name: "on-mouse-move-example",
