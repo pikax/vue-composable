@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue-composable/axios": "^1.0.0-dev.0",
     "@vue/composition-api": "^0.3.2",
     "vue": "^2.6.10",
     "vue-composable": "^1.0.0-dev.1",
@@ -15,8 +16,8 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.6.0",
-    "@vue/cli-service": "3.6.0",
-    "vue-template-compiler": "2.6.10"
+    "@vue/cli-service": "^3.6.0",
+    "vue-template-compiler": "^2.6.11"
   },
   "postcss": {
     "plugins": {

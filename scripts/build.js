@@ -4,8 +4,10 @@
 
 const fs = require("fs-extra");
 const path = require("path");
-const execa = require('execa')
+const execa = require("execa");
 const chalk = require("chalk");
+const { gzipSync } = require('zlib')
+const { compress } = require('brotli')
 const { targets: allTargets, fuzzyMatchTarget } = require("./utils");
 
 const args = require("minimist")(process.argv.slice(2));
@@ -17,7 +19,7 @@ const isRelease = args.release;
 const buildTypes = args.t || args.types || isRelease || true;
 const buildAllMatching = args.all || args.a;
 const lean = args.lean || args.l;
-const commit = execa.sync('git', ['rev-parse', 'HEAD']).stdout.slice(0, 7)
+const commit = execa.sync("git", ["rev-parse", "HEAD"]).stdout.slice(0, 7);
 
 run();
 
@@ -30,10 +32,11 @@ function run() {
 }
 
 async function buildAll(targets) {
-//   return await Promise.all(targets.map(build));
+  //   return await Promise.all(targets.map(build));
   for (const target of targets) {
-    await build(target)
+    await build(target);
   }
+  checkAllSizes(targets);
 }
 
 async function build(target) {
@@ -115,5 +118,34 @@ async function build(target) {
     }
 
     await fs.remove(`${pkgDir}/dist/packages`);
+  }
+}
+
+function checkAllSizes(targets) {
+  if (devOnly) {
+    return;
+  }
+  console.log();
+  for (const target of targets) {
+    checkSize(target);
+  }
+  console.log();
+}
+
+function checkSize(target) {
+  const pkgDir = path.resolve(`packages/${target}`);
+  const esmProdBuild = `${pkgDir}/dist/${target}.global.prod.js`;
+  if (fs.existsSync(esmProdBuild)) {
+    const file = fs.readFileSync(esmProdBuild);
+    const minSize = (file.length / 1024).toFixed(2) + "kb";
+    const gzipped = gzipSync(file);
+    const gzippedSize = (gzipped.length / 1024).toFixed(2) + "kb";
+    const compressed = compress(file);
+    const compressedSize = (compressed.length / 1024).toFixed(2) + "kb";
+    console.log(
+      `${chalk.gray(
+        chalk.bold(target)
+      )} min:${minSize} / gzip:${gzippedSize} / brotli:${compressedSize}`
+    );
   }
 }
