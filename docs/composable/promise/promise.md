@@ -59,7 +59,7 @@ const { exec } = usePromise();
 
 <script>
 import { ref } from "@vue/composition-api";
-import { usePromise } from "../../..";
+import { usePromise } from "vue-composable";
 
 export default {
   name: "promise-example",
@@ -91,4 +91,4 @@ export default {
 
 <ClientOnly>
 <promise-example/>
-<ClientOnly>
+</ClientOnly>

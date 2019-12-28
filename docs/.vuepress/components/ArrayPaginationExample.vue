@@ -14,10 +14,11 @@
 </template>
 
 <script>
-import { useArrayPagination } from '../../../';
+// import { useArrayPagination } from '../../../packages/core';
+import { useArrayPagination } from "vue-composable";
 
 export default {
-  name:"array-pagination-example",
+  name: "array-pagination-example",
   setup() {
     const array = new Array(1000).fill(0).map((_, i) => i);
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(

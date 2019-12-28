@@ -39,7 +39,7 @@
       // add composition api to vue
       Vue.use(vueCompositionApi.default);
     </script>
-    <script src="../dist/vue-composable.umd.js"></script>
+    <script src="../packages/vue-composable/dist/vue-composable.global.js"></script>
     <script>
       const { useCancellablePromise } = vueComposable;
       const { computed, ref, watch } = vueCompositionApi;
@@ -56,8 +56,9 @@
             cancelled,
             result
           } = useCancellablePromise(delay =>
-            fetch(`https://reqres.in/api/users?delay=${delay}`)
-              .then(x => x.json())
+            fetch(`https://reqres.in/api/users?delay=${delay}`).then(x =>
+              x.json()
+            )
           );
 
           const delay = ref(1);
