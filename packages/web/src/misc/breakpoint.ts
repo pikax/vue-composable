@@ -1,6 +1,6 @@
 import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
-import { RemoveEventFunction } from "./event";
-import { useMatchMedia } from "../web/matchMedia";
+import { RemoveEventFunction } from "../event/event";
+import { useMatchMedia } from "./matchMedia";
 import { useDebounce, isNumber } from "@vue-composable/core";
 
 export function useBreakpoint<T>(

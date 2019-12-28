@@ -51,11 +51,12 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Mouse Move](composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
 - [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
-- [Breakpoint](composable/event/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ### MISC
 
 - [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
+- [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
+- [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ### Pagination
 
@@ -73,7 +74,6 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Fetch](composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
-- [MatchMedia](composable/web/matchMedia) - reactive `MatchMedia`
 
 ### External
 

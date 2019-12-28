@@ -163,15 +163,18 @@ module.exports = {
             ["composable/event/event", "event"],
             ["composable/event/onMouseMove", "onMouseMove"],
             ["composable/event/onResize", "onResize"],
-            ["composable/event/onScroll", "onScroll"],
-            ["composable/event/breakpoint", "breakpoint"]
+            ["composable/event/onScroll", "onScroll"]
           ]
         },
         {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/misc/localStorage", "localStorage"]]
+          children: [
+            ["composable/misc/localStorage", "localStorage"],
+            ["composable/web/matchMedia", "matchMedia"],
+            ["composable/event/breakpoint", "breakpoint"]
+          ]
         },
         {
           title: "Pagination",
@@ -198,8 +201,7 @@ module.exports = {
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/webSocket", "webSocket"],
-            ["composable/web/intersectionObserver", "IntersectionObserver"],
-            ["composable/web/matchMedia", "matchMedia"]
+            ["composable/web/intersectionObserver", "IntersectionObserver"]
           ]
         },
         {
@@ -216,7 +218,7 @@ module.exports = {
         selectText: "Languages",
         editLinkText: "Help us improve this page!",
         nav: [
-          { text: "Composable", link: "/composable/" },
+          { text: "Composable", link: "/composable/" }
           // { text: "Examples", link: "/examples/" }
         ]
       }
