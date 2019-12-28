@@ -196,11 +196,16 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/web/fetch", "fetch"],
-            ["composable/web/axios", "axios"],
             ["composable/web/webSocket", "webSocket"],
             ["composable/web/intersectionObserver", "IntersectionObserver"]
-            
+
           ]
+        },
+        {
+          title: "External",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/external/axios", "axios"]]
         }
       ]
     },
@@ -211,7 +216,7 @@ module.exports = {
         editLinkText: "Help us improve this page!",
         nav: [
           { text: "Composable", link: "/composable/" },
-          { text: "Examples", link: "/examples/" }
+          // { text: "Examples", link: "/examples/" }
         ]
       }
     }

@@ -64,7 +64,7 @@ const { next, prev, first, last } = useArrayPagination();
 </template>
 
 <script>
-import { useArrayPagination } from '../../../';
+import { useArrayPagination } from 'vue-composable';
 
 export default {
   name:"array-pagination-example",
@@ -85,4 +85,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <array-pagination-example/>
+</ClientOnly>

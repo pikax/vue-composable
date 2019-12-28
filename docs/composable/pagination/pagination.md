@@ -37,7 +37,6 @@ const { next, prev, first, last } = usePagination();
 | `first()` | Sets currentPage to `1`       |
 | `last()`  | Sets currentPage = `lastPage` |
 
-
 ## Example
 
 Array pagination
@@ -58,7 +57,7 @@ Array pagination
 
 <script>
 import { reactive, ref, computed } from "@vue/composition-api";
-import { usePagination } from "../../..";
+import { usePagination } from "vue-composable";
 
 export default {
   name: "pagination-example",
@@ -98,4 +97,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <pagination-example/>
+</ClientOnly>

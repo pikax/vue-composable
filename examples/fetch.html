@@ -1,62 +1,55 @@
 <html>
-
-<head>
+  <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-      Vue.config.devtools = true
+      Vue.config.devtools = true;
     </script>
-</head>
-<body>
-
-  <div id="app">
-    <p>current Id {{id}}</p>
-    <p>
-      <button @click="id--">prev</button>
-      <button @click="id++">next</button>
-    </p>
-    <p v-if="loading">
+  </head>
+  <body>
+    <div id="app">
+      <p>current Id {{id}}</p>
+      <p>
+        <button @click="id--">prev</button>
+        <button @click="id++">next</button>
+      </p>
+      <p v-if="loading">
         loading...
-    </p>
-    <div v-else>
-        <p> Status: {{status}} </p>
+      </p>
+      <div v-else>
+        <p>Status: {{status}}</p>
         {{ json }}
+      </div>
     </div>
 
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
+    <script>
+      // add composition api to vue
+      Vue.use(vueCompositionApi.default);
+    </script>
+    <script src="../packages/vue-composable/dist/vue-composable.global.js"></script>
+    <script>
+      const { useFetch } = vueComposable;
+      const { computed, ref, watch } = vueCompositionApi;
 
+      new Vue({
+        el: "#app",
 
-  <script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@0.3.2/dist/vue-composition-api.umd.js"></script>
-  <script>
-    // add composition api to vue
-    Vue.use(vueCompositionApi.default);
-  </script>
-  <script src="../dist/vue-composable.umd.js"></script>
-  <script>
-    const {
-      useFetch 
-    } = vueComposable;
-    const { computed, ref, watch} = vueCompositionApi;
-    
-    new Vue({
-      el: "#app",
+        setup() {
+          const id = ref(1);
+          const { json, loading, exec, error, status } = useFetch();
 
-      setup(){
-        const id = ref(1);
-        const {json , loading, exec, error, status} = useFetch();
+          watch(id, id => {
+            exec("https://reqres.in/api/user/" + id);
+          });
 
-        watch(id, (id)=>{
-            exec('https://reqres.in/api/user/'+id);
-        })
-
-        return {
+          return {
             id,
             json,
             loading,
             status
+          };
         }
-      }
-    })
-  </script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>

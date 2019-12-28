@@ -16,7 +16,7 @@
 
 <script>
 import {ref, watch, reactive} from '@vue/composition-api';
-import {useIntersectionObserver} from '../../../';
+import {useIntersectionObserver} from 'vue-composable';
 
 export default {
   name: "intersection-observer-example",

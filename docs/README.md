@@ -69,10 +69,15 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Web
 
-- [Axios](composable/web/axios) - reactive `axios` wrapper client
 - [Fetch](composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
+
+### External
+
+> New packages needed
+
+- [Axios](composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 
 ## Usage
 

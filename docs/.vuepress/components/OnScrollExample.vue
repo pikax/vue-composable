@@ -14,7 +14,7 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnScroll } from "../../..";
+import { useOnScroll } from "vue-composable";
 
 export default {
   name: "on-scroll-example",
