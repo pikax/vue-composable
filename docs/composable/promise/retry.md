@@ -73,7 +73,7 @@ const { cancel, exec } = useRetry();
 
 <script>
 import { ref, watch } from "@vue/composition-api";
-import { useFetch, useRetry, exponentialDelay } from "../../../";
+import { useFetch, useRetry, exponentialDelay } from "vue-composable";
 
 export default {
   name: "retry-example",
@@ -131,4 +131,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <retry-example/>
+</ClientOnly>

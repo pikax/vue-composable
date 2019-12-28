@@ -9,9 +9,9 @@ Base composable used in the other element composables
 The `useEvent` function exposes the following methods:
 
 ```js
-import { useFetch } from "vue-composable";
+import { useEvent } from "vue-composable";
 
-const { cancel } = useFetch(elem);
+const { remove } = useEvent(element, name, listener);
 ```
 
 ## Example
@@ -29,7 +29,7 @@ const { cancel } = useFetch(elem);
 
 <script>
 import { reactive, ref } from '@vue/composition-api';
-import { useEvent } from "../../../";
+import { useEvent } from "vue-composable";
 
 export default {
   name: 'event-example',
@@ -56,4 +56,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <event-example/>
+</ClientOnly>

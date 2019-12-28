@@ -68,7 +68,7 @@ const { exec, cancel } = useCancellablePromise();
 
 <script>
 import { ref } from "@vue/composition-api";
-import { useCancellablePromise } from "../../..";
+import { useCancellablePromise } from "vue-composable";
 export default {
   name: "cancellable-promise-example",
   setup() {
@@ -100,4 +100,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <cancellable-promise-example/>
+</ClientOnly>
