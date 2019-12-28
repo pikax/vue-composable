@@ -1,18 +1,16 @@
-# 
+#
 
 > The [mousemove event](https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event).
 
+## Parameters
 
-## Parameters 
 ```js
 import { useOnScroll } from "vue-composable";
 
 const scroll = useOnScroll(options);
 ```
 
-| Parameters      | Type     | Description         |
-
-
+| Parameters | Type | Description |
 
 ## State
 
@@ -51,4 +49,6 @@ const { remove } = useOnScroll();
 
 ### Code
 
+<ClientOnly>
 <on-scroll-example/>
+</ClientOnly>

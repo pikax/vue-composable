@@ -73,6 +73,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Fetch](composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
+- [MatchMedia](composable/web/matchMedia) - reactive `MatchMedia`
 
 ### External
 
@@ -119,4 +120,6 @@ export default {
 
 ### Pagination example
 
+<ClientOnly>
 <array-pagination-example/>
+</ClientOnly>

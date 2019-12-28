@@ -1,4 +1,4 @@
-import { ref } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/composition-api";
 
 export function useMatchMedia(query: string) {
   const mediaQueryList = ref<MediaQueryList>(matchMedia(query));
@@ -12,6 +12,9 @@ export function useMatchMedia(query: string) {
 
   const remove = () =>
     mediaQueryList.value.removeEventListener("change", process);
+
+
+  onUnmounted(remove);
 
   return {
     mediaQueryList,

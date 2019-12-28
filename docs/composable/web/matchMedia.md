@@ -1,4 +1,4 @@
-#
+# MatchMedia
 
 > The [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia).
 
@@ -10,8 +10,9 @@ import { useMatchMedia } from "vue-composable";
 const matchMedia = useMatchMedia(mediaQueryString);
 ```
 
-| Parameters | Type | Description |
-|mediaQueryString| string| A string representing the media query to parse.
+| Parameters       | Type     | Description                                     |
+| ---------------- | -------- | ----------------------------------------------- |
+| mediaQueryString | `String` | A string representing the media query to parse. |
 
 ## State
 
@@ -20,13 +21,13 @@ The `useMatchMedia` function exposes the following reactive state:
 ```js
 import { useMatchMedia } from "vue-composable";
 
-const { scrollTop, scrollLeft } = useMatchMedia();
+const { scrollTop, matches } = useMatchMedia();
 ```
 
-| State      | Type     | Description         |
-| ---------- | -------- | ------------------- |
-| scrollTop  | `Number` | Scroll top position |
-| scrollLeft | `Number` | Scroll let position |
+| State          | Type                                                                              | Description                                                                                          |
+| -------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| mediaQueryList | [MediaQueryList](https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList) | List of objects stores information on a media query                                                  |
+| matches        | `Boolean`                                                                         | A Boolean that returns true if the document currently matches the media query list, or false if not. |
 
 ## Methods
 
@@ -45,9 +46,26 @@ const { remove } = useMatchMedia();
 ## Example
 
 ```vue
+<template>
+  <div>
+    <p>Screen less than 600px: <b>{{ matches }}</b></p>
+  </div>
+</template>
 
+<script>
+import { useMatchMedia } from "vue-composable";
+
+export default {
+  name: "match-media-example",
+  setup() {
+    return useMatchMedia("(max-width: 600px)");
+  }
+};
+</script>
 ```
 
 ### Code
 
-<on-scroll-example/>
+<ClientOnly>
+<match-media-example/>
+</ClientOnly>
