@@ -53,7 +53,7 @@
     "chalk": "^3.0.0",
     "coveralls": "^3.0.7",
     "enquirer": "^2.3.2",
-    "execa": "^3.4.0",
+    "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
     "jest": "^24.9.0",
     "jest-junit": "^10.0.0",
