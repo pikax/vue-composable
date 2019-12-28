@@ -23,6 +23,8 @@ jobs:
         frozen-lockfile: true
           
     - run: yarn
+      
+    - run: yarn build
 
     - run: yarn docs:build
 
