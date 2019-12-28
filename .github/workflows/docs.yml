@@ -3,7 +3,7 @@ name: github pages
 on:
   push:
     paths: 
-      - "docs"
+      - "docs/**"
     branches:
     - master
 
