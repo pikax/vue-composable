@@ -34,6 +34,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [localStorage](https://pikax.me/vue-composable/composable/misc/localStorage) - Reactive access to a `localStorage`
+- [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
+- [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ### Pagination
 
@@ -50,6 +52,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
+- [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) - reactive `IntersectionObserver`
 
 ### External
 
@@ -103,6 +106,14 @@ export default {
 };
 </script>
 ```
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b feat/new-composable`
+3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+4. Push to the branch: `git push origin feat/new-composable`
+5. Submit a pull request
 
 ## License
 

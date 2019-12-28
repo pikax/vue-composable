@@ -39,9 +39,21 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 <!-- TODO SET CORRECT url -->
 
-[pagination]: https://github.com/pikax/vue-composable
-[array-pagination]: https://github.com/pikax/vue-composable
-[promise]: https://github.com/pikax/vue-composable
-[retry]: https://github.com/pikax/vue-composable
-[cancellable-promise]: https://github.com/pikax/vue-composable
+[pagination]: https://pikax.me/vue-composable/composable/pagination/pagination
+[array-pagination]: https://pikax.me/vue-composable/composable/pagination/arrayPagination
+[promise]: https://pikax.me/vue-composable/composable/promise/promise
+[retry]: https://pikax.me/vue-composable/composable/promise/retry
+[cancellable-promise]: https://pikax.me/vue-composable/composable/promise/cancellablePromise
 [debounce]: https://github.com/pikax/vue-composable
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b feat/new-composable`
+3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+4. Push to the branch: `git push origin feat/new-composable`
+5. Submit a pull request
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
