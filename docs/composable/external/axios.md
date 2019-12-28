@@ -20,7 +20,7 @@ npm install @vue-composable/axios
 The `useAxios` function exposes the following reactive state:
 
 ```js
-import { useAxios } from "vue-composable";
+import { useAxios } from "@vue-composable/axios";
 
 const {
   client,
@@ -51,7 +51,7 @@ const {
 The `useAxios` function exposes the following methods:
 
 ```js
-import { useAxios } from "vue-composable";
+import { useAxios } from "@vue-composable/axios";
 
 const { exec } = useAxios();
 ```

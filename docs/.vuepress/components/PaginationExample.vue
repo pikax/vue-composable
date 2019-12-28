@@ -13,7 +13,7 @@
 
 <script>
 import { reactive, ref, computed } from "@vue/composition-api";
-import { usePagination } from "../../../packages/core";
+import { usePagination } from "vue-composable";
 
 export default {
   name: "pagination-example",

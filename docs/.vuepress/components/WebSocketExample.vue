@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { useWebSocket } from "../../../packages/web";
+import { useWebSocket } from "vue-composable";
 export default {
   name: "web-socket-example",
   setup() {

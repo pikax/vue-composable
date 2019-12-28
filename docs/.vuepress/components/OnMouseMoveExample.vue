@@ -1,8 +1,8 @@
 <template>
   <div ref="elref">
     Mouse Move
-    <p>x: {{mouseX}}</p>
-    <p>y: {{mouseY}}</p>
+    <p>x: {{ mouseX }}</p>
+    <p>y: {{ mouseY }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnMouseMove } from "../../../packages/web";
+import { useOnMouseMove } from "vue-composable";
 
 export default {
   name: "on-mouse-move-example",

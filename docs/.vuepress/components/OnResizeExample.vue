@@ -10,7 +10,7 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnResize } from "../../../packages/web";
+import { useOnResize } from "vue-composable";
 
 export default {
   name: "on-resize-example",

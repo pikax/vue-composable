@@ -24,7 +24,7 @@
 
 <script>
 import { ref } from "@vue/composition-api";
-import { useCancellablePromise } from "../../../packages/core";
+import { useCancellablePromise } from "vue-composable";
 export default {
   name: "cancellable-promise-example",
   setup() {

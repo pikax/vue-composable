@@ -214,7 +214,7 @@ module.exports = {
         editLinkText: "Help us improve this page!",
         nav: [
           { text: "Composable", link: "/composable/" },
-          { text: "Examples", link: "/examples/" }
+          // { text: "Examples", link: "/examples/" }
         ]
       }
     }

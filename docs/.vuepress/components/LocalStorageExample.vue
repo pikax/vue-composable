@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { useLocalStorage } from "../../../packages/web";
+import { useLocalStorage } from "vue-composable";
 export default {
   name: "local-storage-example",
 
