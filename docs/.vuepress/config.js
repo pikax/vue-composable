@@ -172,8 +172,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/misc/localStorage", "localStorage"],
-            ["composable/web/matchMedia", "matchMedia"],
-            ["composable/event/breakpoint", "breakpoint"]
+            ["composable/misc/matchMedia", "matchMedia"],
+            ["composable/misc/breakpoint", "breakpoint"]
           ]
         },
         {
