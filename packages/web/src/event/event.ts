@@ -21,11 +21,11 @@ export function useEvent(
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction {
-  const element = wrap(el);
+  const element = wrap(el as Element);
 
-  const remove = () => element.value.removeEventListener(name, listener);
+  const remove = () => element.value!.removeEventListener(name, listener);
 
-  onMounted(() => element.value.addEventListener(name, listener, options));
+  onMounted(() => element.value!.addEventListener(name, listener, options));
   onUnmounted(remove);
 
   return remove;

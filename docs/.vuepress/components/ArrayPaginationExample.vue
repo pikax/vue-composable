@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import { useArrayPagination } from '../../../packages/core';
 import { useArrayPagination } from "vue-composable";
 
 export default {

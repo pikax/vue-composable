@@ -196,7 +196,9 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/web/fetch", "fetch"],
-            ["composable/web/webSocket", "webSocket"]
+            ["composable/web/webSocket", "webSocket"],
+            ["composable/web/intersectionObserver", "IntersectionObserver"]
+
           ]
         },
         {
