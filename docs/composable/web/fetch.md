@@ -11,7 +11,7 @@ import { useFetch } from "vue-composable";
 
 const { loading, json, text, error, exec } = useFetch();
 
-exec("./api/")
+exec("./api/");
 ```
 
 | State      | Type            | Description                             |
@@ -41,6 +41,12 @@ const { exec } = useFetch();
 | `exec`    | Executes the request similar to `fetch`.                                                                                            |
 
 ## Example
+
+<ClientOnly>
+<fetch-example/>
+</ClientOnly>
+
+### Code
 
 ```vue
 <template>
@@ -84,9 +90,3 @@ export default {
 };
 </script>
 ```
-
-### Fetch example
-
-<ClientOnly>
-<fetch-example/>
-</ClientOnly>

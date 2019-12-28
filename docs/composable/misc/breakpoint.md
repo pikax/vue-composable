@@ -43,6 +43,12 @@ const { remove } = useBreakpoint();
 
 ## Example
 
+<ClientOnly>
+<breakpoint-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -65,9 +71,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<breakpoint-example/>
-</ClientOnly>

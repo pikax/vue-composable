@@ -35,6 +35,12 @@ const { exec } = usePromise();
 
 ## Example
 
+<ClientOnly>
+<promise-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -86,9 +92,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<promise-example/>
-</ClientOnly>

@@ -41,6 +41,12 @@ const { exec, cancel } = useCancellablePromise();
 
 ## Example
 
+<ClientOnly>
+<cancellable-promise-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -97,9 +103,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<cancellable-promise-example/>
-</ClientOnly>

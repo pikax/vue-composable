@@ -37,6 +37,12 @@ const { observe, unobserve, disconnect, debug } = useIntersectionObserver();
 
 ## Example
 
+<ClientOnly>
+<intersection-observer-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -70,9 +76,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<intersection-observer-example/>
-</ClientOnly>

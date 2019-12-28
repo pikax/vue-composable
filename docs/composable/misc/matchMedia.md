@@ -45,10 +45,18 @@ const { remove } = useMatchMedia();
 
 ## Example
 
+<ClientOnly>
+<match-media-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
-    <p>Screen less than 600px: <b>{{ matches }}</b></p>
+    <p>
+      Screen less than 600px: <b>{{ matches }}</b>
+    </p>
   </div>
 </template>
 
@@ -63,9 +71,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<match-media-example/>
-</ClientOnly>

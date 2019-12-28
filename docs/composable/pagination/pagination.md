@@ -39,6 +39,12 @@ const { next, prev, first, last } = usePagination();
 
 ## Example
 
+<ClientOnly>
+<pagination-example/>
+</ClientOnly>
+
+### Code
+
 Array pagination
 
 ```vue
@@ -94,9 +100,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<pagination-example/>
-</ClientOnly>

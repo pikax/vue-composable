@@ -35,12 +35,18 @@ const { remove } = useOnResize();
 
 ## Example
 
+<ClientOnly>
+<on-resize-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
     Window Resize
-    <p>height: {{height}}</p>
-    <p>width: {{width}}</p>
+    <p>height: {{ height }}</p>
+    <p>width: {{ width }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -64,9 +70,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<on-resize-example/>
-</ClientOnly>

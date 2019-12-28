@@ -43,12 +43,12 @@ const { remove } = useOnScroll();
 
 ## Example
 
-```vue
-
-```
-
-### Code
-
 <ClientOnly>
 <on-scroll-example/>
 </ClientOnly>
+
+### Code
+
+```vue
+
+```

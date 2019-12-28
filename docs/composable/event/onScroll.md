@@ -33,6 +33,12 @@ const { remove } = useOnScroll();
 
 ## Example
 
+<ClientOnly>
+<on-scroll-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -69,9 +75,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<on-scroll-example/>
-</ClientOnly>

@@ -14,7 +14,6 @@ yarn add @vue-composable/axios
 npm install @vue-composable/axios
 ```
 
-
 ## State
 
 The `useAxios` function exposes the following reactive state:
@@ -62,6 +61,12 @@ const { exec } = useAxios();
 
 ## Example
 
+<ClientOnly>
+<axios-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -105,9 +110,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<axios-example/>
-</ClientOnly>

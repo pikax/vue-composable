@@ -33,6 +33,12 @@ const { remove } = useOnMouseMove();
 
 ## Example
 
+<ClientOnly>
+<on-mouse-move-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div ref="elref">
@@ -65,9 +71,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<on-mouse-move-example/>
-</ClientOnly>

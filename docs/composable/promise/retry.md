@@ -36,6 +36,12 @@ const { cancel, exec } = useRetry();
 
 ## Example
 
+<ClientOnly>
+<retry-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -128,9 +134,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<retry-example/>
-</ClientOnly>
