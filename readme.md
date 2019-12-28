@@ -28,6 +28,15 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 This is a monorepo project, please check [packages](packages/) or check [vue-composable](packages/vue-composable)
 
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b feat/new-composable`
+3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+4. Push to the branch: `git push origin feat/new-composable`
+5. Submit a pull request
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
