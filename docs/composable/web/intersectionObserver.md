@@ -32,7 +32,8 @@ const { observe, unobserve, disconnect, debug } = useIntersectionObserver();
 | `observe(Element)`  | Starts observing Element                                                                                            |
 | `unobserve(Element` | Stops observing Element                                                                                             |
 | `disconnect()`      | [IntersectionObserver.disconnect](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/disconnect) |
-| `debug()`           | Provides some debug information: [WIP]                                                                              |
+
+<!-- | `debug()`           | Provides some debug information: [WIP]                                                                              | -->
 
 ## Example
 
@@ -72,4 +73,6 @@ export default {
 
 ### Code
 
+<ClientOnly>
 <intersection-observer-example/>
+</ClientOnly>

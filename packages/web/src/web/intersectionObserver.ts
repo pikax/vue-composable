@@ -22,7 +22,7 @@ export interface IntersectionObserverResult {
   disconnect: () => void;
   readonly isIntersecting: Ref<boolean>;
 
-  debug: () => void;
+  // debug: () => void; // TODO implement
 }
 
 export function useIntersectionObserver(
@@ -116,16 +116,16 @@ export function useIntersectionObserver(
     });
   }
 
-  // debug is still work in progress, would be nice to provide some
-  // information about the target
-  /* istanbul ignore next */
-  const debug = () => {
-    if (elements.value.length === 0) {
-      __DEV__ && console.warn('[IntersectionObserver] no elements provided, did you mount the component?')
-      return;
-    }
-    // TODO: add border to the elements 
-  };
+  // // debug is still work in progress, would be nice to provide some
+  // // information about the target
+  // /* istanbul ignore next */
+  // const debug = () => {
+  //   if (elements.value.length === 0) {
+  //     __DEV__ && console.warn('[IntersectionObserver] no elements provided, did you mount the component?')
+  //     return;
+  //   }
+  //   // TODO: add border to the elements 
+  // };
 
   return {
     elements,
@@ -133,8 +133,7 @@ export function useIntersectionObserver(
     unobserve,
     disconnect,
 
-    isIntersecting,
-    debug
+    isIntersecting
   };
 }
 
