@@ -55,6 +55,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### MISC
 
 - [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
+- [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
+- [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ### Pagination
 
@@ -118,4 +120,6 @@ export default {
 
 ### Pagination example
 
+<ClientOnly>
 <array-pagination-example/>
+</ClientOnly>

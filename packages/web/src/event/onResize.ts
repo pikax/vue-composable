@@ -44,7 +44,7 @@ export function useOnResize(
   }
 
   // resize seems only to be fired against the window
-  const remove = useEvent(window, "resize", handler, eventOptions);
+  const remove = useEvent(window, "resize", handler, eventOptions || { passive: true });
 
   return {
     height,

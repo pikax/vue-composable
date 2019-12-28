@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - [IntersectionObserver](composable/web/intersectionObserver) - Provides functionality to IntersectionObserver #27
+- [breakpoint](https://pikax.me/vue-composable/composable/web/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 
 ## 0.2.2
 ------------------------------
