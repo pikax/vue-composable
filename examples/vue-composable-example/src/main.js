@@ -6,6 +6,7 @@ import App from "./App.vue";
 import HelloWorld from "./components/HelloWorld";
 import ArrayPagination from "./components/ArrayPagination";
 import Fetch from "./components/Fetch";
+import NetworkInformation from "./components/NetworkInformation";
 import CancellablePromise from "./components/CancellablePromise";
 import SWAPI from "./components/SWAPI";
 
@@ -28,6 +29,10 @@ const routes = [
   {
     path: "/cancellablePromise",
     component: CancellablePromise
+  },
+  {
+    path: "/networkInformation",
+    component: NetworkInformation
   },
   {
     path: "/swapi",

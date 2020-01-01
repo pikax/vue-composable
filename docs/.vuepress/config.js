@@ -201,7 +201,8 @@ module.exports = {
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/webSocket", "webSocket"],
-            ["composable/web/intersectionObserver", "IntersectionObserver"]
+            ["composable/web/intersectionObserver", "IntersectionObserver"],
+            ["composable/web/networkInformation", "NetworkInformation"]
           ]
         },
         {
