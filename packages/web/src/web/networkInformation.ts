@@ -109,6 +109,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
   const type = ref<NetworkInformationType>("none");
 
   let handler = () => { };
+  let remove = () => { };
   if (connection) {
     handler = () => {
       downlink.value = connection.downlink;
@@ -118,12 +119,13 @@ export function useNetworkInformation(): NetworkInformationReturn {
       saveData.value = connection.saveData;
       type.value = connection.type;
     };
+    
+    remove = () => {
+      connection.removeEventListener('change', handler);
+    };
+
     connection.addEventListener("change", handler, { passive: true });
     handler();
-  }
-
-  const remove = () => {
-    connection?.removeEventListener('change', handler);
   }
 
   return {
