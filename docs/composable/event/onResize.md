@@ -35,12 +35,18 @@ const { remove } = useOnResize();
 
 ## Example
 
+<ClientOnly>
+<on-resize-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
     Window Resize
-    <p>height: {{height}}</p>
-    <p>width: {{width}}</p>
+    <p>height: {{ height }}</p>
+    <p>width: {{ width }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -48,7 +54,7 @@ const { remove } = useOnResize();
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnResize } from "../../../";
+import { useOnResize } from "vue-composable";
 
 export default {
   name: "on-resize-example",
@@ -64,9 +70,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<on-resize-example/>
-</ClientOnly>

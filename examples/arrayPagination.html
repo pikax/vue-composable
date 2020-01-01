@@ -12,7 +12,7 @@
     <p>page {{currentPage}} of {{ lastPage }}</p>
     <p> 
       <label for="pageSize">Page size</label>
-      <input name="pageSize" v-model="pageSize" type="number">
+      <input name="pageSize" v-model.number="pageSize" type="number">
     </p>
     <p>
       <button @click="prev">prev</button>
@@ -31,7 +31,7 @@
     // add composition api to vue
     Vue.use(vueCompositionApi.default);
   </script>
-  <script src="../dist/vue-composable.umd.js"></script>
+  <script src="../packages/vue-composable/dist/vue-composable.global.js"></script>
   <script>
     const {
       useArrayPagination 

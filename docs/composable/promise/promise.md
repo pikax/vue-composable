@@ -35,6 +35,12 @@ const { exec } = usePromise();
 
 ## Example
 
+<ClientOnly>
+<promise-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -59,7 +65,7 @@ const { exec } = usePromise();
 
 <script>
 import { ref } from "@vue/composition-api";
-import { usePromise } from "../../..";
+import { usePromise } from "vue-composable";
 
 export default {
   name: "promise-example",
@@ -86,7 +92,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<promise-example/>

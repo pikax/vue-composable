@@ -47,6 +47,12 @@ const { next, prev, first, last } = useArrayPagination();
 
 ## Example
 
+<ClientOnly>
+<array-pagination-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -64,10 +70,10 @@ const { next, prev, first, last } = useArrayPagination();
 </template>
 
 <script>
-import { useArrayPagination } from '../../../';
+import { useArrayPagination } from "vue-composable";
 
 export default {
-  name:"array-pagination-example",
+  name: "array-pagination-example",
   setup() {
     const array = new Array(1000).fill(0).map((_, i) => i);
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
@@ -82,7 +88,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<array-pagination-example/>

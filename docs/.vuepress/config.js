@@ -170,7 +170,11 @@ module.exports = {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/misc/localStorage", "localStorage"]]
+          children: [
+            ["composable/misc/localStorage", "localStorage"],
+            ["composable/misc/matchMedia", "matchMedia"],
+            ["composable/misc/breakpoint", "breakpoint"]
+          ]
         },
         {
           title: "Pagination",
@@ -196,9 +200,15 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/web/fetch", "fetch"],
-            ["composable/web/axios", "axios"],
-            ["composable/web/webSocket", "webSocket"]
+            ["composable/web/webSocket", "webSocket"],
+            ["composable/web/intersectionObserver", "IntersectionObserver"]
           ]
+        },
+        {
+          title: "External",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/external/axios", "axios"]]
         }
       ]
     },
@@ -208,8 +218,8 @@ module.exports = {
         selectText: "Languages",
         editLinkText: "Help us improve this page!",
         nav: [
-          { text: "Composable", link: "/composable/" },
-          { text: "Examples", link: "/examples/" }
+          { text: "Composable", link: "/composable/" }
+          // { text: "Examples", link: "/examples/" }
         ]
       }
     }

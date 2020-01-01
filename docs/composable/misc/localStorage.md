@@ -33,6 +33,12 @@ const { remove, clear } = useLocalStorage(key);
 
 ## Example
 
+<ClientOnly>
+<local-storage-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -47,7 +53,7 @@ const { remove, clear } = useLocalStorage(key);
 </template>
 
 <script>
-import { useLocalStorage } from "../../../";
+import { useLocalStorage } from "vue-composable";
 export default {
   name: "local-storage-example",
 
@@ -63,9 +69,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<local-storage-example/>
-</ClientOnly>

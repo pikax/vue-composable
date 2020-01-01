@@ -33,6 +33,12 @@ const { remove } = useOnMouseMove();
 
 ## Example
 
+<ClientOnly>
+<on-mouse-move-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div ref="elref">
@@ -46,7 +52,7 @@ const { remove } = useOnMouseMove();
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useMouseMove } from "../../../";
+import { useMouseMove } from "vue-composable";
 
 export default {
   name: "on-mouse-move-example",
@@ -65,7 +71,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<on-mouse-move-example/>

@@ -47,6 +47,12 @@ const { send, close } = useWebSocket();
 
 ## Example
 
+<ClientOnly>
+<web-socket-example/>
+</ClientOnly>
+
+### Code
+
 ```vue
 <template>
   <div>
@@ -60,7 +66,7 @@ const { send, close } = useWebSocket();
 </template>
 
 <script>
-import { useWebSocket } from "../../../";
+import { useWebSocket } from "vue-composable";
 export default {
   name: "web-socket-example",
   setup() {
@@ -80,9 +86,3 @@ export default {
 };
 </script>
 ```
-
-### Code
-
-<ClientOnly>
-<web-socket-example/>
-</ClientOnly>

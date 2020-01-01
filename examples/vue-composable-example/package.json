@@ -1,0 +1,40 @@
+{
+  "name": "vue-composable-examples",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@vue-composable/axios": "^1.0.0-dev.0",
+    "@vue/composition-api": "^0.3.2",
+    "vue": "^2.6.10",
+    "vue-composable": "^1.0.0-dev.1",
+    "vue-router": "^3.1.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "4.1.2",
+    "@vue/cli-service": "^4.1.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "keywords": [
+    "composition-api",
+    "vue-composable",
+    "composable",
+    "vue3",
+    "vuejs"
+  ],
+  "description": "Some example on how to supercharge your development with composition-api and vue-composable"
+}
