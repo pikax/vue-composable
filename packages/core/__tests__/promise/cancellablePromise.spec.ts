@@ -1,5 +1,5 @@
 import { useCancellablePromise } from "../../src/promise/cancellablePromise";
-import { promisedTimeout } from "../../src/utils";
+import { promisedTimeout } from "@vue-composable/core";
 import { nextTick } from "../utils";
 
 describe("cancellablePromise", () => {

@@ -18,18 +18,12 @@
     "lib": ["esnext", "dom"],
     "types": ["jest", "node"],
     "rootDir": ".",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@vue/axios": ["packages/axios/src"],
-      "@vue/core": ["packages/core/src"],
-      "@vue/shared": ["packages/shared/src"]
+      "@vue-composable/axios": ["packages/axios/src"],
+      "@vue-composable/core": ["packages/core/src"],
+      "@vue-composable/web": ["packages/web/src"]
     }
   },
-  "include": [
-    "packages/global.d.ts",
-    "packages/*/src",
-    "packages/*/__tests__"
-  ]
+  "include": ["packages/global.d.ts", "packages/*/src", "packages/*/__tests__"]
 }
