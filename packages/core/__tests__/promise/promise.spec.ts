@@ -102,6 +102,29 @@ describe("promise", () => {
     });
   });
 
+  it("should throw exception", async () => {
+    const error = new Error("error");
+    const use = usePromise(
+      () => Promise.reject(error),
+      true
+    );
+
+    try {
+      await use.exec();
+      expect(true).toBe(false);
+    }
+    catch (e) {
+      expect(true).toBe(true);
+    }
+    await nextTick();
+
+    expect(use).toMatchObject({
+      result: { value: null },
+      loading: { value: false },
+      error: { value: error }
+    });
+  });
+
   it("should update the result when calling multiple times", async () => {
     let result = 0;
     const use = usePromise(factory);

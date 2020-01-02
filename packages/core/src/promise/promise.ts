@@ -8,7 +8,7 @@ interface PromiseResult<
   T extends Promise<any>,
   TR = PromiseType<T>,
   TError = any
-> {
+  > {
   promise: Ref<T | undefined>;
   result: Ref<TR | null>;
 
@@ -18,21 +18,51 @@ interface PromiseResult<
 
 export interface PromiseResultFactory<
   T extends Promise<any>,
-  TArgs extends Array<any> = never
-> extends PromiseResult<T> {
+  TArgs extends Array<any> = Array<any>
+  > extends PromiseResult<T> {
   exec: (...args: TArgs) => Promise<PromiseType<T> | undefined>;
 }
 
-// TODO fix the typings, T doesn't need to extend Promise<any>
+/**
+ * 
+ * @param fn - factory function
+ * @param throwException - if `true` allows to catch exception when `exec()`
+ */
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => Promise<T>, throwException?: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => Promise<T>): PromiseResultFactory<Promise<T>, TArgs>;
+
+
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => T, throwException: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => T): PromiseResultFactory<Promise<T>, TArgs>;
+
+
+export function usePromise<T = any>(
+  fn: () => Promise<T>, throwException: boolean
+): PromiseResultFactory<Promise<T>>;
+
+export function usePromise<T = any>(
+  fn: () => Promise<T>
+): PromiseResultFactory<Promise<T>>;
+
+export function usePromise<T = any>(
+  fn: () => T, throwException: boolean
+): PromiseResultFactory<Promise<T>>;
+
+export function usePromise<T = any>(
+  fn: () => T
+): PromiseResultFactory<Promise<T>>;
+
 
 export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
-  fn: (...args: TArgs) => T
-): PromiseResultFactory<T, TArgs>;
-export function usePromise<T extends Promise<any>>(
-  fn: () => T
-): PromiseResultFactory<T>;
-export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
-  fn: (...args: TArgs) => T
+  fn: (...args: TArgs) => T, throwException = false
 ): PromiseResultFactory<T, TArgs> {
   if (!fn) {
     throw new Error(`[usePromise] argument can't be '${fn}'`);
@@ -63,7 +93,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
         error.value = er;
         result.value = null;
       }
-      return undefined;
+      return throwException ? currentPromise : undefined;
     } finally {
       if (promise.value === currentPromise) {
         loading.value = false;
