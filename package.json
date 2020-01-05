@@ -45,7 +45,7 @@
     "@rollup/plugin-replace": "^2.2.1",
     "@types/jest": "^24.0.19",
     "@types/node": "^13.1.2",
-    "@vue/composition-api": "^0.3.2",
+    "@vue/runtime-core": "^3.0.0-alpha.0",
     "@vuepress/plugin-back-to-top": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
     "axios": "^0.19.0",

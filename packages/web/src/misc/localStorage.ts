@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from "@vue/composition-api";
+import { Ref, ref, watch } from "@vue/runtime-core";
 import { RefTyped, wrap, debounce } from "@vue-composable/core";
 
 // used to store all the instances of weakMap

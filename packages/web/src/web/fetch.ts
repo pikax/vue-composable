@@ -1,5 +1,5 @@
 import { usePromise } from "@vue-composable/core";
-import { ref, computed } from "@vue/composition-api";
+import { ref, computed } from "@vue/runtime-core";
 
 export interface UseFetchOptions {
   /**
@@ -15,7 +15,7 @@ export interface UseFetchOptions {
 }
 
 export function useFetch<T = any>(options?: UseFetchOptions) {
-  const json = ref<T>(null);
+  const json = ref<T | null>(null);
   // TODO add text = ref<string> ??
   const jsonError = ref<any | null>(null);
   const isJson = options ? options.isJson !== false : true;

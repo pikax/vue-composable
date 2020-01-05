@@ -1,4 +1,4 @@
-import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
+import { Ref, onMounted, ref, onUnmounted, UnwrapRef } from "@vue/runtime-core";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "./matchMedia";
 import { useDebounce, isNumber } from "@vue-composable/core";
@@ -17,7 +17,7 @@ export function useBreakpoint<T>(
       valid: Ref<boolean>;
     }
   >();
-  const current = ref<keyof T>();
+  const current = ref<keyof T | undefined>();
   let sorted: number[] = [];
   const removeMedia: Array<() => void> = [];
 
@@ -42,7 +42,7 @@ export function useBreakpoint<T>(
 
   const resize = () => {
     const width = window.innerWidth;
-    let c = undefined;
+    let c: keyof T | undefined = undefined;
     for (let i = 0; i < sorted.length; i++) {
       const bp = sorted[i];
       const r = map.get(bp)!;
@@ -51,7 +51,7 @@ export function useBreakpoint<T>(
         c = r.name;
       }
     }
-    current.value = c;
+    current.value = c as UnwrapRef<keyof T>;
   };
 
   const processResize = useDebounce(resize, 10);

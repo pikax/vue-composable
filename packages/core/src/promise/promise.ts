@@ -1,4 +1,4 @@
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref, UnwrapRef } from "@vue/runtime-core";
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
   ? R
@@ -80,8 +80,8 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
     loading.value = true;
     error.value = null;
     result.value = null;
-
-    const currentPromise = (promise.value = fn(...args));
+    
+    const currentPromise = (promise.value = fn(...args) as any as UnwrapRef<T>);
     try {
       const r = await currentPromise;
       if (promise.value === currentPromise) {

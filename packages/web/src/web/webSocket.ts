@@ -1,8 +1,8 @@
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 
 export function useWebSocket(url: string, protocols?: string | string[]) {
   const ws = new WebSocket(url, protocols);
-  const messageEvent = ref<MessageEvent>(null);
+  const messageEvent = ref<MessageEvent>();
   const errorEvent = ref<Event>();
   const data = ref<any>(null);
 

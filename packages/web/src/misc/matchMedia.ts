@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/runtime-core";
 
 export function useMatchMedia(query: string) {
   const mediaQueryList = ref<MediaQueryList>(matchMedia(query));

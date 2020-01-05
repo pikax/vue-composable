@@ -6,7 +6,7 @@ import {
   onMounted,
   onUnmounted,
   Ref
-} from "@vue/composition-api";
+} from "@vue/runtime-core";
 
 export interface IntersectionObserverOptions {
   root?: RefTyped<Element> | null;
@@ -51,7 +51,7 @@ export function useIntersectionObserver(
   );
 
   const elements = ref<IntersectionObserverEntry[]>(
-    element && element.value ? [element.value] : []
+    // element && element.value ? [element.value] : []
   );
 
   const isIntersecting = computed(() =>

@@ -1,4 +1,4 @@
-import { Ref, ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/runtime-core";
 import { RefElement, wrap, RefTyped, useDebounce } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 

@@ -1,7 +1,7 @@
-const Vue = require('vue/dist/vue.common');
+// const Vue = require('vue/dist/vue.common');
 
-const plugin = require('@vue/composition-api').default;
+// const plugin = require('@vue/composition-api').default;
 
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
-Vue.use(plugin);
+// Vue.config.productionTip = false;
+// Vue.config.devtools = false;
+// Vue.use(plugin);

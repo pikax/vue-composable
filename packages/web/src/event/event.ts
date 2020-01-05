@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted } from "@vue/composition-api";
+import { onMounted, onUnmounted } from "@vue/runtime-core";
 import { RefTyped, wrap } from "@vue-composable/core";
 
 export type RemoveEventFunction = () => void;

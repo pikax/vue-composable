@@ -1,5 +1,6 @@
-import { Ref, computed, watch, ref } from "@vue/composition-api";
+// import { Ref, computed, ref } from "@vue/reactivity";
 import { minMax, RefTyped, wrap } from "@vue-composable/core";
+import { watch, Ref, computed, ref } from "@vue/runtime-core";
 
 type PaginationControl = () => void;
 

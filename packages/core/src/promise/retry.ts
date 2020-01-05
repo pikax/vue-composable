@@ -1,4 +1,4 @@
-import { ref, Ref, computed } from "@vue/composition-api";
+import { ref, Ref, computed } from "@vue/runtime-core";
 import {
   isPromise,
   promisedTimeout,

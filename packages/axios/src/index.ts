@@ -1,4 +1,4 @@
-import { computed, Ref } from "@vue/composition-api";
+import { computed, Ref, ComputedRef } from "@vue/runtime-core";
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from "axios";
 import { usePromise, PromiseResultFactory } from "@vue-composable/core";
 
@@ -7,7 +7,7 @@ const _axios = axios || (globalThis && (globalThis as any).axios);
 
 interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<TData>>, [AxiosRequestConfig]> {
   readonly client: Ref<Readonly<AxiosInstance>>;
-  readonly data: Ref<TData | null>;
+  readonly data: ComputedRef<TData | null>;
   readonly status: Ref<number | null>;
   readonly statusText: Ref<string | null>;
 }

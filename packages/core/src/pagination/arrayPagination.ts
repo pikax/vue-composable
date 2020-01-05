@@ -4,18 +4,21 @@ import {
   PaginationOptions
 } from "./pagination";
 import { RefTyped, wrap } from "@vue-composable/core";
-import { Ref, computed } from "@vue/composition-api";
+import { computed, ComputedRef } from "@vue/runtime-core";
 
 export interface ArrayPaginationResult<T extends Array<any>>
   extends PaginationResult {
-  result: Readonly<Ref<T>>;
+  // result: Readonly<Ref<T>>;
+
+  result: ComputedRef<T>;
+
 }
 
 export function useArrayPagination<T extends Array<TR>, TR>(
   array: RefTyped<T>,
   options?: Partial<Omit<PaginationOptions, 'total'>>
 ): ArrayPaginationResult<T>;
-export function useArrayPagination<T extends Array<TR>, TR>(
+export function useArrayPagination<T extends Array<any>>(
   array: RefTyped<T>,
   options?: Partial<Omit<PaginationOptions, 'total'>>
 ): ArrayPaginationResult<T> {
@@ -37,7 +40,7 @@ export function useArrayPagination<T extends Array<TR>, TR>(
       pagination.offset.value,
       pagination.offset.value + pagination.pageSize.value
     );
-  }) as Readonly<Ref<T>>;
+  }) as ComputedRef<T>;
 
   return {
     ...pagination,
