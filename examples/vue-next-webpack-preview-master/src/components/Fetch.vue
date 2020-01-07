@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {ref, watch} from '@vue/composition-api';
+import {ref, watch} from 'vue';
 import {useFetch} from 'vue-composable';
 
 export default {

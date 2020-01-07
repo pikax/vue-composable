@@ -27,7 +27,7 @@
 
 <script>
 import { usePagination, useFetch } from 'vue-composable';
-import { ref, watch, isRef } from '@vue/composition-api';
+import { ref, watch, isRef } from 'vue';
 
 
 function useSWAPI(r){

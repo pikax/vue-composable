@@ -8,10 +8,10 @@ This package contains core functionality for [vue-composable][vue-composable]
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api @vue-composable/core
+yarn add vue@next @vue-composable/core@next
 
 # install with npm
-npm install @vue/composition-api @vue-composable/core
+npm install vue@next @vue-composable/core@next
 ```
 
 ## Documentation

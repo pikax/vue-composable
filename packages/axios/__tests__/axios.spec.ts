@@ -53,10 +53,10 @@ describe("axios", () => {
     const r = await exec(request);
 
     expect(r).toBe(response);
-    expect(result.value).toBe(response);
-    expect(data.value).toBe(response.data);
-    expect(status.value).toBe(response.status);
-    expect(statusText.value).toBe(response.statusText);
+    expect(result.value).toStrictEqual(response);
+    expect(data.value).toStrictEqual(response.data); 
+    expect(status.value).toStrictEqual(response.status);
+    expect(statusText.value).toStrictEqual(response.statusText);
   });
 
   it("should set data, status and statusText on error request", async () => {
@@ -92,7 +92,7 @@ describe("axios", () => {
     await exec(request);
 
     expect(error.value).toMatchObject({ response });
-    expect(data.value).toBe(response.data);
+    expect(data.value).toStrictEqual(response.data);
     expect(status.value).toBe(response.status);
     expect(statusText.value).toBe(response.statusText);
   });

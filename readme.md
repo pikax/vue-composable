@@ -6,7 +6,7 @@
 
 ## Introduction
 
-`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.
+`vue-composable` is out-of-box ready to use the brand new [Vue 3](https://github.com/vuejs/vue-next) [composition-api](https://vue-composition-api-rfc.netlify.com/) generic components.
 
 100% typescript based composable components and full type support out-of-box.
 
@@ -14,10 +14,10 @@
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api vue-composable
+yarn add vue@next vue-composable@next
 
 # install with npm
-npm install @vue/composition-api vue-composable
+npm install vue@next vue-composable@next
 ```
 
 ## Documentation
@@ -27,7 +27,6 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ## Information
 
 This is a monorepo project, please check [packages](packages/) or check [vue-composable](packages/vue-composable)
-
 
 ## Contributing
 

@@ -8,10 +8,10 @@ This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Ref
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api @vue-composable/web
+yarn add vue@next @vue-composable/web@next
 
 # install with npm
-npm install @vue/composition-api @vue-composable/web
+npm install vue@next @vue-composable/web@next
 ```
 
 ## Documentation

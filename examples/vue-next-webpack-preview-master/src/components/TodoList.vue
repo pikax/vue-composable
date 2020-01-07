@@ -7,24 +7,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, createComponent, reactive, toRefs } from "@vue/composition-api";
+<script>
+import { reactive, toRefs } from "vue";
 
-type Todo = {
-  id: number;
-  userId: number;
-  title: string;
-  completed: boolean;
-};
+// type Todo = {
+//   id: number;
+//   userId: number;
+//   title: string;
+//   completed: boolean;
+// };
 
-type EventT = {
-  todos: Todo[];
-};
+// type EventT = {
+//   todos: Todo[];
+// };
 
-export default createComponent({
+export default {
   setup() {
-    const event: Event = <any>reactive({
-      todos:[]
+    const event = reactive({
+      todos: []
     });
 
     async function fetchTodos() {
@@ -38,5 +38,5 @@ export default createComponent({
 
     return { ...toRefs(event) };
   }
-});
+};
 </script>

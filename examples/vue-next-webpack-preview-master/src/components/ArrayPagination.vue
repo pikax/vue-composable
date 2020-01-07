@@ -19,7 +19,6 @@
 
 <script>
 import { useArrayPagination } from "@vue-composable/core";
-import { ref } from "vue";
 
 export default {
   setup() {
@@ -34,16 +33,8 @@ export default {
       offset
     } = useArrayPagination(array, {});
 
-    // setInterval(() => {
-    //   next();
-    //   console.log("array", result);
-    // }, 1000);
-
     return {
-      next: () => {
-        next();
-        console.log("array", result);
-      },
+      next,
       prev,
       currentPage,
       lastPage,
@@ -52,10 +43,5 @@ export default {
       offset
     };
   }
-  // setup() {
-  //   return {
-  //     currentPage: 2
-  //   };
-  // }
 };
 </script>

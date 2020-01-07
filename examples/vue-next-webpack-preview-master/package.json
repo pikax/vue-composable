@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "vue": "^3.0.0-alpha.1",
-    "@vue/runtime-core": "^3.0.0-alpha.0",
     "vue-composable": "^1.0.0-dev.2"
   },
   "devDependencies": {
