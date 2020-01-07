@@ -4,6 +4,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 
+# Vue 3
+
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master)
+
 ## Introduction
 
 `vue-composable` is out-of-box ready to use the brand new [Vue 3](https://github.com/vuejs/vue-next) [composition-api](https://vue-composition-api-rfc.netlify.com/) generic components.

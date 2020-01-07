@@ -4,6 +4,12 @@
 
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 
+# Vue 3
+
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master)
+
 ## Installing
 
 ```bash

@@ -2,8 +2,11 @@
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
 
-# Vue 3 
-This version is `alpha` with support for the vue3([vue-next](https://github.com/vuejs/vue-next))
+# Vue 3
+
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master)
 
 ## Introduction
 
