@@ -47,7 +47,13 @@ const configs = {
 
 const setup = {
   global: {
-    external: ["vue", "@vue/composition-api", "axios", "@vue/runtime-core"],
+    external: [
+      "vue",
+      "@vue/composition-api",
+      "axios",
+      "@vue/runtime-core",
+      "@vue/reactivity"
+    ],
     plugins: [
       resolvePlugin({
         // mainFields: [

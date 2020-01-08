@@ -6,7 +6,7 @@
 
 This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
 
-> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master)
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
 
 ## Introduction
 

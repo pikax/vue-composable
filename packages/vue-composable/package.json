@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.5",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
@@ -37,10 +37,10 @@
   },
   "homepage": "https://github.com/pikax/vue-composable",
   "dependencies": {
-    "@vue-composable/core": "1.0.0-alpha.1",
-    "@vue-composable/web": "1.0.0-alpha.1"
+    "@vue-composable/core": "1.0.0-alpha.5",
+    "@vue-composable/web": "1.0.0-alpha.5"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-alpha.0"
+    "@vue/runtime-core": "^3.0.0-alpha.1"
   }
 }
