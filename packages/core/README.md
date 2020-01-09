@@ -4,6 +4,9 @@
 
 This package contains core functionality for [vue-composable][vue-composable]
 
+# vue-next
+> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/core/v/next)
+
 ## Installing
 
 ```bash

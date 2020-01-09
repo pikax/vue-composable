@@ -15,6 +15,11 @@ _2020-01-09_
 
 ---
 
+### Changed
+
+- changing `peerDependencies` to `dependencies`
+- fix `cjs` modules, missing `index.js` in some packages, preventing it from being used in codesandbox
+
 ### Added
 
 - `usePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`

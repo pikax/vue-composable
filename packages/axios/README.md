@@ -2,6 +2,10 @@
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
 
+# vue-next
+
+> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/axios/v/next)
+
 ## Introduction
 
 Use Axios library with the [composition-api](https://github.com/vuejs/composition-api)
