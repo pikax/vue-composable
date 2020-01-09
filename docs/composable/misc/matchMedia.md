@@ -10,9 +10,9 @@ import { useMatchMedia } from "vue-composable";
 const matchMedia = useMatchMedia(mediaQueryString);
 ```
 
-| Parameters       | Type     | Description                                     |
-| ---------------- | -------- | ----------------------------------------------- |
-| mediaQueryString | `String` | A string representing the media query to parse. |
+| Parameters       | Type     | Required | Description                                     |
+| ---------------- | -------- | -------- | ----------------------------------------------- |
+| mediaQueryString | `String` | `true`   | A string representing the media query to parse. |
 
 ## State
 

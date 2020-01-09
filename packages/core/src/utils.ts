@@ -24,6 +24,9 @@ export const isString = (val: unknown): val is string =>
 export const isSymbol = (val: unknown): val is symbol =>
   typeof val === "symbol";
 
+export const isBoolean = (val: unknown): val is Boolean => typeof val === 'boolean';
+
+
 export const isDate = (val: unknown): val is Date =>
   isObject(val) && isFunction(val.getTime);
 

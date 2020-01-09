@@ -10,7 +10,9 @@ import { useOnScroll } from "vue-composable";
 const scroll = useOnScroll(options);
 ```
 
-| Parameters | Type | Description |
+| Parameters | Type | Required | Default | Description |
+| ---------- | ---- | -------- | ------- | ----------- |
+|            |      |          |         |             |
 
 ## State
 

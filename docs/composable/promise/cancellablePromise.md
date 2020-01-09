@@ -6,6 +6,21 @@ Prevents result to be set if the `cancel` is called
 Javascript doesn't provide a way to cancel promises, so this will execute the promise until the end.
 :::
 
+> This uses [usePromise](./promise.md)
+
+## Parameters
+
+```js
+import { useCancellablePromise } from "vue-composable";
+
+const cancellablePromise = useCancellablePromise(factory, throwException?);
+```
+
+| Parameters     | Type       | Required | Default | Description                                                                                                   |
+| -------------- | ---------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| factory        | `Function` | `true`   |         | Factory will be called every time the exec is called, the arguments will be passed to the factory. `Required` |
+| throwException | `Boolean`  | `false`  | `false` | Makes `exec` throw exceptions, when `false` the error will be handled only by the `usePromise`                |
+
 ## State
 
 The `useCancellablePromise` function exposes the following reactive state:

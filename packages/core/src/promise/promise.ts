@@ -1,4 +1,5 @@
 import { ref, Ref } from "@vue/composition-api";
+import { isBoolean } from "../utils";
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
   ? R
@@ -81,8 +82,11 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
     error.value = null;
     result.value = null;
 
+    let throwExp = args && fn.length !== args.length && args.length > 0 && isBoolean(args[args.length - 1]) ? args[args.length - 1] : throwException;
+
     const currentPromise = (promise.value = fn(...args));
     try {
+
       const r = await currentPromise;
       if (promise.value === currentPromise) {
         result.value = r;
@@ -93,7 +97,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
         error.value = er;
         result.value = null;
       }
-      return throwException ? currentPromise : undefined;
+      return throwExp ? currentPromise : undefined;
     } finally {
       if (promise.value === currentPromise) {
         loading.value = false;
