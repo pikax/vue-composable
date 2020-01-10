@@ -60,7 +60,7 @@
     "jest-websocket-mock": "^2.0.1",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.0",
-    "mock-socket": "^9.0.2",
+    "mock-socket": "^9.0.3",
     "rimraf": "^3.0.0",
     "rollup": "^1.29.0",
     "rollup-plugin-terser": "^5.1.2",
