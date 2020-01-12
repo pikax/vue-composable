@@ -4,6 +4,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 
+
+# vue-next
+> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/vue-composable/v/next)
+
 ## Introduction
 
 `vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components, eg: [useFetch](examples/fetch.html)
@@ -70,6 +74,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### NOTE
 
 Currently only works with [composition-api](https://github.com/vuejs/composition-api), when [Vue3](https://github.com/vuejs/vue-next) gets release I will update to use the new reactive system (using [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity))
+
+For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/vue-composable/v/next)
 
 ## Usage
 

@@ -4,6 +4,10 @@
 
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 
+# vue-next
+
+> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/web/v/next)
+
 ## Installing
 
 ```bash

@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
 
+## 1.0.0-dev.3
+
+_2020-01-09_
+
+---
+
+### Changed
+
+- changing `peerDependencies` to `dependencies`
+- fix `cjs` modules, missing `index.js` in some packages, preventing it from being used in codesandbox
+
+### Added
+
+- `usePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useCancellablePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useAxios` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useAxios` - `cancel(message?)` allows to cancel the latest axios request
+
 ## 1.0.0-dev.2
 
 ---

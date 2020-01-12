@@ -17,9 +17,7 @@ const resolve = p => path.resolve(packageDir, p);
 const pkg = require(resolve(`package.json`));
 const packageOptions = pkg.buildOptions || {};
 
-const knownExternals = fs.readdirSync(packagesDir).filter(p => {
-  return p !== "@vue/shared";
-});
+const knownExternals = fs.readdirSync(packagesDir);
 
 // ensure TS checks only once for each build
 let hasTSChecked = false;
@@ -37,7 +35,7 @@ const configs = {
     file: resolve(`dist/${name}.global.js`),
     format: `iife`,
     globals: {
-      "@vue/composition-api": "vueCompositionApi",
+      "@vue/composition-api": "vueCompositionApi"
       // "@vue-composable/core": "VueComposableCore"
     }
   },
@@ -182,8 +180,6 @@ function createReplacePlugin(
     __RUNTIME_COMPILE__: isRuntimeCompileBuild,
     // support options?
     // the lean build drops options related code with buildOptions.lean: true
-    __FEATURE_OPTIONS__: !packageOptions.lean && !process.env.LEAN,
-    __FEATURE_SUSPENSE__: true,
     "process.env.NODE_ENV": !isProduction
   });
 }

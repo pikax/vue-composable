@@ -6,7 +6,7 @@ import {
   isDate,
   isObject,
   isFunction
-} from "../utils";
+} from "@vue-composable/core";
 
 const MAX_RETRIES = 9000;
 

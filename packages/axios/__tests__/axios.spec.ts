@@ -1,13 +1,17 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useAxios } from "../src";
+import { promisedTimeout } from "@vue-composable/core";
+
 
 jest.mock("axios");
+const __axios = jest.requireActual('axios');
 
 describe("axios", () => {
   beforeEach(() => {
     axios.create = jest.fn(() => ({
       request: jest.fn()
     })) as any;
+    axios.CancelToken = __axios.CancelToken;
   });
 
   it("should create axios client", () => {
@@ -28,7 +32,7 @@ describe("axios", () => {
 
     await exec(request);
 
-    expect(client.value.request).toBeCalledWith(request);
+    expect(client.value.request).toBeCalledWith(expect.objectContaining(request));
   });
 
   it("should set response", async () => {
@@ -128,4 +132,52 @@ describe("axios", () => {
     expect(status.value).toBeNull();
     expect(statusText.value).toBeNull();
   });
+
+  it('should cancel the request', async () => {
+    const {
+      exec,
+      error,
+      client,
+      cancel,
+      cancelledMessage,
+      isCancelled
+    } = useAxios();
+
+    const message = 'cancelled ';
+    (client.value.request as jest.Mock).mockImplementationOnce(async (x: AxiosRequestConfig) => {
+      expect(x).toBeDefined();
+      expect(x.cancelToken).toBeDefined();
+
+      const r = await Promise.race([promisedTimeout(5000), x.cancelToken!.promise]);
+      x.cancelToken!.throwIfRequested()
+
+      return r;
+    });
+
+    try {
+      const execPromise = exec({});
+      cancel(message);
+      await execPromise;
+    } catch (e) {
+      expect(e).toMatchObject({ rr: 1 });
+    }
+
+    expect({
+      cancelledMessage,
+      isCancelled,
+      error,
+    }).toMatchObject({
+      cancelledMessage: {
+        value: message
+      },
+      isCancelled: {
+        value: true
+      },
+      error: {
+        value: {
+          message
+        }
+      }
+    })
+  })
 });

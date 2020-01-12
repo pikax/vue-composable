@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.2",
+  "version": "1.0.0-dev.3",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
@@ -35,7 +35,7 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
-  "peerDependencies": {
+  "dependencies": {
     "@vue/composition-api": "^0.3.4",
     "vue": "^2.6.10"
   }

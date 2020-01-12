@@ -14,6 +14,27 @@ yarn add @vue-composable/axios
 npm install @vue-composable/axios
 ```
 
+## Parameters
+
+```js
+import { useAxios } from "@vue-composable/axios";
+
+useAxios(url?, opts?, throwException?);
+useAxios(url, opts?);
+useAxios(url, throwException?);
+useAxios(opts, throwException?);
+useAxios(throwException);
+
+```
+
+| Parameters     | Type                 | Required | Default     | Description                                                                                    |
+| -------------- | -------------------- | -------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| url            | `String`             | `false`  | `undefined` | Makes a request at creation                                                                    |
+| opts           | `AxiosRequestConfig` | `false`  | `undefined` | Arguments for axios.client                                                                     |
+| throwException | `Boolean`            | `false`  | `false`     | Makes `exec` throw exceptions, when `false` the error will be handled only by the `usePromise` |
+
+> NOTE: if `url` or `config.url` is provided the request will be made when calling `useAxios`
+
 ## State
 
 The `useAxios` function exposes the following reactive state:
@@ -26,6 +47,11 @@ const {
   data,
   status,
   statusText,
+
+  // cancel
+  isCancelled,
+  cancelledMessage,
+
   // promise
   promise,
   result,
@@ -34,16 +60,18 @@ const {
 } = useAxios();
 ```
 
-| State      | Type          | Description                            |
-| ---------- | ------------- | -------------------------------------- |
-| client     | `AxiosClient` | Axios client used                      |
-| data       | `any`         | Axios `response.data`                  |
-| status     | `Number`      | Axios `response.status`                |
-| statusText | `String`      | Axios `response.statusText`            |
-| promise    | `Promise`     | Current promise                        |
-| result     | `any`         | Resolved value                         |
-| loading    | `boolean`     | Waiting for the promise to be resolved |
-| error      | `any`         | Promise error                          |
+| State            | Type          | Description                                                          |
+| ---------------- | ------------- | -------------------------------------------------------------------- |
+| client           | `AxiosClient` | Axios client used                                                    |
+| data             | `any`         | Axios `response.data`                                                |
+| status           | `Number`      | Axios `response.status`                                              |
+| statusText       | `String`      | Axios `response.statusText`                                          |
+| isCancelled      | `Boolean`     | If the request has been cancelled by the user (executing `cancel()`) |
+| cancelledMessage | `String`      | Message provided when cancelling the request                         |
+| promise          | `Promise`     | Current promise                                                      |
+| result           | `any`         | Resolved value                                                       |
+| loading          | `boolean`     | Waiting for the promise to be resolved                               |
+| error            | `any`         | Promise error                                                        |
 
 ## Methods
 
@@ -52,12 +80,13 @@ The `useAxios` function exposes the following methods:
 ```js
 import { useAxios } from "@vue-composable/axios";
 
-const { exec } = useAxios();
+const { exec, cancel } = useAxios();
 ```
 
-| Signature       | Description            |
-| --------------- | ---------------------- |
-| `exec(request)` | Executes axios request |
+| Signature          | Description              |
+| ------------------ | ------------------------ |
+| `exec(request)`    | Executes axios request   |
+| `cancel(message?)` | Cancels the last request |
 
 ## Example
 
