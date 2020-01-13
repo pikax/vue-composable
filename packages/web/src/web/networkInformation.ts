@@ -1,5 +1,6 @@
-import { computed, Ref, ref } from "@vue/composition-api";
-import { RemoveEventFunction } from '../event';
+import { computed, Ref, ref, onUnmounted } from "@vue/composition-api";
+import { RemoveEventFunction } from "../event";
+import { NO_OP } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -17,7 +18,7 @@ type NetworkInformationType =
   | "wifi"
   | "wimax";
 
-interface NetworkInformation {
+export interface NetworkInformation {
   readonly downlink: number;
   readonly downlinkMax: number;
   readonly effectiveType: NetworkInformationEffectiveType;
@@ -108,8 +109,10 @@ export function useNetworkInformation(): NetworkInformationReturn {
   const saveData = ref<Boolean>(false);
   const type = ref<NetworkInformationType>("none");
 
-  let handler = () => { };
-  let remove = () => { };
+  let handler = NO_OP;
+  let remove = NO_OP;
+
+  /* istanbul ignore else  */
   if (connection) {
     handler = () => {
       downlink.value = connection.downlink;
@@ -119,13 +122,19 @@ export function useNetworkInformation(): NetworkInformationReturn {
       saveData.value = connection.saveData;
       type.value = connection.type;
     };
-    
+
     remove = () => {
-      connection.removeEventListener('change', handler);
+      connection.removeEventListener("change", handler);
     };
 
     connection.addEventListener("change", handler, { passive: true });
     handler();
+
+    onUnmounted(remove);
+  } else if (__DEV__) {
+    console.warn(
+      "[navigator.connection] not found, networkInformation not available."
+    );
   }
 
   return {
