@@ -34,6 +34,7 @@ describe("network information", () => {
     navigator.mozConnection = navigator.webkitConnection = navigator.connection = null as any;
     let networkInformation = useNetworkInformation();
     new Vue({
+      template: `<div></div>`,
       setup() {
         navigator.connection = conn;
         beforeSetup && beforeSetup();
@@ -43,7 +44,7 @@ describe("network information", () => {
         }
         return networkInformation;
       }
-    });
+    }).$mount();
     return networkInformation;
   };
 
