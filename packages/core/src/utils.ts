@@ -1,4 +1,3 @@
-
 import { Ref, isRef, ref } from "@vue/composition-api";
 
 export type RefTyped<T> = T | Ref<T>;
@@ -24,8 +23,8 @@ export const isString = (val: unknown): val is string =>
 export const isSymbol = (val: unknown): val is symbol =>
   typeof val === "symbol";
 
-export const isBoolean = (val: unknown): val is Boolean => typeof val === 'boolean';
-
+export const isBoolean = (val: unknown): val is Boolean =>
+  typeof val === "boolean";
 
 export const isDate = (val: unknown): val is Date =>
   isObject(val) && isFunction(val.getTime);
@@ -42,6 +41,8 @@ export const isElement = (val: unknown): val is Element =>
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
+
+export const NO_OP = () => {};
 
 export function promisedTimeout(timeout: number): Promise<void> {
   return new Promise(res => {

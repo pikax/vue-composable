@@ -57,6 +57,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) - reactive `IntersectionObserver`
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
 
 ### External
 
