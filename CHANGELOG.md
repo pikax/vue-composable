@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
 
+## 1.0.0-dev.4
+
+_2020-01-13_
+
+---
+
+### Added
+
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
+
 ## 1.0.0-dev.3
 
 _2020-01-09_
