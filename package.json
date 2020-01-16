@@ -43,7 +43,7 @@
     "@rollup/plugin-json": "^4.0.0",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-replace": "^2.2.1",
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^24.9.0",
     "@types/node": "^13.1.7",
     "@vue/composition-api": "^0.3.2",
     "@vuepress/plugin-back-to-top": "^1.2.0",
