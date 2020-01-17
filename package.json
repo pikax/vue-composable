@@ -67,7 +67,7 @@
     "rollup-plugin-typescript2": "^0.25.1",
     "ts-jest": "^24.3.0",
     "tsd": "^0.11.0",
-    "typescript": "^3.6.4",
+    "typescript": "^3.7.5",
     "vue": "^2.6.10",
     "vuepress": "^1.2.0",
     "zlib": "^1.0.5"
