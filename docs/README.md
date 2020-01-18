@@ -75,6 +75,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
 - [NetworkInformation](composable/web/networkInformation) - reactive `NetworkInformation` wrapper
+- [Online](composable/web/online) - reactive `navigator.onLine` wrapper
+- [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
 
 ### External
 

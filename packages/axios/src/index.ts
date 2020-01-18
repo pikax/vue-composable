@@ -1,6 +1,6 @@
 import { computed, Ref, ref } from "@vue/composition-api";
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance, CancelTokenSource } from "axios";
-import { usePromise, PromiseResultFactory } from "@vue-composable/core";
+import { usePromise, PromiseResultFactory, isString, isBoolean, isObject } from "@vue-composable/core";
 
 /* istanbul ignore next  */
 const _axios = axios || (globalThis && (globalThis as any).axios);
@@ -17,10 +17,10 @@ interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<
   // readonly 
 }
 
-// TODO replace by shared project
-const isObject = (d: any): d is Object => typeof d === 'object';
-const isString = (d: any): d is String => typeof d === 'string';
-const isBoolean = (d: any): d is Boolean => typeof d === 'boolean';
+// // TODO replace by shared project
+// const isObject = (d: any): d is Object => typeof d === 'object';
+// const isString = (d: any): d is String => typeof d === 'string';
+// const isBoolean = (d: any): d is Boolean => typeof d === 'boolean';
 
 
 export function useAxios<TData = any>(throwException?: boolean): AxiosReturn<TData>;
