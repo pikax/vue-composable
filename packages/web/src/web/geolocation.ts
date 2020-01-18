@@ -1,12 +1,28 @@
 import { ref, watch, onMounted, onUnmounted } from "@vue/composition-api";
-export function useGeolocation(options?: PositionOptions) {
+import { NO_OP } from "@vue-composable/core";
+
+
+export interface GeolocationOptions {
+  /**
+   * Executes request location immediately, default = true 
+   */
+  immediate?: boolean
+}
+
+export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
   const supported = !!navigator.geolocation;
+
+  // used to check if the execution is lazy
+  const lazy = ref(options ? options?.immediate === false : undefined);
 
   const error = ref<PositionError>(null);
 
   const timestamp = ref<number>(null);
   const coords = ref<Position["coords"]>(null);
   const highAccuracy = ref<boolean>(options && options.enableHighAccuracy);
+
+  // allow manual control on when the geolocation is requested
+  let enable = NO_OP;
 
   if (supported) {
     const setPosition = (pos: Position) => {
@@ -20,19 +36,25 @@ export function useGeolocation(options?: PositionOptions) {
       error.value = err;
     };
     const clearWatch = () =>
-      watchId && navigator.geolocation.clearWatch(watchId);
+      lazy.value !== true && watchId && navigator.geolocation.clearWatch(watchId);
+
+    if (lazy.value) {
+      enable = () => lazy.value = false;
+    }
 
     let watchId = 0;
 
     onMounted(() =>
-      watch(highAccuracy, acc => {
+      watch(() => [highAccuracy, lazy], ([acc]) => {
         clearWatch();
 
         watchId = navigator.geolocation.watchPosition(
           setPosition,
           setError,
-          options ? { ...options, enableHighAccuracy: acc } : undefined
+          options ? { ...options, enableHighAccuracy: acc.value } : undefined
         );
+      }, {
+        lazy: lazy.value
       })
     );
     onUnmounted(clearWatch);
@@ -40,6 +62,9 @@ export function useGeolocation(options?: PositionOptions) {
 
   return {
     supported,
+
+    enable,
+
     error,
 
     timestamp,
