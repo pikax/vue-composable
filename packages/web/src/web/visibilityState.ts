@@ -1,15 +1,22 @@
 import { ref, Ref } from "@vue/composition-api";
 
-let state: Ref<VisibilityState> | undefined = undefined;
+let visibility: Ref<VisibilityState> | undefined = undefined;
+let hidden = ref(document.hidden);
 
 export function useVisibilityState() {
-  if (!state) {
-    state = ref(document.visibilityState);
+  if (!visibility) {
+    visibility = ref(document.visibilityState);
     document.addEventListener(
       "visibilitychange",
-      () => (state!.value = document.visibilityState),
+      () => {
+        visibility!.value = document.visibilityState
+        hidden.value = document.hidden;
+      },
       { passive: true }
     );
   }
-  return state;
+  return {
+    visibility,
+    hidden
+  };
 }
