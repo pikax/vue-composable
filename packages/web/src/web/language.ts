@@ -1,21 +1,25 @@
-import { ref } from "@vue/composition-api";
-import { useEvent } from "../event";
+import { ref, Ref } from "@vue/composition-api";
+
+let language: Ref<String> | undefined = undefined;
+let preferred: Ref<readonly String[]> | undefined = undefined;
 
 export function useLanguage() {
-  const language = ref(navigator.language);
-  const preferred = ref(navigator.languages);
+  if (!language) {
+    language = ref(navigator.language);
+  }
 
-  const change = () => {
-    language.value = navigator.language;
-    preferred.value = navigator.languages;
-  };
+  if (!preferred) {
+    preferred = ref(navigator.languages);
+    const change = () => {
+      language!.value = navigator.language;
+      preferred!.value = navigator.languages;
+    };
 
-  const remove = useEvent(window, "languagechange", change, { passive: true });
+    window.addEventListener('languagechange', change, { passive: true });
+  }
 
   return {
     language,
-    preferred,
-
-    remove
+    preferred
   };
 }
