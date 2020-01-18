@@ -1,31 +1,13 @@
-import { Ref } from "@vue/composition-api";
 import { RefTyped, NO_OP } from "@vue-composable/core";
 import { useWebStorage } from './webStorage'
+import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
-export type LocalStorageTyped<T> = string;
-
-export interface LocalStorageReturn<T> {
-  supported: boolean,
-
-  storage: Ref<T>;
-
-  /**
-   * @description Removes current item from the store
-   */
-  remove: () => void;
-
-  /**
-   * @description Clears all tracked localStorage items
-   */
-  clear: () => void;
-}
-
-export function useLocalStorage<T = any>(
+export function useSessionStorage<T = any>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>
 ): LocalStorageReturn<T>;
-export function useLocalStorage(key: string, defaultValue?: any) {
-  const { supported, store } = useWebStorage('localStorage');
+export function useSessionStorage(key: string, defaultValue?: any) {
+  const { supported, store } = useWebStorage('sessionStorage');
 
   let remove = NO_OP;
   let clear = NO_OP;
@@ -40,7 +22,7 @@ export function useLocalStorage(key: string, defaultValue?: any) {
       storage = store.setItem(key, defaultValue);
     }
   } else if (__DEV__) {
-    console.warn('[localStorage] is not available');
+    console.warn('[sessionStorage] is not available');
   }
 
   return {

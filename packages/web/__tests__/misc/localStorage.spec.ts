@@ -1,67 +1,16 @@
 import { useLocalStorage } from "../../src";
 import { nextTick } from "../utils";
 import { promisedTimeout } from "@vue-composable/core";
+import { useWebStorage } from "../../src/misc/webStorage";
 
 describe("localStorage", () => {
-  const _localStorage = localStorage;
-  let localStore: Record<string, string> = {};
-  let len = 0;
-
-  const setItem = jest.fn((key: string, value: string) => {
-    localStore[key] = value.toString();
-    len = Object.keys(localStore).length;
-  });
-  const getItem = jest.fn((key: string) => localStore[key]);
-  const removeItem = jest.fn((key: string) => {
-    delete localStore[key];
-    len = Object.keys(localStore).length;
-  });
-
-  const key = jest.fn(index => {
-    return Object.keys(localStore)[index];
-  });
-
-  const clear = jest.fn(() => (localStore = {}));
-
-  let mockedLocalStorage: Storage = {
-    setItem,
-    getItem,
-    clear,
-    removeItem,
-    length: len,
-    key
-  };
-
-  Object.defineProperty(window, "localStorage", {
-    value: mockedLocalStorage
-  });
+  const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
 
   beforeEach(() => {
-    setItem.mockClear();
-    getItem.mockClear();
-    clear.mockClear();
-    removeItem.mockClear();
-    key.mockClear();
-  });
-
-  afterEach(async () => {
-    useLocalStorage("").clear();
-    await promisedTimeout(100);
-    localStore = {};
-    len = 0;
-  });
-
-  afterAll(() => {
-    Object.defineProperty(window, "localStorage", {
-      value: _localStorage
-    });
-  });
-
-  it("should store in the localStore", () => {
-    localStorage.setItem("test", "test");
-
-    expect(localStore["test"]).toBe("test");
-  });
+    localStorage.clear();
+    useWebStorage('localStorage').remove();
+    setItemSpy.mockClear();
+  })
 
   it("should store object in localStorage if default is passed", async () => {
     const obj = { a: 1 };
@@ -70,28 +19,22 @@ describe("localStorage", () => {
     await promisedTimeout(100);
 
     expect(storage.value).toMatchObject(obj);
-    expect(setItem).toHaveBeenCalledWith("test", JSON.stringify(obj));
+    expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify(obj));
   });
 
-  it("should update the localstorage if value changes", async () => {
-    const obj = { a: 1 };
+  it("should update the localStorage if value changes", async () => {
+    const obj = { a: 111 };
 
     const { storage } = useLocalStorage("test", obj);
-    await nextTick();
-    await promisedTimeout(100);
 
     expect(storage.value).toMatchObject(obj);
-    expect(setItem).toHaveBeenCalledWith("test", JSON.stringify(obj));
+    expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify(obj));
 
     storage.value.a = 33;
     await nextTick();
 
-    await promisedTimeout(100);
-
     expect(storage.value).toMatchObject({ a: 33 });
-    expect(setItem).toHaveBeenCalledWith("test", JSON.stringify({ a: 33 }));
-
-    expect(localStore["test"]).toBe(JSON.stringify({ a: 33 }));
+    expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify({ a: 33 }));
   });
 
   it("should get the same object if the same key is used", () => {
@@ -108,21 +51,18 @@ describe("localStorage", () => {
 
     remove();
     await nextTick();
-    expect(localStore[key]).toBeUndefined();
+
+    expect(localStorage.getItem(key)).toBeFalsy();
   });
 
-  it("should clear all localstorage keys", async () => {
+  it("should clear all localStorage keys", async () => {
     localStorage.setItem("_other_", "secret");
     const s1 = useLocalStorage("key", { a: 1 });
     const s2 = useLocalStorage("key2", { a: 2 });
 
-    await promisedTimeout(100);
-
-    expect(localStore).toMatchObject({
-      key: JSON.stringify(s1.storage.value),
-      key2: JSON.stringify(s2.storage.value),
-      _other_: "secret"
-    });
+    expect(localStorage.getItem('key')).toBe(JSON.stringify(s1.storage.value));
+    expect(localStorage.getItem('key2')).toBe(JSON.stringify(s2.storage.value));
+    expect(localStorage.getItem('_other_')).toBe("secret");
 
     s1.clear();
 
@@ -131,9 +71,7 @@ describe("localStorage", () => {
 
     expect(s1.storage.value).toBeUndefined();
     expect(s2.storage.value).toBeUndefined();
-    expect(localStore).toStrictEqual({
-      _other_: "secret"
-    });
+    expect(localStorage.getItem('_other_')).toBe("secret");
   });
 
 
