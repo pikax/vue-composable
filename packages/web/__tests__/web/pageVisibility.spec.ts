@@ -1,6 +1,6 @@
-import { useVisibilityState } from "../../src";
+import { usePageVisibility } from "../../src";
 
-describe("visibilityState", () => {
+describe("pageVisibility", () => {
   const documentEventSpy = jest.fn();
   const documentEvent = document.addEventListener;
 
@@ -26,8 +26,8 @@ describe("visibilityState", () => {
   it('should only add event listener once', () => {
     expect(documentEventSpy).not.toHaveBeenCalled();
 
-    useVisibilityState();
-    useVisibilityState();
+    usePageVisibility();
+    usePageVisibility();
 
     expect(documentEventSpy).toHaveBeenCalled();
     expect(documentEventSpy).toHaveBeenCalledTimes(1);
@@ -36,7 +36,7 @@ describe("visibilityState", () => {
   })
 
   it('should update visibilityState and hidden', () => {
-    const { visibility, hidden } = useVisibilityState();
+    const { visibility, hidden } = usePageVisibility();
 
     expect(visibility.value).toBe(document.visibilityState);
     expect(hidden.value).toBe(document.hidden);

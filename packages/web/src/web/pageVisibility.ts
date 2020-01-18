@@ -3,7 +3,7 @@ import { ref, Ref } from "@vue/composition-api";
 let visibility: Ref<VisibilityState> | undefined = undefined;
 let hidden = ref(document.hidden);
 
-export function useVisibilityState() {
+export function usePageVisibility() {
   if (!visibility) {
     visibility = ref(document.visibilityState);
     document.addEventListener(
