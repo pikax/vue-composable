@@ -3,10 +3,42 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
 
+### Changed
+
+- Axios: Allow calling exec with a string
+
+## 1.0.0-dev.7
+
+_2020-01-19_
+
+---
+
+### Changed
+
+- Fix readme storage links
+
+## 1.0.0-dev.6
+
+_2020-01-19_
+
+---
+
+### Added
+
+- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
+- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+
+### Changed
+
+- [localStorage](composable/misc/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
 
 ## 1.0.0-dev.4
 

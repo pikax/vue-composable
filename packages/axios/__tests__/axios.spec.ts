@@ -35,6 +35,15 @@ describe("axios", () => {
     expect(client.value.request).toBeCalledWith(expect.objectContaining(request));
   });
 
+  it("should call axios using string", async () => {
+    const { exec, client } = useAxios();
+    const url = "./api/1";
+
+    await exec(url);
+
+    expect(client.value.request).toBeCalledWith(expect.objectContaining({ url }));
+  });
+
   it("should set response", async () => {
     const { exec, client, result, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {

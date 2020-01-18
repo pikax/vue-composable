@@ -1,6 +1,6 @@
 <template>
   <div>
-    localStorage: {{ storage }}
+    sessionStorage: {{ storage }}
     <p>
       supported:
       <b :class="{ green: supported, red: !supported }">{{ supported }}</b>
@@ -13,30 +13,21 @@
     </label>
 
     <div>
-      <p>Enable tab sync? <input type="checkbox" v-model="tabSync" /></p>
-      <p v-if="tabSync">
-        Now this tab is listening for changes, please change the storage value
-        in other tab
-      </p>
-    </div>
-    <div>
       <button @click="remove">Remove</button>
     </div>
   </div>
 </template>
 
 <script>
-import { useLocalStorage } from "vue-composable";
+import { useSessionStorage } from "vue-composable";
 import { ref, watch } from "@vue/composition-api";
 export default {
-  name: "local-storage-example",
+  name: "session-storage-example",
 
   setup() {
-    const key = "__vue_localStorage_example";
+    const key = "__vue_sessionStorage_example";
     const tabSync = ref(false);
-    const { supported, storage, setSync, remove } = useLocalStorage(key, 1);
-
-    watch(tabSync, setSync);
+    const { supported, storage, remove } = useSessionStorage(key, 1);
 
     return {
       key,
