@@ -77,6 +77,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [NetworkInformation](composable/web/networkInformation) - reactive `NetworkInformation` wrapper
 - [Online](composable/web/online) - reactive `navigator.onLine` wrapper
 - [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](composable/web/language) - reactive `NavigatorLanguage`
 
 ### External
 

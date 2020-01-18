@@ -38,17 +38,17 @@ describe('language', () => {
 
 
   it('should update languages', () => {
-    const { language, preferred } = useLanguage();
+    const { language, languages } = useLanguage();
 
     expect(language.value).toBe(navigator.language);
-    expect(preferred.value).toBe(navigator.languages);
+    expect(languages.value).toBe(navigator.languages);
 
     let lang = 'en-GB';
     let pref = ['en-GB', 'en-EN', 'en'];
 
     updateLanguage(lang, pref);
     expect(language.value).toBe(lang);
-    expect(preferred.value).toBe(pref);
+    expect(languages.value).toBe(pref);
 
 
     lang = 'en-EN';
@@ -56,7 +56,7 @@ describe('language', () => {
 
     updateLanguage(lang, pref);
     expect(language.value).toBe(lang);
-    expect(preferred.value).toBe(pref);
+    expect(languages.value).toBe(pref);
   })
 
 })

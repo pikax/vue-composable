@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ---
+
 ### Added
 
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 
 ## 1.0.0-dev.4
 
