@@ -203,7 +203,8 @@ module.exports = {
             ["composable/web/webSocket", "webSocket"],
             ["composable/web/intersectionObserver", "IntersectionObserver"],
             ["composable/web/networkInformation", "NetworkInformation"],
-            ["composable/web/online", "Navigator.onLine"]
+            ["composable/web/online", "Navigator.onLine"],
+            ["composable/web/pageVisibility", "PageVisibilityAPI"]
           ]
         },
         {
