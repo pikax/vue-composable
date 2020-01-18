@@ -204,7 +204,8 @@ module.exports = {
             ["composable/web/intersectionObserver", "IntersectionObserver"],
             ["composable/web/networkInformation", "NetworkInformation"],
             ["composable/web/online", "Navigator.onLine"],
-            ["composable/web/pageVisibility", "PageVisibilityAPI"]
+            ["composable/web/pageVisibility", "PageVisibilityAPI"],
+            ["composable/web/language", "Language"]
           ]
         },
         {
