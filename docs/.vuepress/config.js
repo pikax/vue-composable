@@ -215,7 +215,8 @@ module.exports = {
             ["composable/web/networkInformation", "NetworkInformation"],
             ["composable/web/online", "Navigator.onLine"],
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
-            ["composable/web/language", "Language"]
+            ["composable/web/language", "Language"],
+            ["composable/web/geolocation", "Geolocation API"]
           ]
         },
         {
