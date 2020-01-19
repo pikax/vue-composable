@@ -1155,14 +1155,6 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@vue-composable/web@1.0.0-alpha.5":
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@vue-composable/web/-/web-1.0.0-alpha.5.tgz#9afd05ac5bd6bde82372615ee8e814b5e88e3e74"
-  integrity sha512-Z48WPl4FOsK2Qy0a0qtzaHMRKUnAz4aYGg8i3zGqbeDvuHdfOoQbeu2A67ljjw1tQA9+q8nosubmOQ4gXf5fEQ==
-  dependencies:
-    "@vue-composable/core" "1.0.0-alpha.5"
-    "@vue/runtime-core" "^3.0.0-alpha.1"
-
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -1403,11 +1395,6 @@
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.1.1.tgz#18723530d304f443021da2292d6ec9502826104a"
   integrity sha512-8VCoJeeH8tCkzhkpfOkt+abALQkS11OIHhte5MBzYaKMTqK0A3ZAKEUVAffsOklhEv7t0yrQt696Opnu9oAx+w==
 
-"@vue/reactivity@3.0.0-alpha.1":
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-alpha.1.tgz#c4d858a97e4a2f249dc15e32f9eaa515161fefc7"
-  integrity sha512-yhH5mZqCt5MCiAAtF9Tv7ofph8erpb54hX6nCBJHotOm/IuR4G4TpQcKs4m0LVsW8EIFjTrE4XI4ekuMqjCXeQ==
-
 "@vue/reactivity@3.0.0-alpha.2":
   version "3.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-alpha.2.tgz#8d0b235652f1834236325c36ea0ba419e06df423"
@@ -1419,13 +1406,6 @@
   integrity sha512-wyzZ69B4fO6pawN7Z/thLnWOwhymJ8eE45mO8VGjRWi91RbC70X+tDrjUhsVQBTDJy9C9YkimBtDhBAy/cREIw==
   dependencies:
     "@vue/reactivity" "3.0.0-alpha.2"
-
-"@vue/runtime-core@^3.0.0-alpha.1":
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-alpha.1.tgz#37fbee2a5b1703df194c2a12576f15af9f64d48e"
-  integrity sha512-oNDjcx/uR+98Omm7o651gwVnUfePh5JySR73ubeENnwZejMnShMwsNrJgLxgn6y5DzbPirIerPbFrXbFBQ9cJA==
-  dependencies:
-    "@vue/reactivity" "3.0.0-alpha.1"
 
 "@vue/runtime-dom@3.0.0-alpha.2":
   version "3.0.0-alpha.2"

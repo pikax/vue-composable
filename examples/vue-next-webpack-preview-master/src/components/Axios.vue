@@ -26,7 +26,7 @@ export default {
     const { result, loading, exec, status } = useAxios();
 
     watch(id, id => {
-      exec("https://reqres.in/api/user/" + id);
+      exec({ url: "https://reqres.in/api/user/" + id });
     });
 
     return {
