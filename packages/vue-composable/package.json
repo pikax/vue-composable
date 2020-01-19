@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-dev.6",
+  "version": "1.0.0-dev.7",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
@@ -36,8 +36,8 @@
   },
   "homepage": "https://github.com/pikax/vue-composable",
   "dependencies": {
-    "@vue-composable/core": "1.0.0-dev.6",
-    "@vue-composable/web": "1.0.0-dev.6",
+    "@vue-composable/core": "1.0.0-dev.7",
+    "@vue-composable/web": "1.0.0-dev.7",
     "@vue/composition-api": "^0.3.4",
     "vue": "^2.6.10"
   }
