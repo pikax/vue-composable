@@ -31,9 +31,15 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### MISC
 
-- [localStorage](https://pikax.me/vue-composable/composable/misc/localStorage) - Reactive access to a `localStorage`
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
 - [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+
+### Storage
+
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Web
 

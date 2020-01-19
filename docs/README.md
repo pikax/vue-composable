@@ -54,9 +54,15 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### MISC
 
-- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
 - [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
 - [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+
+### Storage
+
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Pagination
 

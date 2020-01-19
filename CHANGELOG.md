@@ -12,6 +12,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+
+### Changed
+
+- [localStorage](composable/misc/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
 
 ## 1.0.0-dev.4
 
