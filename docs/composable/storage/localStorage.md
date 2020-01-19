@@ -48,6 +48,8 @@ const { remove, clear, setSync } = useLocalStorage(key);
 
 ## Example
 
+![Local Storage Cross tab](/vue-composable/localStorage.gif)
+
 <ClientOnly>
 <local-storage-example/>
 </ClientOnly>
