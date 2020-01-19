@@ -171,9 +171,19 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
-            ["composable/misc/localStorage", "localStorage"],
             ["composable/misc/matchMedia", "matchMedia"],
             ["composable/misc/breakpoint", "breakpoint"]
+          ]
+        },
+        {
+          title: "Storage",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/storage/webStorage", "WebStorage"],
+            ["composable/storage/storage", "Storage"],
+            ["composable/storage/localStorage", "localStorage"],
+            ["composable/storage/sessionStorage", "sessionStorage"]
           ]
         },
         {

@@ -1,7 +1,6 @@
-import { useLocalStorage } from "../../src";
+import { useLocalStorage, useWebStorage } from "../../src";
 import { nextTick } from "../utils";
 import { promisedTimeout } from "@vue-composable/core";
-import { useWebStorage } from "../../src/misc/webStorage";
 
 describe("localStorage", () => {
   const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');

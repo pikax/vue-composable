@@ -1,8 +1,8 @@
-import { RefTyped, NO_OP } from "@vue-composable/core";
+import { RefTyped, NO_OP, FALSE_OP } from "@vue-composable/core";
 import { useWebStorage } from './webStorage'
 import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
-export function useSessionStorage<T = any>(
+export function useSessionStorage<T extends object = object>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>
 ): LocalStorageReturn<T>;
@@ -11,9 +11,13 @@ export function useSessionStorage(key: string, defaultValue?: any) {
 
   let remove = NO_OP;
   let clear = NO_OP;
+  let setSync: LocalStorageReturn<any>['setSync'] = FALSE_OP;
   let storage = undefined;
 
   if (supported && store) {
+    if (__DEV__) {
+      setSync = (s) => console.warn('sync is not supported, please `useLocalStorage` instead');
+    }
     remove = () => store.removeItem(key);
     clear = () => store.clear();
 
@@ -30,6 +34,7 @@ export function useSessionStorage(key: string, defaultValue?: any) {
 
     storage,
     clear,
-    remove
+    remove,
+    setSync
   };
 }

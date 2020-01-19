@@ -2,7 +2,7 @@ import { Ref } from "@vue/composition-api";
 import { RefTyped, NO_OP } from "@vue-composable/core";
 import { useWebStorage } from './webStorage'
 
-export type LocalStorageTyped<T> = string;
+export type LocalStorageTyped<T extends object> = string;
 
 export interface LocalStorageReturn<T> {
   supported: boolean,
@@ -25,12 +25,11 @@ export interface LocalStorageReturn<T> {
   setSync: (sync: boolean) => void;
 }
 
-export function useLocalStorage<T = any>(
+export function useLocalStorage<T extends object = any>(
   key: LocalStorageTyped<T> | string,
-  defaultValue?: RefTyped<T>,
-  sync?: RefTyped<boolean>,
+  defaultValue?: RefTyped<T>
 ): LocalStorageReturn<T>;
-export function useLocalStorage(key: string, defaultValue?: any, sync?: RefTyped<boolean>) {
+export function useLocalStorage(key: string, defaultValue?: any) {
   const { supported, store } = useWebStorage('localStorage');
 
   let remove = NO_OP;
@@ -55,6 +54,7 @@ export function useLocalStorage(key: string, defaultValue?: any, sync?: RefTyped
     supported,
 
     storage,
+    
     clear,
     remove,
     setSync,

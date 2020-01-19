@@ -140,8 +140,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
       },
 
       clear() {
-        this.$watchHandlers.forEach(x => x());
-        this.$refMap.forEach(x => x.value = undefined);
+        this.$refMap.forEach((_, k) => this.removeItem(k));
       },
       removeItem(k) {
         const item = this.$refMap.get(k);
@@ -157,7 +156,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
 
         delete this.$syncKeys[k];
         this.$refMap.delete(k);
-        localStorage.removeItem(k);
+        storage.removeItem(k);
       },
       getItem(k) {
         let r = this.$refMap.get(k);

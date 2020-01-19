@@ -1,3 +1,3 @@
 
-export * from '../misc/localStorage';
-export * from '../misc/matchMedia'
+export * from './matchMedia'
+export * from './breakpoint'
