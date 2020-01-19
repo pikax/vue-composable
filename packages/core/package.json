@@ -1,10 +1,9 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.4",
+  "version": "1.0.0-dev.6",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
-  "unpkg": "dist/core.global.js",
   "files": [
     "index.js",
     "dist"
@@ -15,8 +14,7 @@
     "name": "VueComposableCore",
     "formats": [
       "esm-bundler",
-      "cjs",
-      "global"
+      "cjs"
     ]
   },
   "repository": {

@@ -2,9 +2,6 @@ import { computed, Ref, ref } from "@vue/composition-api";
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance, CancelTokenSource } from "axios";
 import { usePromise, PromiseResultFactory, isString, isBoolean, isObject } from "@vue-composable/core";
 
-/* istanbul ignore next  */
-const _axios = axios || (globalThis && (globalThis as any).axios);
-
 interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<TData>>, [AxiosRequestConfig]> {
   readonly client: Ref<Readonly<AxiosInstance>>;
   readonly data: Ref<TData | null>;
@@ -30,13 +27,13 @@ export function useAxios<TData = any>(config?: AxiosRequestConfig, throwExceptio
 export function useAxios<TData = any>(configUrlThrowException?: AxiosRequestConfig | string | boolean, configThrowException?: AxiosRequestConfig | boolean, throwException = false): AxiosReturn<TData> {
   /* istanbul ignore next  */
   __DEV__ &&
-    !_axios &&
+    !axios &&
     console.warn(`[axios] not installed, please install it`);
 
   const config = !isString(configUrlThrowException) && !isBoolean(configUrlThrowException) ? configUrlThrowException : isObject(configThrowException) ? configThrowException as AxiosRequestConfig : undefined;
   throwException = isBoolean(configUrlThrowException) ? configUrlThrowException : isBoolean(configThrowException) ? configThrowException : throwException;
 
-  const axiosClient = _axios.create(config);
+  const axiosClient = axios.create(config);
   const client = computed(() => axiosClient);
   const isCancelled = ref(false);
   const cancelledMessage = ref<string>(null);
@@ -55,7 +52,7 @@ export function useAxios<TData = any>(configUrlThrowException?: AxiosRequestConf
   }
 
   const use = usePromise(async (request: AxiosRequestConfig) => {
-    cancelToken = _axios.CancelToken.source()
+    cancelToken = axios.CancelToken.source()
     isCancelled.value = false;
     cancelledMessage.value = null;
 
