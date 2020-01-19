@@ -4,7 +4,7 @@ import { wrap, isString, debounce } from "@vue-composable/core";
 type WebStorageType = 'localStorage' | 'sessionStorage';
 
 
-
+/* istanbul ignore next */
 function isQuotaExceededError(e: any, storage: Storage) {
   return e instanceof DOMException && (
     // everything except Firefox
@@ -125,95 +125,100 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
     })
   }
 
-  let store: WebStorage | undefined = storageMap.get(type);
+  let store: WebStorage = storageMap.get(type) as any;
   let quotaError: Ref<boolean>;
-  if (!store) {
-    quotaError = ref(false);
-    store = {
-      $refMap: new Map<string, Ref<any>>(),
-      $watchHandlers: new Map<string, Function>(),
-      $syncKeys: {} as Record<string, boolean>,
-      $quotaError: quotaError,
+  if (supported) {
+    if (!store) {
+      quotaError = ref(false);
+      store = {
+        $refMap: new Map<string, Ref<any>>(),
+        $watchHandlers: new Map<string, Function>(),
+        $syncKeys: {} as Record<string, boolean>,
+        $quotaError: quotaError,
 
-      key: storage.key,
-      length: storage.length,
+        key: storage.key,
+        length: storage.length,
 
-      setSync(key, sync) {
-        if (sync) {
-          this.$syncKeys[key] = true;
-        }
-        else {
-          delete this.$syncKeys[key];
-        }
-      },
+        setSync(key, sync) {
+          if (sync) {
+            this.$syncKeys[key] = true;
+          }
+          else {
+            delete this.$syncKeys[key];
+          }
+        },
 
-      clear() {
-        this.$refMap.forEach((_, k) => this.removeItem(k));
-      },
-      removeItem(k) {
-        const item = this.$refMap.get(k);
-        // remove the object value if item deleted
-        if (item) {
-          item.value = undefined;
-        }
-        // clear the watch
-        const stop = this.$watchHandlers.get(k);
-        if (stop) {
-          stop();
-        }
+        clear() {
+          this.$refMap.forEach((_, k) => this.removeItem(k));
+        },
+        removeItem(k) {
+          const item = this.$refMap.get(k);
+          // remove the object value if item deleted
+          if (item) {
+            item.value = undefined;
+          }
+          // clear the watch
+          const stop = this.$watchHandlers.get(k);
+          if (stop) {
+            stop();
+          }
 
-        delete this.$syncKeys[k];
-        this.$refMap.delete(k);
-        storage.removeItem(k);
-      },
-      getItem(k) {
-        let r = this.$refMap.get(k);
-        if (r) {
-          return r;
-        }
-        const data = storage.getItem(k);
-        if (!data) {
-          return null
-        }
-        return this.setItem(k, safeParse(serializer, data));
-      },
-      setItem(k, v) {
-        const reference = wrap(v);
-        this.$refMap.set(k, reference);
+          delete this.$syncKeys[k];
+          this.$refMap.delete(k);
+          storage.removeItem(k);
+        },
+        getItem(k) {
+          let r = this.$refMap.get(k);
+          if (r) {
+            return r;
+          }
+          const data = storage.getItem(k);
+          if (!data) {
+            return null
+          }
+          return this.setItem(k, safeParse(serializer, data));
+        },
+        setItem(k, v) {
+          const reference = wrap(v);
+          this.$refMap.set(k, reference);
 
-        const save = (key: string, value: any) => {
-          try {
-            const data = isString(value) ? value : serializer.stringify(value);
-            storage.setItem(key, data);
-          } catch (e) {
-            quotaError.value = isQuotaExceededError(e, storage);
+          const save = (key: string, value: any) => {
+            try {
+              const data = isString(value) ? value : serializer.stringify(value);
+              storage.setItem(key, data);
+            } catch (e) {
+              quotaError.value = isQuotaExceededError(e, storage);
+            }
+          }
+
+          save(k, v);
+
+          const stop = watch(reference, debounce((r) => {
+            save(k, r)
+          }, ms), {
+            lazy: true,
+            deep: true
+          })
+
+          this.$watchHandlers.set(k, stop);
+
+          return reference;
+        },
+        updateItem(k, data) {
+          let r = this.$refMap.get(k);
+          if (r) {
+            r.value = safeParse(serializer, data);
           }
         }
-
-        save(k, v);
-
-        const stop = watch(reference, debounce((r) => {
-          save(k, r)
-        }, ms), {
-          lazy: true,
-          deep: true
-        })
-
-        this.$watchHandlers.set(k, stop);
-
-        return reference;
-      },
-      updateItem(k, data) {
-        let r = this.$refMap.get(k);
-        if (r) {
-          r.value = safeParse(serializer, data);
-        }
       }
-    }
 
-    storageMap.set(type, store);
+      storageMap.set(type, store);
+    } else {
+      quotaError = store.$quotaError;
+    }
   } else {
-    quotaError = store.$quotaError;
+    quotaError = ref(false);
+    store = {} as any;
   }
 
   return {

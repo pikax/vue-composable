@@ -131,10 +131,13 @@ export function useNetworkInformation(): NetworkInformationReturn {
     );
 
     handler();
-  } else if (__DEV__) {
-    console.warn(
-      "[navigator.connection] not found, networkInformation not available."
-    );
+  } else {
+    /* istanbul ignore else */
+    if (__DEV__) {
+      console.warn(
+        "[navigator.connection] not found, networkInformation not available."
+      );
+    }
   }
 
   return {

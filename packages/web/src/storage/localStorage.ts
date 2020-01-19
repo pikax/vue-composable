@@ -46,15 +46,18 @@ export function useLocalStorage(key: string, defaultValue?: any) {
     if (!storage) {
       storage = store.setItem(key, defaultValue);
     }
-  } else if (__DEV__) {
-    console.warn('[localStorage] is not available');
+  } else {
+    /* istanbul ignore else */
+    if (__DEV__) {
+      console.warn('[localStorage] is not available');
+    }
   }
 
   return {
     supported,
 
     storage,
-    
+
     clear,
     remove,
     setSync,

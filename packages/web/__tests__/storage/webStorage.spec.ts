@@ -1,7 +1,10 @@
 import { useWebStorage, WebStorage } from "../../src";
 import { nextTick } from "../utils";
+import { promisedTimeout } from "@vue-composable/core";
 
 describe("localStorage", () => {
+  const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+
   const localStorageSpy = jest.spyOn(window, 'localStorage', 'get');
   const sessionStorageSpy = jest.spyOn(window, 'sessionStorage', 'get');
 
@@ -11,6 +14,7 @@ describe("localStorage", () => {
     useWebStorage('sessionStorage').remove();
     localStorageSpy.mockClear();
     sessionStorageSpy.mockClear();
+    setItemSpy.mockClear();
   })
 
   it('should return the same object if called multiple times', () => {
@@ -38,6 +42,47 @@ describe("localStorage", () => {
     useWebStorage('sessionStorage');
 
     expect(sessionStorageSpy).toBeCalledTimes(1);
+  })
+
+  it('should parse string', () => {
+    const key = 'test1'
+    localStorage.setItem(key, key);
+    const { store } = useWebStorage('localStorage');
+
+    const i = store.getItem(key)!;
+
+    expect(i.value).toBe(key);
+  })
+
+  it('should removeItem', async () => {
+    const key = 'test1'
+    const val = 'test2';
+    const { store } = useWebStorage('localStorage');
+    store.setItem(key, key);
+
+    expect(localStorage.getItem(key)).toBe(key);
+    store.updateItem(key, val);
+    await nextTick();
+    await promisedTimeout(10);
+    expect(localStorage.getItem(key)).toBe(val);
+
+    store.removeItem(key);
+    expect(localStorage.getItem(key)).toBeNull();
+  })
+
+  it('should work if trying to remove not tracked item', () => {
+    const key = 'test1'
+    const non = 'test2';
+    localStorage.setItem(non, non);
+
+    const { store } = useWebStorage('localStorage');
+
+    store.updateItem(non, key);
+    // it should not update the localStorage value
+    expect(localStorage.getItem(non)).toBe(non);
+
+    store.removeItem(non);
+    expect(localStorage.getItem(non)).toBeNull();
   })
 
 
@@ -84,6 +129,10 @@ describe("localStorage", () => {
       dispatchStorageEvent(k, JSON.stringify(item.value), JSON.stringify(item.value));
       expect(updateItemSpy).not.toBeCalled();
 
+      // different item 
+      dispatchStorageEvent(k + 'test', '', JSON.stringify(item.value));
+      expect(updateItemSpy).not.toBeCalled();
+
 
       // different value
       dispatchStorageEvent(k, JSON.stringify(item.value), JSON.stringify(n));
@@ -120,9 +169,7 @@ describe("localStorage", () => {
       expect(clearSpy).toHaveBeenCalledTimes(1);
     })
 
-    // TODO test quota exceeded
     it('should show quota errors', async () => {
-
       function getStorageTotalSize(upperLimit/*in bytes*/?: number) {
         var store = localStorage, testkey = "$_test"; // (NOTE: Test key is part of the storage!!! It should also be an even number of characters)
         var test = function (_size: number) { try { store.removeItem(testkey); store.setItem(testkey, new Array(_size + 1).join('0')); } catch (_ex) { return false; } return true; }
@@ -155,81 +202,7 @@ describe("localStorage", () => {
       await nextTick();
 
       expect(quotaError.value).toBe(true);
-
     })
+
   })
-
-
-  // it("should store object in localStorage if default is passed", async () => {
-  //   const obj = { a: 1 };
-  //   const { storage } = useWebStorage("test", obj);
-
-  //   await promisedTimeout(100);
-
-  //   expect(storage.value).toMatchObject(obj);
-  //   expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify(obj));
-  // });
-
-  // it("should update the localStorage if value changes", async () => {
-  //   const obj = { a: 111 };
-
-  //   const { storage } = useLocalStorage("test", obj);
-
-  //   expect(storage.value).toMatchObject(obj);
-  //   expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify(obj));
-
-  //   storage.value.a = 33;
-  //   await nextTick();
-
-  //   expect(storage.value).toMatchObject({ a: 33 });
-  //   await promisedTimeout(20);
-  //   expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify({ a: 33 }));
-  // });
-
-  // it("should get the same object if the same key is used", () => {
-  //   const key = "test";
-  //   const { storage: storage1 } = useLocalStorage(key, { a: 1 });
-  //   const { storage: storage2 } = useLocalStorage(key, { a: 1 });
-
-  //   expect(storage1).toBe(storage2);
-  // });
-
-  // it("should remove from localstorage", async () => {
-  //   const key = "test";
-  //   const { remove } = useLocalStorage(key, { a: 1 });
-
-  //   remove();
-  //   await nextTick();
-
-  //   expect(localStorage.getItem(key)).toBeFalsy();
-  // });
-
-  // it("should clear all localStorage keys", async () => {
-  //   localStorage.setItem("_other_", "secret");
-  //   const s1 = useLocalStorage("key", { a: 1 });
-  //   const s2 = useLocalStorage("key2", { a: 2 });
-
-  //   expect(localStorage.getItem('key')).toBe(JSON.stringify(s1.storage.value));
-  //   expect(localStorage.getItem('key2')).toBe(JSON.stringify(s2.storage.value));
-  //   expect(localStorage.getItem('_other_')).toBe("secret");
-
-  //   s1.clear();
-
-  //   await nextTick();
-  //   await promisedTimeout(200);
-
-  //   expect(s1.storage.value).toBeUndefined();
-  //   expect(s2.storage.value).toBeUndefined();
-  //   expect(localStorage.getItem('_other_')).toBe("secret");
-  // });
-
-
-  // it("should load from localStorage", () => {
-  //   const key = "hello";
-  //   localStorage.setItem(key, JSON.stringify({ k: 1 }));
-
-  //   const { storage } = useLocalStorage(key, { k: 10 });
-
-  //   expect(storage.value).toMatchObject({ k: 1 });
-  // });
 });

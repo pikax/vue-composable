@@ -4,11 +4,13 @@ import { promisedTimeout } from "@vue-composable/core";
 
 describe("localStorage", () => {
   const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+  const consoleWarnSpy = jest.spyOn(console, 'warn');
 
   beforeEach(() => {
     localStorage.clear();
     useWebStorage('localStorage').remove();
     setItemSpy.mockClear();
+    consoleWarnSpy.mockClear()
   })
 
   it("should store object in localStorage if default is passed", async () => {
@@ -83,4 +85,25 @@ describe("localStorage", () => {
 
     expect(storage.value).toMatchObject({ k: 1 });
   });
+
+
+  it('should you try to sync', () => {
+    const key = "hello";
+    const { setSync } = useLocalStorage(key, { k: 10 });
+    const setSyncSpy = jest.spyOn(useWebStorage('localStorage').store!, 'setSync');
+
+    setSync(true);
+
+    expect(setSyncSpy).toHaveBeenCalledWith(key, true);
+
+  })
+
+  it('should warn if sessionStorage is not supported', () => {
+    setItemSpy.mockImplementationOnce(() => {
+      throw new Error('random')
+    });
+    const key = "hello";
+    useLocalStorage(key, { k: 10 });
+    expect(consoleWarnSpy).toHaveBeenCalledWith('[localStorage] is not available');
+  })
 });

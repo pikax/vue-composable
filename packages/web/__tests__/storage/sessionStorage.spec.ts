@@ -4,11 +4,13 @@ import { promisedTimeout } from "@vue-composable/core";
 
 describe("sessionStorage", () => {
   const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+  const consoleWarnSpy = jest.spyOn(console, 'warn');
 
   beforeEach(() => {
     sessionStorage.clear();
     useWebStorage('sessionStorage').remove();
     setItemSpy.mockClear();
+    consoleWarnSpy.mockClear();
   })
 
   it("should store object in sessionStorage if default is passed", async () => {
@@ -83,4 +85,22 @@ describe("sessionStorage", () => {
 
     expect(storage.value).toMatchObject({ k: 1 });
   });
+
+  it('should warn if you try to sync', () => {
+    const key = "hello";
+    const { setSync } = useSessionStorage(key, { k: 10 });
+
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
+    setSync(true);
+    expect(consoleWarnSpy).toHaveBeenCalledWith('sync is not supported, please `useLocalStorage` instead');
+  })
+
+  it('should warn if sessionStorage is not supported', () => {
+    setItemSpy.mockImplementationOnce(() => {
+      throw new Error('random')
+    });
+    const key = "hello";
+    useSessionStorage(key, { k: 10 });
+    expect(consoleWarnSpy).toHaveBeenCalledWith('[sessionStorage] is not available');
+  })
 });

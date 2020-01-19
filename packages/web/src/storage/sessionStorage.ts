@@ -15,8 +15,9 @@ export function useSessionStorage(key: string, defaultValue?: any) {
   let storage = undefined;
 
   if (supported && store) {
+    /* istanbul ignore else */
     if (__DEV__) {
-      setSync = (s) => console.warn('sync is not supported, please `useLocalStorage` instead');
+      setSync = () => console.warn('sync is not supported, please `useLocalStorage` instead');
     }
     remove = () => store.removeItem(key);
     clear = () => store.clear();
@@ -25,8 +26,12 @@ export function useSessionStorage(key: string, defaultValue?: any) {
     if (!storage) {
       storage = store.setItem(key, defaultValue);
     }
-  } else if (__DEV__) {
-    console.warn('[sessionStorage] is not available');
+  }
+  else {
+    /* istanbul ignore else */
+    if (__DEV__) {
+      console.warn('[sessionStorage] is not available');
+    }
   }
 
   return {
