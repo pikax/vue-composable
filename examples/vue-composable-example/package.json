@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vue-composable/axios": "^1.0.0-alpha.4",
-    "vue": "^3.0.0-alpha.1",
+    "vue": "^3.0.0-alpha.2",
     "vue-composable": "^1.0.0-alpha.5"
   },
   "devDependencies": {

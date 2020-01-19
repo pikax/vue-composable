@@ -38,6 +38,6 @@
   "dependencies": {
     "@vue-composable/core": "1.0.0-alpha.5",
     "@vue-composable/web": "1.0.0-alpha.5",
-    "@vue/runtime-core": "^3.0.0-alpha.1"
+    "@vue/runtime-core": "^3.0.0-alpha.2"
   }
 }
