@@ -14,6 +14,13 @@
 
 100% typescript based composable components and full type support out-of-box.
 
+This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code ([12kb gzip](https://app.circleci.com/jobs/github/pikax/vue-composable/318/parallel-runs/0/steps/0-105)).
+
+[vue-composable](https://www.npmjs.com/package/vue-composable) is composed by two package [@vue-composable/core](./packages/core) and [@vue-composable/web](./packages/web).
+
+- [@vue-composable/core](./packages/core): contains helpers composables, such as Promise and Pagination.
+- [@vue-composable/web](./packages/web): contains [Web API](https://developer.mozilla.org/en-US/docs/Web/API) implementations
+
 ## Installing
 
 ```bash
@@ -118,6 +125,16 @@ export default {
 ```
 
 ## Contributing
+
+You can contribute raising issues and by helping out with code.
+
+Tests and Documentation are the most important things for me, because good documentation is really useful!
+
+I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
+
+> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax`
+
+### New composable
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`
