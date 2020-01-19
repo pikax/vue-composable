@@ -39,10 +39,11 @@ export interface StorageSerializer<T = any> {
   parse(data: string): T;
 }
 
-interface WebStorage {
+export interface WebStorage {
   $refMap: Map<string, Ref<any>>;
   $watchHandlers: Map<string, Function>;
   $syncKeys: Record<string, boolean>;
+  $quotaError: Ref<boolean>;
 
   updateItem(key: string, value: string): void;
 
@@ -93,7 +94,6 @@ let storageMap: Map<WebStorageType, WebStorage> | undefined = undefined;
 export function useWebStorage(type: WebStorageType, serializer: StorageSerializer = JSON, ms = 10) {
   const storage = window[type];
   const supported = storageAvailable(storage);
-  const quotaError = ref(false);
 
   const remove = () => storageMap!.delete(type);
 
@@ -126,17 +126,25 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
   }
 
   let store: WebStorage | undefined = storageMap.get(type);
+  let quotaError: Ref<boolean>;
   if (!store) {
+    quotaError = ref(false);
     store = {
       $refMap: new Map<string, Ref<any>>(),
       $watchHandlers: new Map<string, Function>(),
       $syncKeys: {} as Record<string, boolean>,
+      $quotaError: quotaError,
 
       key: storage.key,
       length: storage.length,
 
       setSync(key, sync) {
-        this.$syncKeys[key] = sync;
+        if (sync) {
+          this.$syncKeys[key] = true;
+        }
+        else {
+          delete this.$syncKeys[key];
+        }
       },
 
       clear() {
@@ -204,6 +212,8 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
     }
 
     storageMap.set(type, store);
+  } else {
+    quotaError = store.$quotaError;
   }
 
   return {
