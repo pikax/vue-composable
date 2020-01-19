@@ -2,6 +2,19 @@
 
 Provides promise state
 
+## Parameters
+
+```js
+import { usePromise } from "vue-composable";
+
+const promise = usePromise(factory, throwException?);
+```
+
+| Parameters     | Type       | Required | Default | Description                                                                                                   |
+| -------------- | ---------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| factory        | `Function` | `true`   |         | Factory will be called every time the exec is called, the arguments will be passed to the factory. `Required` |
+| throwException | `Boolean`  | `false`  | `false` | Makes `exec` throw exceptions, when `false` the error will be handled only by the `usePromise`                |
+
 ## State
 
 The `usePromise` function exposes the following reactive state:

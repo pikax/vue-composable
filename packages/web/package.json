@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/web",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.7",
   "description": "@vue-composable/web",
   "main": "index.js",
   "module": "dist/web.esm-bundler.js",

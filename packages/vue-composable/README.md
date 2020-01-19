@@ -16,6 +16,13 @@ This version is `alpha` with support for the vue3 ([vue-next](https://github.com
 
 100% typescript based composable components and full type support out-of-box.
 
+This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code ([12kb gzip](https://app.circleci.com/jobs/github/pikax/vue-composable/318/parallel-runs/0/steps/0-105)).
+
+[vue-composable](https://www.npmjs.com/package/vue-composable) is composed by two package [@vue-composable/core](./packages/core) and [@vue-composable/web](./packages/web).
+
+- [@vue-composable/core](./packages/core): contains helpers composables, such as Promise and Pagination.
+- [@vue-composable/web](./packages/web): contains [Web API](https://developer.mozilla.org/en-US/docs/Web/API) implementations
+
 ## Installing
 
 ```bash
@@ -40,9 +47,15 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### MISC
 
-- [localStorage](https://pikax.me/vue-composable/composable/misc/localStorage) - Reactive access to a `localStorage`
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
 - [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+
+### Storage
+
+- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Pagination
 
@@ -60,6 +73,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) - reactive `IntersectionObserver`
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
+- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
+- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 
 ### External
 
@@ -76,6 +93,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### NOTE
 
 Currently only works with [composition-api](https://github.com/vuejs/composition-api), when [Vue3](https://github.com/vuejs/vue-next) gets release I will update to use the new reactive system (using [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity))
+
+For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/vue-composable/v/next)
 
 ## Usage
 
@@ -115,6 +134,16 @@ export default {
 ```
 
 ## Contributing
+
+You can contribute raising issues and by helping out with code.
+
+Tests and Documentation are the most important things for me, because good documentation is really useful!
+
+I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
+
+> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax`
+
+### New composable
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`

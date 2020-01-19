@@ -3,15 +3,66 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<!-- ## [Unreleased]
 
+--- -->
 
-## [Unreleased]
+## 1.0.0-dev.7
 
---- 
+_2020-01-19_
+
+---
+
+### Changed
+
+- Fix readme storage links
+
+## 1.0.0-dev.6
+
+_2020-01-19_
+
+---
 
 ### Added
-- `usePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
 
+- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
+- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+
+### Changed
+
+- [localStorage](composable/misc/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
+
+## 1.0.0-dev.4
+
+_2020-01-13_
+
+---
+
+### Added
+
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper #70
+
+## 1.0.0-dev.3
+
+_2020-01-09_
+
+---
+
+### Changed
+
+- changing `peerDependencies` to `dependencies`
+- fix `cjs` modules, missing `index.js` in some packages, preventing it from being used in codesandbox
+
+### Added
+
+- `usePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useCancellablePromise` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useAxios` - added new argument `throwException`, default: `false`, if true it will return the exception when using `exec`
+- `useAxios` - `cancel(message?)` allows to cancel the latest axios request
 
 ## 1.0.0-dev.2
 

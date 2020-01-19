@@ -16,8 +16,7 @@
     "formats": [
       "esm-bundler",
       "cjs",
-      "global",
-      "esm"
+      "global"
     ]
   },
   "repository": {
@@ -38,9 +37,7 @@
   "homepage": "https://github.com/pikax/vue-composable",
   "dependencies": {
     "@vue-composable/core": "1.0.0-alpha.5",
-    "@vue-composable/web": "1.0.0-alpha.5"
-  },
-  "peerDependencies": {
+    "@vue-composable/web": "1.0.0-alpha.5",
     "@vue/runtime-core": "^3.0.0-alpha.1"
   }
 }

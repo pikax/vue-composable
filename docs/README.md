@@ -54,9 +54,15 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### MISC
 
-- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
 - [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
 - [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+
+### Storage
+
+- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Pagination
 
@@ -74,6 +80,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Fetch](composable/web/fetch) - reactive `fetch` wrapper
 - [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
 - [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
+- [NetworkInformation](composable/web/networkInformation) - reactive `NetworkInformation` wrapper
+- [Online](composable/web/online) - reactive `navigator.onLine` wrapper
+- [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](composable/web/language) - reactive `NavigatorLanguage`
 
 ### External
 

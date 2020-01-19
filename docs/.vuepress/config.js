@@ -171,9 +171,19 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
-            ["composable/misc/localStorage", "localStorage"],
             ["composable/misc/matchMedia", "matchMedia"],
             ["composable/misc/breakpoint", "breakpoint"]
+          ]
+        },
+        {
+          title: "Storage",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/storage/webStorage", "WebStorage"],
+            ["composable/storage/storage", "Storage"],
+            ["composable/storage/localStorage", "localStorage"],
+            ["composable/storage/sessionStorage", "sessionStorage"]
           ]
         },
         {
@@ -201,7 +211,11 @@ module.exports = {
           children: [
             ["composable/web/fetch", "fetch"],
             ["composable/web/webSocket", "webSocket"],
-            ["composable/web/intersectionObserver", "IntersectionObserver"]
+            ["composable/web/intersectionObserver", "IntersectionObserver"],
+            ["composable/web/networkInformation", "NetworkInformation"],
+            ["composable/web/online", "Navigator.onLine"],
+            ["composable/web/pageVisibility", "PageVisibilityAPI"],
+            ["composable/web/language", "Language"]
           ]
         },
         {

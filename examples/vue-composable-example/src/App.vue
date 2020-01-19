@@ -1,37 +1,39 @@
 <template>
   <div id="app">
-      <ul>
-        <li>
-          <router-link to="/">Home</router-link>
-        </li>
-        <li>
-          <router-link to="/arrayPagination">Array Pagination</router-link>
-        </li>
-        <li>
-          <router-link to="/fetch">Fetch</router-link>
-        </li>
-        
-        <li>
-          <router-link to="/cancellablePromise">Cancellable Promise</router-link>
-        </li>
+    <ul>
+      <li>
+        <router-link to="/">Home</router-link>
+      </li>
+      <li>
+        <router-link to="/arrayPagination">Array Pagination</router-link>
+      </li>
+      <li>
+        <router-link to="/fetch">Fetch</router-link>
+      </li>
 
-        
-        <li>
-          <router-link to="/SWAPI">SWAPI</router-link>
-        </li>
+      <li>
+        <router-link to="/networkInformation">NetWork Information</router-link>
+      </li>
 
-        <li>
-          {{a}}
-        </li>
+      <li>
+        <router-link to="/cancellablePromise">Cancellable Promise</router-link>
+      </li>
 
-      </ul>
-      <router-view></router-view>
+      <li>
+        <router-link to="/SWAPI">SWAPI</router-link>
+      </li>
+
+      <li>
+        {{ a }}
+      </li>
+    </ul>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld";
-import Fetch from './components/Fetch';
+import Fetch from "./components/Fetch";
 
 export default {
   name: "App",
@@ -40,10 +42,10 @@ export default {
     Fetch
   },
 
-  setup (){
+  setup() {
     return {
       a: 2
-    }
+    };
   }
 };
 </script>
@@ -57,7 +59,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 
 ul {
   list-style-type: none;
