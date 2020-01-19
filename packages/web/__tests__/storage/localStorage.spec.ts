@@ -45,7 +45,7 @@ describe("localStorage", () => {
     expect(storage1).toBe(storage2);
   });
 
-  it("should remove from localstorage", async () => {
+  it("should remove from localStorage", async () => {
     const key = "test";
     const { remove } = useLocalStorage(key, { a: 1 });
 
