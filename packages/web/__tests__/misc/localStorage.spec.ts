@@ -34,6 +34,7 @@ describe("localStorage", () => {
     await nextTick();
 
     expect(storage.value).toMatchObject({ a: 33 });
+    await promisedTimeout(20);
     expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify({ a: 33 }));
   });
 

@@ -1,7 +1,9 @@
 import { Ref, ref, watch } from "@vue/composition-api";
-import { wrap } from "@vue-composable/core";
+import { wrap, isString, debounce } from "@vue-composable/core";
 
 type WebStorageType = 'localStorage' | 'sessionStorage';
+
+
 
 function isQuotaExceededError(e: any, storage: Storage) {
   return e instanceof DOMException && (
@@ -38,6 +40,13 @@ export interface StorageSerializer<T = any> {
 }
 
 interface WebStorage {
+  $refMap: Map<string, Ref<any>>;
+  $watchHandlers: Map<string, Function>;
+  $syncKeys: Record<string, boolean>;
+
+  updateItem(key: string, value: string): void;
+
+  setSync(key: string, sync: boolean): void;
 
   /**
      * Returns the number of key/value pairs currently present in the list associated with the object.
@@ -68,13 +77,20 @@ interface WebStorage {
    */
   setItem<T>(key: string, value: T): Ref<T>;
 
-  [name: string]: any;
+  // [name: string]: any;
 }
 
+function safeParse(serializer: StorageSerializer, value: string) {
+  try {
+    return serializer.parse(value)
+  } catch{
+    return value;
+  }
+}
 
 let storageMap: Map<WebStorageType, WebStorage> | undefined = undefined;
 
-export function useWebStorage(type: WebStorageType, serializer: StorageSerializer = JSON) {
+export function useWebStorage(type: WebStorageType, serializer: StorageSerializer = JSON, ms = 10) {
   const storage = window[type];
   const supported = storageAvailable(storage);
   const quotaError = ref(false);
@@ -83,40 +99,68 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
 
   if (!storageMap) {
     storageMap = new Map();
+
+    window.addEventListener('storage', (e) => {
+      if (e.newValue === e.oldValue) {
+        return;
+      }
+      let webStore = storageMap!.get('localStorage');
+      if (e.storageArea === window.localStorage) {
+        webStore = storageMap!.get('localStorage')
+      } else {
+        webStore = storageMap!.get('sessionStorage')
+      }
+      if (webStore && Object.keys(webStore.$syncKeys).length > 0) {
+        if (e.key === null) {
+          webStore.clear();
+        }
+        else if (webStore.$syncKeys[e.key]) {
+          if (e.newValue === null) {
+            webStore.removeItem(e.key);
+          } else {
+            webStore.updateItem(e.key, e.newValue!);
+          }
+        }
+      }
+    })
   }
 
   let store: WebStorage | undefined = storageMap.get(type);
   if (!store) {
-    const refMap = new Map<string, Ref<any>>();
-    const watchHandlers = new Map<string, Function>();
     store = {
-      refMap,
-      watchHandlers,
+      $refMap: new Map<string, Ref<any>>(),
+      $watchHandlers: new Map<string, Function>(),
+      $syncKeys: {} as Record<string, boolean>,
 
       key: storage.key,
       length: storage.length,
 
+      setSync(key, sync) {
+        this.$syncKeys[key] = sync;
+      },
+
       clear() {
-        watchHandlers.forEach(x => x());
-        refMap.forEach(x => x.value = undefined);
+        this.$watchHandlers.forEach(x => x());
+        this.$refMap.forEach(x => x.value = undefined);
       },
       removeItem(k) {
-        const item = refMap.get(k);
+        const item = this.$refMap.get(k);
         // remove the object value if item deleted
         if (item) {
           item.value = undefined;
         }
         // clear the watch
-        const stop = watchHandlers.get(k);
+        const stop = this.$watchHandlers.get(k);
         if (stop) {
           stop();
         }
 
-        refMap.delete(k);
+        delete this.$syncKeys[k];
+        this.$refMap.delete(k);
         localStorage.removeItem(k);
       },
       getItem(k) {
-        let r = refMap.get(k);
+        let r = this.$refMap.get(k);
         if (r) {
           return r;
         }
@@ -124,15 +168,15 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
         if (!data) {
           return null
         }
-        return this.setItem(k, serializer.parse(data));
+        return this.setItem(k, safeParse(serializer, data));
       },
       setItem(k, v) {
         const reference = wrap(v);
-        refMap.set(k, reference);
+        this.$refMap.set(k, reference);
 
         const save = (key: string, value: any) => {
           try {
-            const data = serializer.stringify(value);
+            const data = isString(value) ? value : serializer.stringify(value);
             storage.setItem(key, data);
           } catch (e) {
             quotaError.value = isQuotaExceededError(e, storage);
@@ -141,16 +185,22 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
 
         save(k, v);
 
-        const stop = watch(reference, (r) => {
-          save(k, r);
-        }, {
+        const stop = watch(reference, debounce((r) => {
+          save(k, r)
+        }, ms), {
           lazy: true,
           deep: true
         })
 
-        watchHandlers.set(k, stop);
+        this.$watchHandlers.set(k, stop);
 
         return reference;
+      },
+      updateItem(k, data) {
+        let r = this.$refMap.get(k);
+        if (r) {
+          r.value = safeParse(serializer, data);
+        }
       }
     }
 

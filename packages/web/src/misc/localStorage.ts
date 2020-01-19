@@ -18,20 +18,28 @@ export interface LocalStorageReturn<T> {
    * @description Clears all tracked localStorage items
    */
   clear: () => void;
+
+  /**
+   * @description Enable cross tab syncing 
+   */
+  setSync: (sync: boolean) => void;
 }
 
 export function useLocalStorage<T = any>(
   key: LocalStorageTyped<T> | string,
-  defaultValue?: RefTyped<T>
+  defaultValue?: RefTyped<T>,
+  sync?: RefTyped<boolean>,
 ): LocalStorageReturn<T>;
-export function useLocalStorage(key: string, defaultValue?: any) {
+export function useLocalStorage(key: string, defaultValue?: any, sync?: RefTyped<boolean>) {
   const { supported, store } = useWebStorage('localStorage');
 
   let remove = NO_OP;
   let clear = NO_OP;
+  let setSync: LocalStorageReturn<any>['setSync'] = NO_OP;
   let storage = undefined;
 
   if (supported && store) {
+    setSync = (s) => store.setSync(key, s);
     remove = () => store.removeItem(key);
     clear = () => store.clear();
 
@@ -48,6 +56,7 @@ export function useLocalStorage(key: string, defaultValue?: any) {
 
     storage,
     clear,
-    remove
+    remove,
+    setSync,
   };
 }
