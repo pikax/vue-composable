@@ -6,7 +6,7 @@ import { useWebStorage } from "./webStorage";
 
 let canUseLocalStorage: boolean | undefined = undefined;
 
-
+export function useStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
 export function useStorage<T extends object = any>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>

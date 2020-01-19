@@ -2,6 +2,7 @@ import { RefTyped, NO_OP, FALSE_OP } from "@vue-composable/core";
 import { useWebStorage } from './webStorage'
 import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
+export function useSessionStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
 export function useSessionStorage<T extends object = object>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>

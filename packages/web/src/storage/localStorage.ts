@@ -25,6 +25,7 @@ export interface LocalStorageReturn<T> {
   setSync: (sync: boolean) => void;
 }
 
+export function useLocalStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
 export function useLocalStorage<T extends object = any>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>
