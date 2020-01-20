@@ -2,7 +2,7 @@ import { computed, Ref, ref } from "@vue/composition-api";
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance, CancelTokenSource } from "axios";
 import { usePromise, PromiseResultFactory, isString, isBoolean, isObject } from "@vue-composable/core";
 
-interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<TData>>, [AxiosRequestConfig]> {
+interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<TData>>, [AxiosRequestConfig | string]> {
   readonly client: Ref<Readonly<AxiosInstance>>;
   readonly data: Ref<TData | null>;
   readonly status: Ref<number | null>;
@@ -13,12 +13,6 @@ interface AxiosReturn<TData> extends PromiseResultFactory<Promise<AxiosResponse<
   readonly cancelledMessage: Ref<string | null>;
   // readonly 
 }
-
-// // TODO replace by shared project
-// const isObject = (d: any): d is Object => typeof d === 'object';
-// const isString = (d: any): d is String => typeof d === 'string';
-// const isBoolean = (d: any): d is Boolean => typeof d === 'boolean';
-
 
 export function useAxios<TData = any>(throwException?: boolean): AxiosReturn<TData>;
 export function useAxios<TData = any>(url: string, config?: AxiosRequestConfig, throwException?: boolean): AxiosReturn<TData>;
@@ -51,14 +45,16 @@ export function useAxios<TData = any>(configUrlThrowException?: AxiosRequestConf
     }
   }
 
-  const use = usePromise(async (request: AxiosRequestConfig) => {
+  const use = usePromise(async (request: AxiosRequestConfig | string) => {
     cancelToken = axios.CancelToken.source()
     isCancelled.value = false;
     cancelledMessage.value = null;
 
+    const opts = isString(request) ? { url: request } : request;
+
     return axiosClient.request<any, AxiosResponse<TData>>({
       cancelToken: cancelToken.token,
-      ...request
+      ...opts
     });
   }, throwException);
 
