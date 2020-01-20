@@ -59,10 +59,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Storage
 
-- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
-- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
-- [localStorage](composable/misc/localStorage) - Reactive access to a `localStorage`
-- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+- [WebStorage](composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](composable/storage/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Pagination
 
