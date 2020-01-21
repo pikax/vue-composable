@@ -1,6 +1,6 @@
 <template>
   <div>
-    localStorage: {{ storage }}
+    storage: {{ storage }}
     <p>
       supported:
       <b :class="{ green: supported, red: !supported }">{{ supported }}</b>
@@ -13,6 +13,7 @@
     </label>
 
     <div>
+      <p>Sync supported: {{ supportedSync }}</p>
       <p>Enable tab sync? <input type="checkbox" v-model="tabSync" /></p>
       <p v-if="tabSync">
         Now this tab is listening for changes, please change the storage value
@@ -26,21 +27,29 @@
 </template>
 
 <script>
-import { useLocalStorage } from "vue-composable";
+import { useLocalStorage, useStorage } from "vue-composable";
 import { ref, watch } from "@vue/composition-api";
 export default {
-  name: "local-storage-example",
+  name: "storage-example",
 
   setup() {
-    const key = "__vue_localStorage_example";
+    const key = "__vue_storage_example";
     const tabSync = ref(false);
-    const { supported, storage, setSync, remove } = useLocalStorage(key, 1);
+    const supportedSync = ref(true);
 
-    watch(tabSync, setSync);
+    const { supported, storage, setSync, remove } = useStorage(key, 1);
+
+    watch(tabSync, s => {
+      if (setSync(s) === false) {
+        supportedSync.value = false;
+      }
+    });
 
     return {
       key,
       supported,
+      supportedSync,
+
       tabSync,
       storage,
       remove

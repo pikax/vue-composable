@@ -1,5 +1,5 @@
-import { computed, Ref, ref, onUnmounted } from "@vue/composition-api";
-import { RemoveEventFunction } from "../event";
+import { computed, Ref, ref } from "@vue/composition-api";
+import { RemoveEventFunction, useEvent } from "../event";
 import { NO_OP } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
@@ -123,18 +123,21 @@ export function useNetworkInformation(): NetworkInformationReturn {
       type.value = connection.type;
     };
 
-    remove = () => {
-      connection.removeEventListener("change", handler);
-    };
-
-    connection.addEventListener("change", handler, { passive: true });
-    handler();
-
-    onUnmounted(remove);
-  } else if (__DEV__) {
-    console.warn(
-      "[navigator.connection] not found, networkInformation not available."
+    remove = useEvent<NetworkInformation, NetworkInformationEventMap, "change">(
+      connection,
+      "change",
+      handler,
+      { passive: true }
     );
+
+    handler();
+  } else {
+    /* istanbul ignore else */
+    if (__DEV__) {
+      console.warn(
+        "[navigator.connection] not found, networkInformation not available."
+      );
+    }
   }
 
   return {

@@ -35,13 +35,14 @@ const configs = {
     file: resolve(`dist/${name}.global.js`),
     format: `iife`,
     globals: {
-      "@vue/composition-api": "vueCompositionApi"
-      // "@vue-composable/core": "VueComposableCore"
+      "@vue/composition-api": "vueCompositionApi",
+      axios: "axios"
     }
   },
   esm: {
     file: resolve(`dist/${name}.esm.js`),
-    format: `es`
+    format: `es`,
+    external: ["vue", "@vue/composition-api", "axios"]
   }
 };
 
