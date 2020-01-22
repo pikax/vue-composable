@@ -25,9 +25,6 @@
       <li>
         <router-link to="/SWAPI">SWAPI</router-link>
       </li>
-
-      <li @click="a++">{{ a }} - a</li>
-      <li @click="data++">{{ data }} - data</li>
     </ul>
     <router-view></router-view>
   </div>
@@ -112,28 +109,7 @@ export default {
   },
 
   setup() {
-    const a = refShared(0);
-
-    const { data, master, mind } = useSharedRef("test", 0);
-    // const a = data;
-
-    // onUnmounted(close);
-
-    // const stuff = () => {
-    //   debugger;
-    //   send("22");
-    // };
-    // addListener(v => {
-    //   console.log("eee", v);
-    //   a.value = v.value;
-    // });
-
-    return {
-      a,
-      data,
-      master,
-      mind
-    };
+    return {};
   }
 };
 </script>

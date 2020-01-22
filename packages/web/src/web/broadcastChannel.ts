@@ -19,7 +19,7 @@ export function useBroadcastChannel<T = any>(name: string) {
   let close: Function = NO_OP;
   let addListener: (cb: (ev: BroadcastMessageEvent<T>) => void, options?: boolean | AddEventListenerOptions) => void = NO_OP;
 
-
+  /* istanbul ignore else  */
   if (supported) {
     const bc = new BroadcastChannel(name);
 
@@ -41,6 +41,10 @@ export function useBroadcastChannel<T = any>(name: string) {
     addListener = (cb, o) => {
       bc.addEventListener('message', cb, o);
       onUnmounted(() => bc.removeEventListener('message', cb));
+    }
+  } else {
+    if (__DEV__) {
+      console.warn('[BroadcastChannel] is not supported')
     }
   }
 

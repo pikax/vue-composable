@@ -11,6 +11,8 @@ const enum RefSharedMessageType {
   // changes the master to 
   SET_MIND,
 
+  LEAVE,
+
   PING,
   PONG
 }
@@ -27,6 +29,7 @@ const enum SharedRefMind {
 type RefSharedMessage<T> = {
   t: RefSharedMessageType,
   m?: SharedRefMind,
+  assignMaster?: boolean,
   v: T
 }
 
@@ -54,6 +57,21 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
     send({ t, v: vv });
   };
 
+  window.addEventListener('unload', () => {
+    // send({
+    //   t: RefSharedMessageType.LEAVE,
+    //   assignMaster: master.value
+    // } as any)
+    if (targets.value.length > 0 && master.value) {
+      targets.value[0].dispatchEvent(new MessageEvent("message", {
+        data: {
+          t: RefSharedMessageType.LEAVE,
+          assignMaster: true
+        } as RefSharedMessage<T>
+      }))
+    }
+  })
+
   const setMind = (t: SharedRefMind) => {
     switch (t) {
       case SharedRefMind.MASTER: {
@@ -78,8 +96,11 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
         if (master.value) {
           setMind(SharedRefMind.MASTER)
         }
-
-        sendNotification(RefSharedMessageType.SYNC, data.value);
+        send({
+          t: RefSharedMessageType.SYNC,
+          v: data.value,
+          m: mind.value
+        })
         break;
       }
       case RefSharedMessageType.SYNC: {
@@ -87,6 +108,7 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
           break;
         }
         synced = true;
+        mind.value = e.data.m!;
       }
       case RefSharedMessageType.UPDATE: {
         updateState = true;
@@ -97,6 +119,11 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
         mind.value = e.data.m!;
         master.value = false;
         break;
+      }
+      case RefSharedMessageType.LEAVE: {
+        if (mind.value === SharedRefMind.MASTER && e.data.assignMaster) {
+          setMind(SharedRefMind.MASTER)
+        }
       }
       case RefSharedMessageType.PING: {
         targets.value = [];
@@ -139,7 +166,7 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
 
   return {
     supported,
-    
+
     data,
 
     master,
