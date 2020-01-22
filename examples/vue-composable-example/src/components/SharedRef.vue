@@ -8,6 +8,8 @@
 
     <input v-model="data" :disabled="!editable" />
 
+    <p>targets: {{ targets.length }}</p>
+
     <div>
       <div>
         <label>

@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from "../web";
 import { ref, Ref, watch, onUnmounted, computed } from "@vue/composition-api";
-import { PASSIVE_EV, isObject } from "@vue-composable/core";
+import { PASSIVE_EV, isObject, randomString } from "@vue-composable/core";
 
 
 const enum RefSharedMessageType {
@@ -30,18 +30,19 @@ type RefSharedMessage<T> = {
   t: RefSharedMessageType,
   m?: SharedRefMind,
   assignMaster?: boolean,
+  id?: string,
   v: T
 }
 
 export function useSharedRef<T = any>(id: string, defaultValue?: T) {
   const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(id);
 
+  const _id = randomString(5);
   const master = ref(false);
   const mind = ref(SharedRefMind.HIVE);
   const editable = computed(() => mind.value === SharedRefMind.MASTER ? master.value : true)
 
-  // const listeners 
-  const targets = ref<EventTarget[]>([]);
+  const targets = ref<string[]>([]);
   const data: Ref<T> = ref(defaultValue);
 
   let synced = false;
@@ -49,8 +50,8 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
 
   send({ t: RefSharedMessageType.INIT } as any);
 
-  const ping = () => send({ t: RefSharedMessageType.PING } as any);
-  ping();
+  const ping = () => send({ t: RefSharedMessageType.PING, id: _id } as any);
+
 
   const sendNotification = (t: RefSharedMessageType, v: T) => {
     const vv = isObject(v) ? { ...v } : v;
@@ -58,19 +59,15 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
   };
 
   window.addEventListener('unload', () => {
-    // send({
-    //   t: RefSharedMessageType.LEAVE,
-    //   assignMaster: master.value
-    // } as any)
     if (targets.value.length > 0 && master.value) {
-      targets.value[0].dispatchEvent(new MessageEvent("message", {
-        data: {
-          t: RefSharedMessageType.LEAVE,
-          assignMaster: true
-        } as RefSharedMessage<T>
-      }))
+      send({
+        t: RefSharedMessageType.SET_MIND,
+        m: SharedRefMind.MASTER,
+        assignMaster: true,
+        id: targets.value[0] // next master
+      } as any);
     }
-  })
+  }, { passive: false })
 
   const setMind = (t: SharedRefMind) => {
     switch (t) {
@@ -99,7 +96,8 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
         send({
           t: RefSharedMessageType.SYNC,
           v: data.value,
-          m: mind.value
+          m: mind.value,
+          id: _id
         })
         break;
       }
@@ -117,7 +115,7 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
       }
       case RefSharedMessageType.SET_MIND: {
         mind.value = e.data.m!;
-        master.value = false;
+        master.value = e.data.assignMaster && e.data.id === _id || false;
         break;
       }
       case RefSharedMessageType.LEAVE: {
@@ -127,19 +125,21 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
       }
       case RefSharedMessageType.PING: {
         targets.value = [];
+        targets.value.push(e.data.id!);
         send({
           t: RefSharedMessageType.PONG,
+          id: _id
         } as any);
         break;
       }
       case RefSharedMessageType.PONG: {
-        if (e.target) {
-          targets.value.push(e.target);
-        }
+        targets.value.push(e.data.id!);
         break;
       }
     }
   }, PASSIVE_EV);
+
+  ping();
 
   watch(
     data,
