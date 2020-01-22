@@ -5,3 +5,4 @@ export * from "./networkInformation";
 export * from "./online";
 export * from "./pageVisibility";
 export * from "./language";
+export * from './broadcastChannel';

@@ -45,6 +45,8 @@ export function isPromise<T = any>(val: unknown): val is Promise<T> {
 export const NO_OP = () => { };
 export const FALSE_OP = () => false;
 
+export const PASSIVE_EV: AddEventListenerOptions = { passive: true };
+
 export function promisedTimeout(timeout: number): Promise<void> {
   return new Promise(res => {
     setTimeout(res, timeout);
@@ -55,4 +57,14 @@ export function minMax(val: number, min: number, max: number) {
   if (val < min) return min;
   if (val > max) return max;
   return val;
+}
+
+
+// compact version: https://stackoverflow.com/a/33146982/1209882
+/**
+ * returns a random string
+ * @param len length of the string max: 36
+ */
+export function randomString(len: number) {
+  return (+new Date).toString(36).slice(-len);
 }
