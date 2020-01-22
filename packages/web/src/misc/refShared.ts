@@ -7,7 +7,7 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
-  const name = `${vm.$vnode.tag}${(vm as any)._uid}${id}`;
+  const name = id ? id : `${vm.$vnode.tag}${(vm as any)._uid}`;
 
   if (__DEV__) {
     if (!shared) {
@@ -19,7 +19,13 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
     shared.add(name);
   }
 
-  const { data } = useSharedRef(name, defaultValue);
+  const { data, supported } = useSharedRef(name, defaultValue);
+
+  if (__DEV__) {
+    if (!supported) {
+      console.warn('[refShared] is dependent of BroadcastChannel');
+    }
+  }
 
   return data;
 }

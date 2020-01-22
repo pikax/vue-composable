@@ -15,7 +15,7 @@
       </li>
 
       <li>
-        <router-link to="/networkInformation">NetWork Information</router-link>
+        <router-link to="/networkInformation">Network Information</router-link>
       </li>
 
       <li>

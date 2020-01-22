@@ -31,7 +31,7 @@ type RefSharedMessage<T> = {
 }
 
 export function useSharedRef<T = any>(id: string, defaultValue?: T) {
-  const { addListener, send, close } = useBroadcastChannel<RefSharedMessage<T>>(id);
+  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(id);
 
   const master = ref(false);
   const mind = ref(SharedRefMind.HIVE);
@@ -40,8 +40,6 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
   // const listeners 
   const targets = ref<EventTarget[]>([]);
   const data: Ref<T> = ref(defaultValue);
-
-
 
   let synced = false;
   let updateState = false;
@@ -140,6 +138,8 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
   });
 
   return {
+    supported,
+    
     data,
 
     master,

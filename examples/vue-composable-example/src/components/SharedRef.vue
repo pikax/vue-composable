@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>Supported: {{ supported }}</p>
     <p>
       Mind: {{ mindDescription }} <button @click="changeMind">Change</button>
     </p>
