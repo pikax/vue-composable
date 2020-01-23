@@ -56,6 +56,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
 - [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [sharedRef](composable/misc/sharedRef.md) - cross-tab reactive `ref`
 
 ### Storage
 
@@ -84,6 +85,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Online](composable/web/online) - reactive `navigator.onLine` wrapper
 - [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](composable/web/language) - reactive `NavigatorLanguage`
+- [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 
 ### External
 
