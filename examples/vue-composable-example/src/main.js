@@ -9,6 +9,7 @@ import Fetch from "./components/Fetch";
 import NetworkInformation from "./components/NetworkInformation";
 import CancellablePromise from "./components/CancellablePromise";
 import SWAPI from "./components/SWAPI";
+import SharedRef from "./components/SharedRef";
 
 Vue.use(VueRouter);
 Vue.use(VueCompositionApi);
@@ -37,6 +38,10 @@ const routes = [
   {
     path: "/swapi",
     component: SWAPI
+  },
+  {
+    path: "/sharedRef",
+    component: SharedRef
   }
 ];
 const router = new VueRouter({
