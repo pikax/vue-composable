@@ -158,7 +158,7 @@ export default {
     });
 
     const changeMind = () => {
-      s.setMind((s.mind.value + 1) % 2);
+      sharedRef.setMind((sharedRef.mind.value + 1) % 2);
     };
 
     return {
