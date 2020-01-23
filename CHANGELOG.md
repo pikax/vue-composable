@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ---
 
+### Added
+
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef.md) - cross-tab reactive `ref`
+
 ### Changed
 
 - Axios: Allow calling exec with a string
