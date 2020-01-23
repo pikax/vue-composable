@@ -1,7 +1,7 @@
 import { ref, onUnmounted } from "@vue/composition-api";
 import { PASSIVE_EV, NO_OP } from "@vue-composable/core";
 
-interface BroadcastMessageEvent<T> extends MessageEvent {
+export interface BroadcastMessageEvent<T> extends MessageEvent {
   readonly data: T;
 }
 

@@ -11,8 +11,6 @@ const enum RefSharedMessageType {
   // changes the master to 
   SET_MIND,
 
-  LEAVE,
-
   PING,
   PONG
 }
@@ -26,36 +24,45 @@ const enum SharedRefMind {
 }
 
 
-type RefSharedMessage<T> = {
-  t: RefSharedMessageType,
-  m?: SharedRefMind,
-  assignMaster?: boolean,
-  id?: string,
-  v: T
-}
 
-export function useSharedRef<T = any>(id: string, defaultValue?: T) {
-  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(id);
+type RefSharedMessageInit = { t: RefSharedMessageType.INIT };
+type RefSharedMessageSync<T> = { t: RefSharedMessageType.SYNC, v: T, m: SharedRefMind };
+type RefSharedMessageUpdate<T> = { t: RefSharedMessageType.UPDATE, v: T };
+type RefSharedMessageSetMind = { t: RefSharedMessageType.SET_MIND, m: SharedRefMind, id?: string };
+type RefSharedMessagePing = { t: RefSharedMessageType.PING, id: string };
+type RefSharedMessagePong = { t: RefSharedMessageType.PONG, id: string };
 
-  const _id = randomString(5);
+
+
+type RefSharedMessage<T> = RefSharedMessageInit
+  | RefSharedMessageSync<T>
+  | RefSharedMessageUpdate<T>
+  | RefSharedMessageSetMind
+  | RefSharedMessagePing
+  | RefSharedMessagePong;
+
+export function useSharedRef<T = any>(name: string, defaultValue?: T) {
+  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(name);
+
+  const id = randomString(5);
   const master = ref(false);
   const mind = ref(SharedRefMind.HIVE);
   const editable = computed(() => mind.value === SharedRefMind.MASTER ? master.value : true)
 
+  // who's listening to this broadcast
   const targets = ref<string[]>([]);
   const data: Ref<T> = ref(defaultValue);
 
   let synced = false;
   let updateState = false;
 
-  send({ t: RefSharedMessageType.INIT } as any);
+  send({ t: RefSharedMessageType.INIT });
 
-  const ping = () => send({ t: RefSharedMessageType.PING, id: _id } as any);
+  const ping = () => send({ t: RefSharedMessageType.PING, id });
 
-
-  const sendNotification = (t: RefSharedMessageType, v: T) => {
+  const sendNotification = (t: RefSharedMessageType.SYNC | RefSharedMessageType.UPDATE, v: T) => {
     const vv = isObject(v) ? { ...v } : v;
-    send({ t, v: vv });
+    send({ t, v: vv, m: mind.value });
   };
 
   window.addEventListener('unload', () => {
@@ -63,11 +70,10 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
       send({
         t: RefSharedMessageType.SET_MIND,
         m: SharedRefMind.MASTER,
-        assignMaster: true,
-        id: targets.value[0] // next master
-      } as any);
+        id: targets.value[0]
+      });
     }
-  }, { passive: false })
+  }, PASSIVE_EV)
 
   const setMind = (t: SharedRefMind) => {
     switch (t) {
@@ -84,8 +90,9 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
     send({
       t: RefSharedMessageType.SET_MIND,
       m: t,
-    } as any)
+    })
   }
+
 
   addListener((e) => {
     switch (e.data.t) {
@@ -97,7 +104,6 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
           t: RefSharedMessageType.SYNC,
           v: data.value,
           m: mind.value,
-          id: _id
         })
         break;
       }
@@ -115,21 +121,19 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
       }
       case RefSharedMessageType.SET_MIND: {
         mind.value = e.data.m!;
-        master.value = e.data.assignMaster && e.data.id === _id || false;
-        break;
-      }
-      case RefSharedMessageType.LEAVE: {
-        if (mind.value === SharedRefMind.MASTER && e.data.assignMaster) {
-          setMind(SharedRefMind.MASTER)
+        master.value = e.data.id === id || false;
+        if (master.value) {
+          ping()
         }
+        break;
       }
       case RefSharedMessageType.PING: {
         targets.value = [];
         targets.value.push(e.data.id!);
         send({
           t: RefSharedMessageType.PONG,
-          id: _id
-        } as any);
+          id
+        });
         break;
       }
       case RefSharedMessageType.PONG: {
@@ -178,6 +182,6 @@ export function useSharedRef<T = any>(id: string, defaultValue?: T) {
     ping,
     setMind,
 
-    // addListener
+    addListener
   }
 }
