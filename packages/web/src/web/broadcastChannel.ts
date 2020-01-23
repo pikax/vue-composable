@@ -10,7 +10,7 @@ export function useBroadcastChannel<T = any>(name: string) {
   const data = ref<T | null>(null)
 
   const messageEvent = ref<MessageEvent>(null);
-  const errorEvent = ref<MessageEvent>();
+  const errorEvent = ref<MessageEvent>(null);
   const errored = ref(false);
   const isClosed = ref(false);
 
@@ -42,6 +42,8 @@ export function useBroadcastChannel<T = any>(name: string) {
       bc.addEventListener('message', cb, o);
       onUnmounted(() => bc.removeEventListener('message', cb));
     }
+
+    onUnmounted(close);
   } else {
     if (__DEV__) {
       console.warn('[BroadcastChannel] is not supported')
