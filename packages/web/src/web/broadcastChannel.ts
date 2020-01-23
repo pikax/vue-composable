@@ -5,7 +5,7 @@ export interface BroadcastMessageEvent<T> extends MessageEvent {
   readonly data: T;
 }
 
-export function useBroadcastChannel<T = any>(name: string) {
+export function useBroadcastChannel<T = any>(name: string, onBeforeClose?: Function) {
   const supported = 'BroadcastChannel' in self;
   const data = ref<T | null>(null)
 
@@ -43,7 +43,10 @@ export function useBroadcastChannel<T = any>(name: string) {
       onUnmounted(() => bc.removeEventListener('message', cb));
     }
 
-    onUnmounted(close);
+    onUnmounted(() => {
+      onBeforeClose && onBeforeClose();
+      close()
+    });
   } else {
     if (__DEV__) {
       console.warn('[BroadcastChannel] is not supported')

@@ -1,9 +1,9 @@
 import { useBroadcastChannel } from "../web";
 import { ref, Ref, watch, onUnmounted, computed, getCurrentInstance } from "@vue/composition-api";
-import { PASSIVE_EV, isObject, randomString, RefTyped, debounce } from "@vue-composable/core";
+import { PASSIVE_EV, isObject, RefTyped } from "@vue-composable/core";
 
 
-const enum RefSharedMessageType {
+export const enum RefSharedMessageType {
   INIT,
   SYNC,
   UPDATE,
@@ -17,7 +17,7 @@ const enum RefSharedMessageType {
   PONG
 }
 
-const enum SharedRefMind {
+export const enum SharedRefMind {
   // everyone can update 
   HIVE,
 
@@ -27,18 +27,18 @@ const enum SharedRefMind {
 
 
 
-type RefSharedMessageInit = { type: RefSharedMessageType.INIT };
-type RefSharedMessageSync<T> = { type: RefSharedMessageType.SYNC, value: T, mind: SharedRefMind };
-type RefSharedMessageUpdate<T> = { type: RefSharedMessageType.UPDATE, value: T, mind: SharedRefMind };
-type RefSharedMessageSetMind = { type: RefSharedMessageType.SET_MIND, mind: SharedRefMind, id: string };
-type RefSharedMessagePing = { type: RefSharedMessageType.PING, id: string };
-type RefSharedMessagePong = { type: RefSharedMessageType.PONG, id: string };
+export type RefSharedMessageInit = { type: RefSharedMessageType.INIT };
+export type RefSharedMessageSync<T> = { type: RefSharedMessageType.SYNC, value: T, mind: SharedRefMind };
+export type RefSharedMessageUpdate<T> = { type: RefSharedMessageType.UPDATE, value: T, mind: SharedRefMind };
+export type RefSharedMessageSetMind = { type: RefSharedMessageType.SET_MIND, mind: SharedRefMind, id: number };
+export type RefSharedMessagePing = { type: RefSharedMessageType.PING, id: number };
+export type RefSharedMessagePong = { type: RefSharedMessageType.PONG, id: number };
 
-type RefSharedMessageLeave = { type: RefSharedMessageType.LEAVE, id: string };
+export type RefSharedMessageLeave = { type: RefSharedMessageType.LEAVE, id: number };
 
 
 
-type RefSharedMessage<T> = RefSharedMessageInit
+export type RefSharedMessage<T = any> = RefSharedMessageInit
   | RefSharedMessageSync<T>
   | RefSharedMessageLeave
   | RefSharedMessageUpdate<T>
@@ -47,36 +47,32 @@ type RefSharedMessage<T> = RefSharedMessageInit
   | RefSharedMessagePong;
 
 export function useSharedRef<T = any>(name: string, defaultValue?: T) {
-  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(name);
+  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(name, () => disconnect());
 
-  const id = randomString(5);
+  const id = Date.now();
   const master = ref(false);
   const mind = ref(SharedRefMind.HIVE);
   const editable = computed(() => mind.value === SharedRefMind.MASTER ? master.value : true)
 
   // who's listening to this broadcast
-  const targets = ref<string[]>([]);
+  const targets = ref<number[]>([]);
   const data: Ref<T> = ref(defaultValue);
 
   // if the state was updated by an event it sets to true
   let updateState = false;
-  let masterId: string | undefined = undefined;
+  let masterId: number | undefined = undefined;
 
   send({ type: RefSharedMessageType.INIT });
 
   const ping = () => send({ type: RefSharedMessageType.PING, id });
 
-  const sendNotification = (t: RefSharedMessageType.UPDATE, v: T) => {
-    const vv = isObject(v) ? { ...v } : v;
-    send({ type: t, value: vv, mind: mind.value });
-  };
-
   const disconnect = () => {
-    if (targets.value.length > 0 && master.value) {
+    if (targets.value.length === 0) return;
+    if (master.value) {
       send({
         type: RefSharedMessageType.SET_MIND,
         mind: SharedRefMind.MASTER,
-        id: targets.value[0]
+        id: Math.min(...targets.value)
       });
     }
     send({
@@ -105,7 +101,6 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     })
   }
 
-
   addListener((e) => {
     switch (e.data.type) {
       case RefSharedMessageType.INIT: {
@@ -117,7 +112,18 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
         break;
       }
       case RefSharedMessageType.LEAVE: {
-        targets.value.splice(targets.value.indexOf(e.data.id), 1);
+        const index = targets.value.indexOf(e.data.id);
+        if (index >= 0) {
+          targets.value.splice(index, 1);
+        }
+        // if master disconnects 
+        if (masterId === e.data.id && targets.value.length > 0) {
+          send({
+            type: RefSharedMessageType.SET_MIND,
+            mind: SharedRefMind.MASTER,
+            id: Math.min(id, ...targets.value)
+          })
+        }
         break
       }
       case RefSharedMessageType.UPDATE: {
@@ -146,18 +152,6 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       }
       case RefSharedMessageType.PONG: {
         targets.value.push(e.data.id);
-        if (mind.value === SharedRefMind.MASTER) {
-          // note this might call SetMind multiple times
-          debounce(() => {
-            if (targets.value.indexOf(masterId!) === -1) {
-              const sorted = targets.value.concat(id).sort(x => x.charCodeAt(0) + x.charCodeAt(1));
-              const newMaster = sorted[0];
-              if (newMaster === id) {
-                setMind(SharedRefMind.MASTER)
-              }
-            }
-          }, 10)()
-        }
         break;
       }
     }
@@ -178,7 +172,12 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
         data.value = o;
         return;
       }
-      sendNotification(RefSharedMessageType.UPDATE, v);
+
+      send({
+        type: RefSharedMessageType.UPDATE,
+        mind: mind.value,
+        value: isObject(v) ? { ...v } : v
+      })
       updateState = false;
     },
     { deep: true, lazy: true }
@@ -192,6 +191,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
   return {
     supported,
+    id,
 
     data,
 
@@ -215,6 +215,7 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
   const name = id ? id : vm.$vnode.tag!;
 
+  /* istanbul ignore else  */
   if (__DEV__) {
     if (!shared) {
       shared = new Set();
@@ -227,6 +228,7 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
 
   const { data, supported } = useSharedRef(name, defaultValue);
 
+  /* istanbul ignore next  */
   if (__DEV__) {
     if (!supported) {
       console.warn('[refShared] is dependent of BroadcastChannel');

@@ -164,6 +164,24 @@ describe("broadcastChannel", () => {
   })
 
 
+  it('should call onBeforeClose', () => {
+    let onBeforeClose = jest.fn();
+    const vm = new Vue({
+      template: "<div ref='el'></div>",
+      setup() {
+        useBroadcastChannel("test", onBeforeClose);
+        expect(onBeforeClose).not.toHaveBeenCalled();
+
+        return {};
+      }
+    });
+    vm.$mount();
+
+    vm.$destroy();
+    expect(onBeforeClose).toHaveBeenCalled();
+  })
+
+
   it('should postMessage on send', () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
