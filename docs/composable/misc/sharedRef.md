@@ -169,8 +169,6 @@ export default {
   }
 };
 </script>
-
-<style></style>
 ```
 
 ## refShared

@@ -65,6 +65,6 @@ export function minMax(val: number, min: number, max: number) {
  * returns a random string
  * @param len length of the string max: 36
  */
-export function randomString(len: number) {
-  return (+new Date).toString(36).slice(-len);
-}
+// export function randomString(len: number) {
+//   return (+new Date).toString(36).slice(-len);
+// }

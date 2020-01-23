@@ -56,7 +56,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
 - [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
-- [sharedRef](composable/misc/sharedRef.md) - cross-tab reactive `ref`
+- [sharedRef](composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
 
