@@ -19,9 +19,9 @@ const { visibility, hidden } = usePageVisibility();
 
 ## Example
 
-<ClientOnly>
+
 <page-visibility-example/>
-</ClientOnly>
+
 
 ### Code
 

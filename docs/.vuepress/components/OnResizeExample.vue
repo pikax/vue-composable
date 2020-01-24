@@ -10,12 +10,14 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnResize } from "vue-composable";
+import { useOnResize, isClient } from "vue-composable";
 
 export default {
   name: "on-resize-example",
   setup(_) {
-    const { height, width, remove } = useOnResize(document.body);
+    const { height, width, remove } = useOnResize(
+      (isClient && document.body) || null
+    );
 
     return {
       height,

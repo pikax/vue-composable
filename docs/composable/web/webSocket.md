@@ -10,6 +10,7 @@ The `useWebSocket` function exposes the following reactive state:
 import { useWebSocket } from "vue-composable";
 
 const {
+  supported,
   ws,
   messageEvent,
   errorEvent,
@@ -20,15 +21,16 @@ const {
 } = useWebSocket();
 ```
 
-| State        | Type           | Description                 |
-| ------------ | -------------- | --------------------------- |
-| ws           | `WebSocket`    | WebSocket instance          |
-| messageEvent | `MessageEvent` | Last message event received |
-| errorEvent   | `ErrorEvent`   | Error event                 |
-| data         | `any`          | Last data received          |
-| isOpen       | `Boolean`      | Is websocket open           |
-| isClosed     | `Boolean`      | Is websocket closed         |
-| errored      | `Boolean`      | Is websocket errored        |
+| State        | Type                | Description                 |
+| ------------ | ------------------- | --------------------------- |
+| supported    | `Boolean`           | Is supported                |
+| ws           | `WebSocket|null`    | WebSocket instance, returns `null` if `supported === false`         |
+| messageEvent | `Ref<MessageEvent>` | Last message event received |
+| errorEvent   | `Ref<ErrorEvent>`   | Error event                 |
+| data         | `Ref<any>`          | Last data received          |
+| isOpen       | `Ref<Boolean>`      | Is websocket open           |
+| isClosed     | `Ref<Boolean>`      | Is websocket closed         |
+| errored      | `Ref<Boolean>`      | Is websocket errored        |
 
 ## Methods
 
@@ -47,9 +49,7 @@ const { send, close } = useWebSocket();
 
 ## Example
 
-<ClientOnly>
 <web-socket-example/>
-</ClientOnly>
 
 ### Code
 

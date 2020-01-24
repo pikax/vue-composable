@@ -1,6 +1,6 @@
 import { Ref, ref } from "@vue/composition-api";
 import { RemoveEventFunction, useEvent } from "../event";
-import { NO_OP } from "@vue-composable/core";
+import { NO_OP, isClient } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -97,10 +97,10 @@ interface NetworkInformationReturn {
 }
 
 export function useNetworkInformation(): NetworkInformationReturn {
-  const connection =
+  const connection = isClient ?
     navigator.connection ||
     navigator.mozConnection ||
-    navigator.webkitConnection;
+    navigator.webkitConnection : false;
   const supported = !!connection;
   const downlink = ref<number>(0);
   const downlinkMax = ref<number>(0);

@@ -46,9 +46,9 @@ const { remove } = useMatchMedia();
 
 ## Example
 
-<ClientOnly>
+
 <match-media-example/>
-</ClientOnly>
+
 
 ### Code
 

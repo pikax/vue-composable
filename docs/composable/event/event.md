@@ -16,9 +16,9 @@ const { remove } = useEvent(element, name, listener);
 
 ## Example
 
-<ClientOnly>
+
 <event-example/>
-</ClientOnly>
+
 
 ### Code
 

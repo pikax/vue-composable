@@ -114,13 +114,13 @@ If the master instance gets destroyed (the component unmounted or tab closed) a 
 
 ## Example
 
-<ClientOnly>
-<shared-ref-video/>
-</ClientOnly>
 
-<ClientOnly>
+<shared-ref-video/>
+
+
+
 <shared-ref-example/>
-</ClientOnly>
+
 
 ### Code
 
@@ -200,9 +200,9 @@ const myShared = useSharedRef();
 
 ### Example
 
-<ClientOnly>
+
 <ref-shared-example/>
-</ClientOnly>
+
 
 #### Code
 

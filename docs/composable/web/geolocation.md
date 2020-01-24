@@ -48,9 +48,9 @@ const { refresh } = useGeolocation();
 
 ## Example
 
-<ClientOnly>
+
 <geolocation-example/>
-</ClientOnly>
+
 
 ### Code
 
