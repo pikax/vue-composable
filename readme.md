@@ -48,6 +48,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
 - [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
 
@@ -76,6 +77,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 
 ### External
 

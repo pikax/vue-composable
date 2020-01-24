@@ -172,7 +172,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/misc/matchMedia", "matchMedia"],
-            ["composable/misc/breakpoint", "breakpoint"]
+            ["composable/misc/breakpoint", "breakpoint"],
+            ["composable/misc/sharedRef", "SharedRef"]
           ]
         },
         {
@@ -216,6 +217,7 @@ module.exports = {
             ["composable/web/online", "Navigator.onLine"],
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
             ["composable/web/language", "Language"],
+            ["composable/web/broadcastChannel", "BroadcastChannel API"],
             ["composable/web/geolocation", "Geolocation API"]
           ]
         },
