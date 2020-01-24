@@ -86,6 +86,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
 
 ### External
 

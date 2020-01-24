@@ -217,7 +217,8 @@ module.exports = {
             ["composable/web/online", "Navigator.onLine"],
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
             ["composable/web/language", "Language"],
-            ["composable/web/broadcastChannel", "BroadcastChannel API"]
+            ["composable/web/broadcastChannel", "BroadcastChannel API"],
+            ["composable/web/geolocation", "Geolocation API"]
           ]
         },
         {

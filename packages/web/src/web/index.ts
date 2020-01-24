@@ -6,3 +6,4 @@ export * from "./online";
 export * from "./pageVisibility";
 export * from "./language";
 export * from './broadcastChannel';
+export * from "./geolocation";
