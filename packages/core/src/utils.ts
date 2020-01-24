@@ -59,6 +59,7 @@ export function minMax(val: number, min: number, max: number) {
   return val;
 }
 
+export const isClient = typeof window != 'undefined'
 
 // compact version: https://stackoverflow.com/a/33146982/1209882
 /**

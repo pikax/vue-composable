@@ -1,5 +1,5 @@
 import { ref, watch, onMounted, onUnmounted } from "@vue/composition-api";
-import { NO_OP, isBoolean } from "@vue-composable/core";
+import { NO_OP, isBoolean, isClient } from "@vue-composable/core";
 
 export interface GeolocationOptions {
   /**
@@ -10,7 +10,7 @@ export interface GeolocationOptions {
 }
 
 export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
-  const supported = !!navigator.geolocation;
+  const supported = isClient && !!navigator.geolocation;
 
   // used to check if the execution is lazy
   const lazy = ref(options ? options.immediate === false : undefined);

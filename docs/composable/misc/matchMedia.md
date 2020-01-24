@@ -21,13 +21,14 @@ The `useMatchMedia` function exposes the following reactive state:
 ```js
 import { useMatchMedia } from "vue-composable";
 
-const { scrollTop, matches } = useMatchMedia();
+const { supported, mediaQueryList, matches } = useMatchMedia();
 ```
 
 | State          | Type                                                                              | Description                                                                                          |
 | -------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| supported      | `Boolean`                                                                         | Is MatchMedia supported                                                                              |
 | mediaQueryList | [MediaQueryList](https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList) | List of objects stores information on a media query                                                  |
-| matches        | `Boolean`                                                                         | A Boolean that returns true if the document currently matches the media query list, or false if not. |
+| matches        | `Ref<Boolean>`                                                                    | A Boolean that returns true if the document currently matches the media query list, or false if not. |
 
 ## Methods
 
