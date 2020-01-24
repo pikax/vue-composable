@@ -78,6 +78,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 
 ### External
 
