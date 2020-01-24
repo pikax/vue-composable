@@ -10,8 +10,8 @@ export function usePageVisibility() {
     hidden = ref(isClient && document.hidden);
   }
 
-  if (isClient) {
-    if (!visibility) {
+  if (!visibility) {
+    if (isClient) {
       visibility = ref(document.visibilityState);
       document.addEventListener(
         "visibilitychange",
@@ -22,6 +22,8 @@ export function usePageVisibility() {
         { passive: true }
         // true
       );
+    } else {
+      visibility = ref(false);
     }
   }
   return {
