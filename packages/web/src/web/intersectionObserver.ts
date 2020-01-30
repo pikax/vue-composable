@@ -1,4 +1,4 @@
-import { RefTyped, wrap, unwrap, isElement, RefElement } from "@vue-composable/core";
+import { RefTyped, wrap, unwrap, isElement, RefElement, isClient, NO_OP } from "@vue-composable/core";
 import {
   ref,
   computed,
@@ -15,6 +15,8 @@ export interface IntersectionObserverOptions {
 }
 
 export interface IntersectionObserverResult {
+  supported: boolean,
+
   elements: Ref<IntersectionObserverEntry[]>;
 
   observe: (el: RefTyped<Element>) => void;
@@ -36,6 +38,7 @@ export function useIntersectionObserver(
   refEl?: any,
   refOptions?: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult {
+  const supported = isClient && 'IntersectionObserver' in window;
   const wrappedElement = refEl ? wrap(refEl) : undefined;
   const element =
     wrappedElement && (isElement(wrappedElement.value) || !wrappedElement.value)
@@ -66,37 +69,39 @@ export function useIntersectionObserver(
 
   let observer = ref<IntersectionObserver>();
 
-  watch(
-    options,
-    options => {
-      if (observer.value) {
-        observer.value.disconnect();
-      }
+  if (supported) {
+    watch(
+      options,
+      options => {
+        if (observer.value) {
+          observer.value.disconnect();
+        }
 
-      const opts: IntersectionObserverInit | undefined =
-        (options &&
-          options && {
-          root: unwrap(options.root),
-          rootMargin: unwrap(options.rootMargin),
-          threshold: unwrap(options.threshold)
-        }) ||
-        undefined;
-      observer.value = new IntersectionObserver(handling, opts);
+        const opts: IntersectionObserverInit | undefined =
+          (options &&
+            options && {
+            root: unwrap(options.root),
+            rootMargin: unwrap(options.rootMargin),
+            threshold: unwrap(options.threshold)
+          }) ||
+          undefined;
+        observer.value = new IntersectionObserver(handling, opts);
 
-      const targets = elements.value.map(x => x.target);
-      targets.forEach(observer.value.observe);
-    },
-    { deep: true }
-  );
+        const targets = elements.value.map(x => x.target);
+        targets.forEach(observer.value.observe);
+      },
+      { deep: true }
+    );
+  }
 
-  const observe = (element: RefTyped<Element>) => {
+  const observe = supported ? (element: RefTyped<Element>) => {
     const e = unwrap(element);
     observer.value!.observe(e);
-  };
-  const unobserve = (element: RefTyped<Element>) => {
+  } : NO_OP;
+  const unobserve = supported ? (element: RefTyped<Element>) => {
     const e = unwrap(element);
     observer.value!.unobserve(e);
-  };
+  } : NO_OP;
 
   const disconnect = () => observer.value!.disconnect();
 
@@ -128,6 +133,8 @@ export function useIntersectionObserver(
   // };
 
   return {
+    supported,
+
     elements,
     observe,
     unobserve,

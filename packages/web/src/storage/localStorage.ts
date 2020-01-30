@@ -1,4 +1,4 @@
-import { Ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/composition-api";
 import { RefTyped, NO_OP } from "@vue-composable/core";
 import { useWebStorage } from './webStorage'
 
@@ -52,6 +52,8 @@ export function useLocalStorage(key: string, defaultValue?: any) {
     if (__DEV__) {
       console.warn('[localStorage] is not available');
     }
+
+    storage = ref(defaultValue);
   }
 
   return {

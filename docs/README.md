@@ -133,6 +133,6 @@ export default {
 
 ### Pagination example
 
-<ClientOnly>
+
 <array-pagination-example/>
-</ClientOnly>
+

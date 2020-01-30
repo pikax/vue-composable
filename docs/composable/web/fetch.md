@@ -42,9 +42,9 @@ const { exec } = useFetch();
 
 ## Example
 
-<ClientOnly>
+
 <fetch-example/>
-</ClientOnly>
+
 
 ### Code
 

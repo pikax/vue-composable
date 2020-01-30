@@ -36,9 +36,9 @@ const { cancel, exec } = useRetry();
 
 ## Example
 
-<ClientOnly>
+
 <retry-example/>
-</ClientOnly>
+
 
 ### Code
 

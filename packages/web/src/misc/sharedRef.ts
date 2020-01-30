@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from "../web";
 import { ref, Ref, watch, onUnmounted, computed, getCurrentInstance } from "@vue/composition-api";
-import { PASSIVE_EV, isObject, RefTyped } from "@vue-composable/core";
+import { PASSIVE_EV, isObject, RefTyped, isClient } from "@vue-composable/core";
 
 
 export const enum RefSharedMessageType {
@@ -183,7 +183,9 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     { deep: true, lazy: true }
   );
 
-  window.addEventListener('unload', disconnect, PASSIVE_EV)
+  if (isClient) {
+    window.addEventListener('unload', disconnect, PASSIVE_EV)
+  }
   onUnmounted(() => {
     disconnect();
     close();

@@ -9,13 +9,16 @@ The `useIntersectionObserver` function exposes the following reactive state:
 ```js
 import { useIntersectionObserver } from "vue-composable";
 
-const { elements, isIntersecting } = useIntersectionObserver(options);
+const { supported, elements, isIntersecting } = useIntersectionObserver(
+  options
+);
 ```
 
-| State          | Type                          | Description                                                                                             |
-| -------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| elements       | `IntersectionObserverEntry[]` | [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) |
-| isIntersecting | `Boolean`                     | Returns true if **all** observed elements are intersection                                              |
+| State          | Type                               | Description                                                                                             |
+| -------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| supported      | `Boolean`                          | Is supported                                                                                            |
+| elements       | `Ref<IntersectionObserverEntry[]>` | [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) |
+| isIntersecting | `Ref<Boolean?`                     | Returns true if **all** observed elements are intersection                                              |
 
 ## Methods
 
@@ -37,9 +40,7 @@ const { observe, unobserve, disconnect, debug } = useIntersectionObserver();
 
 ## Example
 
-<ClientOnly>
 <intersection-observer-example/>
-</ClientOnly>
 
 ### Code
 

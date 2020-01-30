@@ -90,9 +90,9 @@ const { exec, cancel } = useAxios();
 
 ## Example
 
-<ClientOnly>
+
 <axios-example/>
-</ClientOnly>
+
 
 ### Code
 

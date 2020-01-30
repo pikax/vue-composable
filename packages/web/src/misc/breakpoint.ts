@@ -1,7 +1,7 @@
 import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "./matchMedia";
-import { useDebounce, isNumber } from "@vue-composable/core";
+import { useDebounce, isNumber, isClient, NO_OP } from "@vue-composable/core";
 
 export function useBreakpoint<T>(
   breakpoints: Record<keyof T, number | string>
@@ -40,7 +40,7 @@ export function useBreakpoint<T>(
 
   sorted = sorted.sort((a, b) => b - a);
 
-  const resize = () => {
+  const resize = isClient ? () => {
     const width = window.innerWidth;
     let c = undefined;
     for (let i = 0; i < sorted.length; i++) {
@@ -52,11 +52,11 @@ export function useBreakpoint<T>(
       }
     }
     current.value = c;
-  };
+  } : NO_OP;
 
   const processResize = useDebounce(resize, 10);
 
-  const remove = () => window.removeEventListener("resize", processResize);
+  const remove = isClient ? () => window.removeEventListener("resize", processResize) : NO_OP;
 
   onMounted(() => {
     resize();

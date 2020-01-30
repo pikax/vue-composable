@@ -39,9 +39,9 @@ const { next, prev, first, last } = usePagination();
 
 ## Example
 
-<ClientOnly>
+
 <pagination-example/>
-</ClientOnly>
+
 
 ### Code
 

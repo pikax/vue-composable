@@ -61,7 +61,7 @@ describe("network information", () => {
 
     it("should set supported to false if connection not available", () => {
       const { supported } = useNetworkInformation();
-      expect(supported.value).toBe(false);
+      expect(supported).toBe(false);
     });
 
     it("should warn if not supported", () => {
@@ -74,19 +74,19 @@ describe("network information", () => {
       const { supported } = buildNetwork(
         () => (navigator.connection = connectionMock)
       );
-      expect(supported.value).toBe(true);
+      expect(supported).toBe(true);
     });
     it("should get mozConnection from navigator", () => {
       const { supported } = buildNetwork(
         () => (navigator.mozConnection = connectionMock)
       );
-      expect(supported.value).toBe(true);
+      expect(supported).toBe(true);
     });
     it("should get webkitConnection from navigator", () => {
       const { supported } = buildNetwork(
         () => (navigator.webkitConnection = connectionMock)
       );
-      expect(supported.value).toBe(true);
+      expect(supported).toBe(true);
     });
   });
 

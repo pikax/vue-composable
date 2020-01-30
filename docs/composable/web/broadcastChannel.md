@@ -59,9 +59,9 @@ const { send, close, addListener } = useBroadcastChannel();
 
 ## Example
 
-<ClientOnly>
+
 <broadcast-channel-example/>
-</ClientOnly>
+
 
 ### Code
 
