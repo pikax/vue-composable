@@ -2,7 +2,7 @@ import { Ref, ref, watch } from "@vue/composition-api";
 import { wrap, isString, debounce, isClient } from "@vue-composable/core";
 
 type WebStorageType = 'localStorage' | 'sessionStorage';
-
+const STORAGE_TEST_KEY = __DEV__ ? '__storage_test__' : ":$"
 
 /* istanbul ignore next */
 function isQuotaExceededError(e: any, storage?: Storage) {
@@ -26,7 +26,7 @@ export function storageAvailable(storage?: Storage) {
     if (!storage) {
       return false;
     }
-    const x = '__storage_test__';
+    const x = STORAGE_TEST_KEY;
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;

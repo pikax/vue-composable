@@ -133,7 +133,11 @@ function createConfig(output, plugins = [], config = {}) {
     external:
       isGlobalBuild || isRawESMBuild
         ? config.external || []
-        : knownExternals.concat(Object.keys(pkg.dependencies || [])),
+        : knownExternals.concat(
+            Object.keys(pkg.dependencies || []).concat(
+              Object.keys(pkg.peerDependencies || []) || []
+            )
+          ),
     plugins: [
       ...(config.plugins || []),
 
@@ -181,7 +185,9 @@ function createReplacePlugin(
     __RUNTIME_COMPILE__: isRuntimeCompileBuild,
     // support options?
     // the lean build drops options related code with buildOptions.lean: true
-    "process.env.NODE_ENV": !isProduction
+    "process.env.NODE_ENV": isBundlerESMBuild
+      ? `process.env.NODE_ENV`
+      : "'production'"
   });
 }
 

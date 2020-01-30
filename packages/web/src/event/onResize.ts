@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { RefElement, wrap, RefTyped, useDebounce, isClient, NO_OP } from "@vue-composable/core";
+import { RefElement, wrap, RefTyped, useDebounce, isClient, NO_OP, isNumber } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 
 
@@ -36,8 +36,8 @@ export function useOnResize(
     width.value = element.value.clientWidth;
   };
 
-  const eventOptions = typeof options === "number" ? undefined : options;
-  const ms = typeof options === "number" ? options : wait;
+  const [eventOptions, ms] = isNumber(options) ? [undefined, options] : [options, wait];
+
 
   if (ms) {
     handler = useDebounce(handler, wait);

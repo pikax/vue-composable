@@ -35,9 +35,11 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/axios#readme",
+  "peerDependencies": {
+    "@vue/composition-api": "^0.3.4"
+  },
   "dependencies": {
     "@vue-composable/core": "1.0.0-dev.7",
-    "@vue/composition-api": "^0.3.4",
     "axios": "^0.19.2"
   }
 }
