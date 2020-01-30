@@ -1,5 +1,6 @@
 import { Ref, computed, watch, ref } from "@vue/composition-api";
 import { minMax, RefTyped, wrap } from "@vue-composable/core";
+import { isNumber } from "../utils";
 
 type PaginationControl = () => void;
 
@@ -34,7 +35,7 @@ export function usePagination(options: PaginationOptions): PaginationResult {
       return _offset.value;
     },
     set(v) {
-      if (typeof v !== "number") {
+      if (!isNumber(v)) {
         /* istanbul ignore else */
         if (__DEV__) {
           console.warn(
@@ -52,7 +53,7 @@ export function usePagination(options: PaginationOptions): PaginationResult {
       return _currentPage.value;
     },
     set(v) {
-      if (typeof v !== "number") {
+      if (!isNumber(v)) {
         /* istanbul ignore else  */
         if (__DEV__) {
           console.warn(
@@ -72,7 +73,7 @@ export function usePagination(options: PaginationOptions): PaginationResult {
       return _pageSize.value;
     },
     set(v) {
-      if (typeof v !== "number") {
+      if (!isNumber(v)) {
         /* istanbul ignore else */
         if (__DEV__) {
           console.warn(

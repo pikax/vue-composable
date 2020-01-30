@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { RefElement, RefTyped, useDebounce } from "@vue-composable/core";
+import { RefElement, RefTyped, useDebounce, isNumber } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 
 export interface MouseMoveResult {
@@ -34,8 +34,7 @@ export function useOnMouseMove(
     mouseY.value = ev.y;
   };
 
-  const eventOptions = typeof options === "number" ? undefined : options;
-  const ms = typeof options === "number" ? options : wait;
+  const [eventOptions, ms] = isNumber(options) ? [undefined, options] : [options, wait];
 
   if (ms) {
     handler = useDebounce(handler, wait);
