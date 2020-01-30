@@ -34,7 +34,7 @@
 
 <script>
 import { ref, watch } from "@vue/composition-api";
-import { useFetch, useRetry, exponentialDelay } from "vue-composable";
+import { useFetch, useRetry, exponentialDelay, isClient } from "vue-composable";
 
 export default {
   name: "retry-example",
@@ -69,8 +69,9 @@ export default {
       });
     });
 
+    // TODO move to a composable
     // just to have a nice countdown
-    setInterval(() => (dateNow.value = Date.now()), 10);
+    isClient && setInterval(() => (dateNow.value = Date.now()), 10);
 
     return {
       id,
