@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef.md) - cross-tab reactive `ref`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- NuxtJS SSR support
 
 ### Changed
 
