@@ -33,8 +33,10 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
-  "dependencies": {
-    "@vue/composition-api": "^0.3.4",
+  "devDependencies": {
     "vue": "^2.6.10"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^0.3.4"
   }
 }
