@@ -48,7 +48,9 @@ const { remove } = usePerformanceNow();
 
 ## Example
 
+<ClientOnly>
 <performance-now-example/>
+</ClientOnly>
 
 ### Code
 
