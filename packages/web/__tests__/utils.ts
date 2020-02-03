@@ -8,7 +8,7 @@ Vue.config.warnHandler = (err: any) => {
     throw err;
 }
 
-Vue.config.erroHandler = (err: any) => {
+Vue.config.errorHandler = (err: any) => {
     throw err;
 }
 
