@@ -22,7 +22,7 @@
     </div>
     <p v-if="loading">loading...</p>
     <p v-else-if="isRetrying">
-      retrying in {{ Math.floor(nextRetry - dateNow) }}ms
+      retrying in {{ nextRetryIn }}ms
       <span>Current: {{ retryCount }} retries</span>
     </p>
     <div v-else>
@@ -33,8 +33,15 @@
 </template>
 
 <script>
-import { ref, watch } from "@vue/composition-api";
-import { useFetch, useRetry, exponentialDelay, isClient } from "vue-composable";
+import { ref, watch, computed } from "@vue/composition-api";
+import {
+  useFetch,
+  useRetry,
+  exponentialDelay,
+  isClient,
+  useNow,
+  useDateNow
+} from "vue-composable";
 
 export default {
   name: "retry-example",
@@ -45,6 +52,10 @@ export default {
     const delay = ref(200);
     const dateNow = ref(Date.now());
     const mode = ref("delay");
+
+    const { now } = useDateNow({
+      refreshMs: 10
+    });
 
     const retryDelay = n => {
       switch (mode.value) {
@@ -69,9 +80,8 @@ export default {
       });
     });
 
-    // TODO move to a composable
     // just to have a nice countdown
-    isClient && setInterval(() => (dateNow.value = Date.now()), 10);
+    const nextRetryIn = computed(() => Math.floor(nextRetry.value - now.value));
 
     return {
       id,
@@ -83,8 +93,7 @@ export default {
       mode,
       throwError,
       isRetrying,
-      nextRetry,
-      dateNow
+      nextRetryIn
     };
   }
 };
