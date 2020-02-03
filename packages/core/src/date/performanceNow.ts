@@ -9,6 +9,6 @@ export function usePerformanceNow(options?: NowOptions) {
   return useNow({
     refreshMs,
     sync,
-    timeFn: performance.now
+    timeFn: () => performance.now()
   })
 }

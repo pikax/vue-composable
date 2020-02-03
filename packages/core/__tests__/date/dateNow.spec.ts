@@ -1,15 +1,8 @@
 import { Vue } from '../utils';
 import { NowOptions, useDateNow } from "../../src";
-import * as nowModule from '../../src/misc/now';
+import * as nowModule from '../../src/date/now';
 
 type CoreTypes = typeof import("../../src"); // This is the import type!
-// type NowTypes = typeof import("../../src/misc/now"); // This is the import type!
-
-
-
-// jest.genMockFromModule('../../src/misc/now');
-// const nowModule: Record<keyof NowTypes, jest.Mock> = jest.doMock('../../src/misc/now') as any;
-
 
 describe('dateNow', () => {
   jest.spyOn(nowModule, 'useNow')

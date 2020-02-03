@@ -1,15 +1,8 @@
 import { Vue } from '../utils';
 import { NowOptions, usePerformanceNow } from "../../src";
-import * as nowModule from '../../src/misc/now';
+import * as nowModule from '../../src/date/now';
 
 type CoreTypes = typeof import("../../src"); // This is the import type!
-// type NowTypes = typeof import("../../src/misc/now"); // This is the import type!
-
-
-
-// jest.genMockFromModule('../../src/misc/now');
-// const nowModule: Record<keyof NowTypes, jest.Mock> = jest.doMock('../../src/misc/now') as any;
-
 
 describe('performanceNow', () => {
   jest.spyOn(nowModule, 'useNow')
@@ -53,9 +46,7 @@ describe('performanceNow', () => {
     const { now } = buildUsePerformanceNow();
 
     expect(nowModule.useNow).toHaveBeenCalledTimes(1);
-    expect(nowModule.useNow).toHaveBeenCalledWith(expect.objectContaining({
-      timeFn: performance.now
-    }))
+    expect(performance.now).toHaveBeenCalled();
     expect(now.value).toBe(nowMock());
     expect(setTimeout).toHaveBeenCalled();
   })

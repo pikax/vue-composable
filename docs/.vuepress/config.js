@@ -167,6 +167,16 @@ module.exports = {
           ]
         },
         {
+          title: "Date",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/date/now", "now"],
+            ["composable/date/dateNow", "dateNow"],
+            ["composable/date/performanceNow", "performanceNow"]
+          ]
+        },
+        {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,

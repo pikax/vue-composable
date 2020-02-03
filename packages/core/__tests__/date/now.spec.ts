@@ -26,7 +26,9 @@ describe('now', () => {
     jest.clearAllTimers();
     (setTimeout as any).mockClear();
     (setInterval as any).mockClear();
-    (clearInterval as any).mockClear()
+    (clearInterval as any).mockClear();
+
+    (clearTimeout as any).mockClear();
   }))
 
   afterAll(() => {
@@ -115,5 +117,20 @@ describe('now', () => {
     expect(setInterval).toHaveBeenCalledWith(expect.any(Function), refreshMs);
   })
 
+  it('should clear timeout if remove is called', () => {
+    const { remove } = buildUseNow();
+
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+    remove();
+    expect(clearTimeout).toHaveBeenCalled();
+  })
+
+  it('should clear interval if remove is called', () => {
+    const { remove } = buildUseNow({ sync: false });
+
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+    remove();
+    expect(clearInterval).toHaveBeenCalled();
+  })
 
 })

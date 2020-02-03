@@ -44,6 +44,12 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
+### Date
+
+- [useNow][now] : Return reactive custom timer with specified refresh rate
+- [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
+
 ### MISC
 
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
@@ -111,3 +117,13 @@ I really appreciate some tweaks or changes on how the documentation is displayed
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
+
+[now]: https://pikax.me/vue-composable/composable/date/now
+[date-now]: https://pikax.me/vue-composable/composable/date/dateNow
+[performance-now]: https://pikax.me/vue-composable/composable/date/performanceNow
+[pagination]: https://pikax.me/vue-composable/composable/pagination/pagination
+[array-pagination]: https://pikax.me/vue-composable/composable/pagination/arrayPagination
+[promise]: https://pikax.me/vue-composable/composable/promise/promise
+[retry]: https://pikax.me/vue-composable/composable/promise/retry
+[cancellable-promise]: https://pikax.me/vue-composable/composable/promise/cancellablePromise
+[debounce]: https://github.com/pikax/vue-composable
