@@ -154,12 +154,7 @@ function createConfig(output, plugins = [], config = {}) {
       ),
       ...plugins
     ],
-    output,
-    onwarn: (msg, warn) => {
-      if (!/Circular/.test(msg)) {
-        warn(msg);
-      }
-    }
+    output
   };
 }
 

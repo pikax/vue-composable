@@ -6,8 +6,8 @@ const fs = require("fs-extra");
 const path = require("path");
 const execa = require("execa");
 const chalk = require("chalk");
-const { gzipSync } = require('zlib')
-const { compress } = require('brotli')
+const { gzipSync } = require("zlib");
+const { compress } = require("brotli");
 const { targets: allTargets, fuzzyMatchTarget } = require("./utils");
 
 const args = require("minimist")(process.argv.slice(2));
@@ -56,25 +56,30 @@ async function build(target) {
   const env =
     (pkg.buildOptions && pkg.buildOptions.env) ||
     (devOnly ? "development" : "production");
-  await execa(
-    "rollup",
-    [
-      "-c",
-      "--environment",
+
+  try {
+    await execa(
+      "rollup",
       [
-        `COMMIT:${commit}`,
-        `NODE_ENV:${env}`,
-        `TARGET:${target}`,
-        formats ? `FORMATS:${formats}` : ``,
-        buildTypes ? `TYPES:true` : ``,
-        prodOnly ? `PROD_ONLY:true` : ``,
-        lean ? `LEAN:true` : ``
-      ]
-        .filter(Boolean)
-        .join(",")
-    ],
-    { stdio: "inherit" }
-  );
+        "-c",
+        "--environment",
+        [
+          `COMMIT:${commit}`,
+          `NODE_ENV:${env}`,
+          `TARGET:${target}`,
+          formats ? `FORMATS:${formats}` : ``,
+          buildTypes ? `TYPES:true` : ``,
+          prodOnly ? `PROD_ONLY:true` : ``,
+          lean ? `LEAN:true` : ``
+        ]
+          .filter(Boolean)
+          .join(",")
+      ],
+      { stdio: "inherit" }
+    );
+  } catch (e) {
+    return process.exit(1);
+  }
 
   if (buildTypes && pkg.types) {
     console.log();
