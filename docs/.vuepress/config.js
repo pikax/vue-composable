@@ -148,10 +148,6 @@ module.exports = {
     editLinks: true,
     sidebarDepth: 2,
     sidebar: {
-      // "/composable": [
-      //   "",
-      //   ['guide/web/fetch', "fetch"]
-      // ],
       "/examples/": [],
       "/": [
         "",
