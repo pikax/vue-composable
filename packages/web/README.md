@@ -1,6 +1,7 @@
 # @vue-composable/web
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fweb.svg)](https://badge.fury.io/js/%40vue-composable%2Fweb)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/web)](https://bundlephobia.com/result?p=@vue-composable/web)
 
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 

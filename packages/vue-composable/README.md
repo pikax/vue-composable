@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
+[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
 # vue-next
 
@@ -14,7 +15,7 @@
 
 100% typescript based composable components and full type support out-of-box.
 
-This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code ([12kb gzip](https://app.circleci.com/jobs/github/pikax/vue-composable/318/parallel-runs/0/steps/0-105)).
+This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code.
 
 [vue-composable](https://www.npmjs.com/package/vue-composable) is composed by two package [@vue-composable/core](./packages/core) and [@vue-composable/web](./packages/web).
 

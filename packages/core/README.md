@@ -1,6 +1,7 @@
 # @vue-composable/core
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core)](https://bundlephobia.com/result?p=@vue-composable/core)
 
 This package contains core functionality for [vue-composable][vue-composable]
 
