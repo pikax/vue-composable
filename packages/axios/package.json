@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/axios",
-  "version": "1.0.0-dev.7",
+  "version": "1.0.0-dev.8",
   "description": "@vue-composable/axios",
   "main": "index.js",
   "module": "dist/axios.esm-bundler.js",
@@ -40,7 +40,7 @@
     "@vue/composition-api": "^0.3.4"
   },
   "dependencies": {
-    "@vue-composable/core": "1.0.0-dev.7",
+    "@vue-composable/core": "1.0.0-dev.8",
     "axios": "^0.19.2"
   }
 }
