@@ -1,6 +1,7 @@
 # @vue-composable/core
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core)](https://bundlephobia.com/result?p=@vue-composable/core)
 
 This package contains core functionality for [vue-composable][vue-composable]
 
@@ -26,6 +27,12 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ## Functionality
 
+### Date
+
+- [useNow][now] : Return reactive custom timer with specified refresh rate
+- [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
+
 ### Pagination
 
 - [usePagination][pagination] : Provides framework to implement reactive pagination
@@ -45,6 +52,9 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 <!-- TODO SET CORRECT url -->
 
+[now]: https://pikax.me/vue-composable/composable/date/now
+[date-now]: https://pikax.me/vue-composable/composable/date/dateNow
+[performance-now]: https://pikax.me/vue-composable/composable/date/performanceNow
 [pagination]: https://pikax.me/vue-composable/composable/pagination/pagination
 [array-pagination]: https://pikax.me/vue-composable/composable/pagination/arrayPagination
 [promise]: https://pikax.me/vue-composable/composable/promise/promise

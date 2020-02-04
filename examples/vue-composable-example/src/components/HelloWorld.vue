@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1> Vue composable examples</h1>
-    <h3> Select one above </h3>
+    <h1>Vue composable examples</h1>
+    <h3>Select one above</h3>
   </div>
 </template>
 
@@ -10,6 +10,10 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+
+  setup() {
+    return {};
   }
 };
 </script>

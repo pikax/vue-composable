@@ -43,9 +43,9 @@ const { remove } = useBreakpoint();
 
 ## Example
 
-<ClientOnly>
+
 <breakpoint-example/>
-</ClientOnly>
+
 
 ### Code
 

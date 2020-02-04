@@ -33,7 +33,7 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
-  "dependencies": {
+  "peerDependencies": {
     "@vue/runtime-core": "^3.0.0-alpha.2"
   }
 }

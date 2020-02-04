@@ -23,9 +23,9 @@ const { supported, online } = useOnline();
 
 ## Example
 
-<ClientOnly>
+
 <online-example/>
-</ClientOnly>
+
 
 ### Code
 

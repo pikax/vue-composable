@@ -6,14 +6,14 @@ import {
   isDate,
   isObject,
   isFunction
-} from "@vue-composable/core";
+} from "../utils";
 
 const MAX_RETRIES = 9000;
 
 /* istanbul ignore next */
-const ExecutionId = Symbol(__DEV__ ? "RetryId" : undefined);
+const ExecutionId = Symbol(__DEV__ && "RetryId" || ``);
 /* istanbul ignore next */
-const CancellationToken = Symbol(__DEV__ ? "CancellationToken" : undefined);
+const CancellationToken = Symbol(__DEV__ && "CancellationToken" || ``);
 
 /**
  * @description How long should it delay or what time it should execute, it also supports Promises
@@ -102,7 +102,7 @@ const defaultStrategy: RetryStrategy = async (
       } else {
         result = factory();
       }
-      
+
       if (isPromise(result)) {
         result = await result;
       }
@@ -247,13 +247,13 @@ export function useRetry(
 
   const exec: any = fn
     ? (...args: any[]) => {
-        ++context[ExecutionId].value;
-        return defaultStrategy(opt, context, fn, args);
-      }
+      ++context[ExecutionId].value;
+      return defaultStrategy(opt, context, fn, args);
+    }
     : (f: Factory<any, any>) => {
-        ++context[ExecutionId].value;
-        return defaultStrategy(opt, context, f, undefined);
-      };
+      ++context[ExecutionId].value;
+      return defaultStrategy(opt, context, f, undefined);
+    };
 
   const cancel = () => {
     context.isRetrying.value = false;

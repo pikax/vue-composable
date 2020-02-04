@@ -47,9 +47,9 @@ const { next, prev, first, last } = useArrayPagination();
 
 ## Example
 
-<ClientOnly>
+
 <array-pagination-example/>
-</ClientOnly>
+
 
 ### Code
 

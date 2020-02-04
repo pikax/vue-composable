@@ -1,6 +1,6 @@
-import { computed, Ref, ref } from "@vue/runtime-core";
+import { Ref, ref } from "@vue/runtime-core";
 import { RemoveEventFunction, useEvent } from "../event";
-import { NO_OP } from "@vue-composable/core";
+import { NO_OP, isClient } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -65,7 +65,7 @@ declare global {
 }
 
 interface NetworkInformationReturn {
-  readonly supported: Ref<boolean>;
+  readonly supported: boolean;
 
   /**
    * @description Returns the effective bandwidth estimate in megabits per second, rounded to the nearest multiple of 25 kilobits per seconds
@@ -97,11 +97,11 @@ interface NetworkInformationReturn {
 }
 
 export function useNetworkInformation(): NetworkInformationReturn {
-  const connection =
+  const connection = isClient ?
     navigator.connection ||
     navigator.mozConnection ||
-    navigator.webkitConnection;
-  const supported = computed(() => !!connection);
+    navigator.webkitConnection : false;
+  const supported = !!connection;
   const downlink = ref<number>(0);
   const downlinkMax = ref<number>(0);
   const effectiveType = ref<NetworkInformationEffectiveType>("none");

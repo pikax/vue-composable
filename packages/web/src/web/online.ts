@@ -1,8 +1,9 @@
 import { Ref, ref } from "@vue/runtime-core";
+import { isClient } from "@vue-composable/core";
 
 let online: Ref<boolean> | undefined = undefined;
 export function useOnline() {
-  const supported = "onLine" in navigator;
+  const supported = isClient && "onLine" in navigator;
 
   // not sure how to test this :/
   if (!supported) {

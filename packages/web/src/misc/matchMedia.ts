@@ -1,25 +1,44 @@
-import { ref, onUnmounted } from "@vue/runtime-core";
+import { Ref, ref, onUnmounted } from "@vue/runtime-core";
+import { isClient, NO_OP } from "@vue-composable/core";
 
 export function useMatchMedia(query: string) {
-  const mediaQueryList = ref<MediaQueryList>(matchMedia(query));
-  const matches = ref(mediaQueryList.value.matches);
+  const supported = isClient ? 'matchMedia' in window : false;
 
-  const process = (e: MediaQueryListEvent) => {
-    matches.value = e.matches;
-  };
+  let mediaQueryList: Ref<MediaQueryList> = undefined as any;
+  let matches: Ref<boolean> = undefined as any;
 
-  mediaQueryList.value.addEventListener("change", process, { passive: true });
+  let remove = NO_OP;
 
-  const remove = () =>
-    mediaQueryList.value.removeEventListener("change", process);
+  if (supported) {
+    mediaQueryList = ref<MediaQueryList>(matchMedia(query));
+    matches = ref(mediaQueryList.value.matches);
 
+    const process = (e: MediaQueryListEvent) => {
+      matches.value = e.matches;
+    };
 
-  onUnmounted(remove);
+    mediaQueryList.value.addEventListener("change", process, { passive: true });
+
+    const remove = () =>
+      mediaQueryList.value.removeEventListener("change", process);
+
+    onUnmounted(remove);
+
+  } else {
+    /* istanbul ignore else */
+    if (__DEV__) {
+      console.warn('[matchMedia] not supported')
+    }
+    mediaQueryList = ref<MediaQueryList>({} as MediaQueryList);
+    matches = ref(false);
+  }
 
   return {
-    mediaQueryList,
-    remove,
+    supported,
 
-    matches
+    mediaQueryList,
+    matches,
+
+    remove
   };
 }

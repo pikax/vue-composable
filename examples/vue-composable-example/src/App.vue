@@ -5,6 +5,9 @@
         <router-link to="/">Home</router-link>
       </li>
       <li>
+        <router-link to="/sharedRef">Shared Ref</router-link>
+      </li>
+      <li>
         <router-link to="/arrayPagination">Array Pagination</router-link>
       </li>
       <li>
@@ -12,7 +15,7 @@
       </li>
 
       <li>
-        <router-link to="/networkInformation">NetWork Information</router-link>
+        <router-link to="/networkInformation">Network Information</router-link>
       </li>
 
       <li>
@@ -22,10 +25,6 @@
       <li>
         <router-link to="/SWAPI">SWAPI</router-link>
       </li>
-
-      <li>
-        {{ a }}
-      </li>
     </ul>
     <router-view></router-view>
   </div>
@@ -34,6 +33,14 @@
 <script>
 import HelloWorld from "./components/HelloWorld";
 import Fetch from "./components/Fetch";
+import {
+  onUnmounted,
+  ref,
+  computed,
+  getCurrentInstance,
+  Ref
+} from "@vue/composition-api";
+import { useBroadcastChannel, refShared, useSharedRef } from "vue-composable";
 
 export default {
   name: "App",
@@ -43,9 +50,7 @@ export default {
   },
 
   setup() {
-    return {
-      a: 2
-    };
+    return {};
   }
 };
 </script>

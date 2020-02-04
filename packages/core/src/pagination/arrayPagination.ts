@@ -3,7 +3,7 @@ import {
   PaginationResult,
   PaginationOptions
 } from "./pagination";
-import { RefTyped, wrap } from "@vue-composable/core";
+import { RefTyped, wrap } from "../utils";
 import { computed, ComputedRef } from "@vue/runtime-core";
 
 export interface ArrayPaginationResult<T extends Array<any>>

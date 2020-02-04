@@ -10,9 +10,9 @@ This is recommended if you want to support safari users using private mode.
 
 ## Example
 
-<ClientOnly>
+
 <storage-example/>
-</ClientOnly>
+
 
 ### Code
 

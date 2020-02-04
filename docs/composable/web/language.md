@@ -23,9 +23,9 @@ The `useLanguage` function exposes the following methods:
 
 ## Example
 
-<ClientOnly>
+
 <language-example/>
-</ClientOnly>
+
 
 ### Code
 

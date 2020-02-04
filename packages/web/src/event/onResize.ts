@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/runtime-core";
-import { RefElement, wrap, RefTyped, useDebounce } from "@vue-composable/core";
+import { RefElement, wrap, RefTyped, useDebounce, isClient, NO_OP, isNumber } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 
 
@@ -36,15 +36,15 @@ export function useOnResize(
     width.value = element.value.clientWidth;
   };
 
-  const eventOptions = typeof options === "number" ? undefined : options;
-  const ms = typeof options === "number" ? options : wait;
+  const [eventOptions, ms] = isNumber(options) ? [undefined, options] : [options, wait];
+
 
   if (ms) {
     handler = useDebounce(handler, wait);
   }
 
   // resize seems only to be fired against the window
-  const remove = useEvent(window, "resize", handler, eventOptions || { passive: true });
+  const remove = isClient ? useEvent(window, "resize", handler, eventOptions || { passive: true }) : NO_OP;
 
   return {
     height,

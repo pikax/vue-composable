@@ -148,10 +148,6 @@ module.exports = {
     editLinks: true,
     sidebarDepth: 2,
     sidebar: {
-      // "/composable": [
-      //   "",
-      //   ['guide/web/fetch', "fetch"]
-      // ],
       "/examples/": [],
       "/": [
         "",
@@ -167,12 +163,23 @@ module.exports = {
           ]
         },
         {
+          title: "Date",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/date/now", "now"],
+            ["composable/date/dateNow", "dateNow"],
+            ["composable/date/performanceNow", "performanceNow"]
+          ]
+        },
+        {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
           children: [
             ["composable/misc/matchMedia", "matchMedia"],
-            ["composable/misc/breakpoint", "breakpoint"]
+            ["composable/misc/breakpoint", "breakpoint"],
+            ["composable/misc/sharedRef", "SharedRef"]
           ]
         },
         {
@@ -201,7 +208,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/promise/promise", "promise"],
-            ["composable/promise/cancellablePromise", "cancellablePromise"]
+            ["composable/promise/cancellablePromise", "cancellablePromise"],
+            ["composable/promise/retry", "retry"]
           ]
         },
         {
@@ -215,7 +223,9 @@ module.exports = {
             ["composable/web/networkInformation", "NetworkInformation"],
             ["composable/web/online", "Navigator.onLine"],
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
-            ["composable/web/language", "Language"]
+            ["composable/web/language", "Language"],
+            ["composable/web/broadcastChannel", "BroadcastChannel API"],
+            ["composable/web/geolocation", "Geolocation API"]
           ]
         },
         {

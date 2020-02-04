@@ -1,11 +1,11 @@
 import { Ref, ref, watch } from "@vue/runtime-core";
-import { wrap, isString, debounce } from "@vue-composable/core";
+import { wrap, isString, debounce, isClient } from "@vue-composable/core";
 
 type WebStorageType = 'localStorage' | 'sessionStorage';
-
+const STORAGE_TEST_KEY = __DEV__ ? '__storage_test__' : ":$"
 
 /* istanbul ignore next */
-function isQuotaExceededError(e: any, storage: Storage) {
+function isQuotaExceededError(e: any, storage?: Storage) {
   return e instanceof DOMException && (
     // everything except Firefox
     e.code === 22 ||
@@ -17,13 +17,16 @@ function isQuotaExceededError(e: any, storage: Storage) {
     // Firefox
     e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
     // acknowledge QuotaExceededError only if there's something already stored
-    (storage && storage.length !== 0)
+    (storage && storage.length !== 0 || false)
 }
 
 // based on https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-export function storageAvailable(storage: Storage) {
+export function storageAvailable(storage?: Storage) {
   try {
-    const x = '__storage_test__';
+    if (!storage) {
+      return false;
+    }
+    const x = STORAGE_TEST_KEY;
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
@@ -92,7 +95,7 @@ function safeParse(serializer: StorageSerializer, value: string) {
 let storageMap: Map<WebStorageType, WebStorage> | undefined = undefined;
 
 export function useWebStorage(type: WebStorageType, serializer: StorageSerializer = JSON, ms = 10) {
-  const storage = window[type];
+  const storage = isClient ? window[type] : undefined;
   const supported = storageAvailable(storage);
 
   const remove = () => storageMap!.delete(type);
@@ -100,34 +103,36 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
   if (!storageMap) {
     storageMap = new Map();
 
-    window.addEventListener('storage', (e) => {
-      if (e.newValue === e.oldValue) {
-        return;
-      }
-      let webStore = storageMap!.get('localStorage');
-      if (e.storageArea === window.localStorage) {
-        webStore = storageMap!.get('localStorage')
-      } else {
-        webStore = storageMap!.get('sessionStorage')
-      }
-      if (webStore && Object.keys(webStore.$syncKeys).length > 0) {
-        if (e.key === null) {
-          webStore.clear();
+    if (isClient) {
+      window.addEventListener('storage', (e) => {
+        if (e.newValue === e.oldValue) {
+          return;
         }
-        else if (webStore.$syncKeys[e.key]) {
-          if (e.newValue === null) {
-            webStore.removeItem(e.key);
-          } else {
-            webStore.updateItem(e.key, e.newValue!);
+        let webStore = storageMap!.get('localStorage');
+        if (e.storageArea === window.localStorage) {
+          webStore = storageMap!.get('localStorage')
+        } else {
+          webStore = storageMap!.get('sessionStorage')
+        }
+        if (webStore && Object.keys(webStore.$syncKeys).length > 0) {
+          if (e.key === null) {
+            webStore.clear();
+          }
+          else if (webStore.$syncKeys[e.key]) {
+            if (e.newValue === null) {
+              webStore.removeItem(e.key);
+            } else {
+              webStore.updateItem(e.key, e.newValue!);
+            }
           }
         }
-      }
-    })
+      })
+    }
   }
 
   let store: WebStorage = storageMap.get(type) as any;
   let quotaError: Ref<boolean>;
-  if (supported) {
+  if (supported && storage) {
     if (!store) {
       quotaError = ref(false);
       store = {
@@ -210,7 +215,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
             r.value = safeParse(serializer, data);
           }
         }
-      }
+      } as WebStorage;
 
       storageMap.set(type, store);
     } else {

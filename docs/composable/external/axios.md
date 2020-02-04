@@ -83,16 +83,16 @@ import { useAxios } from "@vue-composable/axios";
 const { exec, cancel } = useAxios();
 ```
 
-| Signature          | Description              |
-| ------------------ | ------------------------ |
-| `exec(request)`    | Executes axios request   |
-| `cancel(message?)` | Cancels the last request |
+| Signature                   | Description              |
+| --------------------------- | ------------------------ |
+| `exec(AxiosRequest|string)` | Executes axios request   |
+| `cancel(message?)`          | Cancels the last request |
 
 ## Example
 
-<ClientOnly>
+
 <axios-example/>
-</ClientOnly>
+
 
 ### Code
 

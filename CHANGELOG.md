@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.8
+
+_2020-02-04_
+
+---
+
+### Added
+
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef.md) - cross-tab reactive `ref`
+- [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [useNow][now] : Return reactive custom timer with specified refresh rate
+- [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
+- NuxtJS SSR support
+
+### Changed
+
+- Axios: Allow calling exec with a string
+
 ## 1.0.0-dev.7
 
 _2020-01-19_
@@ -131,3 +151,7 @@ First release
 - useOnResize
 - usePagination
 - usePromise
+
+[now]: https://pikax.me/vue-composable/composable/date/now
+[date-now]: https://pikax.me/vue-composable/composable/date/dateNow
+[performance-now]: https://pikax.me/vue-composable/composable/date/performanceNow

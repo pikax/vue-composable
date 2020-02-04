@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
+[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
 # Vue 3
 
@@ -16,7 +17,7 @@ This version is `alpha` with support for the vue3 ([vue-next](https://github.com
 
 100% typescript based composable components and full type support out-of-box.
 
-This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code ([12kb gzip](https://app.circleci.com/jobs/github/pikax/vue-composable/318/parallel-runs/0/steps/0-105)).
+This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code.
 
 [vue-composable](https://www.npmjs.com/package/vue-composable) is composed by two package [@vue-composable/core](./packages/core) and [@vue-composable/web](./packages/web).
 
@@ -50,10 +51,17 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
+### Date
+
+- [useNow][now] : Return reactive custom timer with specified refresh rate
+- [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
+
 ### MISC
 
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
 - [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
 
@@ -82,6 +90,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 
 ### External
 
@@ -114,3 +124,13 @@ I really appreciate some tweaks or changes on how the documentation is displayed
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
+
+[now]: https://pikax.me/vue-composable/composable/date/now
+[date-now]: https://pikax.me/vue-composable/composable/date/dateNow
+[performance-now]: https://pikax.me/vue-composable/composable/date/performanceNow
+[pagination]: https://pikax.me/vue-composable/composable/pagination/pagination
+[array-pagination]: https://pikax.me/vue-composable/composable/pagination/arrayPagination
+[promise]: https://pikax.me/vue-composable/composable/promise/promise
+[retry]: https://pikax.me/vue-composable/composable/promise/retry
+[cancellable-promise]: https://pikax.me/vue-composable/composable/promise/cancellablePromise
+[debounce]: https://github.com/pikax/vue-composable

@@ -1,4 +1,5 @@
 import { RefTyped, NO_OP, FALSE_OP } from "@vue-composable/core";
+import { ref } from "@vue/runtime-core";
 import { useWebStorage } from './webStorage'
 import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
@@ -33,6 +34,8 @@ export function useSessionStorage(key: string, defaultValue?: any) {
     if (__DEV__) {
       console.warn('[sessionStorage] is not available');
     }
+
+    storage = ref(defaultValue);
   }
 
   return {

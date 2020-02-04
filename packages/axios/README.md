@@ -1,6 +1,7 @@
 # @vue-composable/axios
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios)](https://bundlephobia.com/result?p=@vue-composable/axios)
 
 # Vue 3
 

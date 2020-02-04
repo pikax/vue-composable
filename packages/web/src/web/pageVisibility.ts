@@ -1,23 +1,30 @@
 import { ref, Ref } from "@vue/runtime-core";
+import { isClient } from "@vue-composable/core";
 
 let visibility: Ref<VisibilityState> | undefined = undefined;
 let hidden: Ref<boolean> | undefined = undefined;
 
 export function usePageVisibility() {
+
   if (!hidden) {
-    hidden = ref(document.hidden);
+    hidden = ref(isClient && document.hidden);
   }
+
   if (!visibility) {
-    visibility = ref(document.visibilityState);
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        visibility!.value = document.visibilityState
-        hidden!.value = document.hidden;
-      },
-      { passive: true }
-      // true
-    );
+    if (isClient) {
+      visibility = ref(document.visibilityState);
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+          visibility!.value = document.visibilityState
+          hidden!.value = document.hidden;
+        },
+        { passive: true }
+        // true
+      );
+    } else {
+      visibility = ref<VisibilityState>('visible');
+    }
   }
   return {
     visibility,

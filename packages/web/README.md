@@ -1,6 +1,7 @@
 # @vue-composable/web
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fweb.svg)](https://badge.fury.io/js/%40vue-composable%2Fweb)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/web)](https://bundlephobia.com/result?p=@vue-composable/web)
 
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 
@@ -35,6 +36,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [matchMedia](https://pikax.me/vue-composable/composable/misc/matchMedia) - Reactive `matchMedia`
 - [breakpoint](https://pikax.me/vue-composable/composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
 
@@ -52,6 +54,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 
 ## Contributing
 
