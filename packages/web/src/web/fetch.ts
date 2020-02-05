@@ -1,6 +1,5 @@
-import { usePromise, isBoolean } from "@vue-composable/core";
+import { usePromise, isBoolean, isString } from "@vue-composable/core";
 import { ref, computed } from "@vue/composition-api";
-import { isString } from "util";
 
 export interface UseFetchOptions {
   /**
@@ -18,6 +17,8 @@ export interface UseFetchOptions {
 
 export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInfo>, requestInit?: RequestInit) {
   const json = ref<T>(null);
+  const text = ref('');
+  const blob = ref<Blob>();
   // TODO add text = ref<string> ??
   const isOptions = options ? isBoolean((options as UseFetchOptions).isJson) || isBoolean((options as UseFetchOptions).isJson) : false;
 
@@ -53,17 +54,32 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     });
 
     if (response) {
-      if (isJson) {
-        const pJson = response
+      const promises = [
+        // JSON
+        isJson ? response
+          .clone()
           .json()
           .then(x => (json.value = x))
           .catch(x => {
             json.value = null;
             jsonError.value = x;
-          });
-        if (parseImmediate) {
-          await pJson;
-        }
+          }) : Promise.resolve(),
+        // BLOB
+        response.clone()
+          .blob()
+          .then(x => {
+            blob.value = x
+          }),
+
+        // TEXT
+        response.clone()
+          .text()
+          .then(x => {
+            text.value = x
+          })
+      ];
+      if (parseImmediate) {
+        await Promise.all(promises);
       }
     }
     return response;

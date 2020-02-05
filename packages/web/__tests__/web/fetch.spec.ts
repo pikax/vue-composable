@@ -55,13 +55,23 @@ describe("fetch", () => {
       test: 2
     };
     let r;
-    fetchSpy.mockImplementationOnce(() =>
-      Promise.resolve({
+    fetchSpy.mockImplementationOnce(async () => {
+      await promisedTimeout(wait);
+      return {
+        clone() {
+          return this;
+        },
+        text() {
+          return Promise.resolve('test')
+        },
+        blob() {
+          return Promise.resolve(new Blob())
+        },
         json() {
-          return promisedTimeout(wait).then(x => (r = expectedResult));
+          return r = expectedResult;
         }
-      })
-    );
+      }
+    });
 
     const p = exec("test");
 
@@ -87,14 +97,25 @@ describe("fetch", () => {
     };
     let r;
     let jsonExecuted = false;
-    fetchSpy.mockImplementationOnce(() =>
-      Promise.resolve({
-        json() {
+
+    fetchSpy.mockImplementationOnce(async () => {
+      return {
+        clone() {
+          return this;
+        },
+        text() {
+          return Promise.resolve('test')
+        },
+        blob() {
+          return Promise.resolve(new Blob())
+        },
+        async json() {
           jsonExecuted = true;
-          return promisedTimeout(wait).then(x => (r = expectedResult));
+          await promisedTimeout(wait)
+          return r = expectedResult;
         }
-      })
-    );
+      }
+    });
 
     const p = exec("test");
 
@@ -125,14 +146,24 @@ describe("fetch", () => {
     };
     let r;
     let jsonExecuted = false;
-    fetchSpy.mockImplementationOnce(() =>
-      Promise.resolve({
-        json() {
+    fetchSpy.mockImplementationOnce(async () => {
+      return {
+        clone() {
+          return this;
+        },
+        text() {
+          return Promise.resolve('test')
+        },
+        blob() {
+          return Promise.resolve(new Blob())
+        },
+        async json() {
           jsonExecuted = true;
-          return promisedTimeout(wait).then(x => (r = expectedResult));
+          await promisedTimeout(wait)
+          return r = expectedResult;
         }
-      })
-    );
+      }
+    });
 
     const p = exec("test");
 
@@ -153,13 +184,22 @@ describe("fetch", () => {
       isJson: true
     });
     const exception = new Error("error parsing json");
-    fetchSpy.mockImplementationOnce(() =>
-      Promise.resolve({
-        json() {
-          return Promise.reject(exception);
+    fetchSpy.mockImplementationOnce(async () => {
+      return {
+        clone() {
+          return this;
+        },
+        text() {
+          return Promise.resolve('test')
+        },
+        blob() {
+          return Promise.resolve(new Blob())
+        },
+        async json() {
+          throw exception;
         }
-      })
-    );
+      }
+    });
 
     const p = exec("test");
 
@@ -181,13 +221,23 @@ describe("fetch", () => {
     expect(status.value).toBe(null);
     expect(statusText.value).toBe(null);
 
-    fetchSpy.mockImplementation(() => ({
-      ...expectedResult,
-
-      json() {
-        return Promise.resolve("");
+    fetchSpy.mockImplementationOnce(async () => {
+      return {
+        ...expectedResult,
+        clone() {
+          return this;
+        },
+        text() {
+          return Promise.resolve('test')
+        },
+        blob() {
+          return Promise.resolve(new Blob())
+        },
+        json() {
+          return Promise.resolve("");
+        }
       }
-    }));
+    });
 
     await exec("test");
 
