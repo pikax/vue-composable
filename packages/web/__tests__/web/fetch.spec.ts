@@ -29,7 +29,7 @@ describe("fetch", () => {
 
     exec("./api/1");
 
-    expect(fetchSpy).toBeCalledWith("./api/1", undefined);
+    expect(fetchSpy).toBeCalledWith("./api/1", expect.objectContaining({}));
   });
 
   it("should call fetch with options", () => {
@@ -42,7 +42,7 @@ describe("fetch", () => {
 
     exec("./api/1", init);
 
-    expect(fetchSpy).toHaveBeenCalledWith("./api/1", init);
+    expect(fetchSpy).toHaveBeenCalledWith("./api/1", expect.objectContaining(init));
   });
 
   it("should exec only be resolved after parsing json()", async () => {
@@ -194,4 +194,62 @@ describe("fetch", () => {
     expect(status.value).toBe(expectedResult.status);
     expect(statusText.value).toBe(expectedResult.statusText);
   });
+
+  it('should cancel the request', async () => {
+    const {
+      exec,
+      error,
+      cancel,
+      cancelledMessage,
+      isCancelled
+    } = useFetch();
+
+    const message = 'cancelled ';
+
+    fetchSpy.mockImplementationOnce(async (re: Request, x: RequestInit) => {
+      expect(x).toBeDefined();
+      expect(x.signal).toBeDefined();
+
+      const r = await Promise.race([promisedTimeout(5000)]);
+      return r;
+    });
+
+    try {
+      const execPromise = exec("https://example.com");
+      cancel(message);
+      await execPromise;
+    } catch (e) {
+      expect(e).toMatchObject({ rr: 1 });
+    }
+
+    expect({
+      cancelledMessage,
+      isCancelled,
+      error,
+    }).toMatchObject({
+      cancelledMessage: {
+        value: message
+      },
+      isCancelled: {
+        value: true
+      }
+    })
+  })
+
+  it('should execute request if request is passed', () => {
+    const req: Partial<RequestInfo> = {
+      url: "./api/1",
+    };
+    const init: RequestInit = {
+      method: "POST"
+    }
+    useFetch(req, init);
+    expect(fetchSpy).toBeCalledWith(expect.objectContaining(req), expect.objectContaining(init));
+  })
+
+
+  it('should warn if cancel is called before any request has been made', () => {
+    const { cancel } = useFetch();
+    expect(cancel).toThrowError('Cannot cancel because no request has been made');
+  })
 });

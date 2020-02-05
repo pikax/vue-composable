@@ -250,6 +250,9 @@ export function useEvent<K extends keyof DocumentEventMap>(el: RefTyped<Element>
 
 // @public (undocumented)
 export function useFetch<T = any>(options?: UseFetchOptions): {
+    cancel: (message?: string | undefined) => void;
+    isCancelled: import("@vue/composition-api").Ref<boolean>;
+    cancelledMessage: import("@vue/composition-api").Ref<string | undefined>;
     json: import("@vue/composition-api").Ref<T | null>;
     jsonError: import("@vue/composition-api").Ref<any>;
     status: Readonly<import("@vue/composition-api").Ref<number | null>>;
