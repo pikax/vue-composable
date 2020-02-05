@@ -19,7 +19,7 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
   const json = ref<T>(null);
   const text = ref('');
   const blob = ref<Blob>();
-  // TODO add text = ref<string> ??
+  
   const isOptions = options ? isBoolean((options as UseFetchOptions).isJson) || isBoolean((options as UseFetchOptions).isJson) : false;
 
   const jsonError = ref<any | null>(null);
@@ -106,6 +106,9 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     cancel,
     isCancelled,
     cancelledMessage,
+
+    text, 
+    blob,
 
     json,
     jsonError,

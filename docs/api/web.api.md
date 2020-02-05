@@ -249,10 +249,12 @@ export function useEvent<K extends keyof WindowEventMap>(el: RefTyped<Window>, n
 export function useEvent<K extends keyof DocumentEventMap>(el: RefTyped<Element>, name: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): RemoveEventFunction;
 
 // @public (undocumented)
-export function useFetch<T = any>(options?: UseFetchOptions): {
+export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInfo>, requestInit?: RequestInit): {
     cancel: (message?: string | undefined) => void;
     isCancelled: import("@vue/composition-api").Ref<boolean>;
     cancelledMessage: import("@vue/composition-api").Ref<string | undefined>;
+    text: import("@vue/composition-api").Ref<string>;
+    blob: import("@vue/composition-api").Ref<Blob | undefined>;
     json: import("@vue/composition-api").Ref<T | null>;
     jsonError: import("@vue/composition-api").Ref<any>;
     status: Readonly<import("@vue/composition-api").Ref<number | null>>;
