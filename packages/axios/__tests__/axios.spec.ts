@@ -2,14 +2,14 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useAxios } from "../src";
 import { promisedTimeout } from "@vue-composable/core";
 
-
 jest.mock("axios");
-const __axios = jest.requireActual('axios');
+const __axios = jest.requireActual("axios");
 
 describe("axios", () => {
+  let request = jest.fn();
   beforeEach(() => {
     axios.create = jest.fn(() => ({
-      request: jest.fn()
+      request
     })) as any;
     axios.CancelToken = __axios.CancelToken;
   });
@@ -32,7 +32,9 @@ describe("axios", () => {
 
     await exec(request);
 
-    expect(client.value.request).toBeCalledWith(expect.objectContaining(request));
+    expect(client.value.request).toBeCalledWith(
+      expect.objectContaining(request)
+    );
   });
 
   it("should call axios using string", async () => {
@@ -41,7 +43,9 @@ describe("axios", () => {
 
     await exec(url);
 
-    expect(client.value.request).toBeCalledWith(expect.objectContaining({ url }));
+    expect(client.value.request).toBeCalledWith(
+      expect.objectContaining({ url })
+    );
   });
 
   it("should set response", async () => {
@@ -73,14 +77,7 @@ describe("axios", () => {
   });
 
   it("should set data, status and statusText on error request", async () => {
-    const {
-      exec,
-      client,
-      error,
-      data,
-      status,
-      statusText
-    } = useAxios();
+    const { exec, client, error, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {
       method: "GET",
       url: "./api/1"
@@ -111,13 +108,7 @@ describe("axios", () => {
   });
 
   it("should set set data, status and statusText to null, if Error has been thrown", async () => {
-    const {
-      exec,
-      client,
-      data,
-      status,
-      statusText
-    } = useAxios();
+    const { exec, client, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {
       method: "GET",
       url: "./api/1"
@@ -142,7 +133,7 @@ describe("axios", () => {
     expect(statusText.value).toBeNull();
   });
 
-  it('should cancel the request', async () => {
+  it("should cancel the request", async () => {
     const {
       exec,
       error,
@@ -152,16 +143,21 @@ describe("axios", () => {
       isCancelled
     } = useAxios();
 
-    const message = 'cancelled ';
-    (client.value.request as jest.Mock).mockImplementationOnce(async (x: AxiosRequestConfig) => {
-      expect(x).toBeDefined();
-      expect(x.cancelToken).toBeDefined();
+    const message = "cancelled ";
+    (client.value.request as jest.Mock).mockImplementationOnce(
+      async (x: AxiosRequestConfig) => {
+        expect(x).toBeDefined();
+        expect(x.cancelToken).toBeDefined();
 
-      const r = await Promise.race([promisedTimeout(5000), x.cancelToken!.promise]);
-      x.cancelToken!.throwIfRequested()
+        const r = await Promise.race([
+          promisedTimeout(5000),
+          x.cancelToken!.promise
+        ]);
+        x.cancelToken!.throwIfRequested();
 
-      return r;
-    });
+        return r;
+      }
+    );
 
     try {
       const execPromise = exec({});
@@ -174,7 +170,7 @@ describe("axios", () => {
     expect({
       cancelledMessage,
       isCancelled,
-      error,
+      error
     }).toMatchObject({
       cancelledMessage: {
         value: message
@@ -187,6 +183,27 @@ describe("axios", () => {
           message
         }
       }
-    })
-  })
+    });
+  });
+
+  it("should execute request if request is passed", () => {
+    const req: Partial<AxiosRequestConfig> = {
+      url: "./api/1"
+    };
+    useAxios(req);
+    expect(request).toBeCalledWith(expect.objectContaining(req));
+  });
+
+  it("should execute request if url is passed", () => {
+    const req = "./api/1";
+    useAxios(req);
+    expect(request).toBeCalledWith(expect.objectContaining({ url: req }));
+  });
+
+  it("should warn if cancel is called before any request has been made", () => {
+    const { cancel } = useAxios();
+    expect(cancel).toThrowError(
+      "Cannot cancel because no request has been made"
+    );
+  });
 });
