@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ---
 
 ### Changed
-- [Fetch](https://pikax.me/vue-composable/composable/web/fetch#methods): Allow cancel last request using AbortController
 
+- [Fetch](https://pikax.me/vue-composable/composable/web/fetch#methods): Allow cancel last request using AbortController
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll): allow passing only `undefined` or only wait on the first argument, it will use `window.document.scrollingElement`
 
 ## 1.0.0-dev.8
 

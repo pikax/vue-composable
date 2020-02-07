@@ -11,7 +11,8 @@ describe("onScroll", () => {
       }),
       removeEventListener: jest.fn(),
       scrollTop: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      tagName: 'div'
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ScrollResult | undefined = undefined;
@@ -47,7 +48,8 @@ describe("onScroll", () => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       scrollTop: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      tagName: 'div'
     } as any;
     let use: ScrollResult | undefined = undefined;
 
@@ -72,7 +74,8 @@ describe("onScroll", () => {
       }),
       removeEventListener: jest.fn(),
       scrollTop: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      tagName: 'div'
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
@@ -113,7 +116,8 @@ describe("onScroll", () => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       scrollTop: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      tagName: 'div'
     } as any;
     const options = {
       passive: true
@@ -131,7 +135,7 @@ describe("onScroll", () => {
       options
     );
   });
-  
+
   it("should pass options to the event listener and be debounced", async () => {
     const element: Element = {
       addEventListener: jest.fn().mockImplementation((name, listener) => {
@@ -140,7 +144,8 @@ describe("onScroll", () => {
       }),
       removeEventListener: jest.fn(),
       scrollTop: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      tagName: 'div'
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
@@ -162,8 +167,56 @@ describe("onScroll", () => {
     );
 
     for (let i = 0; i < 10; i++) {
-      (element as any).scrollTop = 10 + i;
-      (element as any).scrollLeft = 10 + i;
+      element.scrollTop = 10 + i;
+      element.scrollLeft = 10 + i;
+
+      handler!({});
+    }
+
+    await nextTick();
+
+    // still waiting to set the values
+    expect(use).toMatchObject({
+      scrollTop: { value: 0 },
+      scrollLeft: { value: 0 }
+    });
+
+    await promisedTimeout(wait);
+    expect(use).toMatchObject({
+      scrollTop: { value: 19 },
+      scrollLeft: { value: 19 }
+    });
+  });
+
+  it("should use window if no element is passed", async () => {
+    const element = ((window.document.scrollingElement as any) = ({
+      scrollTop: 0,
+      scrollLeft: 0,
+      tagName: 'div'
+    } as any) as Element);
+
+    (window as any).addEventListener = jest
+      .fn()
+      .mockImplementation((name, listener) => {
+        expect(name).toBe("scroll");
+        handler = listener;
+      });
+
+    let use: ScrollResult | undefined = undefined;
+    let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
+    const wait = 50;
+
+    new Vue({
+      template: "<div></div>",
+      setup() {
+        use = useOnScroll(wait);
+      }
+    }).$mount();
+    expect(window.addEventListener).toHaveBeenCalled();
+
+    for (let i = 0; i < 10; i++) {
+      element.scrollTop = 10 + i;
+      element.scrollLeft = 10 + i;
 
       handler!({});
     }

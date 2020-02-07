@@ -189,6 +189,8 @@ export interface ScrollResult {
     // (undocumented)
     scrollLeft: Ref<number>;
     // (undocumented)
+    scrollTo: Element["scrollTo"];
+    // (undocumented)
     scrollTop: Ref<number>;
 }
 
@@ -342,6 +344,15 @@ export function useOnResize(el: RefElement, wait: number): ResizeResult;
 
 // @public (undocumented)
 export function useOnResize(el: RefElement, options?: boolean | AddEventListenerOptions, wait?: number): ResizeResult;
+
+// @public (undocumented)
+export function useOnScroll(): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll(wait: number): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll(options: boolean | AddEventListenerOptions, wait?: number): ScrollResult;
 
 // @public (undocumented)
 export function useOnScroll(el: RefTyped<Window>, wait: number): ScrollResult;
