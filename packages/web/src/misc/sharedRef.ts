@@ -1,14 +1,20 @@
-import { useBroadcastChannel } from "../web";
-import { ref, Ref, watch, onUnmounted, computed, getCurrentInstance } from "@vue/composition-api";
+import {
+  ref,
+  Ref,
+  watch,
+  onUnmounted,
+  computed,
+  getCurrentInstance
+} from "@vue/composition-api";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "@vue-composable/core";
-
+import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
 
 export const enum RefSharedMessageType {
   INIT,
   SYNC,
   UPDATE,
 
-  // changes the master to 
+  // changes the master to
   SET_MIND,
 
   LEAVE,
@@ -18,27 +24,45 @@ export const enum RefSharedMessageType {
 }
 
 export const enum SharedRefMind {
-  // everyone can update 
+  // everyone can update
   HIVE,
 
   // only master can update
-  MASTER,
+  MASTER
 }
 
-
-
 export type RefSharedMessageInit = { type: RefSharedMessageType.INIT };
-export type RefSharedMessageSync<T> = { type: RefSharedMessageType.SYNC, value: T, mind: SharedRefMind };
-export type RefSharedMessageUpdate<T> = { type: RefSharedMessageType.UPDATE, value: T, mind: SharedRefMind };
-export type RefSharedMessageSetMind = { type: RefSharedMessageType.SET_MIND, mind: SharedRefMind, id: number };
-export type RefSharedMessagePing = { type: RefSharedMessageType.PING, id: number };
-export type RefSharedMessagePong = { type: RefSharedMessageType.PONG, id: number };
+export type RefSharedMessageSync<T> = {
+  type: RefSharedMessageType.SYNC;
+  value: T;
+  mind: SharedRefMind;
+};
+export type RefSharedMessageUpdate<T> = {
+  type: RefSharedMessageType.UPDATE;
+  value: T;
+  mind: SharedRefMind;
+};
+export type RefSharedMessageSetMind = {
+  type: RefSharedMessageType.SET_MIND;
+  mind: SharedRefMind;
+  id: number;
+};
+export type RefSharedMessagePing = {
+  type: RefSharedMessageType.PING;
+  id: number;
+};
+export type RefSharedMessagePong = {
+  type: RefSharedMessageType.PONG;
+  id: number;
+};
 
-export type RefSharedMessageLeave = { type: RefSharedMessageType.LEAVE, id: number };
+export type RefSharedMessageLeave = {
+  type: RefSharedMessageType.LEAVE;
+  id: number;
+};
 
-
-
-export type RefSharedMessage<T = any> = RefSharedMessageInit
+export type RefSharedMessage<T = any> =
+  | RefSharedMessageInit
   | RefSharedMessageSync<T>
   | RefSharedMessageLeave
   | RefSharedMessageUpdate<T>
@@ -47,12 +71,16 @@ export type RefSharedMessage<T = any> = RefSharedMessageInit
   | RefSharedMessagePong;
 
 export function useSharedRef<T = any>(name: string, defaultValue?: T) {
-  const { addListener, send, close, supported } = useBroadcastChannel<RefSharedMessage<T>>(name, () => disconnect());
+  const { addListener, send, close, supported } = useBroadcastChannel<
+    RefSharedMessage<T>
+  >(name, () => disconnect());
 
   const id = Date.now();
   const master = ref(false);
   const mind = ref(SharedRefMind.HIVE);
-  const editable = computed(() => mind.value === SharedRefMind.MASTER ? master.value : true)
+  const editable = computed(() =>
+    mind.value === SharedRefMind.MASTER ? master.value : true
+  );
 
   // who's listening to this broadcast
   const targets = ref<number[]>([]);
@@ -78,9 +106,8 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     send({
       type: RefSharedMessageType.LEAVE,
       id
-    })
-  }
-
+    });
+  };
 
   const setMind = (t: SharedRefMind) => {
     switch (t) {
@@ -97,18 +124,18 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     send({
       type: RefSharedMessageType.SET_MIND,
       id: id,
-      mind: mind.value,
-    })
-  }
+      mind: mind.value
+    });
+  };
 
-  addListener((e) => {
+  addListener(e => {
     switch (e.data.type) {
       case RefSharedMessageType.INIT: {
         send({
           type: RefSharedMessageType.UPDATE,
           value: data.value,
           mind: mind.value
-        })
+        });
         break;
       }
       case RefSharedMessageType.LEAVE: {
@@ -116,15 +143,15 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
         if (index >= 0) {
           targets.value.splice(index, 1);
         }
-        // if master disconnects 
+        // if master disconnects
         if (masterId === e.data.id && targets.value.length > 0) {
           send({
             type: RefSharedMessageType.SET_MIND,
             mind: SharedRefMind.MASTER,
             id: Math.min(id, ...targets.value)
-          })
+          });
         }
-        break
+        break;
       }
       case RefSharedMessageType.UPDATE: {
         updateState = true;
@@ -134,11 +161,12 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       }
       case RefSharedMessageType.SET_MIND: {
         mind.value = e.data.mind;
-        masterId = e.data.mind === SharedRefMind.MASTER && e.data.id || undefined;
+        masterId =
+          (e.data.mind === SharedRefMind.MASTER && e.data.id) || undefined;
         master.value = masterId === id;
         if (master.value) {
           targets.value = [];
-          ping()
+          ping();
         }
         break;
       }
@@ -177,14 +205,14 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
         type: RefSharedMessageType.UPDATE,
         mind: mind.value,
         value: isObject(v) ? { ...v } : v
-      })
+      });
       updateState = false;
     },
     { deep: true, lazy: true }
   );
 
   if (isClient) {
-    window.addEventListener('unload', disconnect, PASSIVE_EV)
+    window.addEventListener("unload", disconnect, PASSIVE_EV);
   }
   onUnmounted(() => {
     disconnect();
@@ -206,10 +234,9 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     ping,
     setMind,
 
-    addListener
-  }
+    addListener: addListener as (cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions) => void
+  };
 }
-
 
 let shared: Set<string> | undefined = undefined;
 
@@ -223,7 +250,9 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
       shared = new Set();
     }
     if (shared.has(name)) {
-      console.warn('[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)')
+      console.warn(
+        "[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)"
+      );
     }
     shared.add(name);
   }
@@ -233,7 +262,7 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   /* istanbul ignore next  */
   if (__DEV__) {
     if (!supported) {
-      console.warn('[refShared] is dependent of BroadcastChannel');
+      console.warn("[refShared] is dependent of BroadcastChannel");
     }
   }
 

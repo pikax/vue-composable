@@ -378,7 +378,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T): {
     targets: Ref<number[]>;
     ping: () => void;
     setMind: (t: SharedRefMind) => void;
-    addListener: (cb: (ev: import("../web").BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions | undefined) => void;
+    addListener: (cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions | undefined) => void;
 };
 
 // @public (undocumented)
