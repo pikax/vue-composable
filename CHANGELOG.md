@@ -3,7 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!-- ## [Unreleased]
+
+--- -->
+
+## 1.0.0-dev.9
+
+_2020-02-07_
 
 ---
 
@@ -11,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch#methods): Allow cancel last request using AbortController
 - [onScroll](https://pikax.me/vue-composable/composable/event/onScroll): allow passing only `undefined` or only wait on the first argument, it will use `window.document.scrollingElement`
+
+### FIX
+
+- NuxtJS typescript support
 
 ## 1.0.0-dev.8
 
