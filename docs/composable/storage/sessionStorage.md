@@ -48,9 +48,7 @@ const { remove, clear, setSync } = useSessionStorage(key);
 
 ## Example
 
-
 <Session-storage-example/>
-
 
 ### Code
 

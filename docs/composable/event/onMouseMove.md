@@ -33,9 +33,7 @@ const { remove } = useOnMouseMove();
 
 ## Example
 
-
 <on-mouse-move-example/>
-
 
 ### Code
 

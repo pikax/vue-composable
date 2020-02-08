@@ -1,7 +1,13 @@
 import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "../misc/matchMedia";
-import { useDebounce, isNumber, isClient, NO_OP, PASSIVE_EV } from "@vue-composable/core";
+import {
+  useDebounce,
+  isNumber,
+  isClient,
+  NO_OP,
+  PASSIVE_EV
+} from "@vue-composable/core";
 
 function getBreakpointWidth(bp: string | number) {
   if (!bp) return undefined;

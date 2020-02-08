@@ -20,10 +20,10 @@ describe("WebSocket", () => {
   afterEach(() => {
     server!.close();
   });
-  
-  afterAll(()=>{
+
+  afterAll(() => {
     warnSpy.mockReset();
-  })
+  });
 
   it("should connect to server", async () => {
     const { isOpen } = useWebSocket(FAKE_URL);

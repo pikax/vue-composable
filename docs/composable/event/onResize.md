@@ -35,9 +35,7 @@ const { remove } = useOnResize();
 
 ## Example
 
-
 <on-resize-example/>
-
 
 ### Code
 

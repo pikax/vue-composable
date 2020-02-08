@@ -2,7 +2,7 @@ import { Ref, ref, onUnmounted } from "@vue/composition-api";
 import { isClient, NO_OP, PASSIVE_EV } from "@vue-composable/core";
 
 export function useMatchMedia(query: string) {
-  const supported = isClient ? 'matchMedia' in window : false;
+  const supported = isClient ? "matchMedia" in window : false;
 
   let mediaQueryList: Ref<MediaQueryList> = undefined as any;
   let matches: Ref<boolean> = undefined as any;
@@ -23,11 +23,10 @@ export function useMatchMedia(query: string) {
       mediaQueryList.value.removeEventListener("change", process);
 
     onUnmounted(remove);
-
   } else {
     /* istanbul ignore else */
     if (__DEV__) {
-      console.warn('[matchMedia] not supported')
+      console.warn("[matchMedia] not supported");
     }
     mediaQueryList = ref<MediaQueryList>({});
     matches = ref(false);

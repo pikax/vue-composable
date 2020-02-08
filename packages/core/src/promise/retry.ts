@@ -11,9 +11,9 @@ import {
 const MAX_RETRIES = 9000;
 
 /* istanbul ignore next */
-const ExecutionId = Symbol(__DEV__ && "RetryId" || ``);
+const ExecutionId = Symbol((__DEV__ && "RetryId") || ``);
 /* istanbul ignore next */
-const CancellationToken = Symbol(__DEV__ && "CancellationToken" || ``);
+const CancellationToken = Symbol((__DEV__ && "CancellationToken") || ``);
 
 /**
  * @description How long should it delay or what time it should execute, it also supports Promises
@@ -247,13 +247,13 @@ export function useRetry(
 
   const exec: any = fn
     ? (...args: any[]) => {
-      ++context[ExecutionId].value;
-      return defaultStrategy(opt, context, fn, args);
-    }
+        ++context[ExecutionId].value;
+        return defaultStrategy(opt, context, fn, args);
+      }
     : (f: Factory<any, any>) => {
-      ++context[ExecutionId].value;
-      return defaultStrategy(opt, context, f, undefined);
-    };
+        ++context[ExecutionId].value;
+        return defaultStrategy(opt, context, f, undefined);
+      };
 
   const cancel = () => {
     context.isRetrying.value = false;

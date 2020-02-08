@@ -48,9 +48,7 @@ const { exec } = usePromise();
 
 ## Example
 
-
 <promise-example/>
-
 
 ### Code
 

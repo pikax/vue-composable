@@ -162,7 +162,7 @@ export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;
 
 // @public (undocumented)
-export function useArrayPagination<T extends Array<TR>, TR>(array: RefTyped<T>, options?: Partial<Omit<PaginationOptions, 'total'>>): ArrayPaginationResult<T>;
+export function useArrayPagination<T extends Array<TR>, TR>(array: RefTyped<T>, options?: Partial<Omit<PaginationOptions, "total">>): ArrayPaginationResult<T>;
 
 // @public (undocumented)
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(fn: (...args: TArgs) => Promise<T>): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;

@@ -1,10 +1,10 @@
 <template>
   <div>
     <p>
-      Performance.now : {{ now }}</b>
+      Performance.now : <b>{{ now }}</b>
     </p>
     <p>
-      Created <b>{{Math.floor(now / 1000) }}</b> seconds ago
+      Created <b>{{ Math.floor(now / 1000) }}</b> seconds ago
     </p>
   </div>
 </template>

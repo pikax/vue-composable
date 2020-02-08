@@ -42,7 +42,10 @@ describe("fetch", () => {
 
     exec("./api/1", init);
 
-    expect(fetchSpy).toHaveBeenCalledWith("./api/1", expect.objectContaining(init));
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "./api/1",
+      expect.objectContaining(init)
+    );
   });
 
   it("should exec only be resolved after parsing json()", async () => {
@@ -62,15 +65,15 @@ describe("fetch", () => {
           return this;
         },
         text() {
-          return Promise.resolve('test')
+          return Promise.resolve("test");
         },
         blob() {
-          return Promise.resolve(new Blob())
+          return Promise.resolve(new Blob());
         },
         json() {
-          return r = expectedResult;
+          return (r = expectedResult);
         }
-      }
+      };
     });
 
     const p = exec("test");
@@ -104,17 +107,17 @@ describe("fetch", () => {
           return this;
         },
         text() {
-          return Promise.resolve('test')
+          return Promise.resolve("test");
         },
         blob() {
-          return Promise.resolve(new Blob())
+          return Promise.resolve(new Blob());
         },
         async json() {
           jsonExecuted = true;
-          await promisedTimeout(wait)
-          return r = expectedResult;
+          await promisedTimeout(wait);
+          return (r = expectedResult);
         }
-      }
+      };
     });
 
     const p = exec("test");
@@ -152,17 +155,17 @@ describe("fetch", () => {
           return this;
         },
         text() {
-          return Promise.resolve('test')
+          return Promise.resolve("test");
         },
         blob() {
-          return Promise.resolve(new Blob())
+          return Promise.resolve(new Blob());
         },
         async json() {
           jsonExecuted = true;
-          await promisedTimeout(wait)
-          return r = expectedResult;
+          await promisedTimeout(wait);
+          return (r = expectedResult);
         }
-      }
+      };
     });
 
     const p = exec("test");
@@ -190,15 +193,15 @@ describe("fetch", () => {
           return this;
         },
         text() {
-          return Promise.resolve('test')
+          return Promise.resolve("test");
         },
         blob() {
-          return Promise.resolve(new Blob())
+          return Promise.resolve(new Blob());
         },
         async json() {
           throw exception;
         }
-      }
+      };
     });
 
     const p = exec("test");
@@ -228,15 +231,15 @@ describe("fetch", () => {
           return this;
         },
         text() {
-          return Promise.resolve('test')
+          return Promise.resolve("test");
         },
         blob() {
-          return Promise.resolve(new Blob())
+          return Promise.resolve(new Blob());
         },
         json() {
           return Promise.resolve("");
         }
-      }
+      };
     });
 
     await exec("test");
@@ -245,16 +248,10 @@ describe("fetch", () => {
     expect(statusText.value).toBe(expectedResult.statusText);
   });
 
-  it('should cancel the request', async () => {
-    const {
-      exec,
-      error,
-      cancel,
-      cancelledMessage,
-      isCancelled
-    } = useFetch();
+  it("should cancel the request", async () => {
+    const { exec, error, cancel, cancelledMessage, isCancelled } = useFetch();
 
-    const message = 'cancelled ';
+    const message = "cancelled ";
 
     fetchSpy.mockImplementationOnce(async (re: Request, x: RequestInit) => {
       expect(x).toBeDefined();
@@ -275,7 +272,7 @@ describe("fetch", () => {
     expect({
       cancelledMessage,
       isCancelled,
-      error,
+      error
     }).toMatchObject({
       cancelledMessage: {
         value: message
@@ -283,23 +280,27 @@ describe("fetch", () => {
       isCancelled: {
         value: true
       }
-    })
-  })
+    });
+  });
 
-  it('should execute request if request is passed', () => {
+  it("should execute request if request is passed", () => {
     const req: Partial<RequestInfo> = {
-      url: "./api/1",
+      url: "./api/1"
     };
     const init: RequestInit = {
       method: "POST"
-    }
+    };
     useFetch(req, init);
-    expect(fetchSpy).toBeCalledWith(expect.objectContaining(req), expect.objectContaining(init));
-  })
+    expect(fetchSpy).toBeCalledWith(
+      expect.objectContaining(req),
+      expect.objectContaining(init)
+    );
+  });
 
-
-  it('should warn if cancel is called before any request has been made', () => {
+  it("should warn if cancel is called before any request has been made", () => {
     const { cancel } = useFetch();
-    expect(cancel).toThrowError('Cannot cancel because no request has been made');
-  })
+    expect(cancel).toThrowError(
+      "Cannot cancel because no request has been made"
+    );
+  });
 });

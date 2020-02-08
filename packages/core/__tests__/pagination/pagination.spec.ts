@@ -6,14 +6,14 @@ describe("pagination", () => {
   beforeAll(() => {
     warnSpy = jest.spyOn(console, "warn").mockImplementation();
   });
-  
-  beforeEach(()=>{
+
+  beforeEach(() => {
     warnSpy.mockReset();
-  })
-  
-  afterAll(()=>{
+  });
+
+  afterAll(() => {
     warnSpy.mockReset();
-  })
+  });
 
   it("should return pagination", () => {
     const use = usePagination({
@@ -239,8 +239,7 @@ describe("pagination", () => {
     });
   });
 
-
-  describe('validations', ()=>{
+  describe("validations", () => {
     it("should warn when you try assign invalid value to pageSize", async () => {
       const use = usePagination({
         pageSize: 10,
@@ -248,13 +247,17 @@ describe("pagination", () => {
         total: 100
       });
       const value = "11";
-  
+
       expect(use.currentPage.value).toBe(1);
       expect(use.offset.value).toBe(0);
-  
+
       use.pageSize.value = value as any;
-  
-      expect(warnSpy).toBeCalledWith(expect.stringContaining(`[pageSize] expected number but got: '${typeof value}' value: '${value}'`));
+
+      expect(warnSpy).toBeCalledWith(
+        expect.stringContaining(
+          `[pageSize] expected number but got: '${typeof value}' value: '${value}'`
+        )
+      );
       expect(use.pageSize.value).toBe(10);
     });
 
@@ -265,13 +268,17 @@ describe("pagination", () => {
         total: 100
       });
       const value = "11";
-  
+
       expect(use.currentPage.value).toBe(1);
       expect(use.offset.value).toBe(0);
-  
+
       use.currentPage.value = value as any;
-  
-      expect(warnSpy).toBeCalledWith(expect.stringContaining(`[currentPage] expected number but got: '${typeof value}' value: '${value}'`));
+
+      expect(warnSpy).toBeCalledWith(
+        expect.stringContaining(
+          `[currentPage] expected number but got: '${typeof value}' value: '${value}'`
+        )
+      );
       expect(use.currentPage.value).toBe(1);
     });
 
@@ -282,17 +289,20 @@ describe("pagination", () => {
         total: 100
       });
       const value = "11";
-  
+
       expect(use.currentPage.value).toBe(2);
       expect(use.offset.value).toBe(10);
-  
+
       use.offset.value = value as any;
-  
-      expect(warnSpy).toBeCalledWith(expect.stringContaining(`[offset] expected number but got: '${typeof value}' value: '${value}'`));
+
+      expect(warnSpy).toBeCalledWith(
+        expect.stringContaining(
+          `[offset] expected number but got: '${typeof value}' value: '${value}'`
+        )
+      );
       expect(use.offset.value).toBe(10);
     });
-
-  })
+  });
 
   it("when changing the pageSize offset shouldn't change", () => {
     const use = usePagination({

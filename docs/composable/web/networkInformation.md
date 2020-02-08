@@ -51,9 +51,7 @@ const { remove } = useNetworkInformation();
 
 ## Example
 
-
 <network-information-example/>
-
 
 ### Code
 

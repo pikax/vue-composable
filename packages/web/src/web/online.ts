@@ -12,7 +12,11 @@ export function useOnline() {
 
   if (!online) {
     online = ref(navigator.onLine);
-    window.addEventListener("offline", () => (online!.value = false), PASSIVE_EV);
+    window.addEventListener(
+      "offline",
+      () => (online!.value = false),
+      PASSIVE_EV
+    );
     window.addEventListener("online", () => (online!.value = true), PASSIVE_EV);
   }
 

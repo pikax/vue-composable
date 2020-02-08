@@ -89,7 +89,6 @@ export function usePagination(options: PaginationOptions): PaginationResult {
   // make sure the current page is the correct value
   currentPage.value = _currentPage.value;
 
-
   const prev = () => --currentPage.value;
   const next = () => ++currentPage.value;
   const first = () => (currentPage.value = 1);

@@ -234,7 +234,10 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
     ping,
     setMind,
 
-    addListener: addListener as (cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions) => void
+    addListener: addListener as (
+      cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void,
+      options?: boolean | AddEventListenerOptions
+    ) => void
   };
 }
 

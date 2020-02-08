@@ -12,7 +12,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ScrollResult | undefined = undefined;
@@ -49,7 +49,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any;
     let use: ScrollResult | undefined = undefined;
 
@@ -75,7 +75,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
@@ -117,7 +117,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any;
     const options = {
       passive: true
@@ -145,7 +145,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
@@ -192,7 +192,7 @@ describe("onScroll", () => {
     const element = ((window.document.scrollingElement as any) = ({
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: 'div'
+      tagName: "div"
     } as any) as Element);
 
     (window as any).addEventListener = jest

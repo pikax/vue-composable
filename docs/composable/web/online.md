@@ -1,6 +1,6 @@
 # Navigator.onLine
 
-> [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine) reacts to the browser online state. 
+> [Navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine) reacts to the browser online state.
 
 ## State
 
@@ -23,9 +23,7 @@ const { supported, online } = useOnline();
 
 ## Example
 
-
 <online-example/>
-
 
 ### Code
 

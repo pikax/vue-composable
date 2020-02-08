@@ -1,3 +1,3 @@
-export * from './dateNow'
-export * from './now'
-export * from './performanceNow'
+export * from "./dateNow";
+export * from "./now";
+export * from "./performanceNow";

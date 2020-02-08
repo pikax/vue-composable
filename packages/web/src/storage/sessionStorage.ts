@@ -1,25 +1,29 @@
 import { RefTyped, NO_OP, FALSE_OP } from "@vue-composable/core";
 import { ref } from "@vue/composition-api";
-import { useWebStorage } from './webStorage'
+import { useWebStorage } from "./webStorage";
 import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
-export function useSessionStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
+export function useSessionStorage(
+  key: string,
+  defaultValue?: RefTyped<string>
+): LocalStorageReturn<string>;
 export function useSessionStorage<T extends object = object>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>
 ): LocalStorageReturn<T>;
 export function useSessionStorage(key: string, defaultValue?: any) {
-  const { supported, store } = useWebStorage('sessionStorage');
+  const { supported, store } = useWebStorage("sessionStorage");
 
   let remove = NO_OP;
   let clear = NO_OP;
-  let setSync: LocalStorageReturn<any>['setSync'] = FALSE_OP;
+  let setSync: LocalStorageReturn<any>["setSync"] = FALSE_OP;
   let storage = undefined;
 
   if (supported && store) {
     /* istanbul ignore else */
     if (__DEV__) {
-      setSync = () => console.warn('sync is not supported, please `useLocalStorage` instead');
+      setSync = () =>
+        console.warn("sync is not supported, please `useLocalStorage` instead");
     }
     remove = () => store.removeItem(key);
     clear = () => store.clear();
@@ -28,11 +32,10 @@ export function useSessionStorage(key: string, defaultValue?: any) {
     if (!storage) {
       storage = store.setItem(key, defaultValue);
     }
-  }
-  else {
+  } else {
     /* istanbul ignore else */
     if (__DEV__) {
-      console.warn('[sessionStorage] is not available');
+      console.warn("[sessionStorage] is not available");
     }
 
     storage = ref(defaultValue);

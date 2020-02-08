@@ -1,19 +1,18 @@
 import { useDebounce, promisedTimeout } from "../src";
 
-
-describe('debounce', () => {
-  it('should call the function', async () => {
+describe("debounce", () => {
+  it("should call the function", async () => {
     const fn = jest.fn();
     const ms = 10;
     useDebounce(fn, ms)();
     expect(fn).not.toHaveBeenCalled();
 
-    await promisedTimeout(ms)
+    await promisedTimeout(ms);
 
     expect(fn).toBeCalledTimes(1);
-  })
+  });
 
-  it('should call the function only once', async () => {
+  it("should call the function only once", async () => {
     const fn = jest.fn();
     const ms = 10;
 
@@ -23,12 +22,12 @@ describe('debounce', () => {
     }
     expect(fn).not.toHaveBeenCalled();
 
-    await promisedTimeout(ms)
+    await promisedTimeout(ms);
 
     expect(fn).toBeCalledTimes(1);
-  })
+  });
 
-  it('should call the function immediate', async () => {
+  it("should call the function immediate", async () => {
     const fn = jest.fn();
     const ms = 10;
 
@@ -40,14 +39,14 @@ describe('debounce', () => {
     for (let i = 0; i < 10; i++) {
       debounce();
     }
-    await promisedTimeout(ms)
+    await promisedTimeout(ms);
 
     expect(fn).toBeCalledTimes(1);
-  })
+  });
 
-  it('should set wait to 50ms if not passed', async () => {
+  it("should set wait to 50ms if not passed", async () => {
     let pResolver: any = null;
-    const p = new Promise((r) => {
+    const p = new Promise(r => {
       pResolver = r;
     });
     const fn = jest.fn().mockImplementation(pResolver);
@@ -61,6 +60,5 @@ describe('debounce', () => {
 
     expect(duration).toBeGreaterThanOrEqual(20);
     expect(duration).toBeLessThanOrEqual(60);
-  })
-
-})
+  });
+});

@@ -14,17 +14,26 @@ export interface UseFetchOptions {
   parseImmediate?: boolean;
 }
 
-
-export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInfo>, requestInit?: RequestInit) {
+export function useFetch<T = any>(
+  options?: UseFetchOptions & Partial<RequestInfo>,
+  requestInit?: RequestInit
+) {
   const json = ref<T>(null);
-  const text = ref('');
+  const text = ref("");
   const blob = ref<Blob>();
-  
-  const isOptions = options ? isBoolean((options as UseFetchOptions).isJson) || isBoolean((options as UseFetchOptions).isJson) : false;
+
+  const isOptions = options
+    ? isBoolean((options as UseFetchOptions).isJson) ||
+      isBoolean((options as UseFetchOptions).isJson)
+    : false;
 
   const jsonError = ref<any | null>(null);
-  const isJson = isOptions ? (options as UseFetchOptions).isJson !== false : true;
-  const parseImmediate = isOptions ? (options as UseFetchOptions).parseImmediate !== false : true;
+  const isJson = isOptions
+    ? (options as UseFetchOptions).isJson !== false
+    : true;
+  const parseImmediate = isOptions
+    ? (options as UseFetchOptions).parseImmediate !== false
+    : true;
 
   const isCancelled = ref(false);
   const cancelledMessage = ref<string>();
@@ -34,7 +43,7 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     if (!abortController) {
       /* istanbul ignore else */
       if (__DEV__) {
-        throw new Error('Cannot cancel because no request has been made');
+        throw new Error("Cannot cancel because no request has been made");
       } else {
         return;
       }
@@ -42,7 +51,7 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     abortController.abort();
     isCancelled.value = true;
     cancelledMessage.value = message;
-  }
+  };
 
   const use = usePromise(async (request: RequestInfo, init?: RequestInit) => {
     abortController = new AbortController();
@@ -56,26 +65,30 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     if (response) {
       const promises = [
         // JSON
-        isJson ? response
-          .clone()
-          .json()
-          .then(x => (json.value = x))
-          .catch(x => {
-            json.value = null;
-            jsonError.value = x;
-          }) : Promise.resolve(),
+        isJson
+          ? response
+              .clone()
+              .json()
+              .then(x => (json.value = x))
+              .catch(x => {
+                json.value = null;
+                jsonError.value = x;
+              })
+          : Promise.resolve(),
         // BLOB
-        response.clone()
+        response
+          .clone()
           .blob()
           .then(x => {
-            blob.value = x
+            blob.value = x;
           }),
 
         // TEXT
-        response.clone()
+        response
+          .clone()
           .text()
           .then(x => {
-            text.value = x
+            text.value = x;
           })
       ];
       if (parseImmediate) {
@@ -96,7 +109,7 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
   // NOTE: `false` is passed to the `exec` to prevent the exception to be thrown
   if (options) {
     if (isString(options) || !isOptions) {
-      (use.exec as any)(options, undefined, false)
+      (use.exec as any)(options, undefined, false);
     }
   }
 
@@ -107,7 +120,7 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     isCancelled,
     cancelledMessage,
 
-    text, 
+    text,
     blob,
 
     json,

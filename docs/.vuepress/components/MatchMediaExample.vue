@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>Screen less than 600px: <b>{{ matches }}</b></p>
+    <p>
+      Screen less than 600px: <b>{{ matches }}</b>
+    </p>
   </div>
 </template>
 

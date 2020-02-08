@@ -1,6 +1,6 @@
 import { Vue, nextTick } from "../utils";
 import { useOnMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
-import { promisedTimeout } from '@vue-composable/core'
+import { promisedTimeout } from "@vue-composable/core";
 import { ref, Ref } from "@vue/composition-api";
 
 describe("onMouseMove", () => {

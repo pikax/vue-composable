@@ -10,9 +10,7 @@ This is recommended if you want to support safari users using private mode.
 
 ## Example
 
-
 <storage-example/>
-
 
 ### Code
 
@@ -38,8 +36,6 @@ export default {
     const key = "__vue_localStorage_example";
     const supportedSync = ref(true);
     const { storage } = useLocalStorage(key, 1);
-
-    
 
     return {
       key,

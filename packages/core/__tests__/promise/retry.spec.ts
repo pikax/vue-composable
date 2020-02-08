@@ -135,9 +135,10 @@ describe("retry", () => {
   });
 
   it("should cancel retry after call cancel()", async () => {
-    const { exec, isRetrying, retryErrors, nextRetry, cancel } = useRetry(
-      { maxRetries: 2, retryDelay: () => 200 }
-    );
+    const { exec, isRetrying, retryErrors, nextRetry, cancel } = useRetry({
+      maxRetries: 2,
+      retryDelay: () => 200
+    });
 
     fnFactory.mockImplementation(arg => promisedTimeout(50).then(x => arg));
     fnFactory.mockImplementationOnce(() => Promise.reject());

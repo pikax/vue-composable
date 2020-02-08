@@ -20,7 +20,14 @@ export default {
   setup() {
     const arrayRef = ref(new Array(100).fill(1).map((_, i) => i));
     // paginate array
-    const { currentPage, lastPage, next, prev, offset, pageSize } = usePagination({
+    const {
+      currentPage,
+      lastPage,
+      next,
+      prev,
+      offset,
+      pageSize
+    } = usePagination({
       currentPage: 1,
       pageSize: 10,
       total: computed(() => arrayRef.value.length)
@@ -29,10 +36,7 @@ export default {
     const result = computed(() => {
       const array = arrayRef.value;
       if (!Array.isArray(array)) return [];
-      return array.slice(
-        offset.value,
-        offset.value + pageSize.value
-      );
+      return array.slice(offset.value, offset.value + pageSize.value);
     });
 
     return {

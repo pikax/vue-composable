@@ -1,6 +1,6 @@
-import { useBroadcastChannel } from '../../src'
-import { Vue } from '../utils'
-import { PASSIVE_EV } from '@vue-composable/core';
+import { useBroadcastChannel } from "../../src";
+import { Vue } from "../utils";
+import { PASSIVE_EV } from "@vue-composable/core";
 
 describe("broadcastChannel", () => {
   const _broadcastChannel = window.BroadcastChannel;
@@ -19,31 +19,30 @@ describe("broadcastChannel", () => {
       close = closeFn;
       removeEventListener = removeEventListenerFn;
     }
-    Object.defineProperty(
-      window,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: BroadcastChannel }
-    );
-    Object.defineProperty(
-      global,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: BroadcastChannel }
-    );
+    Object.defineProperty(window, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: BroadcastChannel
+    });
+    Object.defineProperty(global, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: BroadcastChannel
+    });
   });
 
   afterAll(() => {
-    Object.defineProperty(
-      window,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: _broadcastChannel }
-    );
-    Object.defineProperty(
-      global,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: _broadcastChannel }
-    );
-  })
-
+    Object.defineProperty(window, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: _broadcastChannel
+    });
+    Object.defineProperty(global, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: _broadcastChannel
+    });
+  });
 
   beforeEach(() => {
     addEventListenerFn.mockReset();
@@ -51,12 +50,9 @@ describe("broadcastChannel", () => {
     constructorFn.mockReset();
     closeFn.mockReset();
     removeEventListenerFn.mockReset();
-  })
-
-
+  });
 
   it("should create new BroadcastChannel and assign listeners", () => {
-
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -76,10 +72,9 @@ describe("broadcastChannel", () => {
       }
     });
     vm.$mount();
-  })
+  });
 
-
-  it('should close on destroy', () => {
+  it("should close on destroy", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -92,9 +87,9 @@ describe("broadcastChannel", () => {
 
     expect(closeFn).toHaveBeenCalled();
     expect(removeEventListenerFn).not.toHaveBeenCalled();
-  })
+  });
 
-  it('should assign data', () => {
+  it("should assign data", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -115,9 +110,9 @@ describe("broadcastChannel", () => {
       }
     });
     vm.$mount();
-  })
+  });
 
-  it('should set error to true on messageerror', () => {
+  it("should set error to true on messageerror", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -125,7 +120,7 @@ describe("broadcastChannel", () => {
 
         const ev = {
           test: 1
-        }
+        };
 
         expect(errorEvent.value).toBeNull();
         expect(errored.value).toBe(false);
@@ -139,9 +134,9 @@ describe("broadcastChannel", () => {
       }
     });
     vm.$mount();
-  })
+  });
 
-  it('should addListener', () => {
+  it("should addListener", () => {
     let addListenerCb = jest.fn();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -151,7 +146,12 @@ describe("broadcastChannel", () => {
 
         addListener(addListenerCb, PASSIVE_EV);
 
-        expect(addEventListenerFn).toHaveBeenNthCalledWith(3, 'message', addListenerCb, PASSIVE_EV);
+        expect(addEventListenerFn).toHaveBeenNthCalledWith(
+          3,
+          "message",
+          addListenerCb,
+          PASSIVE_EV
+        );
 
         return {};
       }
@@ -160,11 +160,13 @@ describe("broadcastChannel", () => {
 
     vm.$destroy();
 
-    expect(removeEventListenerFn).toHaveBeenCalledWith('message', addListenerCb);
-  })
+    expect(removeEventListenerFn).toHaveBeenCalledWith(
+      "message",
+      addListenerCb
+    );
+  });
 
-
-  it('should call onBeforeClose', () => {
+  it("should call onBeforeClose", () => {
     let onBeforeClose = jest.fn();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -179,10 +181,9 @@ describe("broadcastChannel", () => {
 
     vm.$destroy();
     expect(onBeforeClose).toHaveBeenCalled();
-  })
+  });
 
-
-  it('should postMessage on send', () => {
+  it("should postMessage on send", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -190,7 +191,7 @@ describe("broadcastChannel", () => {
         expect(addEventListenerFn).toHaveBeenCalledTimes(2);
         expect(postMessageFn).not.toHaveBeenCalled();
 
-        const d = { data: 'whatever' };
+        const d = { data: "whatever" };
         send(d);
 
         expect(postMessageFn).toHaveBeenCalledWith(d);
@@ -199,6 +200,5 @@ describe("broadcastChannel", () => {
       }
     });
     vm.$mount();
-  })
-
-})
+  });
+});

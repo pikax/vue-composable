@@ -50,9 +50,7 @@ const { remove, clear, setSync } = useLocalStorage(key);
 
 ![Local Storage Cross tab](/vue-composable/localStorage.gif)
 
-
 <local-storage-example/>
-
 
 ### Code
 

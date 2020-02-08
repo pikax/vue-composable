@@ -6,7 +6,7 @@
 
 ## Inspiration
 
-This library is inspired by [@LinusBorg](https://github.com/LinusBorg) work and [composition-api-demos](https://github.com/LinusBorg/composition-api-demos)  also other similar projects.
+This library is inspired by [@LinusBorg](https://github.com/LinusBorg) work and [composition-api-demos](https://github.com/LinusBorg/composition-api-demos) also other similar projects.
 
 ## Installing
 

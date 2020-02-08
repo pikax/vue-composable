@@ -12,9 +12,9 @@
     <button @click="exec(timeout)">Execute</button>
 
     <div v-if="loading">loading...</div>
-    <div v-else-if="result">{{result}}</div>
+    <div v-else-if="result">{{ result }}</div>
     <div v-else>
-      <p>error: {{error}}</p>
+      <p>error: {{ error }}</p>
     </div>
   </div>
 </template>

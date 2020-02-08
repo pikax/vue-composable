@@ -3,15 +3,15 @@ import { nextTick } from "../utils";
 import { promisedTimeout } from "@vue-composable/core";
 
 describe("localStorage", () => {
-  const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
-  const consoleWarnSpy = jest.spyOn(console, 'warn');
+  const setItemSpy = jest.spyOn(Storage.prototype, "setItem");
+  const consoleWarnSpy = jest.spyOn(console, "warn");
 
   beforeEach(() => {
     localStorage.clear();
-    useWebStorage('localStorage').remove();
+    useWebStorage("localStorage").remove();
     setItemSpy.mockClear();
-    consoleWarnSpy.mockClear()
-  })
+    consoleWarnSpy.mockClear();
+  });
 
   it("should store object in localStorage if default is passed", async () => {
     const obj = { a: 1 };
@@ -36,7 +36,10 @@ describe("localStorage", () => {
 
     expect(storage.value).toMatchObject({ a: 33 });
     await promisedTimeout(20);
-    expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify({ a: 33 }));
+    expect(setItemSpy).toHaveBeenLastCalledWith(
+      "test",
+      JSON.stringify({ a: 33 })
+    );
   });
 
   it("should get the same object if the same key is used", () => {
@@ -62,9 +65,9 @@ describe("localStorage", () => {
     const s1 = useLocalStorage("key", { a: 1 });
     const s2 = useLocalStorage("key2", { a: 2 });
 
-    expect(localStorage.getItem('key')).toBe(JSON.stringify(s1.storage.value));
-    expect(localStorage.getItem('key2')).toBe(JSON.stringify(s2.storage.value));
-    expect(localStorage.getItem('_other_')).toBe("secret");
+    expect(localStorage.getItem("key")).toBe(JSON.stringify(s1.storage.value));
+    expect(localStorage.getItem("key2")).toBe(JSON.stringify(s2.storage.value));
+    expect(localStorage.getItem("_other_")).toBe("secret");
 
     s1.clear();
 
@@ -73,9 +76,8 @@ describe("localStorage", () => {
 
     expect(s1.storage.value).toBeUndefined();
     expect(s2.storage.value).toBeUndefined();
-    expect(localStorage.getItem('_other_')).toBe("secret");
+    expect(localStorage.getItem("_other_")).toBe("secret");
   });
-
 
   it("should load from localStorage", () => {
     const key = "hello";
@@ -86,24 +88,27 @@ describe("localStorage", () => {
     expect(storage.value).toMatchObject({ k: 1 });
   });
 
-
-  it('should you try to sync', () => {
+  it("should you try to sync", () => {
     const key = "hello";
     const { setSync } = useLocalStorage(key, { k: 10 });
-    const setSyncSpy = jest.spyOn(useWebStorage('localStorage').store!, 'setSync');
+    const setSyncSpy = jest.spyOn(
+      useWebStorage("localStorage").store!,
+      "setSync"
+    );
 
     setSync(true);
 
     expect(setSyncSpy).toHaveBeenCalledWith(key, true);
+  });
 
-  })
-
-  it('should warn if sessionStorage is not supported', () => {
+  it("should warn if sessionStorage is not supported", () => {
     setItemSpy.mockImplementationOnce(() => {
-      throw new Error('random')
+      throw new Error("random");
     });
     const key = "hello";
     useLocalStorage(key, { k: 10 });
-    expect(consoleWarnSpy).toHaveBeenCalledWith('[localStorage] is not available');
-  })
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "[localStorage] is not available"
+    );
+  });
 });
