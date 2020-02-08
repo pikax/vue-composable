@@ -9,10 +9,41 @@ import { RefElement } from '@vue-composable/core';
 import { RefTyped } from '@vue-composable/core';
 
 // @public (undocumented)
+export type BreakpointObject = Record<string, string | number>;
+
+// @public (undocumented)
+export type BreakpointReturn<T> = Record<keyof T, Ref<boolean>> & BreakpointReturnObject<T>;
+
+// @public (undocumented)
+export interface BreakpointReturnObject<T> {
+    // (undocumented)
+    current: Ref<keyof T | undefined>;
+    // (undocumented)
+    remove: RemoveEventFunction;
+}
+
+// @public (undocumented)
 export interface BroadcastMessageEvent<T> extends MessageEvent {
     // (undocumented)
     readonly data: T;
 }
+
+// @public (undocumented)
+export interface DefaultTailwindBreakpoints {
+    // (undocumented)
+    lg: 1024;
+    // (undocumented)
+    md: 768;
+    // (undocumented)
+    sm: 640;
+    // (undocumented)
+    xl: 1280;
+}
+
+// Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type ExtractTailwindScreens<T extends TailwindConfigEmpty> = keyof T["theme"]["screens"] extends never ? DefaultTailwindBreakpoints : T["theme"]["screens"];
 
 // @public (undocumented)
 export interface GeolocationOptions {
@@ -195,6 +226,12 @@ export interface ScrollResult {
 }
 
 // @public (undocumented)
+export function setBreakpointTailwindCSS<T extends TailwindConfigEmpty>(tailwindConfig: T): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function setBreakpointTailwindCSS<T extends BreakpointObject>(breakpoints: T): BreakpointReturn<T>;
+
+// @public (undocumented)
 export const enum SharedRefMind {
     // (undocumented)
     HIVE = 0,
@@ -214,10 +251,24 @@ export interface StorageSerializer<T = any> {
 }
 
 // @public (undocumented)
-export function useBreakpoint<T>(breakpoints: Record<keyof T, number | string>): Record<keyof T, Ref<boolean>> & {
-    remove: RemoveEventFunction;
-    current: Ref<keyof T | undefined>;
-};
+export function useBreakpoint<T extends BreakpointObject>(breakpoints: Record<keyof T, number | string>): BreakpointReturn<T>;
+
+// Warning: (ae-forgotten-export) The symbol "ChromeBreakpoint" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function useBreakpointChrome(): BreakpointReturn<ChromeBreakpoint>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(tailwindConfig: T): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends BreakpointObject>(): BreakpointReturn<T>;
 
 // @public (undocumented)
 export function useBroadcastChannel<T = any>(name: string, onBeforeClose?: Function): {

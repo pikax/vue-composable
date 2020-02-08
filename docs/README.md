@@ -52,10 +52,15 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
+### Breakpoint
+
+- [MatchMedia](composable/breakpoint/matchMedia) - reactive `MatchMedia`
+- [Breakpoint](composable/breakpoint/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [Chrome](composable/breakpoint/breakpointChrome) - reactive chrome breakpoints
+- [TailwindCSS](composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
+
 ### MISC
 
-- [MatchMedia](composable/misc/matchMedia) - reactive `MatchMedia`
-- [Breakpoint](composable/misc/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
 - [sharedRef](composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
@@ -133,6 +138,4 @@ export default {
 
 ### Pagination example
 
-
 <array-pagination-example/>
-
