@@ -172,15 +172,23 @@ module.exports = {
             ["composable/date/performanceNow", "performanceNow"]
           ]
         },
+
+        {
+          title: "Breakpoint",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/breakpoint/matchMedia", "matchMedia"],
+            ["composable/breakpoint/breakpoint", "breakpoint"],
+            ["composable/breakpoint/breakpointChrome", "Chrome"],
+            ["composable/breakpoint/breakpointTailwindCSS", "TailwindCSS"]
+          ]
+        },
         {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
-          children: [
-            ["composable/misc/matchMedia", "matchMedia"],
-            ["composable/misc/breakpoint", "breakpoint"],
-            ["composable/misc/sharedRef", "SharedRef"]
-          ]
+          children: [["composable/misc/sharedRef", "SharedRef"]]
         },
         {
           title: "Storage",

@@ -3,9 +3,9 @@
 Allows to get reactive object on the current windows size.
 
 ::: warning
-If `Number` it checks the defined breakpoint against window.innerWidth.
+If `Number` or `{Number}px` it checks the defined breakpoint against window.innerWidth.
 `bp >= window.innerWidth`
-If `MediaQuery` is passed it will not be able to resolve the current breakpoint
+If `MediaQuery` is passed it will not be able to resolve the `current` breakpoint
 :::
 
 ## State
@@ -43,9 +43,7 @@ const { remove } = useBreakpoint();
 
 ## Example
 
-
 <breakpoint-example/>
-
 
 ### Code
 
