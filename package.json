@@ -32,12 +32,36 @@
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "lint": "prettier \"packages/**/*.ts\" \"docs/(.vuepress|Examples|composable)/**/*.md\" \"docs/.vuepress/*.js\" \"docs/**/*.vue\" --write"
   },
   "bugs": {
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/blob/master/readme.md",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.vue": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.7.8",
     "@rollup/plugin-json": "^4.0.2",
@@ -55,9 +79,11 @@
     "enquirer": "^2.3.4",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
+    "husky": "^4.2.1",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.1",
+    "lint-staged": "^10.0.7",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.0",
     "mock-socket": "^9.0.3",
@@ -73,7 +99,7 @@
     "zlib": "^1.0.5"
   },
   "peerDependencies": {
-    "vue": "^2.6.10",
-    "@vue/composition-api": "^0.3.2"
+    "@vue/composition-api": "^0.3.2",
+    "vue": "^2.6.10"
   }
 }
