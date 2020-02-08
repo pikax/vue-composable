@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { RefElement, wrap, RefTyped, useDebounce, isClient, NO_OP, isNumber } from "@vue-composable/core";
+import { RefElement, wrap, RefTyped, useDebounce, isClient, NO_OP, isNumber, PASSIVE_EV } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 
 
@@ -44,7 +44,7 @@ export function useOnResize(
   }
 
   // resize seems only to be fired against the window
-  const remove = isClient ? useEvent(window, "resize", handler, eventOptions || { passive: true }) : NO_OP;
+  const remove = isClient ? useEvent(window, "resize", handler, eventOptions || PASSIVE_EV) : NO_OP;
 
   return {
     height,

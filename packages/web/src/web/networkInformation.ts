@@ -1,6 +1,6 @@
 import { Ref, ref } from "@vue/composition-api";
 import { RemoveEventFunction, useEvent } from "../event";
-import { NO_OP, isClient } from "@vue-composable/core";
+import { NO_OP, isClient, PASSIVE_EV } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -127,7 +127,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
       connection,
       "change",
       handler,
-      { passive: true }
+      PASSIVE_EV
     );
 
     handler();

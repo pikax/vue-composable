@@ -1,5 +1,5 @@
 import { Ref, ref, onUnmounted } from "@vue/composition-api";
-import { isClient, NO_OP } from "@vue-composable/core";
+import { isClient, NO_OP, PASSIVE_EV } from "@vue-composable/core";
 
 export function useMatchMedia(query: string) {
   const supported = isClient ? 'matchMedia' in window : false;
@@ -17,7 +17,7 @@ export function useMatchMedia(query: string) {
       matches.value = e.matches;
     };
 
-    mediaQueryList.value.addEventListener("change", process, { passive: true });
+    mediaQueryList.value.addEventListener("change", process, PASSIVE_EV);
 
     const remove = () =>
       mediaQueryList.value.removeEventListener("change", process);

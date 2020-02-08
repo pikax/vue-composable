@@ -1,11 +1,10 @@
 import { ref, Ref } from "@vue/composition-api";
-import { isClient } from "@vue-composable/core";
+import { isClient, PASSIVE_EV } from "@vue-composable/core";
 
 let visibility: Ref<VisibilityState> | undefined = undefined;
 let hidden: Ref<boolean> | undefined = undefined;
 
 export function usePageVisibility() {
-
   if (!hidden) {
     hidden = ref(isClient && document.hidden);
   }
@@ -16,11 +15,10 @@ export function usePageVisibility() {
       document.addEventListener(
         "visibilitychange",
         () => {
-          visibility!.value = document.visibilityState
+          visibility!.value = document.visibilityState;
           hidden!.value = document.hidden;
         },
-        { passive: true }
-        // true
+        PASSIVE_EV
       );
     } else {
       visibility = ref(false);

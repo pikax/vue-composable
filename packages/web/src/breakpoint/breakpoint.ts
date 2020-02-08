@@ -1,7 +1,7 @@
 import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "../misc/matchMedia";
-import { useDebounce, isNumber, isClient, NO_OP } from "@vue-composable/core";
+import { useDebounce, isNumber, isClient, NO_OP, PASSIVE_EV } from "@vue-composable/core";
 
 function getBreakpointWidth(bp: string | number) {
   if (!bp) return undefined;
@@ -89,9 +89,7 @@ export function useBreakpoint<T extends BreakpointObject>(
 
   onMounted(() => {
     resize();
-    window.addEventListener("resize", processResize, {
-      passive: true
-    });
+    window.addEventListener("resize", processResize, PASSIVE_EV);
   });
 
   onUnmounted(() => {
