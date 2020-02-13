@@ -79,7 +79,7 @@
     "enquirer": "^2.3.4",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "husky": "^4.2.2",
+    "husky": "^4.2.3",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.1",
