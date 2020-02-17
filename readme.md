@@ -47,9 +47,13 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### Date
 
-- [useNow][now] : Return reactive custom timer with specified refresh rate
-- [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
-- [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
+- [useNow][https://pikax.me/vue-composable/composable/date/now] : Return reactive custom timer with specified refresh rate
+- [useDateNow][https://pikax.me/vue-composable/composable/date/date-now] : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow][https://pikax.me/vue-composable/composable/date/performance-now] : Returns reactive `performance.now()` with custom refresh rate
+
+### Format
+
+- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
 
 ### Breakpoint
 

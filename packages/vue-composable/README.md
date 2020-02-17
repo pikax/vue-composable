@@ -49,6 +49,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [useDateNow][date-now] : Returns reactive `Date.now()` with custom refresh rate
 - [usePerformanceNow][performance-now] : Returns reactive `performance.now()` with custom refresh rate
 
+### Format
+
+- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
+
 ### Breakpoint
 
 - [MatchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) - reactive `MatchMedia`

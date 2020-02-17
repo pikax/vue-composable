@@ -52,6 +52,16 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
+### Date
+
+- [useNow](composable/date/now) - Return reactive custom timer with specified refresh rate
+- [useDateNow](composable/date/date-now) - Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow](composable/date/performance-now) - Returns reactive `performance.now()` with custom refresh rate
+
+### Format
+
+- [format](composable/format/format) - Reactive string format
+
 ### Breakpoint
 
 - [MatchMedia](composable/breakpoint/matchMedia) - reactive `MatchMedia`

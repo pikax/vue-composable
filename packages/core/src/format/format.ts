@@ -1,5 +1,5 @@
 import { RefTyped, unwrap, isArray } from "../utils";
-import { reactive, computed } from "@vue/composition-api";
+import { reactive, computed, Ref, isRef } from "@vue/composition-api";
 
 type FormatValue = RefTyped<object> | RefTyped<string> | RefTyped<number>;
 export interface FormatObject {
@@ -8,11 +8,20 @@ export interface FormatObject {
 
 export function useFormat(
   format: RefTyped<string>,
-  args: RefTyped<FormatObject> | Array<FormatValue>
-) {
-  const r = reactive(args);
+  obj: RefTyped<FormatObject>
+): Readonly<Ref<string>>;
 
-  const formatter = computed(() => {
+export function useFormat(
+  format: RefTyped<string>,
+  ...args: Array<FormatValue>
+): Readonly<Ref<string>>;
+
+export function useFormat(
+  format: RefTyped<string>,
+  args: RefTyped<FormatObject> | Array<FormatValue>
+): Readonly<Ref<string>> {
+  return computed(() => {
+    const r = isRef(args) ? reactive(args.value) : reactive(args);
     const f = unwrap(format);
     const regEx = /({?{[\w\s]*}?})/g;
 
@@ -30,6 +39,4 @@ export function useFormat(
       return v === undefined ? s : `${unwrap(v)}`;
     });
   });
-
-  return formatter;
 }

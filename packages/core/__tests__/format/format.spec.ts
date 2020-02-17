@@ -22,6 +22,13 @@ describe("format", () => {
     expect(useFormat("{0}{1}{2}{3}", arr).value).toBe(arr.map(unwrap).join(""));
   });
 
+  it("should format with ref<array>", () => {
+    const arr = ref(["hello", "world", ref("how"), "you"]);
+    expect(useFormat("{0}{1}{2}{3}", arr).value).toBe(
+      arr.value.map(unwrap).join("")
+    );
+  });
+
   it("should update the result if args change", async () => {
     const arr = [ref("how")];
     const e = "how are you";

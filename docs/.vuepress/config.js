@@ -172,6 +172,12 @@ module.exports = {
             ["composable/date/performanceNow", "performanceNow"]
           ]
         },
+        {
+          title: "Format",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/format/format", "format"]]
+        },
 
         {
           title: "Breakpoint",
