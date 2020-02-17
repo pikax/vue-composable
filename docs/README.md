@@ -55,8 +55,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### Date
 
 - [useNow](composable/date/now) - Return reactive custom timer with specified refresh rate
-- [useDateNow](composable/date/date-now) - Returns reactive `Date.now()` with custom refresh rate
-- [usePerformanceNow](composable/date/performance-now) - Returns reactive `performance.now()` with custom refresh rate
+- [useDateNow](composable/date/dateNow) - Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow](composable/date/performanceNow) - Returns reactive `performance.now()` with custom refresh rate
 
 ### Format
 
