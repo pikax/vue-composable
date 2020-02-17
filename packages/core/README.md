@@ -63,7 +63,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 [retry]: https://pikax.me/vue-composable/composable/promise/retry
 [cancellable-promise]: https://pikax.me/vue-composable/composable/promise/cancellablePromise
 [debounce]: https://github.com/pikax/vue-composable
-[debounce]: https://github.com/pikax/vue-composable/format/format
+[format]: https://github.com/pikax/vue-composable/format/format
 
 ## Contributing
 
