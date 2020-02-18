@@ -6,6 +6,7 @@
 
 import { ComputedRef } from '@vue/runtime-core';
 import { Ref } from '@vue/runtime-core';
+import { UnwrapRef } from '@vue/runtime-core';
 
 // @public (undocumented)
 export interface ArrayPaginationResult<T extends Array<any>> extends PaginationResult {
@@ -171,6 +172,9 @@ export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;
 
 // @public (undocumented)
+export type UnwrapType<T> = T extends Ref<infer R> ? R : T;
+
+// @public (undocumented)
 export function useArrayPagination<T extends Array<TR>, TR>(array: RefTyped<T>, options?: Partial<Omit<PaginationOptions, "total">>): ArrayPaginationResult<T>;
 
 // @public (undocumented)
@@ -272,11 +276,21 @@ export function useRetry<T, TArgs extends Array<any>>(factory: Factory<T, TArgs>
 // @public (undocumented)
 export function useRetry<T, TArgs extends Array<any>>(options: RetryOptions, factory: Factory<T, TArgs>): RetryReturnFactory<T, TArgs>;
 
+// Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ValidationGroupResult" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function useValidation<T extends UseValidation<E>, E = any>(input: E): ValidationOutput<E> & ValidationGroupResult;
+
 // @public (undocumented)
 export function wrap(o: RefElement): Ref<Element>;
 
 // @public (undocumented)
 export function wrap<T>(o: RefTyped<T>): Ref<T>;
+
+// @public (undocumented)
+export type WrapType<T> = T extends Ref<any> ? T : Ref<T>;
 
 
 // (No @packageDocumentation comment for this package)

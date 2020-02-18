@@ -1,12 +1,11 @@
 import {
-  UnwrapType,
   RefTyped,
   isObject,
   isPromise,
   wrap,
   isBoolean
 } from "../utils";
-import { ref, Ref, watch, computed } from "@vue/composition-api";
+import { ref, Ref, watch, computed, UnwrapRef } from "@vue/runtime-core";
 
 type ValidatorFunc<T> = (model: T) => boolean | Promise<boolean>;
 
@@ -45,7 +44,7 @@ interface ValidatorResultMessage {
 /*  Input */
 type ValidationInputType<T, TValue> = Record<
   Exclude<keyof T, "$value">,
-  Validator<UnwrapType<TValue>>
+  Validator<UnwrapRef<TValue>>
 > & { $value: TValue };
 
 type ValidationInput<T> = T extends { $value: infer TValue }
@@ -202,7 +201,7 @@ const buildValidation = <T>(
           .map(x => (validation[x] as any) as ValidatorResult);
         $errors = computed(() => {
           return validations.map(x => x.$error.value).filter(Boolean);
-        }) as Ref<[]>;
+        });
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() => validations.some(x => !!x.$invalid.value));
       } else {
@@ -211,7 +210,7 @@ const buildValidation = <T>(
         );
         $errors = computed(() => {
           return validations.map(x => x.$errors.value).filter(Boolean);
-        }) as Ref<[]>;
+        });
         $anyDirty = computed(() =>
           validations.some(
             x =>

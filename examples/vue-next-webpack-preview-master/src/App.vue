@@ -19,12 +19,14 @@
     <hello-world v-else-if="selected === 4" />
     <swapi v-else-if="selected === 5" />
     <todo-list v-else-if="selected === 6" />
+    <validation v-else-if="selected === 7" />
   </div>
 </template>
 
 <script>
 // import { ref } from "@vue/reactivity";
 import ArrayPagination from "./components/ArrayPagination.vue";
+import Validation from "./components/Validation.vue";
 import CancellablePromise from "./components/CancellablePromise.vue";
 import Axios from "./components/Axios.vue";
 import Fetch from "./components/Fetch.vue";
@@ -41,7 +43,8 @@ export default {
     Fetch,
     HelloWorld,
     Swapi,
-    TodoList
+    TodoList,
+    Validation
   },
 
   setup(props, ctx) {
