@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/runtime-core";
-import { isClient } from "@vue-composable/core";
+import { isClient, PASSIVE_EV } from "@vue-composable/core";
 
 let online: Ref<boolean> | undefined = undefined;
 export function useOnline() {
@@ -12,12 +12,12 @@ export function useOnline() {
 
   if (!online) {
     online = ref(navigator.onLine);
-    window.addEventListener("offline", () => (online!.value = false), {
-      passive: true
-    });
-    window.addEventListener("online", () => (online!.value = true), {
-      passive: true
-    });
+    window.addEventListener(
+      "offline",
+      () => (online!.value = false),
+      PASSIVE_EV
+    );
+    window.addEventListener("online", () => (online!.value = true), PASSIVE_EV);
   }
 
   return {

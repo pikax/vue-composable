@@ -2,10 +2,10 @@
   <div>
     <button @click="send" :disabled="!isOpen">Send</button>
     <button @click="close(1000)" :disabled="!isOpen">Close</button>
-    <p>open: {{isOpen}}</p>
-    <p>closed: {{isClosed}}</p>
-    <p>data: {{data}}</p>
-    <p>errored: {{errored}}</p>
+    <p>open: {{ isOpen }}</p>
+    <p>closed: {{ isClosed }}</p>
+    <p>data: {{ data }}</p>
+    <p>errored: {{ errored }}</p>
   </div>
 </template>
 

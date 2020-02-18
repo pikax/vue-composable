@@ -1,11 +1,11 @@
 import { Ref, ref } from "@vue/runtime-core";
 import { RefTyped, NO_OP } from "@vue-composable/core";
-import { useWebStorage } from './webStorage'
+import { useWebStorage } from "./webStorage";
 
 export type LocalStorageTyped<T extends object> = string;
 
 export interface LocalStorageReturn<T> {
-  supported: boolean,
+  supported: boolean;
 
   storage: Ref<T>;
 
@@ -20,26 +20,29 @@ export interface LocalStorageReturn<T> {
   clear: () => void;
 
   /**
-   * @description Enable cross tab syncing 
+   * @description Enable cross tab syncing
    */
   setSync: (sync: boolean) => void;
 }
 
-export function useLocalStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
+export function useLocalStorage(
+  key: string,
+  defaultValue?: RefTyped<string>
+): LocalStorageReturn<string>;
 export function useLocalStorage<T extends object = any>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>
 ): LocalStorageReturn<T>;
 export function useLocalStorage(key: string, defaultValue?: any) {
-  const { supported, store } = useWebStorage('localStorage');
+  const { supported, store } = useWebStorage("localStorage");
 
   let remove = NO_OP;
   let clear = NO_OP;
-  let setSync: LocalStorageReturn<any>['setSync'] = NO_OP;
+  let setSync: LocalStorageReturn<any>["setSync"] = NO_OP;
   let storage = undefined;
 
   if (supported && store) {
-    setSync = (s) => store.setSync(key, s);
+    setSync = s => store.setSync(key, s);
     remove = () => store.removeItem(key);
     clear = () => store.clear();
 
@@ -50,7 +53,7 @@ export function useLocalStorage(key: string, defaultValue?: any) {
   } else {
     /* istanbul ignore else */
     if (__DEV__) {
-      console.warn('[localStorage] is not available');
+      console.warn("[localStorage] is not available");
     }
 
     storage = ref(defaultValue);
@@ -63,6 +66,6 @@ export function useLocalStorage(key: string, defaultValue?: any) {
 
     clear,
     remove,
-    setSync,
+    setSync
   };
 }

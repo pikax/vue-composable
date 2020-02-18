@@ -45,9 +45,7 @@ const { remove } = useOnScroll();
 
 ## Example
 
-
 <on-scroll-example/>
-
 
 ### Code
 

@@ -1,6 +1,6 @@
 import { useOnline } from "../../src";
 
-describe('online', () => {
+describe("online", () => {
   const windowEventSpy = jest.fn();
   const windowEvent = window.addEventListener;
   const windowRemoveEvent = window.removeEventListener;
@@ -10,13 +10,13 @@ describe('online', () => {
 
   beforeAll(() => {
     window.addEventListener = windowEventSpy;
-  })
+  });
   afterAll(() => {
     window.addEventListener = windowEvent;
     window.removeEventListener = windowRemoveEvent;
-  })
+  });
 
-  it('should only add event listener once', () => {
+  it("should only add event listener once", () => {
     expect(windowEventSpy).not.toHaveBeenCalled();
 
     useOnline();
@@ -25,11 +25,21 @@ describe('online', () => {
     expect(windowEventSpy).toHaveBeenCalled();
     expect(windowEventSpy).toHaveBeenCalledTimes(2);
 
-    expect(windowEventSpy).toHaveBeenNthCalledWith(1, 'offline', expect.anything(), expect.anything())
-    expect(windowEventSpy).toHaveBeenNthCalledWith(2, 'online', expect.anything(), expect.anything())
-  })
+    expect(windowEventSpy).toHaveBeenNthCalledWith(
+      1,
+      "offline",
+      expect.anything(),
+      expect.anything()
+    );
+    expect(windowEventSpy).toHaveBeenNthCalledWith(
+      2,
+      "online",
+      expect.anything(),
+      expect.anything()
+    );
+  });
 
-  it('should update to online', () => {
+  it("should update to online", () => {
     const { online } = useOnline();
 
     raiseOffline();
@@ -40,7 +50,5 @@ describe('online', () => {
 
     raiseOffline();
     expect(online.value).toBe(false);
-  })
-
-
+  });
 });

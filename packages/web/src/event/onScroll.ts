@@ -1,13 +1,31 @@
-import { Ref, ref } from "@vue/runtime-core";
-import { RefElement, wrap, RefTyped, useDebounce, isNumber } from "@vue-composable/core";
+import { Ref, ref, isRef } from "@vue/runtime-core";
+import {
+  RefElement,
+  wrap,
+  RefTyped,
+  useDebounce,
+  isNumber,
+  PASSIVE_EV,
+  isBoolean,
+  isElement,
+  isClient
+} from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
 
 export interface ScrollResult {
   scrollTop: Ref<number>;
   scrollLeft: Ref<number>;
   remove: RemoveEventFunction;
+
+  scrollTo: Element["scrollTo"];
 }
 
+export function useOnScroll(): ScrollResult;
+export function useOnScroll(wait: number): ScrollResult;
+export function useOnScroll(
+  options: boolean | AddEventListenerOptions,
+  wait?: number
+): ScrollResult;
 export function useOnScroll(el: RefTyped<Window>, wait: number): ScrollResult;
 export function useOnScroll(
   el: RefTyped<Window>,
@@ -21,21 +39,43 @@ export function useOnScroll(
   wait?: number
 ): ScrollResult;
 export function useOnScroll(
-  el: any,
+  el?: any,
   options?: number | boolean | AddEventListenerOptions,
   wait?: number
 ): ScrollResult {
-  const element = wrap(el);
+  const isValidElement = (el: any) =>
+    isNumber(el) || isBoolean(el) || !(isElement(el) || isRef(el)) || !el
+      ? false
+      : true;
 
-  const scrollTop = ref(element.value && element.value.scrollTop);
-  const scrollLeft = ref(element.value && element.value.scrollLeft);
+  const element = isValidElement(el)
+    ? wrap(el)
+    : ref((isClient && window) || undefined);
+  const scrollableElement = isValidElement(el)
+    ? element
+    : ref((isClient && window.document.scrollingElement) || undefined);
 
-  let handler = (ev: Event) => {
-    scrollTop.value = element.value.scrollTop;
-    scrollLeft.value = element.value.scrollLeft;
+  const scrollTop = ref(
+    (scrollableElement.value && scrollableElement.value.scrollTop) || 0
+  );
+  const scrollLeft = ref(
+    (scrollableElement.value && scrollableElement.value.scrollLeft) || 0
+  );
+
+  let handler = () => {
+    scrollTop.value = scrollableElement.value!.scrollTop;
+    scrollLeft.value = scrollableElement.value!.scrollLeft;
   };
 
-  const [eventOptions, ms] = isNumber(options) ? [undefined, options] : [options, wait];
+  const scrollTo: Element["scrollTo"] = (...args: any) =>
+    scrollableElement.value.scrollTo.apply(scrollableElement.value, args);
+
+  const [eventOptions, ms] =
+    isNumber(el) || !el
+      ? [PASSIVE_EV, el as number]
+      : isNumber(options)
+      ? [PASSIVE_EV, options]
+      : [options, wait];
 
   if (ms) {
     handler = useDebounce(handler, wait);
@@ -46,6 +86,8 @@ export function useOnScroll(
   return {
     scrollTop,
     scrollLeft,
+
+    scrollTo,
 
     remove
   };

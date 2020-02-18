@@ -19,7 +19,9 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
 
   const timestamp = ref<number | null>(null);
   const coords = ref<Position["coords"] | null>(null);
-  const highAccuracy = ref<boolean| null>(options && options.enableHighAccuracy || null);
+  const highAccuracy = ref<boolean | null>(
+    (options && options.enableHighAccuracy) || null
+  );
 
   // allow manual control on when the geolocation is requested
   let refresh = NO_OP;
@@ -35,9 +37,13 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
       coords.value = null;
       error.value = err;
     };
-    const clearWatch = () => lazy.value !== true && watchId && navigator.geolocation.clearWatch(watchId);
+    const clearWatch = () =>
+      lazy.value !== true &&
+      watchId &&
+      navigator.geolocation.clearWatch(watchId);
 
-    let _currentPositionRefresh = () => navigator.geolocation.getCurrentPosition(setPosition, setError, options);
+    let _currentPositionRefresh = () =>
+      navigator.geolocation.getCurrentPosition(setPosition, setError, options);
 
     if (lazy.value) {
       refresh = () => {
@@ -46,7 +52,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
         } else {
           _currentPositionRefresh();
         }
-      }
+      };
     } else {
       // NOTE probably useless??
       refresh = _currentPositionRefresh;
@@ -55,19 +61,29 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
     let watchId = 0;
 
     onMounted(() =>
-      watch([highAccuracy, lazy], (a) => {
-        clearWatch();
+      watch(
+        [highAccuracy, lazy],
+        a => {
+          clearWatch();
 
-        const enableHighAccuracy = isBoolean(a[0]) ? a[0] : options ? options.enableHighAccuracy : undefined;
+          const enableHighAccuracy = isBoolean(a[0])
+            ? a[0]
+            : options
+            ? options.enableHighAccuracy
+            : undefined;
 
-        watchId = navigator.geolocation.watchPosition(
-          setPosition,
-          setError,
-          options ? { ...options, enableHighAccuracy } : { enableHighAccuracy }
-        );
-      }, {
-        lazy: lazy.value
-      })
+          watchId = navigator.geolocation.watchPosition(
+            setPosition,
+            setError,
+            options
+              ? { ...options, enableHighAccuracy }
+              : { enableHighAccuracy }
+          );
+        },
+        {
+          lazy: lazy.value
+        }
+      )
     );
     onUnmounted(clearWatch);
   }

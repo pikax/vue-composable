@@ -23,9 +23,7 @@ The `useLanguage` function exposes the following methods:
 
 ## Example
 
-
 <language-example/>
-
 
 ### Code
 

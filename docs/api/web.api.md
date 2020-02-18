@@ -9,10 +9,41 @@ import { RefElement } from '@vue-composable/core';
 import { RefTyped } from '@vue-composable/core';
 
 // @public (undocumented)
+export type BreakpointObject = Record<string, string | number>;
+
+// @public (undocumented)
+export type BreakpointReturn<T> = Record<keyof T, Ref<boolean>> & BreakpointReturnObject<T>;
+
+// @public (undocumented)
+export interface BreakpointReturnObject<T> {
+    // (undocumented)
+    current: Ref<keyof T | undefined>;
+    // (undocumented)
+    remove: RemoveEventFunction;
+}
+
+// @public (undocumented)
 export interface BroadcastMessageEvent<T> extends MessageEvent {
     // (undocumented)
     readonly data: T;
 }
+
+// @public (undocumented)
+export interface DefaultTailwindBreakpoints {
+    // (undocumented)
+    lg: 1024;
+    // (undocumented)
+    md: 768;
+    // (undocumented)
+    sm: 640;
+    // (undocumented)
+    xl: 1280;
+}
+
+// Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type ExtractTailwindScreens<T extends TailwindConfigEmpty> = keyof T["theme"]["screens"] extends never ? DefaultTailwindBreakpoints : T["theme"]["screens"];
 
 // @public (undocumented)
 export interface GeolocationOptions {
@@ -189,8 +220,16 @@ export interface ScrollResult {
     // (undocumented)
     scrollLeft: Ref<number>;
     // (undocumented)
+    scrollTo: Element["scrollTo"];
+    // (undocumented)
     scrollTop: Ref<number>;
 }
+
+// @public (undocumented)
+export function setBreakpointTailwindCSS<T extends TailwindConfigEmpty>(tailwindConfig: T): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function setBreakpointTailwindCSS<T extends BreakpointObject>(breakpoints: T): BreakpointReturn<T>;
 
 // @public (undocumented)
 export const enum SharedRefMind {
@@ -212,10 +251,24 @@ export interface StorageSerializer<T = any> {
 }
 
 // @public (undocumented)
-export function useBreakpoint<T>(breakpoints: Record<keyof T, number | string>): Record<keyof T, Ref<boolean>> & {
-    remove: RemoveEventFunction;
-    current: Ref<keyof T | undefined>;
-};
+export function useBreakpoint<T extends BreakpointObject>(breakpoints: Record<keyof T, number | string>): BreakpointReturn<T>;
+
+// Warning: (ae-forgotten-export) The symbol "ChromeBreakpoint" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function useBreakpointChrome(): BreakpointReturn<ChromeBreakpoint>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(tailwindConfig: T): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(): BreakpointReturn<ExtractTailwindScreens<T>>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
+
+// @public (undocumented)
+export function useBreakpointTailwindCSS<T extends BreakpointObject>(): BreakpointReturn<T>;
 
 // @public (undocumented)
 export function useBroadcastChannel<T = any>(name: string, onBeforeClose?: Function): {
@@ -249,7 +302,12 @@ export function useEvent<K extends keyof WindowEventMap>(el: RefTyped<Window>, n
 export function useEvent<K extends keyof DocumentEventMap>(el: RefTyped<Element>, name: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): RemoveEventFunction;
 
 // @public (undocumented)
-export function useFetch<T = any>(options?: UseFetchOptions): {
+export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInfo>, requestInit?: RequestInit): {
+    cancel: (message?: string | undefined) => void;
+    isCancelled: import("@vue/reactivity").Ref<boolean>;
+    cancelledMessage: import("@vue/reactivity").Ref<string | undefined>;
+    text: import("@vue/reactivity").Ref<string>;
+    blob: import("@vue/reactivity").Ref<Blob>;
     json: import("@vue/reactivity").Ref<T | null>;
     jsonError: any;
     status: import("@vue/reactivity").ComputedRef<number | null>;
@@ -339,6 +397,15 @@ export function useOnResize(el: RefElement, wait: number): ResizeResult;
 export function useOnResize(el: RefElement, options?: boolean | AddEventListenerOptions, wait?: number): ResizeResult;
 
 // @public (undocumented)
+export function useOnScroll(): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll(wait: number): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll(options: boolean | AddEventListenerOptions, wait?: number): ScrollResult;
+
+// @public (undocumented)
 export function useOnScroll(el: RefTyped<Window>, wait: number): ScrollResult;
 
 // @public (undocumented)
@@ -373,7 +440,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T): {
     targets: Ref<number[]>;
     ping: () => void;
     setMind: (t: SharedRefMind) => void;
-    addListener: (cb: (ev: import("../web").BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions | undefined) => void;
+    addListener: (cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void, options?: boolean | AddEventListenerOptions | undefined) => void;
 };
 
 // @public (undocumented)

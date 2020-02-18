@@ -56,9 +56,7 @@ const { exec, cancel } = useCancellablePromise();
 
 ## Example
 
-
 <cancellable-promise-example/>
-
 
 ### Code
 

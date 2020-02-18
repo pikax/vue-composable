@@ -11,6 +11,7 @@
   ],
   "types": "dist/axios.d.ts",
   "buildOptions": {
+    "priotity": 200,
     "name": "vueComposableAxios",
     "formats": [
       "esm-bundler",

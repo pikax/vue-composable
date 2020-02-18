@@ -3,9 +3,35 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
+
+### Changed
+
+- moving [breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint) and [matchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) from `web/misc` to `web/breakpoint`
+- [breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint): Allow to pass width as string `${width}px`
+
+### Added
+
+- [Chrome](https://pikax.me/vue-composable/composable/breakpoint/breakpointChrome) - reactive chrome breakpoints
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
+- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
+
+## 1.0.0-dev.9
+
+_2020-02-07_
+
+---
+
+### Changed
+
+- [Fetch](https://pikax.me/vue-composable/composable/web/fetch#methods): Allow cancel last request using AbortController
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll): allow passing only `undefined` or only wait on the first argument, it will use `window.document.scrollingElement`
+
+### FIX
+
+- NuxtJS typescript support
 
 ## 1.0.0-dev.8
 

@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from '@vue/runtime-core';
+import { ref, onUnmounted } from "@vue/runtime-core";
 import { isFunction, isClient, NO_OP, isBoolean } from "../utils";
 
 export interface NowOptions {
@@ -14,23 +14,22 @@ export interface NowOptions {
 }
 
 export interface UseNowOptions {
-
   /**
-   * @description - time factory, it should retrieve `now` in ms 
+   * @description - time factory, it should retrieve `now` in ms
    */
   timeFn?: () => number;
 }
 
-
 export function useNow(options?: NowOptions & UseNowOptions) {
   const SYNC_MS = 1000;
-  const ms = options && options.refreshMs || SYNC_MS;
+  const ms = (options && options.refreshMs) || SYNC_MS;
   const sync = options && isBoolean(options.sync) ? options.sync : true;
-  const fn = options && isFunction(options.timeFn) && options.timeFn || Date.now;
+  const fn =
+    (options && isFunction(options.timeFn) && options.timeFn) || Date.now;
   /* istanbul ignore else */
   if (__DEV__) {
     if (options && options.timeFn && isFunction(options.timeFn) === false) {
-      console.warn('[useNow] timeFn param must be Function')
+      console.warn("[useNow] timeFn param must be Function");
     }
   }
   let handler: any | undefined = undefined;
@@ -40,21 +39,24 @@ export function useNow(options?: NowOptions & UseNowOptions) {
   const remove = () => {
     clearInterval(handler);
     clearTimeout(timeoutHandler);
-  }
+  };
   /* istanbul ignore next */
-  const start = isClient ? () => handler = setInterval(() => now.value = fn(), ms) : NO_OP;
+  const start = isClient
+    ? () => (handler = setInterval(() => (now.value = fn()), ms))
+    : NO_OP;
 
   if (sync) {
-    const offset = SYNC_MS - (now.value - (Math.floor(now.value / SYNC_MS) * SYNC_MS))
+    const offset =
+      SYNC_MS - (now.value - Math.floor(now.value / SYNC_MS) * SYNC_MS);
     timeoutHandler = setTimeout(start, offset);
   } else {
     start();
   }
 
-  onUnmounted(remove)
+  onUnmounted(remove);
 
   return {
     now,
     remove
-  }
+  };
 }

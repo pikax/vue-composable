@@ -3,15 +3,15 @@ import { nextTick } from "../utils";
 import { promisedTimeout } from "@vue-composable/core";
 
 describe("sessionStorage", () => {
-  const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
-  const consoleWarnSpy = jest.spyOn(console, 'warn');
+  const setItemSpy = jest.spyOn(Storage.prototype, "setItem");
+  const consoleWarnSpy = jest.spyOn(console, "warn");
 
   beforeEach(() => {
     sessionStorage.clear();
-    useWebStorage('sessionStorage').remove();
+    useWebStorage("sessionStorage").remove();
     setItemSpy.mockClear();
     consoleWarnSpy.mockClear();
-  })
+  });
 
   it("should store object in sessionStorage if default is passed", async () => {
     const obj = { a: 1 };
@@ -36,7 +36,10 @@ describe("sessionStorage", () => {
 
     expect(storage.value).toMatchObject({ a: 33 });
     await promisedTimeout(20);
-    expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify({ a: 33 }));
+    expect(setItemSpy).toHaveBeenLastCalledWith(
+      "test",
+      JSON.stringify({ a: 33 })
+    );
   });
 
   it("should get the same object if the same key is used", () => {
@@ -62,9 +65,13 @@ describe("sessionStorage", () => {
     const s1 = useSessionStorage("key", { a: 1 });
     const s2 = useSessionStorage("key2", { a: 2 });
 
-    expect(sessionStorage.getItem('key')).toBe(JSON.stringify(s1.storage.value));
-    expect(sessionStorage.getItem('key2')).toBe(JSON.stringify(s2.storage.value));
-    expect(sessionStorage.getItem('_other_')).toBe("secret");
+    expect(sessionStorage.getItem("key")).toBe(
+      JSON.stringify(s1.storage.value)
+    );
+    expect(sessionStorage.getItem("key2")).toBe(
+      JSON.stringify(s2.storage.value)
+    );
+    expect(sessionStorage.getItem("_other_")).toBe("secret");
 
     s1.clear();
 
@@ -73,9 +80,8 @@ describe("sessionStorage", () => {
 
     expect(s1.storage.value).toBeUndefined();
     expect(s2.storage.value).toBeUndefined();
-    expect(sessionStorage.getItem('_other_')).toBe("secret");
+    expect(sessionStorage.getItem("_other_")).toBe("secret");
   });
-
 
   it("should load from sessionStorage", () => {
     const key = "hello";
@@ -86,21 +92,25 @@ describe("sessionStorage", () => {
     expect(storage.value).toMatchObject({ k: 1 });
   });
 
-  it('should warn if you try to sync', () => {
+  it("should warn if you try to sync", () => {
     const key = "hello";
     const { setSync } = useSessionStorage(key, { k: 10 });
 
     expect(consoleWarnSpy).not.toHaveBeenCalled();
     setSync(true);
-    expect(consoleWarnSpy).toHaveBeenCalledWith('sync is not supported, please `useLocalStorage` instead');
-  })
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "sync is not supported, please `useLocalStorage` instead"
+    );
+  });
 
-  it('should warn if sessionStorage is not supported', () => {
+  it("should warn if sessionStorage is not supported", () => {
     setItemSpy.mockImplementationOnce(() => {
-      throw new Error('random')
+      throw new Error("random");
     });
     const key = "hello";
     useSessionStorage(key, { k: 10 });
-    expect(consoleWarnSpy).toHaveBeenCalledWith('[sessionStorage] is not available');
-  })
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "[sessionStorage] is not available"
+    );
+  });
 });

@@ -1,6 +1,6 @@
 import { Ref, ref } from "@vue/runtime-core";
 import { RemoveEventFunction, useEvent } from "../event";
-import { NO_OP, isClient } from "@vue-composable/core";
+import { NO_OP, isClient, PASSIVE_EV } from "@vue-composable/core";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -97,10 +97,11 @@ interface NetworkInformationReturn {
 }
 
 export function useNetworkInformation(): NetworkInformationReturn {
-  const connection = isClient ?
-    navigator.connection ||
-    navigator.mozConnection ||
-    navigator.webkitConnection : false;
+  const connection = isClient
+    ? navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection
+    : false;
   const supported = !!connection;
   const downlink = ref<number>(0);
   const downlinkMax = ref<number>(0);
@@ -127,7 +128,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
       connection,
       "change",
       handler,
-      { passive: true }
+      PASSIVE_EV
     );
 
     handler();

@@ -1,6 +1,7 @@
 import { Ref, ref } from "@vue/runtime-core";
 import { Vue } from "../utils";
 import { useEvent } from "../../src";
+import { NO_OP } from "@vue-composable/core";
 
 describe("event", () => {
   jest.mock("@vue/composition-api");
@@ -134,5 +135,9 @@ describe("event", () => {
     remove!();
 
     expect(element.removeEventListener).toHaveBeenCalled();
+  });
+
+  it("should not throw if undefined passed", () => {
+    expect(useEvent(undefined as any, "load", NO_OP)).toBe(NO_OP);
   });
 });

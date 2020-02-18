@@ -102,7 +102,6 @@ describe("promise", () => {
     });
   });
 
-
   it("should update the result when calling multiple times", async () => {
     let result = 0;
     const use = usePromise(factory);
@@ -183,20 +182,16 @@ describe("promise", () => {
     });
   });
 
-  describe('throw exception', () => {
-    it('should throw when throwException is true at creation', async () => {
+  describe("throw exception", () => {
+    it("should throw when throwException is true at creation", async () => {
       expect.assertions(2);
 
       const error = new Error("error");
-      const use = usePromise(
-        () => Promise.reject(error),
-        true
-      );
+      const use = usePromise(() => Promise.reject(error), true);
 
       try {
         await use.exec();
-      }
-      catch (e) {
+      } catch (e) {
         expect(e).toMatchObject(error);
       }
 
@@ -209,18 +204,15 @@ describe("promise", () => {
       });
     });
 
-    it('should throw if the last argument of the exec is true, but factory is ()=>void', async () => {
+    it("should throw if the last argument of the exec is true, but factory is ()=>void", async () => {
       expect.assertions(2);
 
       const error = new Error("error");
-      const use = usePromise(
-        () => Promise.reject(error)
-      );
+      const use = usePromise(() => Promise.reject(error));
 
       try {
         await (use.exec as any)(true);
-      }
-      catch (e) {
+      } catch (e) {
         expect(e).toMatchObject(error);
       }
 
@@ -233,18 +225,15 @@ describe("promise", () => {
       });
     });
 
-    it('should throw if the last argument of the exec is true, but factory is (a)=>void', async () => {
+    it("should throw if the last argument of the exec is true, but factory is (a)=>void", async () => {
       expect.assertions(2);
 
       const error = new Error("error");
-      const use = usePromise(
-        (a: number) => Promise.reject(error)
-      );
+      const use = usePromise((a: number) => Promise.reject(error));
 
       try {
         await (use.exec as any)(1, true);
-      }
-      catch (e) {
+      } catch (e) {
         expect(e).toMatchObject(error);
       }
 
@@ -257,19 +246,15 @@ describe("promise", () => {
       });
     });
 
-    it('should not throw if the last argument of the exec is false', async () => {
+    it("should not throw if the last argument of the exec is false", async () => {
       expect.assertions(1);
 
       const error = new Error("error");
-      const use = usePromise(
-        () => Promise.reject(error),
-        true
-      );
+      const use = usePromise(() => Promise.reject(error), true);
 
       try {
         await (use.exec as any)(false);
-      }
-      catch (e) {
+      } catch (e) {
         expect(e).toMatchObject(error);
       }
 
@@ -281,7 +266,7 @@ describe("promise", () => {
         error: { value: error }
       });
     });
-  })
+  });
 
   it("should throw if factory is invalid", () => {
     expect(() => {

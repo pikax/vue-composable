@@ -33,6 +33,14 @@ export const exponentialDelay: RetryDelayFactory;
 export const FALSE_OP: () => boolean;
 
 // @public (undocumented)
+export interface FormatObject {
+    // Warning: (ae-forgotten-export) The symbol "FormatValue" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    [id: string]: FormatValue;
+}
+
+// @public (undocumented)
 export const isArray: (arg: any) => arg is any[];
 
 // @public (undocumented)
@@ -163,7 +171,7 @@ export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;
 
 // @public (undocumented)
-export function useArrayPagination<T extends Array<TR>, TR>(array: RefTyped<T>, options?: Partial<Omit<PaginationOptions, 'total'>>): ArrayPaginationResult<T>;
+export function useArrayPagination<T extends Array<TR>, TR>(array: RefTyped<T>, options?: Partial<Omit<PaginationOptions, "total">>): ArrayPaginationResult<T>;
 
 // @public (undocumented)
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(fn: (...args: TArgs) => Promise<T>): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
@@ -200,6 +208,12 @@ export function useDateNow(options?: NowOptions): {
 
 // @public (undocumented)
 export function useDebounce<T extends Function>(handler: T, wait?: number, options?: Options): T;
+
+// @public (undocumented)
+export function useFormat(format: RefTyped<string>, obj: RefTyped<FormatObject>): Readonly<Ref<string>>;
+
+// @public (undocumented)
+export function useFormat(format: RefTyped<string>, ...args: Array<FormatValue>): Readonly<Ref<string>>;
 
 // @public (undocumented)
 export function useNow(options?: NowOptions & UseNowOptions): {

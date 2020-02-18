@@ -1,23 +1,25 @@
 import { Ref, ref, watch } from "@vue/runtime-core";
 import { wrap, isString, debounce, isClient } from "@vue-composable/core";
 
-type WebStorageType = 'localStorage' | 'sessionStorage';
-const STORAGE_TEST_KEY = __DEV__ ? '__storage_test__' : ":$"
+type WebStorageType = "localStorage" | "sessionStorage";
+const STORAGE_TEST_KEY = __DEV__ ? "__storage_test__" : ":$";
 
 /* istanbul ignore next */
 function isQuotaExceededError(e: any, storage?: Storage) {
-  return e instanceof DOMException && (
+  return (
+    e instanceof DOMException &&
     // everything except Firefox
-    e.code === 22 ||
-    // Firefox
-    e.code === 1014 ||
-    // test name field too, because code might not be present
-    // everything except Firefox
-    e.name === 'QuotaExceededError' ||
-    // Firefox
-    e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+    (e.code === 22 ||
+      // Firefox
+      e.code === 1014 ||
+      // test name field too, because code might not be present
+      // everything except Firefox
+      e.name === "QuotaExceededError" ||
+      // Firefox
+      e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
     // acknowledge QuotaExceededError only if there's something already stored
-    (storage && storage.length !== 0 || false)
+    ((storage && storage.length !== 0) || false)
+  );
 }
 
 // based on https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -30,12 +32,10 @@ export function storageAvailable(storage?: Storage) {
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
-  }
-  catch (e) {
+  } catch (e) {
     return isQuotaExceededError(e, storage);
   }
 }
-
 
 export interface StorageSerializer<T = any> {
   stringify(item: T): string;
@@ -53,8 +53,8 @@ export interface WebStorage {
   setSync(key: string, sync: boolean): void;
 
   /**
-     * Returns the number of key/value pairs currently present in the list associated with the object.
-     */
+   * Returns the number of key/value pairs currently present in the list associated with the object.
+   */
   readonly length: number;
   /**
    * Empties the list associated with the object of all key/value pairs, if there are any.
@@ -76,7 +76,7 @@ export interface WebStorage {
   removeItem(key: string): void;
   /**
    * Sets the value of the pair identified by key to value, creating a new key/value pair if none existed for key previously.
-   * 
+   *
    * Throws a "QuotaExceededError" DOMException exception if the new value couldn't be set. (Setting could fail if, e.g., the user has disabled storage for the site, or if the quota has been exceeded.)
    */
   setItem<T>(key: string, value: T): Ref<T>;
@@ -86,15 +86,19 @@ export interface WebStorage {
 
 function safeParse(serializer: StorageSerializer, value: string) {
   try {
-    return serializer.parse(value)
-  } catch{
+    return serializer.parse(value);
+  } catch {
     return value;
   }
 }
 
 let storageMap: Map<WebStorageType, WebStorage> | undefined = undefined;
 
-export function useWebStorage(type: WebStorageType, serializer: StorageSerializer = JSON, ms = 10) {
+export function useWebStorage(
+  type: WebStorageType,
+  serializer: StorageSerializer = JSON,
+  ms = 10
+) {
   const storage = isClient ? window[type] : undefined;
   const supported = storageAvailable(storage);
 
@@ -104,21 +108,20 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
     storageMap = new Map();
 
     if (isClient) {
-      window.addEventListener('storage', (e) => {
+      window.addEventListener("storage", e => {
         if (e.newValue === e.oldValue) {
           return;
         }
-        let webStore = storageMap!.get('localStorage');
+        let webStore = storageMap!.get("localStorage");
         if (e.storageArea === window.localStorage) {
-          webStore = storageMap!.get('localStorage')
+          webStore = storageMap!.get("localStorage");
         } else {
-          webStore = storageMap!.get('sessionStorage')
+          webStore = storageMap!.get("sessionStorage");
         }
         if (webStore && Object.keys(webStore.$syncKeys).length > 0) {
           if (e.key === null) {
             webStore.clear();
-          }
-          else if (webStore.$syncKeys[e.key]) {
+          } else if (webStore.$syncKeys[e.key]) {
             if (e.newValue === null) {
               webStore.removeItem(e.key);
             } else {
@@ -126,7 +129,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
             }
           }
         }
-      })
+      });
     }
   }
 
@@ -147,8 +150,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
         setSync(key, sync) {
           if (sync) {
             this.$syncKeys[key] = true;
-          }
-          else {
+          } else {
             delete this.$syncKeys[key];
           }
         },
@@ -179,7 +181,7 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
           }
           const data = storage.getItem(k);
           if (!data) {
-            return null
+            return null;
           }
           return this.setItem(k, safeParse(serializer, data));
         },
@@ -189,21 +191,27 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
 
           const save = (key: string, value: any) => {
             try {
-              const data = isString(value) ? value : serializer.stringify(value);
+              const data = isString(value)
+                ? value
+                : serializer.stringify(value);
               storage.setItem(key, data);
             } catch (e) {
               quotaError.value = isQuotaExceededError(e, storage);
             }
-          }
+          };
 
           save(k, v);
 
-          const stop = watch(() => reference, debounce((r) => {
-            save(k, r.value)
-          }, ms), {
-            lazy: true,
-            deep: true
-          })
+          const stop = watch(
+            () => reference,
+            debounce(r => {
+              save(k, r.value);
+            }, ms),
+            {
+              lazy: true,
+              deep: true
+            }
+          );
 
           this.$watchHandlers.set(k, stop);
 
@@ -232,5 +240,5 @@ export function useWebStorage(type: WebStorageType, serializer: StorageSerialize
     quotaError,
     store,
     remove
-  }
+  };
 }

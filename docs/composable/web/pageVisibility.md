@@ -19,9 +19,7 @@ const { visibility, hidden } = usePageVisibility();
 
 ## Example
 
-
 <page-visibility-example/>
-
 
 ### Code
 

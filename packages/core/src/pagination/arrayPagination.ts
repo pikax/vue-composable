@@ -11,23 +11,22 @@ export interface ArrayPaginationResult<T extends Array<any>>
   // result: Readonly<Ref<T>>;
 
   result: ComputedRef<T>;
-
 }
 
 export function useArrayPagination<T extends Array<TR>, TR>(
   array: RefTyped<T>,
-  options?: Partial<Omit<PaginationOptions, 'total'>>
+  options?: Partial<Omit<PaginationOptions, "total">>
 ): ArrayPaginationResult<T>;
 export function useArrayPagination<T extends Array<any>>(
   array: RefTyped<T>,
-  options?: Partial<Omit<PaginationOptions, 'total'>>
+  options?: Partial<Omit<PaginationOptions, "total">>
 ): ArrayPaginationResult<T> {
   const arrayRef = wrap(array);
 
   const pagination = usePagination({
     ...{
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 10
     },
     ...options,
     total: computed(() => arrayRef.value.length)

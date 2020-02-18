@@ -1,4 +1,3 @@
-
 import { ref, Ref, isRef } from "@vue/runtime-core";
 
 export type RefTyped<T> = T | Ref<T>;
@@ -7,7 +6,7 @@ export type RefElement = Element | Ref<Element | undefined>;
 export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;
 export function unwrap<T>(o: RefTyped<T>): T {
-  return isRef(o) ? o.value as T : o;
+  return isRef(o) ? (o.value as T) : o;
 }
 
 export function wrap(o: RefElement): Ref<Element>;
@@ -43,7 +42,7 @@ export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
-export const NO_OP = () => { };
+export const NO_OP = () => {};
 export const FALSE_OP = () => false;
 
 export const PASSIVE_EV: AddEventListenerOptions = { passive: true };
@@ -60,7 +59,7 @@ export function minMax(val: number, min: number, max: number) {
   return val;
 }
 
-export const isClient = typeof window != 'undefined'
+export const isClient = typeof window != "undefined";
 
 // compact version: https://stackoverflow.com/a/33146982/1209882
 /**

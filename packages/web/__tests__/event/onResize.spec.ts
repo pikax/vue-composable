@@ -9,11 +9,11 @@ describe("onResize", () => {
 
   beforeAll(() => {
     window.addEventListener = windowEventSpy;
-  })
+  });
   afterAll(() => {
     window.addEventListener = windowEvent;
     window.removeEventListener = windowRemoveEvent;
-  })
+  });
 
   it("should add the correct event", async () => {
     const element: Element = {

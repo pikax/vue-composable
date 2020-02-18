@@ -10,11 +10,11 @@ import { useWebStorage } from "vue-composable";
 const webStorage = useWebStorage(type, serializer?, delayMs?);
 ```
 
-| Parameters | Type                          | Required | Default | Description                                                                                                      |
-| ---------- | ----------------------------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| Parameters | Type                          | Required | Default | Description                                                                                     |
+| ---------- | ----------------------------- | -------- | ------- | ----------------------------------------------------------------------------------------------- |
 | type       | `localStorage|sessionStorage` | `true`   |         | storage type, it will return always the same object if called multiple times with the same type |
-| serializer | `Serializer`                  | `false`  | JSON    | custom serializer, it uses `stringify()` and `parse()`                                                           |
-| delayMs    | `number`                      | `false`  | 10      | `debounce` time for save to storage                                                                              |
+| serializer | `Serializer`                  | `false`  | JSON    | custom serializer, it uses `stringify()` and `parse()`                                          |
+| delayMs    | `number`                      | `false`  | 10      | `debounce` time for save to storage                                                             |
 
 ## State
 
@@ -45,5 +45,3 @@ const { remove } = useWebStorage();
 | Signature | Description                |
 | --------- | -------------------------- |
 | `remove`  | Removes `store` from cache |
-
-

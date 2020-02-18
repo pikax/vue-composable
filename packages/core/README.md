@@ -38,6 +38,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [usePagination][pagination] : Provides framework to implement reactive pagination
 - [useArrayPagination][array-pagination] : Uses [usePagination][pagination] to paginate an array
 
+### Format
+
+- [format][format] - Reactive string format
+
 ## Promise
 
 - [usePromise][promise] : Handles promise states
@@ -61,6 +65,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 [retry]: https://pikax.me/vue-composable/composable/promise/retry
 [cancellable-promise]: https://pikax.me/vue-composable/composable/promise/cancellablePromise
 [debounce]: https://github.com/pikax/vue-composable
+[format]: https://github.com/pikax/vue-composable/format/format
 
 ## Contributing
 

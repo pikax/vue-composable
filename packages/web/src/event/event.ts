@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted } from "@vue/runtime-core";
-import { RefTyped, wrap } from "@vue-composable/core";
+import { RefTyped, wrap, NO_OP } from "@vue-composable/core";
 
 export type RemoveEventFunction = () => void;
 
@@ -53,12 +53,15 @@ export function useEvent(
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction {
-  const element = wrap(el as Element);
+  let remove = NO_OP;
 
-  const remove = () => element.value!.removeEventListener(name, listener);
+  if (el) {
+    const element = wrap(el as Element);
+    remove = () => element.value!.removeEventListener(name, listener);
 
-  onMounted(() => element.value!.addEventListener(name, listener, options));
-  onUnmounted(remove);
+    onMounted(() => element.value!.addEventListener(name, listener, options));
+    onUnmounted(remove);
+  }
 
   return remove;
 }

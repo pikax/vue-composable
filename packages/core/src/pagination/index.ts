@@ -1,2 +1,2 @@
-export * from './pagination'
-export * from './arrayPagination'
+export * from "./pagination";
+export * from "./arrayPagination";

@@ -1,9 +1,15 @@
-import { useSharedRef, SharedRefMind, RefSharedMessage, RefSharedMessageType, BroadcastMessageEvent, refShared } from '../../src'
-import { Vue, nextTick } from '../utils'
+import {
+  useSharedRef,
+  SharedRefMind,
+  RefSharedMessage,
+  RefSharedMessageType,
+  BroadcastMessageEvent,
+  refShared
+} from "../../src";
+import { Vue, nextTick } from "../utils";
 
 // import * as compositionApi from '@vue/composition-api';
 // import { PASSIVE_EV } from '@vue-composable/core';
-
 
 describe("sharedRef", () => {
   const _broadcastChannel = window.BroadcastChannel;
@@ -22,31 +28,30 @@ describe("sharedRef", () => {
       close = closeFn;
       removeEventListener = removeEventListenerFn;
     }
-    Object.defineProperty(
-      window,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: BroadcastChannel }
-    );
-    Object.defineProperty(
-      global,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: BroadcastChannel }
-    );
+    Object.defineProperty(window, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: BroadcastChannel
+    });
+    Object.defineProperty(global, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: BroadcastChannel
+    });
   });
 
   afterAll(() => {
-    Object.defineProperty(
-      window,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: _broadcastChannel }
-    );
-    Object.defineProperty(
-      global,
-      'BroadcastChannel',
-      { writable: true, configurable: true, value: _broadcastChannel }
-    );
-  })
-
+    Object.defineProperty(window, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: _broadcastChannel
+    });
+    Object.defineProperty(global, "BroadcastChannel", {
+      writable: true,
+      configurable: true,
+      value: _broadcastChannel
+    });
+  });
 
   beforeEach(() => {
     addEventListenerFn.mockReset();
@@ -54,10 +59,9 @@ describe("sharedRef", () => {
     constructorFn.mockReset();
     closeFn.mockReset();
     removeEventListenerFn.mockReset();
-  })
+  });
 
-
-  it('should create sharedRef', () => {
+  it("should create sharedRef", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -68,9 +72,11 @@ describe("sharedRef", () => {
         expect(data.value).toBeUndefined();
         expect(targets.value).toHaveLength(0);
 
-        expect(postMessageFn).toBeCalledWith(expect.objectContaining({
-          type: RefSharedMessageType.PING
-        } as RefSharedMessage<any>))
+        expect(postMessageFn).toBeCalledWith(
+          expect.objectContaining({
+            type: RefSharedMessageType.PING
+          } as RefSharedMessage<any>)
+        );
         expect(addEventListenerFn).toHaveBeenCalledTimes(3);
         expect(closeFn).not.toHaveBeenCalled();
         return {};
@@ -81,9 +87,9 @@ describe("sharedRef", () => {
 
     vm.$destroy();
     expect(closeFn).toHaveBeenCalled();
-  })
+  });
 
-  it('should create using default value and allow update', () => {
+  it("should create using default value and allow update", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -98,19 +104,21 @@ describe("sharedRef", () => {
         data.value = {
           data: 12
         };
-        expect(data.value.data).toBe(12)
+        expect(data.value.data).toBe(12);
 
         return {};
       }
     });
     vm.$mount();
-  })
+  });
 
-  it('should update to specific mind', () => {
+  it("should update to specific mind", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
-        const { mind, setMind, master, editable, targets } = useSharedRef("test");
+        const { mind, setMind, master, editable, targets } = useSharedRef(
+          "test"
+        );
 
         expect(mind.value).toBe(SharedRefMind.HIVE);
         expect(master.value).toBe(false);
@@ -122,11 +130,12 @@ describe("sharedRef", () => {
         expect(master.value).toBe(true);
         expect(editable.value).toBe(true);
 
-        expect(postMessageFn)
-          .toHaveBeenCalledWith(expect.objectContaining({
+        expect(postMessageFn).toHaveBeenCalledWith(
+          expect.objectContaining({
             type: RefSharedMessageType.SET_MIND,
             mind: SharedRefMind.MASTER
-          } as RefSharedMessage<any>))
+          } as RefSharedMessage<any>)
+        );
 
         setMind(SharedRefMind.HIVE);
 
@@ -134,15 +143,14 @@ describe("sharedRef", () => {
         expect(master.value).toBe(false);
         expect(editable.value).toBe(true);
 
-        expect(postMessageFn)
-          .toHaveBeenLastCalledWith(expect.objectContaining({
+        expect(postMessageFn).toHaveBeenLastCalledWith(
+          expect.objectContaining({
             type: RefSharedMessageType.SET_MIND,
             mind: SharedRefMind.HIVE
-          } as RefSharedMessage<any>));
+          } as RefSharedMessage<any>)
+        );
 
-
-        targets.value.push(1, 2, 3, 0)
-
+        targets.value.push(1, 2, 3, 0);
 
         return {};
       }
@@ -151,18 +159,25 @@ describe("sharedRef", () => {
 
     vm.$destroy();
 
-    expect(postMessageFn).lastCalledWith(expect.objectContaining({
-      type: RefSharedMessageType.LEAVE
-    } as RefSharedMessage))
-  })
+    expect(postMessageFn).lastCalledWith(
+      expect.objectContaining({
+        type: RefSharedMessageType.LEAVE
+      } as RefSharedMessage)
+    );
+  });
 
-  it('should send update events', (done) => {
+  it("should send update events", done => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
-        const { /*mind, setMind, master,*/ data } = useSharedRef("test", { v: 1 });
+        const { /*mind, setMind, master,*/ data } = useSharedRef("test", {
+          v: 1
+        });
 
-        const listenerFn = addEventListenerFn.mock.calls[addEventListenerFn.mock.calls.length - 1][1];
+        const listenerFn =
+          addEventListenerFn.mock.calls[
+            addEventListenerFn.mock.calls.length - 1
+          ][1];
 
         expect(listenerFn).toBeDefined();
         expect(data.value).toBeDefined();
@@ -172,68 +187,78 @@ describe("sharedRef", () => {
 
         nextTick().then(async x => {
           // expect(postMessageFn).toHaveBeenCalledTimes(2);
-          expect(postMessageFn).lastCalledWith(expect.objectContaining({
-            type: RefSharedMessageType.UPDATE,
-            value: data.value
-          } as RefSharedMessage))
+          expect(postMessageFn).lastCalledWith(
+            expect.objectContaining({
+              type: RefSharedMessageType.UPDATE,
+              value: data.value
+            } as RefSharedMessage)
+          );
 
           const n = {
             x: 1234,
-            v: 1234,
+            v: 1234
           };
 
           data.value = n;
 
           await nextTick();
 
-          expect(postMessageFn).lastCalledWith(expect.objectContaining({
-            type: RefSharedMessageType.UPDATE,
-            value: n
-          } as RefSharedMessage))
-
+          expect(postMessageFn).lastCalledWith(
+            expect.objectContaining({
+              type: RefSharedMessageType.UPDATE,
+              value: n
+            } as RefSharedMessage)
+          );
 
           data.value = 1 as any;
 
           await nextTick();
 
-          expect(postMessageFn).lastCalledWith(expect.objectContaining({
-            type: RefSharedMessageType.UPDATE,
-            value: 1
-          } as RefSharedMessage))
+          expect(postMessageFn).lastCalledWith(
+            expect.objectContaining({
+              type: RefSharedMessageType.UPDATE,
+              value: 1
+            } as RefSharedMessage)
+          );
 
           done();
-        })
+        });
         return {};
       }
     });
     vm.$mount();
+  });
 
-  })
-
-
-  it('should reply to events', () => {
+  it("should reply to events", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
         const v = { v: 1 };
-        const { mind,/* setMind, master,*/ data, targets, id } = useSharedRef("test", v);
+        const { mind, /* setMind, master,*/ data, targets, id } = useSharedRef(
+          "test",
+          v
+        );
 
-        const listenerFn: (e: BroadcastMessageEvent<RefSharedMessage>) => void = addEventListenerFn.mock.calls[addEventListenerFn.mock.calls.length - 1][1];
-
+        const listenerFn: (e: BroadcastMessageEvent<RefSharedMessage>) => void =
+          addEventListenerFn.mock.calls[
+            addEventListenerFn.mock.calls.length - 1
+          ][1];
 
         /* INIT */
         // If init is received it should reply with UPDATE
         listenerFn({
           data: {
-            type: RefSharedMessageType.INIT,
+            type: RefSharedMessageType.INIT
           } as RefSharedMessage
-        } as any)
+        } as any);
 
-        expect(postMessageFn).lastCalledWith(expect.objectContaining({
-          type: RefSharedMessageType.UPDATE,
-          value: data.value,
-          mind: mind.value
-        } as RefSharedMessage))
+        expect(postMessageFn).lastCalledWith(
+          expect.objectContaining({
+            type: RefSharedMessageType.UPDATE,
+            value: data.value,
+            mind: mind.value
+          } as RefSharedMessage)
+        );
         /* /INIT */
 
         /* LEAVE */
@@ -245,10 +270,9 @@ describe("sharedRef", () => {
             type: RefSharedMessageType.LEAVE,
             id: 111
           } as RefSharedMessage
-        } as any)
+        } as any);
 
-        expect(targets.value).toMatchObject([1, -1])
-
+        expect(targets.value).toMatchObject([1, -1]);
 
         // set to master the smallest id and then call the leave again
         listenerFn({
@@ -257,7 +281,7 @@ describe("sharedRef", () => {
             mind: SharedRefMind.MASTER,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
         expect(mind.value).toBe(SharedRefMind.MASTER);
 
@@ -268,14 +292,15 @@ describe("sharedRef", () => {
             type: RefSharedMessageType.LEAVE,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
-        expect(postMessageFn).lastCalledWith(expect.objectContaining({
-          type: RefSharedMessageType.SET_MIND,
-          mind: SharedRefMind.MASTER,
-          id: -1
-        } as RefSharedMessage))
-
+        expect(postMessageFn).lastCalledWith(
+          expect.objectContaining({
+            type: RefSharedMessageType.SET_MIND,
+            mind: SharedRefMind.MASTER,
+            id: -1
+          } as RefSharedMessage)
+        );
 
         listenerFn({
           data: {
@@ -283,14 +308,12 @@ describe("sharedRef", () => {
             mind: SharedRefMind.HIVE,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
         expect(mind.value).toBe(SharedRefMind.HIVE);
-
 
         targets.value = [];
 
         /* /LEAVE */
-
 
         /* UPDATE */
         // if UPDATE received we should update data and mind
@@ -301,12 +324,10 @@ describe("sharedRef", () => {
             mind: SharedRefMind.MASTER,
             value: 1
           } as RefSharedMessage
-        } as any)
-
+        } as any);
 
         expect(data.value).toBe(1);
         expect(mind.value).toBe(SharedRefMind.MASTER);
-
 
         // restore
         listenerFn({
@@ -315,10 +336,9 @@ describe("sharedRef", () => {
             mind: SharedRefMind.HIVE,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
         /* UPDATE */
-
 
         /* PING */
         // if PING received it should send pong event
@@ -330,20 +350,20 @@ describe("sharedRef", () => {
             type: RefSharedMessageType.PING,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
         // targets are reset and the id is assigned
         expect(targets.value).toStrictEqual([id]);
 
-        expect(postMessageFn).lastCalledWith(expect.objectContaining({
-          type: RefSharedMessageType.PONG,
-          id
-        } as RefSharedMessage))
+        expect(postMessageFn).lastCalledWith(
+          expect.objectContaining({
+            type: RefSharedMessageType.PONG,
+            id
+          } as RefSharedMessage)
+        );
 
         targets.value = [];
         /* PING */
-
-
 
         /* PONG */
         // if PONG received it should append to targets
@@ -354,7 +374,7 @@ describe("sharedRef", () => {
             type: RefSharedMessageType.PONG,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
         expect(targets.value).toStrictEqual([1, id]);
 
@@ -362,14 +382,13 @@ describe("sharedRef", () => {
 
         // set values for disconnect
 
-
         listenerFn({
           data: {
             type: RefSharedMessageType.SET_MIND,
             mind: SharedRefMind.MASTER,
             id: id
           } as RefSharedMessage
-        } as any)
+        } as any);
 
         targets.value.push(1, 2, 34, 5, 0);
 
@@ -378,55 +397,66 @@ describe("sharedRef", () => {
     });
     vm.$mount();
 
-
-
     /* ON DISCONNECT */
     vm.$destroy();
 
-    expect(postMessageFn).toHaveBeenNthCalledWith(postMessageFn.mock.calls.length - 1, expect.objectContaining({
-      type: RefSharedMessageType.SET_MIND,
-      mind: SharedRefMind.MASTER,
-      id: 0
-    } as RefSharedMessage))
+    expect(postMessageFn).toHaveBeenNthCalledWith(
+      postMessageFn.mock.calls.length - 1,
+      expect.objectContaining({
+        type: RefSharedMessageType.SET_MIND,
+        mind: SharedRefMind.MASTER,
+        id: 0
+      } as RefSharedMessage)
+    );
 
-
-    expect(postMessageFn).lastCalledWith(expect.objectContaining({
-      type: RefSharedMessageType.LEAVE
-    } as RefSharedMessage))
+    expect(postMessageFn).lastCalledWith(
+      expect.objectContaining({
+        type: RefSharedMessageType.LEAVE
+      } as RefSharedMessage)
+    );
 
     expect(closeFn).toHaveBeenCalled();
     /* /ON DISCONNECT */
-  })
+  });
 
-
-  it('should reply multiple broadcasts', (done) => {
+  it("should reply multiple broadcasts", done => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
         const all = [
-          useSharedRef('test'),
-          useSharedRef('test'),
-          useSharedRef('test')
+          useSharedRef("test"),
+          useSharedRef("test"),
+          useSharedRef("test")
         ];
-        const [
-          b1,
-          b2,
-          b3
-        ] = all;
+        const [b1, b2, b3] = all;
 
-
-        expect(all.map(x => x.master.value)).toStrictEqual([false, false, false]);
+        expect(all.map(x => x.master.value)).toStrictEqual([
+          false,
+          false,
+          false
+        ]);
 
         b1.setMind(SharedRefMind.MASTER);
         b3.mind.value = b2.mind.value = SharedRefMind.MASTER;
 
         nextTick().then(async () => {
+          expect(all.map(x => x.master.value)).toStrictEqual([
+            true,
+            false,
+            false
+          ]);
 
-          expect(all.map(x => x.master.value)).toStrictEqual([true, false, false]);
+          expect(all.map(x => x.mind.value)).toStrictEqual([
+            SharedRefMind.MASTER,
+            SharedRefMind.MASTER,
+            SharedRefMind.MASTER
+          ]);
 
-          expect(all.map(x => x.mind.value)).toStrictEqual([SharedRefMind.MASTER, SharedRefMind.MASTER, SharedRefMind.MASTER])
-
-          expect(all.map(x => x.editable.value)).toStrictEqual([true, false, false]);
+          expect(all.map(x => x.editable.value)).toStrictEqual([
+            true,
+            false,
+            false
+          ]);
 
           b2.data.value = 12;
           b3.data.value = 22;
@@ -435,8 +465,7 @@ describe("sharedRef", () => {
           expect(b2.data.value).toBe(b1.data.value);
           expect(b3.data.value).toBe(b1.data.value);
 
-
-          all.forEach(x => x.setMind(SharedRefMind.HIVE))
+          all.forEach(x => x.setMind(SharedRefMind.HIVE));
           await nextTick();
 
           b2.data.value = 12;
@@ -446,23 +475,21 @@ describe("sharedRef", () => {
           expect(b3.data.value).not.toBe(b1.data.value);
 
           done();
-        })
+        });
 
         return {};
       }
     });
     vm.$mount();
-  })
+  });
 
-
-
-  describe('helper ref', () => {
+  describe("helper ref", () => {
     // jest.spyOn(compositionApi, 'getCurrentInstance').mockImplementation(() => 'vue-test-vm');
-    it('should create a broadcastChannel', () => {
+    it("should create a broadcastChannel", () => {
       const vm = new Vue({
         template: "<div ref='el'></div>",
         setup(props: any, ctx: any) {
-          ctx.root.$vnode = { tag: 'vue-test-vm' };
+          ctx.root.$vnode = { tag: "vue-test-vm" };
 
           const r = refShared();
           expect(r.value).toBeUndefined();
@@ -477,13 +504,13 @@ describe("sharedRef", () => {
 
       vm.$destroy();
       expect(closeFn).toHaveBeenCalled();
-    })
+    });
 
-    it('should set the defaultValue and id ', () => {
+    it("should set the defaultValue and id ", () => {
       const vm = new Vue({
         template: "<div ref='el'></div>",
         setup() {
-          const r = refShared(11, '11');
+          const r = refShared(11, "11");
           expect(r.value).toBe(11);
 
           expect(constructorFn).toHaveBeenCalled();
@@ -496,25 +523,26 @@ describe("sharedRef", () => {
 
       vm.$destroy();
       expect(closeFn).toHaveBeenCalled();
-    })
+    });
 
-
-    it('should warn if used multiple times in the same component', ()=>{
-      const warnSpy = jest.spyOn(console, 'warn');
+    it("should warn if used multiple times in the same component", () => {
+      const warnSpy = jest.spyOn(console, "warn");
 
       new Vue({
         template: "<div ref='el'></div>",
         setup(props: any, ctx: any) {
-          ctx.root.$vnode = { tag: 'vue-test-vm' };
+          ctx.root.$vnode = { tag: "vue-test-vm" };
 
           const r = refShared();
           const r2 = refShared();
 
-          expect(warnSpy).toHaveBeenCalledWith('[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)');
+          expect(warnSpy).toHaveBeenCalledWith(
+            "[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)"
+          );
 
-          return {r, r2};
+          return { r, r2 };
         }
       });
-    })
-  })
-})
+    });
+  });
+});

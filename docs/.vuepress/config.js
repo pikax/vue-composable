@@ -173,14 +173,28 @@ module.exports = {
           ]
         },
         {
-          title: "Misc",
+          title: "Format",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/format/format", "format"]]
+        },
+
+        {
+          title: "Breakpoint",
           sidebarDepth: 1,
           collapsable: false,
           children: [
-            ["composable/misc/matchMedia", "matchMedia"],
-            ["composable/misc/breakpoint", "breakpoint"],
-            ["composable/misc/sharedRef", "SharedRef"]
+            ["composable/breakpoint/matchMedia", "matchMedia"],
+            ["composable/breakpoint/breakpoint", "breakpoint"],
+            ["composable/breakpoint/breakpointChrome", "Chrome"],
+            ["composable/breakpoint/breakpointTailwindCSS", "TailwindCSS"]
           ]
+        },
+        {
+          title: "Misc",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/misc/sharedRef", "SharedRef"]]
         },
         {
           title: "Storage",

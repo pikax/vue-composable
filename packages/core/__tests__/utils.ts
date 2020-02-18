@@ -1,1 +1,1 @@
-export { nextTick } from '@vue/runtime-core'
+export { nextTick } from "@vue/runtime-core";

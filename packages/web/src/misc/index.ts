@@ -1,4 +1,2 @@
-
-export * from './matchMedia'
-export * from './breakpoint'
-export * from './sharedRef';
+export * from "./matchMedia";
+export * from "./sharedRef";

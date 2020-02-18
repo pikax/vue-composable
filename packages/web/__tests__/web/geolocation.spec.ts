@@ -1,7 +1,7 @@
-import { useGeolocation } from '../../src';
-import { Vue, nextTick } from '../utils'
+import { useGeolocation } from "../../src";
+import { Vue, nextTick } from "../utils";
 
-describe('geolocation', () => {
+describe("geolocation", () => {
   const __geolocation = navigator.geolocation;
 
   const clearWatchFn = jest.fn();
@@ -11,32 +11,28 @@ describe('geolocation', () => {
   const geolocation: Geolocation = {
     clearWatch: clearWatchFn,
     getCurrentPosition: getCurrentPositionFn,
-    watchPosition: watchPositionFn,
-  }
+    watchPosition: watchPositionFn
+  };
 
   beforeEach(() => {
     (navigator as any).geolocation = geolocation;
     clearWatchFn.mockClear();
     getCurrentPositionFn.mockClear();
     watchPositionFn.mockClear();
-  })
-
+  });
 
   afterAll(() => {
     (navigator as any).geolocation = __geolocation;
-  })
+  });
 
-
-
-  it('should not be supported', () => {
+  it("should not be supported", () => {
     (navigator as any).geolocation = false;
     const { supported } = useGeolocation();
 
     expect(supported).toBe(false);
-  })
+  });
 
-
-  it('should pass the arguments to the watch', () => {
+  it("should pass the arguments to the watch", () => {
     let promise: Promise<void> = Promise.resolve();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -45,15 +41,19 @@ describe('geolocation', () => {
           maximumAge: 10,
           timeout: 10,
           enableHighAccuracy: false
-        }
+        };
         const geo = useGeolocation(opts);
 
         expect(geo.supported).toBe(true);
 
         promise = nextTick().then(async x => {
           expect(clearWatchFn).not.toHaveBeenCalled();
-          expect(watchPositionFn).toHaveBeenCalledWith(expect.anything(), expect.anything(), expect.objectContaining(opts));
-        })
+          expect(watchPositionFn).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining(opts)
+          );
+        });
 
         return {
           geo
@@ -61,10 +61,10 @@ describe('geolocation', () => {
       }
     });
     vm.$mount();
-    return promise
-  })
+    return promise;
+  });
 
-  it('refresh should call getCurrentPosition', () => {
+  it("refresh should call getCurrentPosition", () => {
     const vm = new Vue({
       template: "<div ref='el'></div>",
       setup() {
@@ -80,9 +80,9 @@ describe('geolocation', () => {
       }
     });
     vm.$mount();
-  })
+  });
 
-  it('should be lazy `immediate` = false', () => {
+  it("should be lazy `immediate` = false", () => {
     let promise: Promise<void> = Promise.resolve();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -99,7 +99,7 @@ describe('geolocation', () => {
 
           geo.refresh();
           expect(getCurrentPositionFn).toHaveBeenCalled();
-        })
+        });
 
         return {
           geo
@@ -107,10 +107,10 @@ describe('geolocation', () => {
       }
     });
     vm.$mount();
-    return promise
-  })
+    return promise;
+  });
 
-  it('should watchPosition', async () => {
+  it("should watchPosition", async () => {
     let promise: Promise<void> = Promise.resolve();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -120,7 +120,7 @@ describe('geolocation', () => {
         promise = nextTick().then(async x => {
           expect(clearWatchFn).not.toHaveBeenCalled();
           expect(watchPositionFn).toHaveBeenCalledTimes(1);
-        })
+        });
 
         return {
           geo
@@ -132,9 +132,9 @@ describe('geolocation', () => {
     vm.$destroy();
     expect(clearWatchFn).toHaveBeenCalled();
     expect(watchPositionFn).toHaveBeenCalledTimes(1);
-  })
+  });
 
-  it('should update the watchPosition if highAccuracy changes', async () => {
+  it("should update the watchPosition if highAccuracy changes", async () => {
     let promise: Promise<void> = Promise.resolve();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -146,18 +146,17 @@ describe('geolocation', () => {
           expect(watchPositionFn).toHaveBeenCalledTimes(1);
 
           geo.highAccuracy.value = true;
-          await nextTick()
+          await nextTick();
 
           expect(clearWatchFn).toHaveBeenCalledTimes(1);
           expect(watchPositionFn).toHaveBeenCalledTimes(2);
 
-
           geo.highAccuracy.value = false;
-          await nextTick()
+          await nextTick();
 
           expect(clearWatchFn).toHaveBeenCalledTimes(2);
           expect(watchPositionFn).toHaveBeenCalledTimes(3);
-        })
+        });
 
         return {
           geo
@@ -168,11 +167,9 @@ describe('geolocation', () => {
     await promise;
     vm.$destroy();
     expect(clearWatchFn).toHaveBeenCalled();
-  })
+  });
 
-
-  it('should set the correct values', async () => {
-
+  it("should set the correct values", async () => {
     let promise: Promise<void> = Promise.resolve();
     const vm = new Vue({
       template: "<div ref='el'></div>",
@@ -187,7 +184,6 @@ describe('geolocation', () => {
 
           expect(setPosition).toBeInstanceOf(Function);
           expect(setError).toBeInstanceOf(Function);
-
 
           expect(geo.coords.value).toBeNull();
           expect(geo.timestamp.value).toBeNull();
@@ -205,11 +201,11 @@ describe('geolocation', () => {
               speed: 70
             },
             timestamp: 11111111
-          }
+          };
 
           setPosition(pos);
 
-          await nextTick()
+          await nextTick();
 
           expect(geo.coords.value).toBe(pos.coords);
           expect(geo.timestamp.value).toBe(pos.timestamp);
@@ -217,9 +213,9 @@ describe('geolocation', () => {
 
           const error = {
             err: 1
-          }
-          setError(error)
-          await nextTick()
+          };
+          setError(error);
+          await nextTick();
 
           expect(geo.coords.value).toBeNull();
           expect(geo.timestamp.value).not.toBe(pos.timestamp);
@@ -236,16 +232,16 @@ describe('geolocation', () => {
               speed: 7
             },
             timestamp: 22222
-          }
+          };
 
           setPosition(pos2);
 
-          await nextTick()
+          await nextTick();
 
           expect(geo.coords.value).toBe(pos2.coords);
           expect(geo.timestamp.value).toBe(pos2.timestamp);
           expect(geo.error.value).toBeNull();
-        })
+        });
 
         return {
           geo
@@ -257,7 +253,5 @@ describe('geolocation', () => {
     vm.$destroy();
     expect(clearWatchFn).toHaveBeenCalled();
     expect(watchPositionFn).toHaveBeenCalledTimes(1);
-  })
-
-
-})
+  });
+});

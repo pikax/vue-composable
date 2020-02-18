@@ -1,6 +1,30 @@
 # Event
 
-> The [mousemove event](https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event).
+> The [scroll event](https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event).
+
+## Parameters
+
+```js
+import { useOnScroll } from "vue-composable";
+
+const scroll = useOnScroll();
+const scroll = useOnScroll(wait);
+const scroll = useOnScroll(options, wait?);
+const scroll = useOnScroll(element, options?, wait?);
+
+```
+
+| Parameters | Type                                | Required | Default           | Description                               |
+| ---------- | ----------------------------------- | -------- | ----------------- | ----------------------------------------- |
+| element    | `Ref<Element>|Element`              | `false`  | `window`          | DOM element used to track scroll position |
+| options    | `boolean | AddEventListenerOptions` | `false`  | `{passive: true}` | Listener options                          |
+| wait       | `Number`                            | `false`  | `undefined`       | Debounce event in `ms`                    |
+
+::: tip
+
+If no `element` is passed it will use `window` to get the scroll of the page
+
+:::
 
 ## State
 
@@ -33,9 +57,7 @@ const { remove } = useOnScroll();
 
 ## Example
 
-
 <on-scroll-example/>
-
 
 ### Code
 
