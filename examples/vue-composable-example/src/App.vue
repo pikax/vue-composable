@@ -25,6 +25,10 @@
       <li>
         <router-link to="/SWAPI">SWAPI</router-link>
       </li>
+
+      <li>
+        <router-link to="/validation">Validation</router-link>
+      </li>
     </ul>
     <router-view></router-view>
   </div>

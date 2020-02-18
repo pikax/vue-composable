@@ -42,6 +42,10 @@ const routes = [
   {
     path: "/sharedRef",
     component: SharedRef
+  },
+  {
+    path: "/validation",
+    component: () => import("./components/Validation")
   }
 ];
 const router = new VueRouter({
