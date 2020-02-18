@@ -1,5 +1,12 @@
-import { UnwrapType, RefTyped, isObject, isPromise, wrap } from "../utils";
-import { ref, Ref, watch } from "@vue/composition-api";
+import {
+  UnwrapType,
+  RefTyped,
+  isObject,
+  isPromise,
+  wrap,
+  isBoolean
+} from "../utils";
+import { ref, Ref, watch, computed } from "@vue/composition-api";
 
 type ValidatorFunc<T> = (model: T) => boolean | Promise<boolean>;
 
@@ -12,11 +19,11 @@ type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
 
 interface ValidationValue<T> {
   $value: Ref<T>;
+  $dirty: Ref<boolean>;
 }
 
 interface ValidatorResult {
-  $dirty: Ref<boolean>;
-  $error: any;
+  $error: Ref<any>;
   $invalid: Ref<boolean>;
 }
 
@@ -25,12 +32,6 @@ interface ValidationGroupResult {
   $errors: Ref<Array<any>>;
   $anyInvalid: Ref<boolean>;
 }
-
-// type ValidatorResultFuncArgs<T> = T extends (...args : infer TArgs)=>any ? ValidatorResultArgs<TArgs> : {};
-
-// interface ValidatorResultArgs<TArgs extends Array<any>> {
-//   $args: TArgs
-// }
 
 interface ValidatorResultPromise {
   $pending: Ref<boolean>;
@@ -47,7 +48,7 @@ type ValidationInputType<T, TValue> = Record<
   Validator<UnwrapType<TValue>>
 > & { $value: TValue };
 
-type ValidationInput<T> = T extends { $value: infer TValue } // ? Record<Exclude<keyof T, '$value'>, Validator<UnwrapType<TValue>>> & { $value: TValue}
+type ValidationInput<T> = T extends { $value: infer TValue }
   ? ValidationInputType<T, TValue>
   : { [K in keyof T]: ValidationInput<T[K]> };
 
@@ -132,16 +133,6 @@ const buildValidationValue = (
   r: Ref<any>,
   v: Validator<any>
 ): ValidatorResult & ValidatorResultPromise & ValidatorResultMessage => {
-  const $dirty = ref(false);
-  const dirtyWatch = watch(
-    r,
-    () => {
-      $dirty.value = true;
-      dirtyWatch();
-    },
-    { lazy: true, deep: true }
-  );
-
   const $validator: ValidatorFunc<any> = isValidatorObject(v)
     ? v.$validator
     : v;
@@ -153,7 +144,6 @@ const buildValidationValue = (
   );
 
   return {
-    $dirty,
     $pending,
     $error,
     $promise,
@@ -163,36 +153,119 @@ const buildValidationValue = (
 };
 
 const buildValidation = <T>(
-  value: Ref<any>,
   o: ValidationInput<T>
 ): Record<string, ValidationOutput<any>> => {
   const r: Record<string, ValidationOutput<any>> = {};
-  if (isValidation(o)) {
-    const $value = o.$value;
+  const $value = isValidation(o) ? o.$value : undefined;
+  for (const k of Object.keys(o)) {
+    if (k === "$value") {
+      r[k] = $value;
+      const $dirty = ref(false);
+      const dirtyWatch = watch(
+        $value,
+        () => {
+          $dirty.value = true;
+          dirtyWatch();
+        },
+        { lazy: true, deep: true }
+      );
 
-    for (const k of Object.keys(o)) {
-      if (k === "$value") {
-        r[k] = o[k];
-        continue;
+      (r as any)["$dirty"] = $dirty;
+      continue;
+    }
+
+    if ($value) {
+      const validation = buildValidationValue(
+        $value,
+        (o as Record<string, any>)[k]
+      );
+
+      r[k] = {
+        ...validation,
+        $value
+      } as any;
+    } else {
+      const validation = buildValidation((o as Record<string, any>)[k]);
+
+      let $anyDirty: Ref<boolean> | undefined = undefined;
+      let $errors: Ref<Array<any>>;
+      let $anyInvalid: Ref<boolean>;
+
+      if (isValidation(validation)) {
+        const validations = Object.keys(validation)
+          .filter(x => x[0] !== "$")
+          .map(x => (validation[x] as any) as ValidatorResult);
+        $errors = computed(() => {
+          return validations.map(x => x.$error.value);
+        }) as Ref<[]>;
+        // $anyDirty = computed(() => validations.some(x => !!x));
+        $anyInvalid = computed(() => validations.some(x => !!x.$invalid.value));
+      } else {
+        const validations = Object.keys(validation).map(
+          x => (validation[x] as any) as ValidationGroupResult
+        );
+        $errors = computed(() => {
+          return validations.map(x => x.$errors.value);
+        }) as Ref<[]>;
+        $anyDirty = computed(() =>
+          validations.some(
+            x =>
+              (x.$anyDirty && x.$anyDirty.value) ||
+              (isBoolean((x as any).$dirty && (x as any).$dirty.value) &&
+                (x as any).$dirty.value)
+          )
+        );
+        $anyInvalid = computed(() =>
+          validations.some(x => !!x.$anyInvalid.value)
+        );
       }
 
       r[k] = {
-        ...buildValidationValue(value, (o as any)[k]),
-        $value
+        ...validation,
+        $errors,
+        $anyInvalid
       } as any;
+
+      if ($anyDirty) {
+        (r[k] as any).$anyDirty = $anyDirty;
+      }
+      /*
+      const $anyDirty: Ref<boolean>;
+      const $errors: Ref<Array<any>>;
+      const $anyInvalid: Ref<boolean>;
+      */
     }
-  } else {
-    for (const k of Object.keys(o)) {
-      r[k] = buildValidation(value, (o as any)[k]);
-    }
+
+    return r;
   }
+
+  // if (isValidation(o)) {
+  //   const $value = o.$value;
+
+  //   for (const k of Object.keys(o)) {
+  //     if (k === "$value") {
+  //       r[k] = o[k];
+  //       continue;
+  //     }
+
+  //     r[k] = {
+  //       ...buildValidationValue(value, (o as any)[k]),
+  //       $value
+  //     } as any;
+  //   }
+  // } else {
+  //   for (const k of Object.keys(o)) {
+  //     const validation = buildValidation(value, (o as any)[k]);
+
+  //   }
+  // }
   return r;
 };
 
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
 ): ValidationOutput<E> {
-  return buildValidation(null as any, input) as ValidationOutput<E>;
+  return buildValidation({ input }).input as any;
 }
 
 // const required: Validator<number> = x => true;
