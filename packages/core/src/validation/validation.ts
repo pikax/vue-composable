@@ -108,9 +108,9 @@ const buildValidationFunction = (r: Ref<any>, f: ValidatorFunc<any>) => {
 
           const result = f(r);
           if (isPromise(result)) {
-            $invalid.value = await result;
+            $invalid.value = !(await result);
           } else {
-            $invalid.value = result;
+            $invalid.value = !result;
           }
         } finally {
           $pending.value = false;
@@ -158,20 +158,25 @@ const buildValidation = <T>(
   const r: Record<string, ValidationOutput<any>> = {};
   const $value = isValidation(o) ? o.$value : undefined;
   for (const k of Object.keys(o)) {
-    if (k === "$value") {
-      r[k] = $value;
-      const $dirty = ref(false);
-      const dirtyWatch = watch(
-        $value,
-        () => {
-          $dirty.value = true;
-          dirtyWatch();
-        },
-        { lazy: true, deep: true }
-      );
+    if (k[0] === "$") {
+      if (k === "$value") {
+        r[k] = $value;
+        const $dirty = ref(false);
+        const dirtyWatch = watch(
+          $value,
+          () => {
+            $dirty.value = true;
+            dirtyWatch();
+          },
+          { lazy: true, deep: true }
+        );
 
-      (r as any)["$dirty"] = $dirty;
-      continue;
+        (r as any)["$dirty"] = $dirty;
+        continue;
+      } else {
+        r[k] = (o as any)[k];
+        continue;
+      }
     }
 
     if ($value) {
@@ -196,7 +201,7 @@ const buildValidation = <T>(
           .filter(x => x[0] !== "$")
           .map(x => (validation[x] as any) as ValidatorResult);
         $errors = computed(() => {
-          return validations.map(x => x.$error.value);
+          return validations.map(x => x.$error.value).filter(Boolean);
         }) as Ref<[]>;
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() => validations.some(x => !!x.$invalid.value));
@@ -205,7 +210,7 @@ const buildValidation = <T>(
           x => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
-          return validations.map(x => x.$errors.value);
+          return validations.map(x => x.$errors.value).filter(Boolean);
         }) as Ref<[]>;
         $anyDirty = computed(() =>
           validations.some(
@@ -229,42 +234,14 @@ const buildValidation = <T>(
       if ($anyDirty) {
         (r[k] as any).$anyDirty = $anyDirty;
       }
-      /*
-      const $anyDirty: Ref<boolean>;
-      const $errors: Ref<Array<any>>;
-      const $anyInvalid: Ref<boolean>;
-      */
     }
-
-    return r;
   }
-
-  // if (isValidation(o)) {
-  //   const $value = o.$value;
-
-  //   for (const k of Object.keys(o)) {
-  //     if (k === "$value") {
-  //       r[k] = o[k];
-  //       continue;
-  //     }
-
-  //     r[k] = {
-  //       ...buildValidationValue(value, (o as any)[k]),
-  //       $value
-  //     } as any;
-  //   }
-  // } else {
-  //   for (const k of Object.keys(o)) {
-  //     const validation = buildValidation(value, (o as any)[k]);
-
-  //   }
-  // }
   return r;
 };
 
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
-): ValidationOutput<E> {
+): ValidationOutput<E> & ValidationGroupResult {
   return buildValidation({ input }).input as any;
 }
 
