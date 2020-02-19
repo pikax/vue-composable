@@ -8,7 +8,10 @@ import {
 } from "../utils";
 import { ref, Ref, watch, computed } from "@vue/composition-api";
 
-type ValidatorFunc<T> = (model: T) => boolean | Promise<boolean>;
+type ValidatorFunc<T, TContext = any> = (
+  model: T,
+  ctx: TContext
+) => boolean | Promise<boolean>;
 
 type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
   $validator: TValidator;
@@ -18,7 +21,7 @@ type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
 type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
 
 interface ValidationValue<T> {
-  $value: Ref<T>;
+  $value: T extends Ref<any> ? T : Ref<T>;
   $dirty: Ref<boolean>;
 }
 
@@ -72,10 +75,12 @@ type ValidatorOutput<T extends Validator<E>, E = any> = T extends ValidatorFunc<
   ? ValidatorOutputFunc<T["$validator"]> & ValidatorResultMessage
   : never;
 
+// TODO variables started with $ are not treated as validators, not
+// sure how to do that on typescript :/
 type ValidationOutput<T extends Record<string, any>> = T extends {
   $value: infer TValue;
 }
-  ? ValidationValue<T> &
+  ? ValidationValue<T["$value"]> &
       {
         [K in Exclude<keyof T, "$value">]: T[K] extends Validator<infer V>
           ? ValidatorOutput<T[K], V>
@@ -93,33 +98,58 @@ function isValidatorObject(v: any): v is ValidatorObject<any> {
   return isObject(v);
 }
 
-const buildValidationFunction = (r: Ref<any>, f: ValidatorFunc<any>) => {
+const buildValidationFunction = (
+  r: Ref<any>,
+  f: ValidatorFunc<any>,
+  handlers: Array<Function>
+) => {
   const $promise: Ref<Promise<boolean> | null> = ref(null);
   const $pending = ref(false);
   const $error = ref<Error>();
   const $invalid = ref(false);
+  let context: any = undefined;
 
-  watch(
-    r,
-    r => {
-      const p = async () => {
-        try {
-          $pending.value = true;
+  const onChange = (r: any) => {
+    const p = async () => {
+      try {
+        $pending.value = true;
 
-          const result = f(r);
-          if (isPromise(result)) {
-            $invalid.value = !(await result);
-          } else {
-            $invalid.value = !result;
-          }
-        } finally {
-          $pending.value = false;
+        const result = f(r, context);
+        if (isPromise(result)) {
+          $invalid.value = !(await result);
+        } else {
+          $invalid.value = !result;
         }
-      };
-      $promise.value = p().catch(x => ($error.value = x));
-    },
-    { deep: true }
-  );
+      } catch (e) {
+        $invalid.value = true;
+        throw e;
+      } finally {
+        $pending.value = false;
+      }
+    };
+    $promise.value = p().catch(x => {
+      $error.value = x;
+      $invalid.value = true;
+      return x;
+    });
+  };
+
+  handlers.push((ctx: any) => {
+    context = ctx;
+    watch(
+      () => {
+        try {
+          // keep track on the external dependencies
+          f(r.value, context);
+        } catch (e) {
+          // ignore error
+        }
+        return r.value;
+      },
+      onChange,
+      { deep: true }
+    );
+  });
 
   return {
     $promise,
@@ -131,7 +161,8 @@ const buildValidationFunction = (r: Ref<any>, f: ValidatorFunc<any>) => {
 
 const buildValidationValue = (
   r: Ref<any>,
-  v: Validator<any>
+  v: Validator<any>,
+  handlers: Array<Function>
 ): ValidatorResult & ValidatorResultPromise & ValidatorResultMessage => {
   const $validator: ValidatorFunc<any> = isValidatorObject(v)
     ? v.$validator
@@ -140,7 +171,8 @@ const buildValidationValue = (
 
   const { $pending, $promise, $invalid, $error } = buildValidationFunction(
     r,
-    $validator
+    $validator,
+    handlers
   );
 
   return {
@@ -153,7 +185,8 @@ const buildValidationValue = (
 };
 
 const buildValidation = <T>(
-  o: ValidationInput<T>
+  o: ValidationInput<T>,
+  handlers: Array<Function>
 ): Record<string, ValidationOutput<any>> => {
   const r: Record<string, ValidationOutput<any>> = {};
   const $value = isValidation(o) ? o.$value : undefined;
@@ -182,7 +215,8 @@ const buildValidation = <T>(
     if ($value) {
       const validation = buildValidationValue(
         $value,
-        (o as Record<string, any>)[k]
+        (o as Record<string, any>)[k],
+        handlers
       );
 
       r[k] = {
@@ -190,7 +224,10 @@ const buildValidation = <T>(
         $value
       } as any;
     } else {
-      const validation = buildValidation((o as Record<string, any>)[k]);
+      const validation = buildValidation(
+        (o as Record<string, any>)[k],
+        handlers
+      );
 
       let $anyDirty: Ref<boolean> | undefined = undefined;
       let $errors: Ref<Array<any>>;
@@ -242,36 +279,8 @@ const buildValidation = <T>(
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
 ): ValidationOutput<E> & ValidationGroupResult {
-  return buildValidation({ input }).input as any;
+  const handlers: Array<Function> = [];
+  const validation = buildValidation({ input }, handlers);
+  handlers.forEach(x => x(validation.input));
+  return validation.input as any;
 }
-
-// const required: Validator<number> = x => true;
-
-// const c = useValidation({
-//   name: {
-//     $value: ref(1),
-//     required
-//   },
-//   form: {
-//     input: {
-//       $value: 1,
-//       required: async (x: number) => {
-//         return true;
-//       }
-//     },
-//     input2: {
-//       $value: 2,
-//       required: {
-//         $validator(e: number) {
-//           return false;
-//         },
-//         $message: ref("test")
-//       }
-//     }
-//   }
-// });
-
-// c.name.required.$dirty;
-// c.form.input.required.$promise;
-// c.form.input.required;
-// c.form.input2.required.$message;

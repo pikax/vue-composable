@@ -67,4 +67,26 @@ describe("validation", () => {
       }
     });
   });
+
+  it("validator should run if dependent of other ref", async () => {
+    const password = ref('');
+    const form = useValidation({
+      password: {
+        $value: password
+      },
+      password2: {
+        $value: ref(""),
+        samePassword(r: string, ctx: any) {
+          return r === ctx.password.$value.value;
+        }
+      }
+    });
+
+    expect(form.password2.samePassword.$invalid.value).toBe(false);
+
+    form.password.$value.value = 'test';
+    await nextTick();
+
+    expect(form.password2.samePassword.$invalid.value).toBe(true);
+  });
 });
