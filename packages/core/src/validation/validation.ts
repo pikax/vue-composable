@@ -1,4 +1,11 @@
-import { UnwrapRef, isObject, isPromise, wrap, isBoolean } from "../utils";
+import {
+  UnwrapRef,
+  isObject,
+  isPromise,
+  wrap,
+  isBoolean,
+  RefTyped
+} from "../utils";
 import { ref, Ref, watch, computed, reactive } from "@vue/composition-api";
 
 type ValidatorFunc<T, TContext = any> = (
@@ -8,7 +15,7 @@ type ValidatorFunc<T, TContext = any> = (
 
 type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
   $validator: TValidator;
-  $message: string;
+  $message: RefTyped<string>;
 };
 
 type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
@@ -246,8 +253,7 @@ const buildValidation = <T>(
           validations.some(
             x =>
               (x.$anyDirty && x.$anyDirty) ||
-              (isBoolean((x as any).$dirty && (x as any).$dirty) &&
-                (x as any).$dirty)
+              (isBoolean((x as any).$dirty) && (x as any).$dirty)
           )
         );
         $anyInvalid = computed(() => validations.some(x => !!x.$anyInvalid));
@@ -279,6 +285,6 @@ export function useValidation<T extends UseValidation<E>, E = any>(
   // set the context, this will allow to use this object as the second
   // argument when calling validators
   handlers.forEach(x => x(validationInput));
-  
+
   return validationInput as any;
 }
