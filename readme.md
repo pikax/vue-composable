@@ -5,6 +5,13 @@
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 [![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
+<p align="center">
+  <br>
+  <img width="400" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
+
 ## Introduction
 
 `vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.

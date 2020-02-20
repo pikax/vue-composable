@@ -24,7 +24,7 @@ module.exports = {
       "meta",
       { name: "viewport", content: "width=device-width, initial-scale=1" }
     ],
-    ["meta", { property: "og:image", content: "" }],
+    ["meta", { property: "og:image", content: "/img/favicon-32x32.png" }],
     [
       "link",
       {
@@ -94,7 +94,7 @@ module.exports = {
       {
         rel: "apple-touch-icon",
         sizes: "180x180",
-        href: "/img/apple-icon-180x180.png"
+        href: "/img/apple-touch-icon.png"
       }
     ],
     [
@@ -144,6 +144,7 @@ module.exports = {
   themeConfig: {
     repo: "pikax/vue-composable",
     docsRepo: "pikax/vue-composable",
+    logo: "/assets/logo.svg",
     docsDir: "docs",
     editLinks: true,
     sidebarDepth: 2,

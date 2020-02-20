@@ -2,7 +2,7 @@
 title: vue-composable
 lang: en-US
 home: true
-# heroImage:
+heroImage: /assets/logo.svg
 actionText: Get Started →
 actionLink: ./composable/
 features:
