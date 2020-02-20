@@ -23,21 +23,21 @@ describe("validation", () => {
     });
 
     expect(validation).toMatchObject({
-      $anyDirty: { value: false },
-      $anyInvalid: { value: true },
+      $anyDirty: false,
+      $anyInvalid: true,
 
       test: {
-        $dirty: { value: false },
-        $value,
+        $dirty: false,
+        $value: $value.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       },
       test1: {
-        $dirty: { value: false },
-        $value: $value1,
+        $dirty: false,
+        $value: $value1.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       }
     });
@@ -46,30 +46,30 @@ describe("validation", () => {
 
     await nextTick();
 
-    expect(validation.test.$value).toBe($value);
+    expect(validation.test.$value).toBe($value.value);
     expect(validation).toMatchObject({
-      $anyDirty: { value: true },
-      $anyInvalid: { value: true },
+      $anyDirty: true,
+      $anyInvalid: true,
 
       test: {
-        $dirty: { value: true },
-        $value,
+        $dirty: true,
+        $value: $value.value,
         required: {
-          $invalid: { value: false }
+          $invalid: false
         }
       },
       test1: {
-        $dirty: { value: false },
-        $value: $value1,
+        $dirty: false,
+        $value: $value1.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       }
     });
   });
 
   it("validator should run if dependent of other ref", async () => {
-    const password = ref('');
+    const password = ref("");
     const form = useValidation({
       password: {
         $value: password
@@ -77,16 +77,16 @@ describe("validation", () => {
       password2: {
         $value: ref(""),
         samePassword(r: string, ctx: any) {
-          return r === ctx.password.$value.value;
+          return r === ctx.password.$value;
         }
       }
     });
 
-    expect(form.password2.samePassword.$invalid.value).toBe(false);
+    expect(form.password2.samePassword.$invalid).toBe(false);
 
-    form.password.$value.value = 'test';
+    form.password.$value = "test";
     await nextTick();
 
-    expect(form.password2.samePassword.$invalid.value).toBe(true);
+    expect(form.password2.samePassword.$invalid).toBe(true);
   });
 });

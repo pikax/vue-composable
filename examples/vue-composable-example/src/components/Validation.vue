@@ -2,17 +2,17 @@
   <div class="about">
     <h1>Form validation</h1>
     <form @submit="onSubmit">
-      <input v-model="form.firstName.$value.value" placeholder="firstName" />
-      <input v-model="form.lastName.$value.value" placeholder="lastName" />
-      <input v-model="form.password.$value.value" placeholder="password" />
-      <input v-model="form.samePassword.$value.value" placeholder="password2" />
+      <input v-model="form.firstName.$value" placeholder="firstName" />
+      <input v-model="form.lastName.$value" placeholder="lastName" />
+      <input v-model="form.password.$value" placeholder="password" />
+      <input v-model="form.samePassword.$value" placeholder="password2" />
       <p
         v-if="
-          form.samePassword.$dirty.value &&
-            form.samePassword.match.$invalid.value
+          form.samePassword.$dirty &&
+            form.samePassword.match.$invalid
         "
       >
-        {{ form.samePassword.match.$message.value }}
+        {{ form.samePassword.match.$message }}
       </p>
     </form>
     {{ form }}
@@ -65,7 +65,7 @@ export default createComponent({
 
     return {
       onSubmit,
-      form
+      form: ref(form)
     };
   }
 });

@@ -1,12 +1,5 @@
-import {
-  UnwrapType,
-  RefTyped,
-  isObject,
-  isPromise,
-  wrap,
-  isBoolean
-} from "../utils";
-import { ref, Ref, watch, computed } from "@vue/composition-api";
+import { UnwrapRef, isObject, isPromise, wrap, isBoolean } from "../utils";
+import { ref, Ref, watch, computed, reactive } from "@vue/composition-api";
 
 type ValidatorFunc<T, TContext = any> = (
   model: T,
@@ -15,40 +8,40 @@ type ValidatorFunc<T, TContext = any> = (
 
 type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
   $validator: TValidator;
-  $message: RefTyped<string>;
+  $message: string;
 };
 
 type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
 
 interface ValidationValue<T> {
-  $value: T extends Ref<any> ? T : Ref<T>;
-  $dirty: Ref<boolean>;
+  $value: UnwrapRef<T>;
+  $dirty: boolean;
 }
 
 interface ValidatorResult {
-  $error: Ref<any>;
-  $invalid: Ref<boolean>;
+  $error: any;
+  $invalid: boolean;
 }
 
 interface ValidationGroupResult {
-  $anyDirty: Ref<boolean>;
-  $errors: Ref<Array<any>>;
-  $anyInvalid: Ref<boolean>;
+  $anyDirty: boolean;
+  $errors: Array<any>;
+  $anyInvalid: boolean;
 }
 
 interface ValidatorResultPromise {
-  $pending: Ref<boolean>;
-  $promise: Ref<Promise<boolean> | null>;
+  $pending: boolean;
+  $promise: Promise<boolean> | null;
 }
 
 interface ValidatorResultMessage {
-  $message: Ref<string>;
+  $message: string;
 }
 
 /*  Input */
 type ValidationInputType<T, TValue> = Record<
   Exclude<keyof T, "$value">,
-  Validator<UnwrapType<TValue>>
+  Validator<UnwrapRef<TValue>>
 > & { $value: TValue };
 
 type ValidationInput<T> = T extends { $value: infer TValue }
@@ -181,7 +174,7 @@ const buildValidationValue = (
     $promise,
     $invalid,
     $message
-  };
+  } as any;
 };
 
 const buildValidation = <T>(
@@ -238,28 +231,26 @@ const buildValidation = <T>(
           .filter(x => x[0] !== "$")
           .map(x => (validation[x] as any) as ValidatorResult);
         $errors = computed(() => {
-          return validations.map(x => x.$error.value).filter(Boolean);
+          return validations.map(x => x.$error).filter(Boolean);
         }) as Ref<[]>;
         // $anyDirty = computed(() => validations.some(x => !!x));
-        $anyInvalid = computed(() => validations.some(x => !!x.$invalid.value));
+        $anyInvalid = computed(() => validations.some(x => !!x.$invalid));
       } else {
         const validations = Object.keys(validation).map(
           x => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
-          return validations.map(x => x.$errors.value).filter(Boolean);
+          return validations.map(x => x.$errors).filter(Boolean);
         }) as Ref<[]>;
         $anyDirty = computed(() =>
           validations.some(
             x =>
-              (x.$anyDirty && x.$anyDirty.value) ||
-              (isBoolean((x as any).$dirty && (x as any).$dirty.value) &&
-                (x as any).$dirty.value)
+              (x.$anyDirty && x.$anyDirty) ||
+              (isBoolean((x as any).$dirty && (x as any).$dirty) &&
+                (x as any).$dirty)
           )
         );
-        $anyInvalid = computed(() =>
-          validations.some(x => !!x.$anyInvalid.value)
-        );
+        $anyInvalid = computed(() => validations.some(x => !!x.$anyInvalid));
       }
 
       r[k] = {
@@ -281,6 +272,13 @@ export function useValidation<T extends UseValidation<E>, E = any>(
 ): ValidationOutput<E> & ValidationGroupResult {
   const handlers: Array<Function> = [];
   const validation = buildValidation({ input }, handlers);
-  handlers.forEach(x => x(validation.input));
-  return validation.input as any;
+  // convert to reactive, this will make it annoying to deconstruct, but
+  // allows to use it directly on the render template without `.value`
+  // https://github.com/vuejs/vue-next/pull/738
+  const validationInput = reactive(validation.input);
+  // set the context, this will allow to use this object as the second
+  // argument when calling validators
+  handlers.forEach(x => x(validationInput));
+  
+  return validationInput as any;
 }
