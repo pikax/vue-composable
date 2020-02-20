@@ -7,7 +7,7 @@
 
 <p align="center">
   <br>
-  <img width="400" src="./logo.svg" alt="logo of vue-composable">
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
   <br>
   <br>
 </p>
