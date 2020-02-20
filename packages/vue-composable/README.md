@@ -5,6 +5,13 @@
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 [![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
+
 # vue-next
 
 > For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/vue-composable/v/next)

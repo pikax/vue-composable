@@ -3,6 +3,13 @@
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fweb.svg)](https://badge.fury.io/js/%40vue-composable%2Fweb)
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/web)](https://bundlephobia.com/result?p=@vue-composable/web)
 
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
+
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 
 # vue-next
