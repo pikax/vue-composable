@@ -103,6 +103,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
 
+### Validation
+
+- [Validation](composable/validation/validation) - `validation` composable
+
 ### External
 
 > New packages needed

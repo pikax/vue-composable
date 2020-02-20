@@ -238,7 +238,11 @@ const buildValidation = <T>(
           .filter(x => x[0] !== "$")
           .map(x => (validation[x] as any) as ValidatorResult);
         $errors = computed(() => {
-          return validations.map(x => x.$error).filter(Boolean);
+          return validations
+            .map(x => x.$error)
+            .filter(x =>
+              Boolean(x) && Array.isArray(x) ? x.some(Boolean) : x
+            );
         }) as Ref<[]>;
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() => validations.some(x => !!x.$invalid));
@@ -247,7 +251,10 @@ const buildValidation = <T>(
           x => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
-          return validations.map(x => x.$errors).filter(Boolean);
+          return validations
+            .map(x => x.$errors)
+            .filter(Boolean)
+            .filter(x => x.some(Boolean));
         }) as Ref<[]>;
         $anyDirty = computed(() =>
           validations.some(
