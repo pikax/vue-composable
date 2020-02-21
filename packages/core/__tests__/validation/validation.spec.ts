@@ -1,4 +1,4 @@
-import { useValidation } from "../../src";
+import { useValidation, NO_OP } from "../../src";
 import { ref } from "@vue/composition-api";
 import { nextTick } from "../utils";
 
@@ -23,21 +23,21 @@ describe("validation", () => {
     });
 
     expect(validation).toMatchObject({
-      $anyDirty: { value: false },
-      $anyInvalid: { value: true },
+      $anyDirty: false,
+      $anyInvalid: true,
 
       test: {
-        $dirty: { value: false },
-        $value,
+        $dirty: false,
+        $value: $value.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       },
       test1: {
-        $dirty: { value: false },
-        $value: $value1,
+        $dirty: false,
+        $value: $value1.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       }
     });
@@ -46,25 +46,124 @@ describe("validation", () => {
 
     await nextTick();
 
-    expect(validation.test.$value).toBe($value);
+    expect(validation.test.$value).toBe($value.value);
     expect(validation).toMatchObject({
-      $anyDirty: { value: true },
-      $anyInvalid: { value: true },
+      $anyDirty: true,
+      $anyInvalid: true,
 
       test: {
-        $dirty: { value: true },
-        $value,
+        $dirty: true,
+        $value: $value.value,
         required: {
-          $invalid: { value: false }
+          $invalid: false
         }
       },
       test1: {
-        $dirty: { value: false },
-        $value: $value1,
+        $dirty: false,
+        $value: $value1.value,
         required: {
-          $invalid: { value: true }
+          $invalid: true
         }
       }
     });
+  });
+
+  it("validator should run if dependent of other ref", async () => {
+    const password = ref("");
+    const form = useValidation({
+      password: {
+        $value: password
+      },
+      password2: {
+        $value: ref(""),
+        samePassword(r: string, ctx: any) {
+          return r === ctx.password.$value;
+        }
+      }
+    });
+
+    expect(form.password2.samePassword.$invalid).toBe(false);
+
+    form.password.$value = "test";
+    await nextTick();
+
+    expect(form.password2.samePassword.$invalid).toBe(true);
+  });
+
+  it("should keep values with key starting `$`", () => {
+    const $args = [1, 2];
+    const v = useValidation({
+      password: {
+        $value: ref(""),
+        $args
+      }
+    });
+
+    expect(v.password.$args).toBe($args);
+  });
+
+  it("should store error if exception thrown ", async () => {
+    const error = new Error("my error");
+    const v = useValidation({
+      password: {
+        $value: ref(""),
+        required() {
+          throw error;
+        }
+      }
+    });
+
+    await nextTick();
+
+    expect(v.password.required.$error).toBe(error);
+    expect(v.password.$errors).toMatchObject([error]);
+    expect(v.$errors).toMatchObject([[error]]);
+  });
+
+  it("should handle promise validator", async () => {
+    let promiseResolve: Function = NO_OP;
+    const promise = new Promise<boolean>(resolve => (promiseResolve = resolve));
+
+    const v = useValidation({
+      password: {
+        $value: ref(""),
+        required() {
+          return promise;
+        }
+      }
+    });
+
+    expect(v.password.required.$pending).toBe(true);
+
+    promiseResolve(true);
+    await nextTick();
+
+    expect(v.password.required.$pending).toBe(false);
+  });
+
+  it("should handle promise validator with objectValidator", async () => {
+    let promiseResolve: Function = NO_OP;
+    const promise = new Promise<boolean>(resolve => (promiseResolve = resolve));
+
+    const v = useValidation({
+      password: {
+        $value: ref(""),
+        required: {
+          $validator() {
+            return promise;
+          },
+          $message: ref("Err")
+        }
+      }
+    });
+
+    expect(v.password.required.$pending).toBe(true);
+    expect(v.password.required.$message).toBe("Err");
+
+    promiseResolve(true);
+    await nextTick();
+
+    expect(v.password.required.$pending).toBe(false);
+    expect(v.password.required.$message).toBe("Err");
   });
 });

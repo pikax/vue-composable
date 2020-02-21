@@ -1,7 +1,15 @@
 # @vue-composable/core
 
 <!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore) -->
+
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core@next)](https://bundlephobia.com/result?p=@vue-composable/core@next)
+
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
 
 This package contains core functionality for [vue-composable][vue-composable]
 
@@ -37,6 +45,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [usePagination][pagination] : Provides framework to implement reactive pagination
 - [useArrayPagination][array-pagination] : Uses [usePagination][pagination] to paginate an array
+
+### Validation
+
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### Format
 

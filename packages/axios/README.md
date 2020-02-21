@@ -1,7 +1,15 @@
 # @vue-composable/axios
 
 <!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios) -->
+
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios@next)](https://bundlephobia.com/result?p=@vue-composable/axios@next)
+
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
 
 # Vue 3
 

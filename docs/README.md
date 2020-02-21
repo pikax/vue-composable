@@ -2,7 +2,7 @@
 title: vue-composable
 lang: en-US
 home: true
-# heroImage:
+heroImage: /assets/logo.svg
 actionText: Get Started →
 actionLink: ./composable/
 features:
@@ -102,6 +102,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Language](composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
+
+### Validation
+
+- [Validation](composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### External
 

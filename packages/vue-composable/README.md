@@ -1,9 +1,19 @@
 # vue-composable
 
 <!-- [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable) -->
+
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=vue3)](https://coveralls.io/github/pikax/vue-composable?branch=vue3)
+
 <!-- [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable) -->
+
 [![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable@next)](https://bundlephobia.com/result?p=vue-composable@next)
+
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
 
 # Vue 3
 
@@ -35,6 +45,7 @@ npm install @vue/composition-api vue-composable
 ```
 
 ## Documentation
+
 > NOTE documentation might be slightly wrong, because it was built for the v2
 
 Check our [documentation](https://pikax.me/vue-composable/)
@@ -78,6 +89,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [Pagination](https://pikax.me/vue-composable/composable/pagination/pagination) - Generic reactive pagination controls
 - [Array Pagination](https://pikax.me/vue-composable/composable/pagination/arrayPagination) - Array pagination
+
+### Validation
+
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### Promise
 

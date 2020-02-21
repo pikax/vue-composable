@@ -3,8 +3,7 @@ import { ref, Ref, isRef } from "@vue/runtime-core";
 export type RefTyped<T> = T | Ref<T>;
 export type RefElement = Element | Ref<Element | undefined>;
 
-export type UnwrapType<T> = T extends Ref<infer R> ? R : T;
-export type WrapType<T> = T extends Ref<any> ? T : Ref<T>;
+export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
 
 export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;

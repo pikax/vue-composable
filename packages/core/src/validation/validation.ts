@@ -1,13 +1,17 @@
+import { isObject, isPromise, isBoolean, RefTyped } from "../utils";
 import {
-  RefTyped,
-  isObject,
-  isPromise,
-  wrap,
-  isBoolean
-} from "../utils";
-import { ref, Ref, watch, computed, UnwrapRef } from "@vue/runtime-core";
+  ref,
+  Ref,
+  watch,
+  computed,
+  reactive,
+  UnwrapRef
+} from "@vue/runtime-core";
 
-type ValidatorFunc<T> = (model: T) => boolean | Promise<boolean>;
+type ValidatorFunc<T, TContext = any> = (
+  model: T,
+  ctx: TContext
+) => boolean | Promise<boolean>;
 
 type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
   $validator: TValidator;
@@ -17,28 +21,28 @@ type ValidatorObject<TValidator extends ValidatorFunc<any>> = {
 type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
 
 interface ValidationValue<T> {
-  $value: Ref<T>;
-  $dirty: Ref<boolean>;
+  $value: UnwrapRef<T>;
+  $dirty: boolean;
 }
 
 interface ValidatorResult {
-  $error: Ref<any>;
-  $invalid: Ref<boolean>;
+  $error: any;
+  $invalid: boolean;
 }
 
 interface ValidationGroupResult {
-  $anyDirty: Ref<boolean>;
-  $errors: Ref<Array<any>>;
-  $anyInvalid: Ref<boolean>;
+  $anyDirty: boolean;
+  $errors: Array<any>;
+  $anyInvalid: boolean;
 }
 
 interface ValidatorResultPromise {
-  $pending: Ref<boolean>;
-  $promise: Ref<Promise<boolean> | null>;
+  $pending: boolean;
+  $promise: Promise<boolean> | null;
 }
 
 interface ValidatorResultMessage {
-  $message: Ref<string>;
+  $message: string;
 }
 
 /*  Input */
@@ -71,10 +75,12 @@ type ValidatorOutput<T extends Validator<E>, E = any> = T extends ValidatorFunc<
   ? ValidatorOutputFunc<T["$validator"]> & ValidatorResultMessage
   : never;
 
+// TODO variables started with $ are not treated as validators, not
+// sure how to do that on typescript :/
 type ValidationOutput<T extends Record<string, any>> = T extends {
   $value: infer TValue;
 }
-  ? ValidationValue<T> &
+  ? ValidationValue<T["$value"]> &
       {
         [K in Exclude<keyof T, "$value">]: T[K] extends Validator<infer V>
           ? ValidatorOutput<T[K], V>
@@ -92,33 +98,58 @@ function isValidatorObject(v: any): v is ValidatorObject<any> {
   return isObject(v);
 }
 
-const buildValidationFunction = (r: Ref<any>, f: ValidatorFunc<any>) => {
+const buildValidationFunction = (
+  r: Ref<any>,
+  f: ValidatorFunc<any>,
+  handlers: Array<Function>
+) => {
   const $promise: Ref<Promise<boolean> | null> = ref(null);
   const $pending = ref(false);
   const $error = ref<Error>();
   const $invalid = ref(false);
+  let context: any = undefined;
 
-  watch(
-    r,
-    r => {
-      const p = async () => {
-        try {
-          $pending.value = true;
+  const onChange = (r: any) => {
+    const p = async () => {
+      try {
+        $pending.value = true;
 
-          const result = f(r);
-          if (isPromise(result)) {
-            $invalid.value = !(await result);
-          } else {
-            $invalid.value = !result;
-          }
-        } finally {
-          $pending.value = false;
+        const result = f(r, context);
+        if (isPromise(result)) {
+          $invalid.value = !(await result);
+        } else {
+          $invalid.value = !result;
         }
-      };
-      $promise.value = p().catch(x => ($error.value = x));
-    },
-    { deep: true }
-  );
+      } catch (e) {
+        $invalid.value = true;
+        throw e;
+      } finally {
+        $pending.value = false;
+      }
+    };
+    $promise.value = p().catch(x => {
+      $error.value = x;
+      $invalid.value = true;
+      return x;
+    });
+  };
+
+  handlers.push((ctx: any) => {
+    context = ctx;
+    watch(
+      () => {
+        try {
+          // keep track on the external dependencies
+          f(r.value, context);
+        } catch (e) {
+          // ignore error
+        }
+        return r.value;
+      },
+      onChange,
+      { deep: true }
+    );
+  });
 
   return {
     $promise,
@@ -130,16 +161,17 @@ const buildValidationFunction = (r: Ref<any>, f: ValidatorFunc<any>) => {
 
 const buildValidationValue = (
   r: Ref<any>,
-  v: Validator<any>
+  v: Validator<any>,
+  handlers: Array<Function>
 ): ValidatorResult & ValidatorResultPromise & ValidatorResultMessage => {
-  const $validator: ValidatorFunc<any> = isValidatorObject(v)
-    ? v.$validator
-    : v;
-  const $message = isValidatorObject(v) ? wrap(v.$message) : ref("");
+  const { $message, $validator, ...$rest } = isValidatorObject(v)
+    ? v
+    : { $validator: v, $message: "" };
 
   const { $pending, $promise, $invalid, $error } = buildValidationFunction(
     r,
-    $validator
+    $validator,
+    handlers
   );
 
   return {
@@ -147,12 +179,14 @@ const buildValidationValue = (
     $error,
     $promise,
     $invalid,
-    $message
-  };
+    $message,
+    ...$rest
+  } as any;
 };
 
 const buildValidation = <T>(
-  o: ValidationInput<T>
+  o: ValidationInput<T>,
+  handlers: Array<Function>
 ): Record<string, ValidationOutput<any>> => {
   const r: Record<string, ValidationOutput<any>> = {};
   const $value = isValidation(o) ? o.$value : undefined;
@@ -181,7 +215,8 @@ const buildValidation = <T>(
     if ($value) {
       const validation = buildValidationValue(
         $value,
-        (o as Record<string, any>)[k]
+        (o as Record<string, any>)[k],
+        handlers
       );
 
       r[k] = {
@@ -189,7 +224,10 @@ const buildValidation = <T>(
         $value
       } as any;
     } else {
-      const validation = buildValidation((o as Record<string, any>)[k]);
+      const validation = buildValidation(
+        (o as Record<string, any>)[k],
+        handlers
+      );
 
       let $anyDirty: Ref<boolean> | undefined = undefined;
       let $errors: Ref<Array<any>>;
@@ -200,28 +238,32 @@ const buildValidation = <T>(
           .filter(x => x[0] !== "$")
           .map(x => (validation[x] as any) as ValidatorResult);
         $errors = computed(() => {
-          return validations.map(x => x.$error.value).filter(Boolean);
+          return validations
+            .map(x => x.$error)
+            .filter(x =>
+              Boolean(x) && Array.isArray(x) ? x.some(Boolean) : x
+            );
         });
         // $anyDirty = computed(() => validations.some(x => !!x));
-        $anyInvalid = computed(() => validations.some(x => !!x.$invalid.value));
+        $anyInvalid = computed(() => validations.some(x => !!x.$invalid));
       } else {
         const validations = Object.keys(validation).map(
           x => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
-          return validations.map(x => x.$errors.value).filter(Boolean);
+          return validations
+            .map(x => x.$errors)
+            .filter(Boolean)
+            .filter(x => x.some(Boolean));
         });
         $anyDirty = computed(() =>
           validations.some(
             x =>
-              (x.$anyDirty && x.$anyDirty.value) ||
-              (isBoolean((x as any).$dirty && (x as any).$dirty.value) &&
-                (x as any).$dirty.value)
+              (x.$anyDirty && x.$anyDirty) ||
+              (isBoolean((x as any).$dirty) && (x as any).$dirty)
           )
         );
-        $anyInvalid = computed(() =>
-          validations.some(x => !!x.$anyInvalid.value)
-        );
+        $anyInvalid = computed(() => validations.some(x => !!x.$anyInvalid));
       }
 
       r[k] = {
@@ -241,36 +283,15 @@ const buildValidation = <T>(
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
 ): ValidationOutput<E> & ValidationGroupResult {
-  return buildValidation({ input }).input as any;
+  const handlers: Array<Function> = [];
+  const validation = buildValidation({ input }, handlers);
+  // convert to reactive, this will make it annoying to deconstruct, but
+  // allows to use it directly on the render template without `.value`
+  // https://github.com/vuejs/vue-next/pull/738
+  const validationInput = reactive(validation.input);
+  // set the context, this will allow to use this object as the second
+  // argument when calling validators
+  handlers.forEach(x => x(validationInput));
+
+  return validationInput as any;
 }
-
-// const required: Validator<number> = x => true;
-
-// const c = useValidation({
-//   name: {
-//     $value: ref(1),
-//     required
-//   },
-//   form: {
-//     input: {
-//       $value: 1,
-//       required: async (x: number) => {
-//         return true;
-//       }
-//     },
-//     input2: {
-//       $value: 2,
-//       required: {
-//         $validator(e: number) {
-//           return false;
-//         },
-//         $message: ref("test")
-//       }
-//     }
-//   }
-// });
-
-// c.name.required.$dirty;
-// c.form.input.required.$promise;
-// c.form.input.required;
-// c.form.input2.required.$message;
