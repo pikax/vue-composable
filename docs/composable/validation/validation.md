@@ -2,6 +2,10 @@
 
 > `validation` composable inspired by [vuelidate](https://github.com/vuelidate/vuelidate)
 
+::: warning
+Currently there's no exported `validators`.
+:::
+
 ## Parameters
 
 ```js
