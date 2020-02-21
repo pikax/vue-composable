@@ -19,5 +19,5 @@ export function useBreakpointChrome(): BreakpointReturn<ChromeBreakpoint> {
     laptop: 1024,
     laptopL: 1440,
     desktop4K: 2560
-  });
+  }) as BreakpointReturn<ChromeBreakpoint>;
 }
