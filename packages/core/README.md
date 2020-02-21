@@ -43,6 +43,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [usePagination][pagination] : Provides framework to implement reactive pagination
 - [useArrayPagination][array-pagination] : Uses [usePagination][pagination] to paginate an array
 
+### Validation
+
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+
 ### Format
 
 - [format][format] - Reactive string format

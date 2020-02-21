@@ -105,7 +105,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Validation
 
-- [Validation](composable/validation/validation) - `validation` composable
+- [Validation](composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### External
 
