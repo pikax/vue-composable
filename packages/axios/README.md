@@ -3,6 +3,13 @@
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios)](https://bundlephobia.com/result?p=@vue-composable/axios)
 
+<p align="center">
+  <br>
+  <img width="250" src="./logo.svg" alt="logo of vue-composable">
+  <br>
+  <br>
+</p>
+
 # vue-next
 
 > For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/axios/v/next)
