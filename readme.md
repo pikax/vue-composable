@@ -85,6 +85,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Pagination](https://pikax.me/vue-composable/composable/pagination/pagination) - Generic reactive pagination controls
 - [Array Pagination](https://pikax.me/vue-composable/composable/pagination/arrayPagination) - Array pagination
 
+### Validation
+
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject

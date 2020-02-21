@@ -313,7 +313,10 @@ export function useFetch<T = any>(options?: UseFetchOptions & Partial<RequestInf
     status: Readonly<import("@vue/composition-api").Ref<number | null>>;
     statusText: Readonly<import("@vue/composition-api").Ref<string | null>>;
     exec: (request: RequestInfo, init?: RequestInit | undefined) => Promise<Response | undefined>;
-    promise: import("@vue/composition-api").Ref<Promise<Response> | undefined>;
+    promise: import("@vue/composition-api").Ref<Promise<Response> | undefined>; /**
+     * @description if the value is `true` it will parse the `json` before resolving the promise
+     * @default true
+     */
     result: import("@vue/composition-api").Ref<Response | null>;
     loading: import("@vue/composition-api").Ref<boolean>;
     error: import("@vue/composition-api").Ref<any>;
