@@ -14,8 +14,6 @@ function getBreakpointWidth(bp: string | number) {
   if (isNumber(bp)) return bp;
 
   return isValidWidthBreakpoint(bp);
-  // if (isValidWidthBreakpoint(bp.trim())) return +bp.slice(0, -2);
-  // return undefined;
 }
 
 const isValidWidthBreakpoint = (bp: string) => {
