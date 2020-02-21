@@ -6,21 +6,18 @@
       <input v-model="form.lastName.$value" placeholder="lastName" />
       <input v-model="form.password.$value" placeholder="password" />
       <input v-model="form.samePassword.$value" placeholder="password2" />
-      <p
-        v-if="
-          form.samePassword.$dirty &&
-            form.samePassword.match.$invalid
-        "
-      >{{ form.samePassword.match.$message }}</p>
+      <p v-if="form.samePassword.$dirty && form.samePassword.match.$invalid">
+        {{ form.samePassword.match.$message }}
+      </p>
 
       <br />
       <input
         type="submit"
         v-model="submitText"
         :class="{
-        invalid: form.$anyDirty && form.$anyInvalid,
-        dirty: form.$anyDirty && !form.$anyInvalid,
-        error: form.$errors.length > 0
+          invalid: form.$anyDirty && form.$anyInvalid,
+          dirty: form.$anyDirty && !form.$anyInvalid,
+          error: form.$errors.length > 0
         }"
       />
     </form>

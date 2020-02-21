@@ -170,7 +170,7 @@ module.exports = {
           ]
         },
         {
-          title: "validation",
+          title: "Validation",
           sidebarDepth: 1,
           collapsable: false,
           children: [["composable/validation/validation", "Validation"]]

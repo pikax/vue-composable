@@ -1,11 +1,4 @@
-import {
-  UnwrapRef,
-  isObject,
-  isPromise,
-  wrap,
-  isBoolean,
-  RefTyped
-} from "../utils";
+import { UnwrapRef, isObject, isPromise, isBoolean, RefTyped } from "../utils";
 import { ref, Ref, watch, computed, reactive } from "@vue/composition-api";
 
 type ValidatorFunc<T, TContext = any> = (
@@ -164,10 +157,9 @@ const buildValidationValue = (
   v: Validator<any>,
   handlers: Array<Function>
 ): ValidatorResult & ValidatorResultPromise & ValidatorResultMessage => {
-  const $validator: ValidatorFunc<any> = isValidatorObject(v)
-    ? v.$validator
-    : v;
-  const $message = isValidatorObject(v) ? wrap(v.$message) : ref("");
+  const { $message, $validator, ...$rest } = isValidatorObject(v)
+    ? v
+    : { $validator: v, $message: "" };
 
   const { $pending, $promise, $invalid, $error } = buildValidationFunction(
     r,
@@ -180,7 +172,8 @@ const buildValidationValue = (
     $error,
     $promise,
     $invalid,
-    $message
+    $message,
+    ...$rest
   } as any;
 };
 
