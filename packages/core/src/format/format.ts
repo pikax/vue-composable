@@ -1,18 +1,21 @@
 import { RefTyped, unwrap, isArray } from "../utils";
 import { reactive, computed, Ref, isRef } from "@vue/composition-api";
 
-type FormatValue = RefTyped<object> | RefTyped<string> | RefTyped<number>;
+export type FormatValue =
+  | RefTyped<object>
+  | RefTyped<string>
+  | RefTyped<number>;
 export interface FormatObject {
   [id: string]: FormatValue;
 }
 
 export function useFormat(
-  format: RefTyped<string>,
+  format: Readonly<RefTyped<string>>,
   obj: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
 
 export function useFormat(
-  format: RefTyped<string>,
+  format: Readonly<RefTyped<string>>,
   ...args: Array<FormatValue>
 ): Readonly<Ref<string>>;
 

@@ -23,6 +23,9 @@ export interface CancellablePromiseResult<TCancel = any> {
 // @public (undocumented)
 export function debounce<F extends Procedure>(func: F, waitMilliseconds?: number, options?: Options): F;
 
+// @public (undocumented)
+export function deepClone<T extends object = object>(result: T, ...sources: T[]): T;
+
 // Warning: (ae-forgotten-export) The symbol "RetryDelayFactory" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -33,10 +36,17 @@ export const FALSE_OP: () => boolean;
 
 // @public (undocumented)
 export interface FormatObject {
-    // Warning: (ae-forgotten-export) The symbol "FormatValue" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     [id: string]: FormatValue;
+}
+
+// @public (undocumented)
+export type FormatValue = RefTyped<object> | RefTyped<string> | RefTyped<number>;
+
+// Warning: (ae-forgotten-export) The symbol "i18nMessageValue" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface i18n extends Record<string, i18nMessageValue> {
 }
 
 // @public (undocumented)
@@ -163,6 +173,12 @@ export interface RetryReturnNoFactory extends RetryReturn {
     exec<T>(fn: () => T): T;
 }
 
+// Warning: (ae-forgotten-export) The symbol "i18nDefinition" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "i18nResult" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function setI18n<T extends i18nDefinition<TMessage>, TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>>(definition: T): i18nResult<keyof T["messages"], T["locale"]>;
+
 // @public (undocumented)
 export function unwrap(o: RefElement): Element;
 
@@ -212,10 +228,13 @@ export function useDateNow(options?: NowOptions): {
 export function useDebounce<T extends Function>(handler: T, wait?: number, options?: Options): T;
 
 // @public (undocumented)
-export function useFormat(format: RefTyped<string>, obj: RefTyped<FormatObject>): Readonly<Ref<string>>;
+export function useFormat(format: Readonly<RefTyped<string>>, obj: RefTyped<FormatObject>): Readonly<Ref<string>>;
 
 // @public (undocumented)
-export function useFormat(format: RefTyped<string>, ...args: Array<FormatValue>): Readonly<Ref<string>>;
+export function useFormat(format: Readonly<RefTyped<string>>, ...args: Array<FormatValue>): Readonly<Ref<string>>;
+
+// @public (undocumented)
+export function useI18n(): i18nResult<string[], string> | void;
 
 // @public (undocumented)
 export function useNow(options?: NowOptions & UseNowOptions): {
@@ -230,6 +249,12 @@ export interface UseNowOptions {
 
 // @public (undocumented)
 export function usePagination(options: PaginationOptions): PaginationResult;
+
+// @public (undocumented)
+export function usePath<T extends object = any>(source: RefTyped<T>, path: RefTyped<string>, separator?: string, notFoundReturn?: UsePathNotFoundReturn): Readonly<import("@vue/composition-api").Ref<Readonly<any>>>;
+
+// @public (undocumented)
+export type UsePathNotFoundReturn = (path: string, source: any, fullPath: string, originalSource: any) => any;
 
 // @public (undocumented)
 export function usePerformanceNow(options?: NowOptions): {

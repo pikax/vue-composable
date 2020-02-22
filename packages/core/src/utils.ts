@@ -64,6 +64,31 @@ export function minMax(val: number, min: number, max: number) {
 
 export const isClient = typeof window != "undefined";
 
+export function deepClone<T extends object = object>(
+  result: T,
+  ...sources: T[]
+): T {
+  for (let i = 0; i < sources.length; i++) {
+    const source = sources[i];
+    if (source === undefined || !isObject(source)) continue;
+
+    const keys = Object.keys(source);
+
+    for (let j = 0; j < keys.length; j++) {
+      const k = keys[j] as keyof T;
+      const sourceType = typeof source[k];
+      const type = typeof result[k];
+
+      if (result[k] === undefined || sourceType === type) {
+        result[k] = isObject(source[k])
+          ? deepClone<any>(result[k] || {}, source[k])
+          : source[k];
+      }
+    }
+  }
+  return result;
+}
+
 // compact version: https://stackoverflow.com/a/33146982/1209882
 /**
  * returns a random string
