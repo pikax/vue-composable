@@ -29,6 +29,10 @@
       <li>
         <router-link to="/validation">Validation</router-link>
       </li>
+
+      <li>
+        <router-link to="/i18n">I18n</router-link>
+      </li>
     </ul>
     <router-view></router-view>
   </div>

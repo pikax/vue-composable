@@ -7,7 +7,7 @@ import {
   provide
 } from "@vue/composition-api";
 import { RefTyped, deepClone, isPromise, isFunction } from "../utils";
-import { usePath, useFormat, FormatObject, FormatValue } from "../";
+import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
 const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<string[], string>> = Symbol(
   (__DEV__ && "I18n") || ``

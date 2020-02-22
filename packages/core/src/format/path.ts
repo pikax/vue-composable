@@ -27,10 +27,25 @@ export function usePath<T extends object = any>(
     const fragments = p.split(separator);
     let c = s;
     for (let i = 0; i < fragments.length; i++) {
-      const fragmentPath = fragments[i];
+      let fragmentPath = fragments[i];
+      let index: any = -1;
+
+      if (fragmentPath[fragmentPath.length - 1] === "]") {
+        const m = fragmentPath.match(/\[(\d+)\]$/);
+        if (m && m[1]) {
+          index = +m[1];
+
+          fragmentPath = fragmentPath.slice(0, -m[0].length);
+        }
+      }
 
       if (isObject(c)) {
         c = c[fragmentPath];
+
+        // array like: when using ref with and array, it becomes arraylike object
+        if (index >= 0) {
+          c = (c as any)[index];
+        }
       } else {
         if (__DEV__) {
           console.warn(

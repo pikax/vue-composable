@@ -46,6 +46,10 @@ const routes = [
   {
     path: "/validation",
     component: () => import("./components/Validation")
+  },
+  {
+    path: "/i18n",
+    component: () => import("./components/I18n")
   }
 ];
 const router = new VueRouter({

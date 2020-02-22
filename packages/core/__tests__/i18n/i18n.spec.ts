@@ -1,5 +1,6 @@
 import { buildI18n } from "../../src";
 import { nextTick } from "../utils";
+import { ref } from "@vue/composition-api";
 
 describe("i18n", () => {
   it("should work", async () => {
@@ -10,11 +11,13 @@ describe("i18n", () => {
         en: {
           hello: "hello world",
           helloName: "Hello {name}",
-          version: "My version is"
+          version: "My version is",
+          ref: ref("Hey")
         },
         pt: {
           hello: "Olá mundo",
-          helloName: "Olá {name}"
+          helloName: "Olá {name}",
+          ref: ref("Boas")
         }
       }
     });
@@ -22,7 +25,8 @@ describe("i18n", () => {
     expect(x.i18n.value).toMatchObject({
       hello: "hello world",
       helloName: "Hello {name}",
-      version: "My version is"
+      version: "My version is",
+      ref: "Hey"
     });
 
     expect(x.$t("hello").value).toBe("hello world");
@@ -38,7 +42,8 @@ describe("i18n", () => {
     expect(x.i18n.value).toMatchObject({
       hello: "Olá mundo",
       helloName: "Olá {name}",
-      version: "My version is"
+      version: "My version is",
+      ref: "Boas"
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");

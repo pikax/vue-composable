@@ -76,13 +76,14 @@ export function deepClone<T extends object = object>(
 
     for (let j = 0; j < keys.length; j++) {
       const k = keys[j] as keyof T;
-      const sourceType = typeof source[k];
+      const v = unwrap(source[k]);
+      const sourceType = typeof v;
       const type = typeof result[k];
 
       if (result[k] === undefined || sourceType === type) {
-        result[k] = isObject(source[k])
-          ? deepClone<any>(result[k] || {}, source[k])
-          : source[k];
+        result[k] = isObject(v)
+          ? deepClone<any>(result[k] || {}, v)
+          : source[k]; // source[k] is assigned because if is ref we want to override to this ref
       }
     }
   }
