@@ -2,9 +2,9 @@
   <div>
     <div>
       <select v-model="locale">
-        <option v-for="l in locales" :key="l" :value="l">{{
-          i18n.locales[l]
-        }}</option>
+        <option v-for="l in locales" :key="l" :value="l">
+          {{ i18n.locales[l] }}
+        </option>
       </select>
       <div>
         <label for="name">{{ i18n.input.name.label }}</label>
@@ -27,12 +27,25 @@
     <p>
       {{ $t("currentDate", { day: i18n.weekDays[new Date().getDay()] }).value }}
     </p>
+
+    <hr />
+
+    <h3>Custom locale</h3>
+
+    <div>
+      <button v-if="locales.indexOf('custom') < 0" @click="addCustomLocale">
+        Add custom locale
+      </button>
+      <button v-else @click="removeCustomLocale">Remove custom locale</button>
+    </div>
+
+    <textarea v-model="customLocaleJson"></textarea>
   </div>
 </template>
 
 <script>
 import { useI18n, buildI18n, promisedTimeout } from "vue-composable";
-import { ref, computed } from "@vue/composition-api";
+import { ref, computed, watch } from "@vue/composition-api";
 export default {
   setup() {
     const name = ref("");
@@ -44,7 +57,8 @@ export default {
           locales: {
             en: "English",
             pt: "Portuguese",
-            es: "Spanish"
+            es: "Spanish",
+            custom: "YourLocale"
           },
 
           weekDays: [
@@ -123,9 +137,38 @@ export default {
           }))
       }
     });
+
+    const customLocale = ref({
+      locales: {
+        custom: "Awesome"
+      },
+      hello: "H3Y"
+    });
+    const customLocaleJson = ref(JSON.stringify(customLocale.value));
+
+    const addCustomLocale = () => i18n.addLocale("custom", customLocale.value);
+    const removeCustomLocale = () => i18n.removeLocale("custom");
+
+    watch(
+      customLocaleJson,
+      json => {
+        try {
+          customLocale.value = JSON.parse(json);
+        } catch (e) {
+          // err
+        }
+      },
+      { lazy: true }
+    );
+
     return {
       ...i18n,
-      name
+      name,
+
+      customLocaleJson,
+
+      addCustomLocale,
+      removeCustomLocale
     };
   }
 };

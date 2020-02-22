@@ -44,11 +44,14 @@ interface i18nDefinition<TMessage> {
 interface i18nResult<TLocales, TMessages extends any = i18n> {
   locale: Ref<TLocales>;
 
-  locales: Array<TLocales>;
+  locales: Ref<Array<TLocales>>;
 
   i18n: Ref<TMessages>;
 
   $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
+
+  addLocale(locale: string, messages: TMessages): void;
+  removeLocale(locale: TLocales): void;
 }
 
 export function useI18n(): i18nResult<string[], string> | void {
@@ -59,7 +62,10 @@ export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]> {
-  const locales = Object.keys(definition.messages) as Array<keyof TMessage>;
+  const locales = ref<Array<keyof TMessage>>(Object.keys(definition.messages));
+  const localeMessages = ref<
+    Record<keyof TMessage, i18n | (() => Promise<any>)>
+  >(definition.messages);
   const locale: Ref<keyof TMessage> = ref(definition.locale);
   const i18n = ref<any>({});
   const fallback = ref<i18n>();
@@ -67,7 +73,7 @@ export function buildI18n<
   // TODO add cache for processed languages
   let fallbackIsPromise = false;
   const fallbackI18n: i18n | (() => Promise<i18n> | i18n) =
-    definition.messages[definition.fallback];
+    localeMessages.value[definition.fallback];
   if (isFunction(fallbackI18n)) {
     const r = fallbackI18n();
     if (isPromise(r)) {
@@ -83,12 +89,16 @@ export function buildI18n<
   }
 
   watch(
-    [locale, fallback],
-    ([l, fb]: [keyof TMessage, i18n | undefined]) => {
+    [locale, fallback, localeMessages],
+    ([l, fb, localeMessages]: [
+      keyof TMessage,
+      i18n | undefined,
+      Record<keyof TMessage, i18n | (() => Promise<i18n> | i18n)>
+    ]) => {
       if (l === definition.fallback) {
         i18n.value = deepClone<any>({}, fb);
       } else {
-        const i18: i18n | (() => Promise<i18n> | i18n) = definition.messages[l];
+        const i18: i18n | (() => Promise<i18n> | i18n) = localeMessages[l];
         if (isFunction(i18)) {
           const r = i18();
           if (isPromise(r)) {
@@ -118,13 +128,39 @@ export function buildI18n<
     return useFormat(usePath(i18n, path, ".", (_, _1, p) => p) as any, args);
   };
 
+  const addLocale = (l: string, m: any) => {
+    if (locales.value.indexOf(l as any) >= 0) {
+      if (__DEV__) {
+        console.warn("Locale already exists, overriding it");
+      }
+    } else {
+      locales.value.push(l as any);
+    }
+    (localeMessages.value as Record<string, i18n>)[l] = m;
+  };
+
+  const removeLocale = (l: keyof TMessage) => {
+    const index = locales.value.indexOf(l);
+    if (index >= 0) {
+      locales.value.splice(index, 1);
+    } else {
+      if (__DEV__) {
+        console.warn("Locale doesn't exist");
+      }
+    }
+    delete localeMessages.value[l];
+  };
+
   return {
     locale,
     locales,
 
     i18n,
 
-    $t
+    $t,
+
+    addLocale,
+    removeLocale
   };
 }
 
