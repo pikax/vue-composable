@@ -28,6 +28,10 @@ describe("i18n", () => {
     expect(x.$t("hello").value).toBe("hello world");
     expect(x.$tc("helloName", { name: "pikax" }).value).toBe("Hello pikax");
 
+    expect(x.i18n.value.hello).toBe("hello world");
+    expect(x.i18n.value.helloName).toBe("Hello {name}");
+    expect(x.i18n.value.version).toBe("My version is");
+
     x.locale.value = "pt";
     await nextTick();
 

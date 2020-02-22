@@ -13,15 +13,9 @@ const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<string[], string>> = Symbol(
   (__DEV__ && "I18n") || ``
 );
 
-// type LocaleMessages<T> = T | (() => Promise<T>);
-
 type i18nMessageValue = i18nLocale<any> | RefTyped<string>;
 
 export interface i18n extends Record<string, i18nMessageValue> {}
-
-// interface I18N<TMessage extends Record<string, i18nMessageValue>> {
-//   messages: TMessage;
-// }
 
 type i18nMessage<T> = T extends Ref<string>
   ? string
@@ -47,13 +41,12 @@ interface i18nDefinition<TMessage> {
   messages: { [K in keyof TMessage]: i18n | (() => Promise<i18n>) };
 }
 
-interface i18nResult<TLocales, TLocale> {
+interface i18nResult<TLocales, TMessages extends any = i18n> {
   locale: Ref<TLocales>;
 
   locales: Array<TLocales>;
 
-  // i18n: i18nLocale<TMessage[TLocale]>;
-  i18n: Ref<i18n>;
+  i18n: Ref<TMessages>;
 
   $t(path: string): Readonly<Ref<string>>;
   $tc(path: string, args: object | Array<object>): Readonly<Ref<string>>;
@@ -66,9 +59,10 @@ export function useI18n(): i18nResult<string[], string> | void {
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["locale"]> {
+>(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]> {
+  const locales = Object.keys(definition.messages) as Array<keyof TMessage>;
   const locale: Ref<keyof TMessage> = ref(definition.locale);
-  const i18n = ref<i18n>({});
+  const i18n = ref<any>({});
   const fallback = ref<i18n>();
 
   // TODO add cache for processed languages
@@ -118,7 +112,7 @@ export function buildI18n<
   );
 
   const $t = (path: Readonly<RefTyped<string>>): Ref<string> => {
-    // TODO probaly allow to send an custom path resolver or at least allow usage of different accessor
+    // TODO probably allow to send an custom path resolver or at least allow usage of different accessor
     return usePath(i18n, path, ".", (_, _1, p) => p) as any;
   };
 
@@ -129,46 +123,22 @@ export function buildI18n<
     return useFormat(($t(path) as any) as Ref<string>, args);
   };
 
-  const result = {
+  return {
     locale,
-    locales: Object.keys(definition.messages),
+    locales,
 
     i18n,
 
     $t,
     $tc
   };
-
-  // provide(I18n_ACCESS_SYMBOL, result as any);
-
-  return result as any;
 }
 
 export function setI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["locale"]> {
+>(definition: T) {
   const r = buildI18n(definition);
   provide(I18n_ACCESS_SYMBOL, r as any);
   return r;
 }
-
-// setI18n({
-//   locale: "es",
-//   fallback: "en",
-//   messages: {
-//     en: {
-//       test: "11",
-//       xxx: "ad"
-//     },
-//     es: () =>
-//       Promise.resolve({
-//         test: "11"
-//       }),
-//     fr: {
-//       test: "11",
-//       xxx: "ad",
-//       asdd: "ad"
-//     }
-//   }
-// });
