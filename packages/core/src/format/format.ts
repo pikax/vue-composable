@@ -11,7 +11,7 @@ export interface FormatObject {
 
 export function useFormat(
   format: Readonly<RefTyped<string>>,
-  obj: RefTyped<FormatObject>
+  obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
 
 export function useFormat(
@@ -20,12 +20,20 @@ export function useFormat(
 ): Readonly<Ref<string>>;
 
 export function useFormat(
+  format: Readonly<RefTyped<string>>,
+  obj?: RefTyped<FormatObject> | Array<FormatValue>
+): Readonly<Ref<string>>;
+
+export function useFormat(
   format: RefTyped<string>,
-  args: RefTyped<FormatObject> | Array<FormatValue>
+  args: any
 ): Readonly<Ref<string>> {
   return computed(() => {
-    const r = isRef(args) ? reactive(args.value) : reactive(args);
     const f = unwrap(format);
+    if (!args) {
+      return f;
+    }
+    const r = isRef(args) ? reactive(args.value) : reactive(args);
     const regEx = /({?{[\w\s]*}?})/g;
 
     return f.replace(regEx, s => {

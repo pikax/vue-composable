@@ -48,8 +48,7 @@ interface i18nResult<TLocales, TMessages extends any = i18n> {
 
   i18n: Ref<TMessages>;
 
-  $t(path: string): Readonly<Ref<string>>;
-  $tc(path: string, args: object | Array<object>): Readonly<Ref<string>>;
+  $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
 }
 
 export function useI18n(): i18nResult<string[], string> | void {
@@ -111,16 +110,12 @@ export function buildI18n<
     }
   );
 
-  const $t = (path: Readonly<RefTyped<string>>): Ref<string> => {
-    // TODO probably allow to send an custom path resolver or at least allow usage of different accessor
-    return usePath(i18n, path, ".", (_, _1, p) => p) as any;
-  };
-
-  const $tc = (
+  const $t = (
     path: Readonly<RefTyped<string>>,
-    args: RefTyped<FormatObject> | Array<FormatValue>
-  ) => {
-    return useFormat(($t(path) as any) as Ref<string>, args);
+    args: RefTyped<FormatObject> | Array<FormatValue> | undefined
+  ): Ref<string> => {
+    // TODO probably allow to send an custom path resolver or at least allow usage of different accessor
+    return useFormat(usePath(i18n, path, ".", (_, _1, p) => p) as any, args);
   };
 
   return {
@@ -129,8 +124,7 @@ export function buildI18n<
 
     i18n,
 
-    $t,
-    $tc
+    $t
   };
 }
 

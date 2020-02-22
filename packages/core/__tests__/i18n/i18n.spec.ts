@@ -26,7 +26,7 @@ describe("i18n", () => {
     });
 
     expect(x.$t("hello").value).toBe("hello world");
-    expect(x.$tc("helloName", { name: "pikax" }).value).toBe("Hello pikax");
+    expect(x.$t("helloName", { name: "pikax" }).value).toBe("Hello pikax");
 
     expect(x.i18n.value.hello).toBe("hello world");
     expect(x.i18n.value.helloName).toBe("Hello {name}");
@@ -42,6 +42,6 @@ describe("i18n", () => {
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");
-    expect(x.$tc("helloName", { name: "pikax" }).value).toBe("Olá pikax");
+    expect(x.$t("helloName", { name: "pikax" }).value).toBe("Olá pikax");
   });
 });
