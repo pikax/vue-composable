@@ -49,4 +49,40 @@ describe("i18n", () => {
     expect(x.$t("hello").value).toBe("Olá mundo");
     expect(x.$t("helloName", { name: "pikax" }).value).toBe("Olá pikax");
   });
+
+  describe("fallback", () => {
+    it("should not fallback if no fallback is present", () => {
+      const x = buildI18n({
+        locale: "pt",
+        messages: {
+          en: {
+            hello: "hello world"
+          },
+          pt: {
+            helloName: "Olá {name}"
+          }
+        }
+      });
+
+      expect((x.i18n.value as any).hello).toBeUndefined();
+    });
+
+    it("should not fallback notFoundFallback is false", () => {
+      const x = buildI18n({
+        locale: "pt",
+        fallback: "en",
+        notFoundFallback: false,
+        messages: {
+          en: {
+            hello: "hello world"
+          },
+          pt: {
+            helloName: "Olá {name}"
+          }
+        }
+      });
+
+      expect((x.i18n.value as any).hello).toBeUndefined();
+    });
+  });
 });

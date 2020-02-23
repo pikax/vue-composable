@@ -6,7 +6,14 @@ import {
   inject,
   provide
 } from "@vue/composition-api";
-import { RefTyped, deepClone, isPromise, isFunction } from "../utils";
+import {
+  RefTyped,
+  deepClone,
+  isPromise,
+  isFunction,
+  isBoolean,
+  wrap
+} from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
 const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<string[], string>> = Symbol(
@@ -32,13 +39,32 @@ type i18nMessage<T> = T extends Ref<string>
 type i18nLocale<T> = {
   [K in keyof T]: i18nMessage<T[K]>;
 };
+type i18nResolver = (
+  i18n: i18n,
+  path: Readonly<RefTyped<string>>,
+  args: RefTyped<FormatObject> | Array<FormatValue> | undefined
+) => RefTyped<string>;
 
 interface i18nDefinition<TMessage> {
   locale: keyof TMessage;
 
-  fallback: keyof TMessage;
+  fallback?: keyof TMessage;
 
   messages: { [K in keyof TMessage]: i18n | (() => Promise<i18n>) };
+
+  /**
+   * Resolves the translation for i18n
+   * @param i18n i18n messages
+   * @param path desired path
+   * @param args arguments
+   */
+  resolve?: i18nResolver;
+
+  /**
+   * falls back to the fallback locale if key not found
+   * @default true
+   */
+  notFoundFallback?: boolean;
 }
 
 interface i18nResult<TLocales, TMessages extends any = i18n> {
@@ -70,22 +96,32 @@ export function buildI18n<
   const i18n = ref<any>({});
   const fallback = ref<i18n>();
 
+  const shouldFallback = definition.fallback
+    ? isBoolean(definition.notFoundFallback)
+      ? definition.notFoundFallback
+      : true
+    : false;
+
   // TODO add cache for processed languages
   let fallbackIsPromise = false;
-  const fallbackI18n: i18n | (() => Promise<i18n> | i18n) =
-    localeMessages.value[definition.fallback];
-  if (isFunction(fallbackI18n)) {
-    const r = fallbackI18n();
-    if (isPromise(r)) {
-      r.then(x => {
-        fallback.value = x;
-      });
-      fallbackIsPromise = true;
+  if (shouldFallback) {
+    const fallbackI18n: i18n | (() => Promise<i18n> | i18n) =
+      localeMessages.value[definition.fallback!];
+    if (isFunction(fallbackI18n)) {
+      const r = fallbackI18n();
+      if (isPromise(r)) {
+        r.then(x => {
+          fallback.value = x;
+        });
+        fallbackIsPromise = true;
+      } else {
+        fallback.value = r;
+      }
     } else {
-      fallback.value = r;
+      fallback.value = fallbackI18n;
     }
   } else {
-    fallback.value = fallbackI18n;
+    fallback.value = {};
   }
 
   watch(
@@ -95,7 +131,7 @@ export function buildI18n<
       i18n | undefined,
       Record<keyof TMessage, i18n | (() => Promise<i18n> | i18n)>
     ]) => {
-      if (l === definition.fallback) {
+      if (l === definition.fallback && shouldFallback) {
         i18n.value = deepClone<any>({}, fb);
       } else {
         const i18: i18n | (() => Promise<i18n> | i18n) = localeMessages[l];
@@ -124,7 +160,9 @@ export function buildI18n<
     path: Readonly<RefTyped<string>>,
     args: RefTyped<FormatObject> | Array<FormatValue> | undefined
   ): Ref<string> => {
-    // TODO probably allow to send an custom path resolver or at least allow usage of different accessor
+    if (definition.resolve) {
+      return wrap(definition.resolve(i18n.value, path, args));
+    }
     return useFormat(usePath(i18n, path, ".", (_, _1, p) => p) as any, args);
   };
 
