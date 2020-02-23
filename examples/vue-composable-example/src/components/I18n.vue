@@ -2,9 +2,9 @@
   <div>
     <div>
       <select v-model="locale">
-        <option v-for="l in locales" :key="l" :value="l">
-          {{ i18n.locales[l] }}
-        </option>
+        <option v-for="l in locales" :key="l" :value="l">{{
+          i18n.locales[l]
+        }}</option>
       </select>
       <div>
         <label for="name">{{ i18n.input.name.label }}</label>
@@ -52,6 +52,7 @@ export default {
     const i18n = buildI18n({
       locale: "en",
       fallback: "en",
+      notFoundFallback: true,
       messages: {
         en: {
           locales: {

@@ -4,7 +4,8 @@ import {
   InjectionKey,
   watch,
   inject,
-  provide
+  provide,
+  computed
 } from "@vue/composition-api";
 import {
   RefTyped,
@@ -72,7 +73,7 @@ interface i18nResult<TLocales, TMessages extends any = i18n> {
 
   locales: Ref<Array<TLocales>>;
 
-  i18n: Ref<TMessages>;
+  i18n: Readonly<Ref<Readonly<TMessages>>>;
 
   $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
 
@@ -94,7 +95,28 @@ export function buildI18n<
   >(definition.messages);
   const locale: Ref<keyof TMessage> = ref(definition.locale);
   const i18n = ref<any>({});
-  const fallback = ref<i18n>();
+  let fallback = ref<i18n>();
+
+  const cache: Record<string, Ref<i18n>> = {};
+
+  const loadLocale = (
+    locale: string,
+    localeMessages: Ref<Record<string, i18n | (() => Promise<any>)>>
+  ): Ref<i18n> | Promise<Ref<i18n>> => {
+    if (cache[locale]) {
+      return cache[locale];
+    }
+
+    const l = localeMessages.value[locale];
+    if (!l) {
+      return ref({});
+    }
+
+    if (isFunction(l)) {
+      return Promise.resolve(l()).then(x => (cache[locale] = wrap<i18n>(x)));
+    }
+    return (cache[locale] = computed(() => localeMessages.value[locale]));
+  };
 
   const shouldFallback = definition.fallback
     ? isBoolean(definition.notFoundFallback)
@@ -102,53 +124,29 @@ export function buildI18n<
       : true
     : false;
 
-  // TODO add cache for processed languages
   let fallbackIsPromise = false;
   if (shouldFallback) {
-    const fallbackI18n: i18n | (() => Promise<i18n> | i18n) =
-      localeMessages.value[definition.fallback!];
-    if (isFunction(fallbackI18n)) {
-      const r = fallbackI18n();
-      if (isPromise(r)) {
-        r.then(x => {
-          fallback.value = x;
-        });
-        fallbackIsPromise = true;
-      } else {
-        fallback.value = r;
-      }
+    const fallbackI18n = loadLocale(locale.value as string, localeMessages);
+    if (isPromise(fallbackI18n)) {
+      fallbackI18n.then(x => {
+        fallback = x;
+      });
+      fallbackIsPromise = true;
     } else {
-      fallback.value = fallbackI18n;
+      fallback = fallbackI18n;
     }
   } else {
     fallback.value = {};
   }
 
   watch(
-    [locale, fallback, localeMessages],
-    ([l, fb, localeMessages]: [
-      keyof TMessage,
-      i18n | undefined,
-      Record<keyof TMessage, i18n | (() => Promise<i18n> | i18n)>
-    ]) => {
+    [locale, fallback],
+    async ([l, fb]: [keyof TMessage, i18n | undefined]) => {
       if (l === definition.fallback && shouldFallback) {
-        i18n.value = deepClone<any>({}, fb);
+        i18n.value = fb!;
       } else {
-        const i18: i18n | (() => Promise<i18n> | i18n) = localeMessages[l];
-        if (isFunction(i18)) {
-          const r = i18();
-          if (isPromise(r)) {
-            r.then(x => {
-              if (l === locale.value) {
-                i18n.value = deepClone<any>({}, fb, x);
-              }
-            });
-          } else {
-            i18n.value = deepClone<any>({}, fb, r);
-          }
-        } else {
-          i18n.value = deepClone<any>({}, fb, i18);
-        }
+        const localeMessage = await loadLocale(l as string, localeMessages);
+        i18n.value = deepClone<any>({}, fb, localeMessage.value);
       }
     },
     {
@@ -174,6 +172,7 @@ export function buildI18n<
     } else {
       locales.value.push(l as any);
     }
+    delete cache[l];
     (localeMessages.value as Record<string, i18n>)[l] = m;
   };
 
@@ -187,6 +186,7 @@ export function buildI18n<
       }
     }
     delete localeMessages.value[l];
+    delete cache[l as string];
   };
 
   return {
