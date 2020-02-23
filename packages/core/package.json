@@ -33,6 +33,7 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
+  "sideEffects": false,
   "devDependencies": {
     "vue": "^2.6.10"
   },

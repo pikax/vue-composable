@@ -35,6 +35,7 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable",
+  "sideEffects": false,
   "peerDependencies": {
     "@vue/composition-api": "^0.3.4"
   },
