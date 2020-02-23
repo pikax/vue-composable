@@ -1,14 +1,9 @@
 # @vue-composable/web
 
+<p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
+
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Fweb.svg)](https://badge.fury.io/js/%40vue-composable%2Fweb)
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/web)](https://bundlephobia.com/result?p=@vue-composable/web)
-
-<p align="center">
-  <br>
-  <img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="logo of vue-composable">
-  <br>
-  <br>
-</p>
 
 This package contains [Web API](https://developer.mozilla.org/en-US/docs/Web/Reference/API)
 
