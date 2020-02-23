@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ---
 
+## 1.0.0-dev.10
+
+_2020-02-23_
+
 ### Changed
 
 - moving [breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint) and [matchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) from `web/misc` to `web/breakpoint`

@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/web",
-  "version": "1.0.0-dev.9",
+  "version": "1.0.0-dev.10",
   "description": "@vue-composable/web",
   "main": "index.js",
   "module": "dist/web.esm-bundler.js",
@@ -38,7 +38,7 @@
     "@vue/composition-api": "^0.3.4"
   },
   "dependencies": {
-    "@vue-composable/core": "1.0.0-dev.9"
+    "@vue-composable/core": "1.0.0-dev.10"
   },
   "devDependencies": {
     "vue": "^2.6.10"
