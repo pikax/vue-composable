@@ -81,8 +81,15 @@ interface i18nResult<TLocales, TMessages extends any = i18n> {
   removeLocale(locale: TLocales): void;
 }
 
-export function useI18n(): i18nResult<string[], string> | void {
-  return inject(I18n_ACCESS_SYMBOL);
+export function useI18n<
+  T extends i18nDefinition<TMessage>,
+  TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
+>(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+export function useI18n(): i18nResult<string[], string> | void;
+export function useI18n(definition?: any): any {
+  if (definition) {
+    return buildI18n(definition);
+  } else return inject(I18n_ACCESS_SYMBOL);
 }
 
 export function buildI18n<

@@ -44,15 +44,14 @@
 </template>
 
 <script>
-import { useI18n, buildI18n, promisedTimeout } from "vue-composable";
+import { useI18n, promisedTimeout } from "vue-composable";
 import { ref, computed, watch } from "@vue/composition-api";
 export default {
   setup() {
     const name = ref("");
-    const i18n = buildI18n({
+    const i18n = useI18n({
       locale: "en",
       fallback: "en",
-      notFoundFallback: true,
       messages: {
         en: {
           locales: {
