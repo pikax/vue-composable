@@ -5,7 +5,7 @@ import { ref } from "@vue/composition-api";
 describe("i18n", () => {
   it("should work", async () => {
     const x = buildI18n({
-      locale: "pt",
+      locale: "en",
       fallback: "en",
       messages: {
         en: {
