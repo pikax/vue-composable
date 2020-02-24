@@ -8,10 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@vue-composable/axios": "^1.0.0-dev.10",
+    "@vue-composable/axios": "^1.0.0-dev.11",
     "@vue/composition-api": "^0.3.2",
     "vue": "^2.6.10",
-    "vue-composable": "^1.0.0-dev.10",
+    "vue-composable": "^1.0.0-dev.11",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {
