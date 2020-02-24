@@ -1,28 +1,39 @@
 import { RefTyped, unwrap, isArray } from "../utils";
 import { reactive, computed, Ref, isRef } from "@vue/composition-api";
 
-type FormatValue = RefTyped<object> | RefTyped<string> | RefTyped<number>;
+export type FormatValue =
+  | RefTyped<object>
+  | RefTyped<string>
+  | RefTyped<number>;
 export interface FormatObject {
   [id: string]: FormatValue;
 }
 
 export function useFormat(
-  format: RefTyped<string>,
-  obj: RefTyped<FormatObject>
+  format: Readonly<RefTyped<string>>,
+  obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
 
 export function useFormat(
-  format: RefTyped<string>,
+  format: Readonly<RefTyped<string>>,
   ...args: Array<FormatValue>
 ): Readonly<Ref<string>>;
 
 export function useFormat(
+  format: Readonly<RefTyped<string>>,
+  obj?: RefTyped<FormatObject> | Array<FormatValue>
+): Readonly<Ref<string>>;
+
+export function useFormat(
   format: RefTyped<string>,
-  args: RefTyped<FormatObject> | Array<FormatValue>
+  args: any
 ): Readonly<Ref<string>> {
   return computed(() => {
-    const r = isRef(args) ? reactive(args.value) : reactive(args);
     const f = unwrap(format);
+    if (!args) {
+      return f;
+    }
+    const r = isRef(args) ? reactive(args.value) : reactive(args);
     const regEx = /({?{[\w\s]*}?})/g;
 
     return f.replace(regEx, s => {

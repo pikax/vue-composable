@@ -3,9 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
+
+### i18n
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
 ## 1.0.0-dev.10
 
@@ -22,6 +26,8 @@ _2020-02-23_
 - [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
 - [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
 - [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+- [format](https://pikax.me/vue-composable/composable/format/path) - Access object property through string path
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
 ## 1.0.0-dev.9
 
