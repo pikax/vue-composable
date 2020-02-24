@@ -6,7 +6,7 @@ import {
 } from "./breakpoint";
 import { isArray, isString, isObject } from "@vue-composable/core";
 
-const BREAKPOINT_TAILWIND_KEY: InjectionKey<any> = Symbol(
+const BREAKPOINT_TAILWIND_KEY: InjectionKey<any> = /*#__PURE__*/ Symbol(
   (__DEV__ && "TAILWIND_BREAKPOINTS") || ``
 );
 

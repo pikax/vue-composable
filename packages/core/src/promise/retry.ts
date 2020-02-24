@@ -11,9 +11,11 @@ import {
 const MAX_RETRIES = 9000;
 
 /* istanbul ignore next */
-const ExecutionId = Symbol((__DEV__ && "RetryId") || ``);
+const ExecutionId = /*#__PURE__*/ Symbol((__DEV__ && "RetryId") || ``);
 /* istanbul ignore next */
-const CancellationToken = Symbol((__DEV__ && "CancellationToken") || ``);
+const CancellationToken = /*#__PURE__*/ Symbol(
+  (__DEV__ && "CancellationToken") || ``
+);
 
 /**
  * @description How long should it delay or what time it should execute, it also supports Promises
