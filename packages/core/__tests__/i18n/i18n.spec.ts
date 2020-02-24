@@ -5,7 +5,7 @@ import { ref } from "@vue/composition-api";
 describe("i18n", () => {
   it("should work", async () => {
     const x = buildI18n({
-      locale: "en",
+      locale: "pt",
       fallback: "en",
       messages: {
         en: {
@@ -36,6 +36,21 @@ describe("i18n", () => {
     expect(x.i18n.value.helloName).toBe("Hello {name}");
     expect(x.i18n.value.version).toBe("My version is");
 
+    x.locale.value = "pt";
+    await nextTick();
+
+    expect(x.i18n.value).toMatchObject({
+      hello: "Olá mundo",
+      helloName: "Olá {name}",
+      version: "My version is",
+      ref: "Boas"
+    });
+
+    expect(x.$t("hello").value).toBe("Olá mundo");
+    expect(x.$t("helloName", { name: "pikax" }).value).toBe("Olá pikax");
+
+    x.locale.value = "en";
+    await nextTick();
     x.locale.value = "pt";
     await nextTick();
 

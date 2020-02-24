@@ -17,9 +17,10 @@ import {
 } from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
-const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<string[], string>> = Symbol(
-  (__DEV__ && "I18n") || ``
-);
+const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<
+  string[],
+  string
+>> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
 
 type i18nMessageValue = i18nLocale<any> | RefTyped<string>;
 
@@ -85,7 +86,7 @@ export function useI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
-export function useI18n(): i18nResult<string[], string> | void;
+export function useI18n<T = i18n>(): i18nResult<string[], T> | void;
 export function useI18n(definition?: any): any {
   if (definition) {
     return buildI18n(definition);
