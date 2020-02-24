@@ -176,6 +176,12 @@ module.exports = {
           children: [["composable/validation/validation", "Validation"]]
         },
         {
+          title: "i18n",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/i18n/i18n", "i18n"]]
+        },
+        {
           title: "External",
           sidebarDepth: 1,
           collapsable: false,

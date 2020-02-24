@@ -13,7 +13,7 @@ export function unwrap<T>(o: RefTyped<T>): T {
 
 export function wrap(o: RefElement): Ref<Element>;
 export function wrap<T>(o: RefTyped<T>): Ref<T>;
-export function wrap<T>(o: RefTyped<T>): Ref<T> {
+export function wrap(o: any): any {
   return isRef(o) ? o : ref(o);
 }
 
@@ -62,6 +62,32 @@ export function minMax(val: number, min: number, max: number) {
 }
 
 export const isClient = typeof window != "undefined";
+
+export function deepClone<T extends object = object>(
+  result: T,
+  ...sources: T[]
+): T {
+  for (let i = 0; i < sources.length; i++) {
+    const source = sources[i];
+    if (source === undefined || !isObject(source)) continue;
+
+    const keys = Object.keys(source);
+
+    for (let j = 0; j < keys.length; j++) {
+      const k = keys[j] as keyof T;
+      const v = unwrap(source[k]);
+      const sourceType = typeof v;
+      const type = typeof result[k];
+
+      if (result[k] === undefined || sourceType === type) {
+        result[k] = isObject(v)
+          ? deepClone<any>(result[k] || {}, v)
+          : source[k]; // source[k] is assigned because if is ref we want to override to this ref
+      }
+    }
+  }
+  return result;
+}
 
 // compact version: https://stackoverflow.com/a/33146982/1209882
 /**

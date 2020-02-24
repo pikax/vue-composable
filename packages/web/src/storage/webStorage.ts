@@ -208,7 +208,7 @@ export function useWebStorage(
               save(k, r.value);
             }, ms),
             {
-              lazy: true,
+              immediate: false,
               deep: true
             }
           );

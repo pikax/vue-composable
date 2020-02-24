@@ -5,3 +5,4 @@ export * from "./debounce";
 export * from "./date";
 export * from "./format";
 export * from "./validation";
+export * from "./i18n";

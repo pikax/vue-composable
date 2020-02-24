@@ -107,6 +107,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [Validation](composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
+### i18n
+
+- [i18n](composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+
 ### External
 
 > New packages needed

@@ -84,8 +84,8 @@ describe("WebSocket", () => {
     const { data } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    watch(data, m => received.push(m), {
-      lazy: true
+    watch(data, (m: any) => received.push(m), {
+      immediate: false
     });
 
     for (let i = 0; i < messages.length; i++) {
@@ -103,8 +103,8 @@ describe("WebSocket", () => {
     const { data } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    watch(data, m => received.push(m), {
-      lazy: true
+    watch(data, (m: any) => received.push(m), {
+      immediate: false
     });
 
     for (let i = 0; i < messages.length; i++) {

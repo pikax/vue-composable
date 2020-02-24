@@ -1,5 +1,7 @@
 # vue-composable
 
+<p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
+
 <!-- [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable) -->
 
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=vue3)](https://coveralls.io/github/pikax/vue-composable?branch=vue3)
@@ -13,13 +15,6 @@
 This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
 
 > Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
-
-<p align="center">
-  <br>
-  <img width="250" src="./logo.svg" alt="logo of vue-composable">
-  <br>
-  <br>
-</p>
 
 ## Introduction
 
@@ -97,6 +92,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Validation
 
 - [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+
+### i18n
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
 ### Promise
 

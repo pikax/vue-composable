@@ -35,6 +35,7 @@
     "url": "https://github.com/pikax/vue-composable/issues"
   },
   "homepage": "https://github.com/pikax/vue-composable",
+  "sideEffects": false,
   "dependencies": {
     "@vue-composable/core": "1.0.0-alpha.8",
     "@vue-composable/web": "1.0.0-alpha.8"

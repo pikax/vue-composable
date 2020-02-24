@@ -209,7 +209,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       });
       updateState = false;
     },
-    { deep: true, lazy: true }
+    { deep: true, immediate: false }
   );
 
   if (isClient) {

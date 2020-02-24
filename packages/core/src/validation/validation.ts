@@ -201,7 +201,7 @@ const buildValidation = <T>(
             $dirty.value = true;
             dirtyWatch();
           },
-          { lazy: true, deep: true }
+          { immediate: false, deep: true }
         );
 
         (r as any)["$dirty"] = $dirty;

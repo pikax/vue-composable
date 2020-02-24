@@ -1,15 +1,10 @@
 # @vue-composable/core
 
+<p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
+
 <!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore) -->
 
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core@next)](https://bundlephobia.com/result?p=@vue-composable/core@next)
-
-<p align="center">
-  <br>
-  <img width="250" src="./logo.svg" alt="logo of vue-composable">
-  <br>
-  <br>
-</p>
 
 This package contains core functionality for [vue-composable][vue-composable]
 
@@ -49,6 +44,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Validation
 
 - [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+
+### i18n
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
 ### Format
 
