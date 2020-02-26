@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import VueComposableRouter from "@vue-composable/router";
 import VueCompositionApi from "@vue/composition-api";
 import App from "./App.vue";
 
@@ -13,6 +14,7 @@ import SharedRef from "./components/SharedRef";
 
 Vue.use(VueRouter);
 Vue.use(VueCompositionApi);
+Vue.use(VueComposableRouter);
 window.SuperVue = Vue;
 
 Vue.config.productionTip = false;

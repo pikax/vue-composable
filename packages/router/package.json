@@ -1,0 +1,48 @@
+{
+  "name": "@vue-composable/router",
+  "version": "1.0.0-dev.11",
+  "description": "@vue-composable/router",
+  "main": "index.js",
+  "module": "dist/router.esm-bundler.js",
+  "unpkg": "dist/router.global.js",
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "types": "dist/router.d.ts",
+  "buildOptions": {
+    "priotity": 200,
+    "name": "vueComposableRouter",
+    "formats": [
+      "esm-bundler",
+      "cjs",
+      "global"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikax/vue-composable.git"
+  },
+  "keywords": [
+    "vue",
+    "composition-api",
+    "vue-composable",
+    "composable",
+    "router"
+  ],
+  "author": "pikax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pikax/vue-composable/issues"
+  },
+  "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/router#readme",
+  "sideEffects": false,
+  "peerDependencies": {
+    "vue-router": "^3.1.5",
+    "@vue/composition-api": "^0.3.4"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vue-router": "^3.1.5"
+  }
+}

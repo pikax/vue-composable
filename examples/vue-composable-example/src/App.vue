@@ -33,6 +33,10 @@
       <li>
         <router-link to="/i18n">I18n</router-link>
       </li>
+      <li>
+        <div @click="goHome">Home</div>
+        <div @click="goHomeRouter">Home2</div>
+      </li>
     </ul>
     <router-view></router-view>
   </div>
@@ -49,6 +53,7 @@ import {
   Ref
 } from "@vue/composition-api";
 import { useBroadcastChannel, refShared, useSharedRef } from "vue-composable";
+import { getVueRouter } from "@vue-composable/router";
 
 export default {
   name: "App",
@@ -57,8 +62,13 @@ export default {
     Fetch
   },
 
-  setup() {
-    return {};
+  setup(_, ctx) {
+    const goHome = () => getVueRouter().push("/home");
+    const goHomeRouter = () => ctx.parent.$router.push("/home");
+    return {
+      goHome,
+      goHomeRouter
+    };
   }
 };
 </script>
