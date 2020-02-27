@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.12
+
+_2020-02-27_
+
+### Breaking-Change
+
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Added `sync` argument, defaults to `true`, when true it will sync the storage with other tabs
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll.html) - Now `scrollTop` and `scrollLeft` are watched automatically for changes and will call `scrollTopTo` and `scrollLeftTo` respectably on change
+
+### Changed
+
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll.html) - Added `scrollTopTo`, `scrollLeftTo`
+- [webStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - when storage item is saved it dispatches a `StorageEvent`
+- [event][https://pikax.me/vue-composable/composable/event/event.html] - if Element `isRef` it will reattach new listener on change
+
+## Updated
+
+- updated to `@vue/composition-api@0.4.0`
+
 ## 1.0.0-dev.11
 
 _2020-02-24_
@@ -89,13 +108,13 @@ _2020-01-19_
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
-- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
-- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
-- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Changed
 
-- [localStorage](composable/misc/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
 
 ## 1.0.0-dev.4
 
