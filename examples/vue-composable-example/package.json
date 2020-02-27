@@ -12,7 +12,7 @@
     "@vue/composition-api": "^0.3.2",
     "vue": "^2.6.10",
     "vue-composable": "^1.0.0-dev.11",
-    "vue-router": "^3.1.5"
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.2.2",
