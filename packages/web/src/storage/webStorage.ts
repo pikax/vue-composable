@@ -175,10 +175,15 @@ export function useWebStorage(
           storage.removeItem(k);
         },
         getItem(k) {
-          let r = this.$refMap.get(k);
-          if (r) {
-            return r;
-          }
+          /**
+           * NOTE seems if the element who created the `ref` gets destroyed all the watchers assigned will be also disposed
+           * making returning of the cached `ref` invalid
+           */
+
+          // let r = this.$refMap.get(k);
+          // if (r) {
+          //   return r;
+          // }
           const data = storage.getItem(k);
           if (!data) {
             return null;

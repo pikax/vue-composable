@@ -47,6 +47,12 @@ const { remove, clear, setSync } = useLocalStorage(key);
 | `clear()`          | Clears all used localStorage used so far                                     |
 | `setSync(boolean)` | Update the local `storage` if the value is changed in other tab              |
 
+## Sync
+
+::: warning
+When using `sync: true`, only the **last** ref per key will be able to update
+:::
+
 ## Example
 
 ![Local Storage Cross tab](/vue-composable/localStorage.gif)

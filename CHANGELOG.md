@@ -13,6 +13,14 @@ _2020-02-27_
 
 ### Breaking-Change
 
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage): can only keep one `ref` per key!
+
+## 1.0.0-dev.12
+
+_2020-02-27_
+
+### Breaking-Change
+
 - [storage](https://pikax.me/vue-composable/composable/storage/storage) [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Added `sync` argument, defaults to `true`, when true it will sync the storage with other tabs
 - [onScroll](https://pikax.me/vue-composable/composable/event/onScroll.html) - Now `scrollTop` and `scrollLeft` are watched automatically for changes and will call `scrollTopTo` and `scrollLeftTo` respectably on change
 
