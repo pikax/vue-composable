@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted } from "@vue/composition-api";
+import { onUnmounted, watch, Ref } from "@vue/composition-api";
 import { RefTyped, wrap, NO_OP } from "@vue-composable/core";
 
 export type RemoveEventFunction = () => void;
@@ -56,11 +56,25 @@ export function useEvent(
   let remove = NO_OP;
 
   if (el) {
-    const element = wrap(el as Element);
-    remove = () => element.value!.removeEventListener(name, listener);
+    const element: Ref<Element> = wrap(el as Element);
 
-    onMounted(() => element.value!.addEventListener(name, listener, options));
+    const removeEventListener = (e: Element) =>
+      e.removeEventListener(name, listener);
+    const addEventListener = (e: Element) =>
+      e.addEventListener(name, listener, options);
+
+    remove = () => removeEventListener(element.value);
+
     onUnmounted(remove);
+
+    watch(element, (n, o) => {
+      if (o) {
+        removeEventListener(o);
+      }
+      if (n) {
+        addEventListener(n);
+      }
+    });
   }
 
   return remove;
