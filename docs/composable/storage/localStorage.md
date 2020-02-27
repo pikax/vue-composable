@@ -7,13 +7,14 @@
 ```js
 import { useLocalStorage } from "vue-composable";
 
-const localStorage = useLocalStorage(key, defaultValue?);
+const localStorage = useLocalStorage(key, defaultValue?, sync?);
 ```
 
-| Parameters   | Type                          | Required | Default     | Description                                    |
-| ------------ | ----------------------------- | -------- | ----------- | ---------------------------------------------- |
-| key          | `string|LocalStorageTyped<T>` | `true`   |             | Key that will be used to store in localStorage |
-| defaultValue | `object`                      | `false`  | `undefined` | default value stored in the localStorage       |
+| Parameters   | Type                          | Required | Default     | Description                                         |
+| ------------ | ----------------------------- | -------- | ----------- | --------------------------------------------------- |
+| key          | `string|LocalStorageTyped<T>` | `true`   |             | Key that will be used to store in localStorage      |
+| defaultValue | `object`                      | `false`  | `undefined` | default value stored in the localStorage            |
+| sync         | `Boolean`                     | `false`  | `true`      | sets the storage to sync automatically between tabs |
 
 ## State
 
