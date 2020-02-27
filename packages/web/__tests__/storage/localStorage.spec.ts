@@ -47,7 +47,7 @@ describe("localStorage", () => {
     const { storage: storage1 } = useLocalStorage(key, { a: 1 });
     const { storage: storage2 } = useLocalStorage(key, { a: 1 });
 
-    expect(storage1).toBe(storage2);
+    expect(storage1).toMatchObject(storage2);
   });
 
   it("should remove from localStorage", async () => {
