@@ -11,6 +11,7 @@ import {
   PASSIVE_EV
 } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
+import { watch } from "@vue/composition-api";
 
 export interface ScrollResult {
   scrollTop: Ref<number>;
@@ -18,6 +19,8 @@ export interface ScrollResult {
   remove: RemoveEventFunction;
 
   scrollTo: Element["scrollTo"];
+  scrollTopTo: (y: number) => void;
+  scrollLeftTo: (x: number) => void;
 }
 
 export function useOnScroll(): ScrollResult;
@@ -68,7 +71,12 @@ export function useOnScroll(
   };
 
   const scrollTo: Element["scrollTo"] = (...args: any) =>
+    scrollableElement.value &&
+    scrollableElement.value.scrollTo &&
     scrollableElement.value.scrollTo.apply(scrollableElement.value, args);
+
+  const scrollTopTo = (top: number) => scrollTo({ top });
+  const scrollLeftTo = (left: number) => scrollTo({ left });
 
   const [eventOptions, ms] =
     isNumber(el) || !el
@@ -81,7 +89,14 @@ export function useOnScroll(
     handler = useDebounce(handler, wait);
   }
 
-  const remove = useEvent(element, "scroll", handler, eventOptions);
+  const eventRemove = useEvent(element, "scroll", handler, eventOptions);
+  const watchRemoveTop = watch(scrollTop, scrollTopTo, { lazy: true });
+  const watchRemoveLeft = watch(scrollLeft, scrollLeftTo, { lazy: true });
+  const remove = () => {
+    eventRemove();
+    watchRemoveLeft();
+    watchRemoveTop();
+  };
 
   return {
     scrollTop,
@@ -89,6 +104,8 @@ export function useOnScroll(
 
     scrollTo,
 
-    remove
+    remove,
+    scrollTopTo,
+    scrollLeftTo
   };
 }
