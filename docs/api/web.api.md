@@ -220,9 +220,13 @@ export interface ScrollResult {
     // (undocumented)
     scrollLeft: Ref<number>;
     // (undocumented)
+    scrollLeftTo: (x: number) => void;
+    // (undocumented)
     scrollTo: Element["scrollTo"];
     // (undocumented)
     scrollTop: Ref<number>;
+    // (undocumented)
+    scrollTopTo: (y: number) => void;
 }
 
 // @public (undocumented)
@@ -351,10 +355,10 @@ export function useLanguage(): {
 };
 
 // @public (undocumented)
-export function useLocalStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
+export function useLocalStorage(key: string, defaultValue?: RefTyped<string>, sync?: boolean): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useLocalStorage<T extends object = any>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>): LocalStorageReturn<T>;
+export function useLocalStorage<T extends object = any>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>, sync?: boolean): LocalStorageReturn<T>;
 
 // @public (undocumented)
 export function useMatchMedia(query: string): {
@@ -427,10 +431,10 @@ export function usePageVisibility(): {
 };
 
 // @public (undocumented)
-export function useSessionStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
+export function useSessionStorage(key: string, defaultValue?: RefTyped<string>, sync?: boolean): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useSessionStorage<T extends object = object>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>): LocalStorageReturn<T>;
+export function useSessionStorage<T extends object = object>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>, sync?: boolean): LocalStorageReturn<T>;
 
 // @public (undocumented)
 export function useSharedRef<T = any>(name: string, defaultValue?: T): {
@@ -447,10 +451,10 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T): {
 };
 
 // @public (undocumented)
-export function useStorage(key: string, defaultValue?: RefTyped<string>): LocalStorageReturn<string>;
+export function useStorage(key: string, defaultValue?: RefTyped<string>, sync?: boolean): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useStorage<T extends object = any>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>): LocalStorageReturn<T>;
+export function useStorage<T extends object = any>(key: LocalStorageTyped<T> | string, defaultValue?: RefTyped<T>, sync?: boolean): LocalStorageReturn<T>;
 
 // @public (undocumented)
 export function useWebSocket(url: string, protocols?: string | string[]): {
