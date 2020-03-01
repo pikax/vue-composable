@@ -99,7 +99,7 @@ const backgroundColor = get("color-background"); // red
 </template>
 
 <script>
-import { useCssVariables } from "../../../packages/web/dist/web.cjs.js";
+import { useCssVariables } from "vue-composable";
 import { ref } from "@vue/composition-api";
 
 export default {
