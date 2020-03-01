@@ -120,8 +120,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
   const start = () => {
     observer.observe(element, {
       attributes: true,
-      childList: true,
-      subtree: true
+      attributeFilter: ["style"]
     });
     listening.value = true;
   };
