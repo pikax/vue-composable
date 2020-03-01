@@ -19,6 +19,7 @@ describe("CSS variables", () => {
     class MutationObserver {
       constructor(...args: any[]) {
         constructorFn(...args);
+        callback = args[0];
       }
       observe = observeFn;
       disconnect = disconnectFn;
@@ -49,7 +50,7 @@ describe("CSS variables", () => {
   });
 
   beforeEach(() => {
-    observeFn.mockReset();
+    observeFn.mockClear();
     constructorFn.mockReset();
     disconnectFn.mockReset();
   });
