@@ -103,6 +103,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
 
 ### External
 

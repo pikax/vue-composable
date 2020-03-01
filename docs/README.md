@@ -102,6 +102,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Language](composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
+- [CSS variables](composable/web/cssVariables) - reactive `CSS variables`
 
 ### Validation
 
