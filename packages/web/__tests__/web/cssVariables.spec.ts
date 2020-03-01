@@ -54,7 +54,7 @@ describe("CSS variables", () => {
     disconnectFn.mockReset();
   });
 
-  it("sohuld retrieve the correct value for a defined CSS variable", async () => {
+  it("should retrieve the correct value for a defined CSS variable", async () => {
     const element = document.createElement("div");
     element.style.setProperty("--variable-name", "#fff");
 
