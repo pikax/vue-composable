@@ -25,7 +25,7 @@ export interface CssVariablesMethods {
    * @param name The CSS variable name.
    * @param element The element to get the variable for.
    */
-  get: (name: string, element: HTMLElement) => CssVariable;
+  get: (name: string, el?: HTMLElement) => CssVariable;
 
   /**
    * Sets the value of the given CSS variable for the given element.
@@ -34,7 +34,7 @@ export interface CssVariablesMethods {
    * @param value The CSS variable value.
    * @param element The element to set the variable for.
    */
-  set: (name: string, value: CssVariable, element: HTMLElement) => void;
+  set: (name: string, value: CssVariable, el?: HTMLElement) => void;
 }
 
 /**
@@ -131,10 +131,20 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
   // Stops on destroy
   onUnmounted(() => stop());
 
+  // Sets the `get` method
+  const get = (name: string, el?: HTMLElement) => {
+    return getVariableFor(name, el || element);
+  };
+
+  // Sets the `set` method
+  const set = (name: string, value: CssVariable, el?: HTMLElement) => {
+    return setVariableFor(name, value, el || element);
+  };
+
   return {
     ...result,
-    get: getVariableFor,
-    set: setVariableFor,
+    get,
+    set,
     resume: start,
     stop,
     listening

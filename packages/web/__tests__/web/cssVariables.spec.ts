@@ -158,4 +158,34 @@ describe("CSS variables", () => {
 
     expect(variables.test.value).toBe("red");
   });
+
+  it("remembers bound element", async () => {
+    const element = document.createElement("div");
+    element.style.setProperty("--dummy-name", "red");
+    let variables: UseCssVariables<Record<string, string>> = {} as any;
+
+    new Vue({
+      template: "<div></div>",
+      setup() {
+        variables = useCssVariables({}, element);
+      }
+    }).$mount();
+
+    let { get, set } = variables;
+
+    // `get` should be bound to element
+    expect(get("dummy-name")).toBe("red");
+
+    // `set` should be bound to element
+    set("dummy-name", "blue");
+
+    // We check directly from the element to be sure
+    expect(element.style.getPropertyValue("--dummy-name")).toBe("blue");
+
+    // We set that variable to another element
+    set("dummy-name", "green", document.documentElement);
+
+    // Bound element should not have changed
+    expect(element.style.getPropertyValue("--dummy-name")).toBe("blue");
+  });
 });
