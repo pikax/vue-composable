@@ -6552,10 +6552,10 @@ jest-watcher@^25.1.0:
     jest-util "^25.1.0"
     string-length "^3.1.0"
 
-jest-websocket-mock@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/jest-websocket-mock/-/jest-websocket-mock-2.0.1.tgz#01a5e8ee8081262e0c302a7e923dc4885652ba39"
-  integrity sha512-ndIKVWabLEtXs9tKqjskeJwmqiJJS3wpp0200M9LPF1oOLD1QlDAMaEuwM5Id5vxWzKXzj2I9RQW9k40DWW1fA==
+jest-websocket-mock@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/jest-websocket-mock/-/jest-websocket-mock-2.0.2.tgz#8dfa268fd56bba6e0b759756cd1d3bafd40cdb42"
+  integrity sha512-SFTUI8O/LDGqROOMnfAzbrrX5gQ8GDhRqkzVrt8Y67evnFKccRPFI3ymS05tKcMONvVfxumat4pX/LRjM/CjVg==
 
 jest-worker@^24.9.0:
   version "24.9.0"
