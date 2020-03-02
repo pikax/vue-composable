@@ -82,7 +82,7 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
-    "jest-websocket-mock": "^2.0.1",
+    "jest-websocket-mock": "^2.0.2",
     "lint-staged": "^10.0.8",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.0",
