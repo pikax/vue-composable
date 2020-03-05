@@ -6,7 +6,7 @@ export type RefElement = Element | Ref<Element | undefined>;
 export type UnwrapRef<T> = T extends Ref<infer R> ? R : T;
 export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
 
-export function unwrap(o: RefElement): Element;
+// export function unwrap(o: RefElement): Element;
 export function unwrap<T>(o: RefTyped<T>): T;
 export function unwrap<T>(o: RefTyped<T>): T {
   return isRef(o) ? o.value : o;

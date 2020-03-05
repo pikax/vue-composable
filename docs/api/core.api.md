@@ -183,9 +183,6 @@ export interface RetryReturnNoFactory extends RetryReturn {
 export function setI18n<T extends i18nDefinition<TMessage>, TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>>(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
 
 // @public (undocumented)
-export function unwrap(o: RefElement): Element;
-
-// @public (undocumented)
 export function unwrap<T>(o: RefTyped<T>): T;
 
 // @public (undocumented)

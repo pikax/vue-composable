@@ -1,10 +1,10 @@
 import {
-  getVariableFor,
-  setVariableFor,
+  getCssVariableFor,
+  setCssVariableFor,
   useCssVariables,
   UseCssVariables
 } from "../../src";
-import { Vue } from "../utils";
+import { Vue, nextTick } from "../utils";
 
 describe("CSS variables", () => {
   let callback: () => void;
@@ -59,52 +59,58 @@ describe("CSS variables", () => {
     const element = document.createElement("div");
     element.style.setProperty("--variable-name", "#fff");
 
-    const definedVariable = getVariableFor("variable-name", element);
+    const definedVariable = getCssVariableFor(element, "--variable-name");
     expect(definedVariable).toBe("#fff");
 
-    const undefinedVariable = getVariableFor("undefined-variable", element);
+    const undefinedVariable = getCssVariableFor(
+      element,
+      "--undefined-variable"
+    );
     expect(undefinedVariable).toBeNull();
   });
 
   it("should retrieve the correct value for an undefined CSS variable", async () => {
     const element = document.createElement("div");
-    const undefinedVariable = getVariableFor("undefined-variable", element);
+    const undefinedVariable = getCssVariableFor(
+      element,
+      "--undefined-variable"
+    );
     expect(undefinedVariable).toBeNull();
   });
 
   it("should set the value of a CSS variable on an element", async () => {
     const element = document.createElement("div");
 
-    setVariableFor("variable-name", "#fff", element);
+    setCssVariableFor(element, "--variable-name", "#fff");
 
     expect(element.style.getPropertyValue("--variable-name")).toBe("#fff");
   });
 
   it("should know if the observer is no longer listening", async () => {
-    let variables: UseCssVariables<Record<string, string>> = {} as any;
+    let variables: UseCssVariables<{}> = {} as any;
 
     new Vue({
       template: "<div></div>",
       setup() {
-        variables = useCssVariables({});
+        variables = useCssVariables({}) as any;
       }
     }).$mount();
 
-    let { listening, stop, resume } = variables;
+    let { observing, stop, resume } = variables;
 
-    expect(listening).toMatchObject({
+    expect(observing).toMatchObject({
       value: true
     });
 
     stop();
 
-    expect(listening).toMatchObject({
+    expect(observing).toMatchObject({
       value: false
     });
 
     resume();
 
-    expect(listening).toMatchObject({
+    expect(observing).toMatchObject({
       value: true
     });
   });
@@ -114,7 +120,7 @@ describe("CSS variables", () => {
       template: "<div></div>",
       setup() {
         useCssVariables({
-          test: "variable-name"
+          test: "--variable-name"
         });
       }
     });
@@ -132,7 +138,7 @@ describe("CSS variables", () => {
 
   it("should update properties thanks to the observer", async () => {
     const element = document.createElement("div");
-    let variables: UseCssVariables<Record<string, string>> = {} as any;
+    let variables: UseCssVariables<{ test: string }> = {} as any;
 
     new Vue({
       template: "<div></div>",
@@ -147,13 +153,13 @@ describe("CSS variables", () => {
     }).$mount();
 
     callback = () => {
-      variables.test.value = getVariableFor("variable-name", element);
+      variables.test.value = getCssVariableFor(element, "--variable-name");
     };
 
     expect(variables.test.value).toBeNull();
 
     // Simulate an observation
-    setVariableFor("variable-name", "red", element);
+    setCssVariableFor(element, "--variable-name", "red");
     callback();
 
     expect(variables.test.value).toBe("red");
@@ -162,30 +168,25 @@ describe("CSS variables", () => {
   it("remembers bound element", async () => {
     const element = document.createElement("div");
     element.style.setProperty("--dummy-name", "red");
-    let variables: UseCssVariables<Record<string, string>> = {} as any;
+    setCssVariableFor(element, "--dummy-name", "red");
+    let variables: UseCssVariables<{ dummyName: string }> = {} as any;
 
     new Vue({
       template: "<div></div>",
       setup() {
-        variables = useCssVariables({}, element);
+        variables = useCssVariables({ dummyName: "dummy-name" }, element);
       }
     }).$mount();
 
-    let { get, set } = variables;
+    let { dummyName } = variables;
 
-    // `get` should be bound to element
-    expect(get("dummy-name")).toBe("red");
+    expect(dummyName.value).toBe("red");
 
     // `set` should be bound to element
-    set("dummy-name", "blue");
+    dummyName.value = "blue";
+    await nextTick();
 
     // We check directly from the element to be sure
-    expect(element.style.getPropertyValue("--dummy-name")).toBe("blue");
-
-    // We set that variable to another element
-    set("dummy-name", "green", document.documentElement);
-
-    // Bound element should not have changed
     expect(element.style.getPropertyValue("--dummy-name")).toBe("blue");
   });
 });

@@ -1,4 +1,20 @@
-import { Ref, ref, onUnmounted } from "@vue/composition-api";
+import {
+  Ref,
+  ref,
+  onUnmounted,
+  isRef,
+  watch,
+  onMounted
+} from "@vue/composition-api";
+import {
+  RefTyped,
+  isString,
+  unwrap,
+  wrap,
+  isElement,
+  isClient,
+  NO_OP
+} from "@vue-composable/core";
 
 /**
  * The values a CSS variable can contain.
@@ -20,22 +36,25 @@ export interface CssVariablesMethods {
   resume: () => void;
 
   /**
-   * Gets the current value of the given CSS variable name for the given element.
-   *
-   * @param name The CSS variable name.
-   * @param element The element to get the variable for.
+   * current observing state
    */
-  get: (name: string, el?: HTMLElement) => CssVariable;
+  observing: Ref<boolean>;
 
-  /**
-   * Sets the value of the given CSS variable for the given element.
-   *
-   * @param name The CSS variable name without dashes.
-   * @param value The CSS variable value.
-   * @param element The element to set the variable for.
-   */
-  set: (name: string, value: CssVariable, el?: HTMLElement) => void;
+  supported: boolean;
 }
+
+/**
+ * API to assign a value to the css variable
+ */
+export interface CssVarDefinition {
+  name: string;
+  value: RefTyped<string>;
+}
+
+/**
+ * Possible configuration
+ */
+export type CssVarDef = CssVarDefinition | string;
 
 /**
  * Returns object. Consists of multiple pairs of key/CSS variable value references and the additional methods.
@@ -50,7 +69,7 @@ export type CssVariableObject<T> = Record<keyof T, Ref<CssVariable>>;
 /**
  * A CSS Variable configuration object. Each value must be a CSS variable without the leading dashes.
  */
-export type CssVariableConfigurationObject = Record<string, string>;
+export type CssVariableConfigurationObject = Record<string, CssVarDef>;
 
 /**
  * Gets the current value of the given CSS variable name for the given element.
@@ -58,11 +77,11 @@ export type CssVariableConfigurationObject = Record<string, string>;
  * @param element The element to get the variable for.
  * @param name The CSS variable name.
  */
-export function getVariableFor(
-  name: string,
-  element: HTMLElement = document.documentElement
+export function getCssVariableFor(
+  element: HTMLElement,
+  name: string
 ): CssVariable {
-  const result = getComputedStyle(element).getPropertyValue(`--${name}`);
+  const result = getComputedStyle(element).getPropertyValue(name);
   return result ? result.trim() : null;
 }
 
@@ -73,13 +92,26 @@ export function getVariableFor(
  * @param name The CSS variable name without dashes.
  * @param value The CSS variable value.
  */
-export function setVariableFor(
+export function setCssVariableFor(
+  element: HTMLElement,
   name: string,
-  value: CssVariable,
-  element: HTMLElement = document.documentElement
+  value: CssVariable
 ): void {
-  element.style.setProperty(`--${name}`, value);
+  element.style.setProperty(name, value);
 }
+
+const defaultOptions: MutationObserverInit = {
+  attributes: true,
+  childList: true,
+  attributeFilter: ["style"]
+};
+
+const sanitizeCssVarName = (name: string) => {
+  if (name.length <= 2 || name[0] !== "-" || name[1] !== "-") {
+    return `--${name}`;
+  }
+  return name;
+};
 
 /**
  *
@@ -87,66 +119,155 @@ export function setVariableFor(
  * @param element
  */
 export function useCssVariables<T extends CssVariableConfigurationObject>(
-  variables: Record<keyof T, string>,
-  element: HTMLElement = document.documentElement
+  variables: T
+): UseCssVariables<T>;
+export function useCssVariables<T extends CssVariableConfigurationObject>(
+  variables: T,
+  options?: MutationObserverInit
+): UseCssVariables<T>;
+export function useCssVariables<T extends CssVariableConfigurationObject>(
+  variables: T,
+  element: RefTyped<HTMLElement>,
+  options?: MutationObserverInit
+): UseCssVariables<T>;
+export function useCssVariables<T extends CssVariableConfigurationObject>(
+  variables: T,
+  elementOrOptions?: RefTyped<HTMLElement> | MutationObserverInit,
+  optionsConfig?: MutationObserverInit
 ): UseCssVariables<T> {
+  const supported = isClient && "MutationObserver" in self;
+
+  const [element, options] =
+    isRef(elementOrOptions) || isElement(elementOrOptions)
+      ? [elementOrOptions, optionsConfig || defaultOptions]
+      : [
+          (supported && document.documentElement) || ({} as any),
+          elementOrOptions || defaultOptions
+        ];
+
   // Reactive property to tell if the observer is listening
-  const listening = ref(true);
+  const observing = ref(true);
 
   // Stores the results by reference.
-  const result: CssVariableObject<T> = {} as any;
+  const result = {} as CssVariableObject<T>;
 
-  // Assign variables to the result record.
-  for (const key in variables) {
-    result[key] = ref<CssVariable>(null);
+  // If the element is ref, we should only update the variable on mount
+  const updateValues: Function[] = [];
+
+  // extract name
+  const defEntries: Array<[keyof T, string]> = Object.entries(variables).map(
+    (x: [keyof T, CssVarDef]) => {
+      const [name, value] = isString(x[1]) ? [x[1]] : [x[1].name, x[1].value];
+
+      if (value) {
+        updateValues.push(() =>
+          setCssVariableFor(unwrap(element), name, unwrap(value))
+        );
+        // if is ref, use provided ref instead
+        result[x[0]] = wrap(value);
+      }
+
+      return [x[0], sanitizeCssVarName(name)];
+    }
+  );
+
+  for (let i = 0; i < defEntries.length; i++) {
+    const [key, name] = defEntries[i];
+
+    if (!result[key]) {
+      // if is ref set null, onMount we will update
+      result[key] = ref(
+        (isRef(element) && !element.value) || !supported
+          ? null
+          : getCssVariableFor(unwrap(element), name as string)
+      );
+    }
+
+    if (supported) {
+      // keep track of changes
+      watch(
+        [result[key], wrap(element)] as any,
+        (val: [CssVariable, HTMLElement]) => {
+          if (!observing) return;
+          if (val) {
+            setCssVariableFor(val[1], name as string, val[0]);
+          } else {
+            // todo remove?
+          }
+        },
+        { lazy: isRef(element) }
+      );
+    }
   }
 
-  // Sets up the observer.
-  const observer = new MutationObserver(() => {
+  if (!supported) {
+    return {
+      ...result,
+
+      stop: NO_OP,
+      resume: NO_OP,
+      supported,
+      observing
+    };
+  }
+
+  const update = () => {
     // Each time an observation has been made,
     // we look up for each CSS variable and update their values.
-    for (const key in variables) {
-      result[key].value = getVariableFor(variables[key], element);
+    for (let i = 0; i < defEntries.length; i++) {
+      const [key, value] = defEntries[i];
+
+      result[key].value = getCssVariableFor(unwrap(element), value);
     }
-  });
+  };
+
+  // Sets up the observer.
+  const observer = new MutationObserver(update);
 
   // Sets the `stop` method.
   const stop = () => {
     observer.disconnect();
-    listening.value = false;
+    observing.value = false;
   };
 
   // Sets the `start` method.
-  const start = () => {
-    observer.observe(element, {
-      attributes: true,
-      childList: true
-    });
-    listening.value = true;
+  const resume = () => {
+    // if it was stopped we will update the variables to the current value
+    if (!observing.value) {
+      update();
+    }
+    observer.observe(unwrap(element), options);
+    observing.value = true;
   };
-
-  // Starts observing
-  start();
 
   // Stops on destroy
-  onUnmounted(() => stop());
+  onUnmounted(stop);
 
-  // Sets the `get` method
-  const get = (name: string, el?: HTMLElement) => {
-    return getVariableFor(name, el || element);
-  };
-
-  // Sets the `set` method
-  const set = (name: string, value: CssVariable, el?: HTMLElement) => {
-    return setVariableFor(name, value, el || element);
-  };
+  if (isRef(element)) {
+    onMounted(() => {
+      updateValues.forEach(x => x());
+      watch(element, (n, o) => {
+        if (o) {
+          stop();
+        }
+        if (n) {
+          resume();
+        }
+      });
+    });
+  } else if (isClient || element) {
+    updateValues.forEach(x => x());
+    // Starts observe
+    resume();
+  }
 
   return {
     ...result,
-    get,
-    set,
-    resume: start,
+
+    supported,
+
+    resume,
     stop,
-    listening
+    observing
   };
 }

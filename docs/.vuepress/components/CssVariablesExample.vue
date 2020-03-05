@@ -1,70 +1,55 @@
 <template>
   <div>
     <div>
-      <label for="foreground-value"
-        >Override the value for <code>--color-foreground</code>:</label
-      >
-      <input
-        type="text"
-        id="foreground-value"
-        @input="set('color-foreground', $event.target.value)"
-        :model="foreground"
-      />
+      <label for="foreground-value">
+        Override the value for
+        <code>--color-foreground</code>:
+      </label>
+      <input type="text" id="foreground-value" v-model="foreground" />
     </div>
 
-    <div class="text" style="color: var(--color-foreground)">
-      <span v-if="listening">
-        I am a text with the following color:
-      </span>
-      <span v-else>
-        My color will be updated but not my label:
-      </span>
+    <div ref="textDiv"  class="text" style="color: var(--color-foreground)">
+      <span v-if="observing">I am a text with the following color:</span>
+      <span v-else>My color will be updated but not my label:</span>
       {{ foreground }}
     </div>
 
     <div>
-      <button type="button" @click="stop()" :disabled="!listening">
-        Stop listening
-      </button>
-      <button type="button" @click="resume()" :disabled="listening">
-        Resume listening
-      </button>
-      <button
-        type="button"
-        @click="foreground = get('color-foreground')"
-        :disabled="listening"
-      >
-        Manual label update
-      </button>
+      <button type="button" @click="stop" :disabled="!observing">Stop observing</button>
+      <button type="button" @click="resume" :disabled="observing">Resume observing</button>
     </div>
   </div>
 </template>
 
 <script>
-import { useCssVariables } from "../../../packages/web/dist/web.cjs.js";
-import { ref } from "@vue/composition-api";
+import { ref, defineComponent } from "@vue/composition-api";
+import { useCssVariables } from "vue-composable";
 
-export default {
+export default defineComponent({
   name: "css-variables-example",
   setup() {
-    const { stop, resume, get, set, listening, foreground } = useCssVariables({
-      foreground: "color-foreground"
-    });
+    const textDiv = ref(null);
 
-    set("color-foreground", "red");
+    const { supported, stop, resume, observing, foreground } = useCssVariables(
+      {
+        foreground: {
+          name: "color-foreground",
+          value: "red"
+        }
+      },
+      textDiv
+    );
 
     return {
-      listening,
+      textDiv,
+
+      observing,
       stop,
       resume,
-      get,
-      set,
-      listening,
-      foreground,
-      document
+      foreground
     };
   }
-};
+});
 </script>
 
 <style scoped>

@@ -2,6 +2,49 @@
 
 Expose the CSS variables of your choice to reactive properties.
 
+## Parameters
+
+```ts
+import { useCssVariables } from "vue-composable";
+
+useCssVariables(variables);
+useCssVariables(variables, options);
+useCssVariables(variables, element, options);
+
+useCssVariables({
+  backgroundColor: "color-background", // value is css as --color-background
+  foregroundColor: "--color-foreground", // value is css as --color-foreground
+  onBackgroundColor: {
+    name: "color-on-background",
+    value: "red"
+  }
+});
+
+/**
+ * API to assign a value to the css variable
+ */
+export interface CssVarDefinition {
+  name: string;
+  value: RefTyped<string>;
+}
+
+/**
+ * Possible configuration
+ */
+export type CssVarDef = CssVarDefinition | string;
+
+const defaultOptions = {
+  attributes: true,
+  attributeFilter: ["style"]
+};
+```
+
+| Parameters | Type                        | Required | Default                    | Description                                                                                                                                |
+| ---------- | --------------------------- | -------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| variables  | `Record<string, CssVarDef>` | `true`   |                            | dictionary with the cssVariable name you wish to track/change                                                                              |
+| options    | `MutationObserverInit`      | `false`  | `defaultOptions`           | Options passed to `MutationObserver.observe` [MutationObserverInit](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit) |
+| element    | `HTMLElement`               | `false`  | `document.documentElement` | element to keep track of CssVariables, it will default to document.documentElement if is in a client browser                               |
+
 ## State
 
 The `useCssVariables` function exposes the following reactive states:
@@ -9,20 +52,31 @@ The `useCssVariables` function exposes the following reactive states:
 ```js
 import { useCssVariables } from "vue-composable";
 
-const { listening, backgroundColor, onBackgroundColor } = useCssVariables({
+const {
+  supported,
+  observing,
+  backgroundColor,
+  onBackgroundColor
+} = useCssVariables({
   backgroundColor: "color-background",
-  onBackgroundColor: "color-on-background"
+  onBackgroundColor: {
+    name: "color-on-background",
+    value: "red"
+  }
 });
 
 // backgroundColor contains the `--color-background` CSS variable
-// onBackgroundColor contains the `--color-on-background` CSS variable
-// listening is true
+// onBackgroundColor sets `--color-on-background` CSS variable with the value 'red'
+// observing is true
+
+backGroundColor.value = "yellow"; // updates the cssVariable to yellow
 ```
 
-| State     | Type      | Description                                                                 |
-| --------- | --------- | --------------------------------------------------------------------------- |
-| listening | `Boolean` | A value that indicates if the observer is listening to CSS variable changes |
-| ...args   | `Args`    | Object with the same keys but with reactive CSS variable value              |
+| State        | Type              | Description                                                                 |
+| ------------ | ----------------- | --------------------------------------------------------------------------- |
+| supported    | `Boolean`         | Returns true if `MutationObserver` is supported                             |
+| observing    | `Ref<Boolean>`    | A value that indicates if the observer is listening to CSS variable changes |
+| ...variables | `Ref<TVariables>` | Object with the same keys but with reactive CSS variable value              |
 
 ## Methods
 
@@ -31,23 +85,13 @@ The `useCssVariables` function exposes the following methods:
 ```js
 import { useCssVariables } from "vue-composable";
 
-const { get, set, resume, start } = useCssVariables();
-
-// Sets the `--color-background` variable value
-// You don't need the dashed before the variable name.
-set("color-background", "red");
-
-// Gets the `--color-background` variable value
-// The result is not reactive, and you don't need the leading dashes
-const backgroundColor = get("color-background"); // red
+const { resume, stop } = useCssVariables();
 ```
 
-| Signature | Description                                                 | Arguments                                                                                     |
-| --------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `get`     | Manually gets the given CSS variable from the given element | `variableName: string, element: HTMLElement = document.documentElement`                       |
-| `set`     | Manually sets a CSS variable to the given element           | `variableName: string, value: string | null, element: HTMLElement = document.documentElement` |
-| `stop`    | Stops observing the changes                                 |                                                                                               |
-| `resume`  | Start observing the changes again                           |                                                                                               |
+| Signature | Description                       |
+| --------- | --------------------------------- |
+| `resume`  | Start observing the changes again |
+| `stop`    | Stops observing the changes       |
 
 ## Example
 
@@ -59,69 +103,69 @@ const backgroundColor = get("color-background"); // red
 <template>
   <div>
     <div>
-      <label for="foreground-value"
-        >Override the value for <code>--color-foreground</code>:</label
-      >
-      <input
-        type="text"
-        id="foreground-value"
-        @input="set('color-foreground', $event.target.value)"
-        :model="foreground"
-      />
+      <label for="foreground-value">
+        Override the value for
+        <code>--color-foreground</code>:
+      </label>
+      <input type="text" id="foreground-value" v-model="foreground" />
     </div>
 
-    <div class="text" style="color: var(--color-foreground)">
-      <span v-if="listening">
-        I am a text with the following color:
-      </span>
-      <span v-else>
-        My color will be updated but not my label:
-      </span>
+    <div ref="textDiv" class="text" style="color: var(--color-foreground)">
+      <span v-if="observing">I am a text with the following color:</span>
+      <span v-else>My color will be updated but not my label:</span>
       {{ foreground }}
     </div>
 
     <div>
-      <button type="button" @click="stop()" :disabled="!listening">
-        Stop listening
+      <button type="button" @click="stop" :disabled="!observing">
+        Stop observing
       </button>
-      <button type="button" @click="resume()" :disabled="listening">
-        Resume listening
-      </button>
-      <button
-        type="button"
-        @click="foreground = get('color-foreground')"
-        :disabled="listening"
-      >
-        Manual label update
+      <button type="button" @click="resume" :disabled="observing">
+        Resume observing
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import { useCssVariables } from "vue-composable";
 import { ref } from "@vue/composition-api";
+import { useCssVariables } from "vue-composable";
 
 export default {
   name: "css-variables-example",
   setup() {
-    const { stop, resume, get, set, listening, foreground } = useCssVariables({
-      foreground: "color-foreground"
-    });
+    const textDiv = ref(null);
 
-    set("color-foreground", "red");
+    const { stop, resume, observing, foreground } = useCssVariables(
+      {
+        foreground: {
+          name: "color-foreground",
+          value: "red"
+        }
+      },
+      textDiv
+    );
 
     return {
-      listening,
+      textDiv,
+
+      observing,
       stop,
       resume,
-      get,
-      set,
-      listening,
-      foreground,
-      document
+      observing,
+      foreground
     };
   }
 };
 </script>
+
+<style scoped>
+div > div {
+  margin-top: 15px;
+}
+
+.text {
+  margin: 15px 0;
+}
+</style>
 ```
