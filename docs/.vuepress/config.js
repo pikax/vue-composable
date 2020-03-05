@@ -166,7 +166,8 @@ module.exports = {
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
             ["composable/web/language", "Language"],
             ["composable/web/broadcastChannel", "BroadcastChannel API"],
-            ["composable/web/geolocation", "Geolocation API"]
+            ["composable/web/geolocation", "Geolocation API"],
+            ["composable/web/cssVariables", "CSS variables"]
           ]
         },
         {
