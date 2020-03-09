@@ -257,7 +257,7 @@ export interface UseNowOptions {
 export function usePagination(options: PaginationOptions): PaginationResult;
 
 // @public (undocumented)
-export function usePath<T extends object = any>(source: RefTyped<T>, path: RefTyped<string>, separator?: string, notFoundReturn?: UsePathNotFoundReturn): Readonly<import("@vue/composition-api").Ref<Readonly<any>>>;
+export function usePath<T = any>(source: RefTyped<object>, path: RefTyped<string>, separator?: string, notFoundReturn?: UsePathNotFoundReturn): Ref<Readonly<T>>;
 
 // @public (undocumented)
 export type UsePathNotFoundReturn = (path: string, source: any, fullPath: string, originalSource: any) => any;

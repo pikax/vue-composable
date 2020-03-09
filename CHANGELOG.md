@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.15
+
+_2020-03-25_
+
+## Fix
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - fix not loading fallback when locale is different than fallback. #167
+
 ## 1.0.0-dev.14
 
 _2020-03-25_
