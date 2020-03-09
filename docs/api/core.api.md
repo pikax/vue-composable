@@ -218,14 +218,14 @@ export function useCancellablePromise<T = any>(fn: () => T, throwException: bool
 // @public (undocumented)
 export function useCancellablePromise<T extends Promise<TR>, TR>(fn: () => T): PromiseResultFactory<T> & CancellablePromiseResult;
 
-// @public (undocumented)
+// @public
 export function useDateNow(options?: NowOptions): {
     now: import("@vue/composition-api").Ref<number>;
     remove: () => void;
 };
 
-// @public (undocumented)
-export function useDebounce<T extends Function>(handler: T, wait?: number, options?: Options): T;
+// @public
+export function useDebounce<T extends Procedure>(handler: T, wait?: number, options?: Options): T;
 
 // @public (undocumented)
 export function useFormat(format: Readonly<RefTyped<string>>, obj?: RefTyped<FormatObject>): Readonly<Ref<string>>;
@@ -242,7 +242,7 @@ export function useI18n<T extends i18nDefinition<TMessage>, TMessage extends Rec
 // @public (undocumented)
 export function useI18n<T = i18n>(): i18nResult<string[], T> | void;
 
-// @public (undocumented)
+// @public
 export function useNow(options?: NowOptions & UseNowOptions): {
     now: import("@vue/composition-api").Ref<number>;
     remove: () => void;
@@ -262,7 +262,7 @@ export function usePath<T extends object = any>(source: RefTyped<T>, path: RefTy
 // @public (undocumented)
 export type UsePathNotFoundReturn = (path: string, source: any, fullPath: string, originalSource: any) => any;
 
-// @public (undocumented)
+// @public
 export function usePerformanceNow(options?: NowOptions): {
     now: import("@vue/composition-api").Ref<number>;
     remove: () => void;
