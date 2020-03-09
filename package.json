@@ -88,7 +88,7 @@
     "minimist": "^1.2.0",
     "mock-socket": "^9.0.3",
     "rimraf": "^3.0.2",
-    "rollup": "^1.32.1",
+    "rollup": "^2.0.2",
     "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "ts-jest": "^25.2.1",
