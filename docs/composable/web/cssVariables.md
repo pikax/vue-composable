@@ -1,6 +1,6 @@
 # CSS variables
 
-Expose the CSS variables of your choice to reactive properties.
+> Expose the CSS variables of your choice to reactive properties. Using [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 
 ## Parameters
 
@@ -92,6 +92,14 @@ const { resume, stop } = useCssVariables();
 | --------- | --------------------------------- |
 | `resume`  | Start observing the changes again |
 | `stop`    | Stops observing the changes       |
+
+::: tip
+
+Calling `stop()` will stop observing for changes in the `DOM`, changes made to the ref will still update/override the style values.
+
+Check the example bellow.
+
+:::
 
 ## Example
 
