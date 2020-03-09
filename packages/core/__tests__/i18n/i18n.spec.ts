@@ -100,4 +100,19 @@ describe("i18n", () => {
       expect((x.i18n.value as any).hello).toBeUndefined();
     });
   });
+
+  it("should fallback if the locale is different than fallback locale", async () => {
+    const x = buildI18n({
+      locale: "jp",
+      fallback: "en",
+      messages: {
+        en: { hello: "Hello" },
+        jp: {}
+      }
+    });
+
+    await nextTick();
+
+    expect((x.i18n.value as any).hello).toBe("Hello");
+  });
 });

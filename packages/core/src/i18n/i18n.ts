@@ -134,7 +134,10 @@ export function buildI18n<
 
   let fallbackIsPromise = false;
   if (shouldFallback) {
-    const fallbackI18n = loadLocale(locale.value as string, localeMessages);
+    const fallbackI18n = loadLocale(
+      definition.fallback! as string,
+      localeMessages
+    );
     if (isPromise(fallbackI18n)) {
       fallbackI18n.then(x => {
         fallback = x;
@@ -147,7 +150,7 @@ export function buildI18n<
     fallback.value = {};
   }
 
-  watch(
+  watch(  
     [locale, fallback],
     async ([l, fb]: [keyof TMessage, i18n | undefined]) => {
       if (l === definition.fallback && shouldFallback) {
