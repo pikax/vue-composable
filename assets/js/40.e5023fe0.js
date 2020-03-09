@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[40],{343:function(t,e,s){"use strict";s.r(e);var n=s(19),c=Object(n.a)({},(function(){var t=this.$createElement;return(this._self._c||t)("video",{staticStyle:{width:"100%"},attrs:{src:"/vue-composable/master-hive.mp4",controls:""}})}),[],!1,null,null,null);e.default=c.exports}}]);
