@@ -49,6 +49,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Format
 
 - [format][format] - Reactive string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
 
 ## Promise
 

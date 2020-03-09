@@ -61,6 +61,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### Format
 
 - [format](composable/format/format) - Reactive string format
+- [path](composable/format/path) - Retrieve object value based on string path
 
 ### Breakpoint
 

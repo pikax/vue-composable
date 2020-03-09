@@ -1,5 +1,5 @@
 import { RefTyped, unwrap, isObject, NO_OP } from "../utils";
-import { computed } from "@vue/composition-api";
+import { computed, Ref } from "@vue/composition-api";
 
 export type UsePathNotFoundReturn = (
   path: string,
@@ -8,12 +8,12 @@ export type UsePathNotFoundReturn = (
   originalSource: any
 ) => any;
 
-export function usePath<T extends object = any>(
-  source: RefTyped<T>,
+export function usePath<T = any>(
+  source: RefTyped<object>,
   path: RefTyped<string>,
   separator: string = ".",
   notFoundReturn: UsePathNotFoundReturn = NO_OP
-) {
+): Ref<Readonly<T>> {
   return computed(() => {
     const s = unwrap(source);
     const p = unwrap(path);

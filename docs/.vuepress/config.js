@@ -103,7 +103,10 @@ module.exports = {
           title: "Format",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/format/format", "format"]]
+          children: [
+            ["composable/format/format", "format"],
+            ["composable/format/path", "path"]
+          ]
         },
 
         {
