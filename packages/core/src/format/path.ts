@@ -1,18 +1,37 @@
 import { RefTyped, unwrap, isObject, NO_OP } from "../utils";
 import { computed, Ref } from "@vue/composition-api";
 
-export type UsePathNotFoundReturn = (
+export type UsePathNotFoundReturn<TSource> = (
+  /**
+   * Current path
+   */
   path: string,
+  /**
+   * last source found
+   */
   source: any,
+  /**
+   * Full path requested
+   */
   fullPath: string,
-  originalSource: any
+  /**
+   * Original source
+   */
+  originalSource: TSource
 ) => any;
 
-export function usePath<T = any>(
-  source: RefTyped<object>,
+/**
+ * Retrieve object value based on string path
+ * @param source - Source object to retrieve path
+ * @param path - string path to value
+ * @param separator - path separator, default '.'
+ * @param notFoundReturn - not found handler
+ */
+export function usePath<T = any, TSource = any>(
+  source: RefTyped<TSource>,
   path: RefTyped<string>,
   separator: string = ".",
-  notFoundReturn: UsePathNotFoundReturn = NO_OP
+  notFoundReturn: UsePathNotFoundReturn<TSource> = NO_OP
 ): Ref<Readonly<T>> {
   return computed(() => {
     const s = unwrap(source);
@@ -25,7 +44,7 @@ export function usePath<T = any>(
     }
 
     const fragments = p.split(separator);
-    let c = s;
+    let c: Record<string, any> = s;
     for (let i = 0; i < fragments.length; i++) {
       let fragmentPath = fragments[i];
       let index: any = -1;

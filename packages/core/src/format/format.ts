@@ -9,11 +9,30 @@ export interface FormatObject {
   [id: string]: FormatValue;
 }
 
+/**
+ * format string based on object: [format](https://pikax.me/vue-composable/composable/format/format)
+ *  * @example
+ * ```ts
+ * useFormat('Today is {{ day }}', { day: new Date().getDay() })
+ * ```
+ * @param format - string format
+ * @param obj - object to get values from
+ */
 export function useFormat(
   format: Readonly<RefTyped<string>>,
   obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
 
+/**
+ * format string based on object: [format](https://pikax.me/vue-composable/composable/format/format)
+ * * @example
+ * ```ts
+ * useFormat('Today is {{ 0 }}', new Date().getDay())
+ * ```
+ * @param format - string format
+ * @param args - array based format
+ *
+ */
 export function useFormat(
   format: Readonly<RefTyped<string>>,
   ...args: Array<FormatValue>

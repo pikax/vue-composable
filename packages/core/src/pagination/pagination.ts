@@ -1,19 +1,51 @@
 import { Ref, computed, watch, ref } from "@vue/composition-api";
 import { isNumber, minMax, wrap, RefTyped } from "../utils";
+/**
+ * Pagination control
+ */
+export type PaginationControl = () => void;
 
-type PaginationControl = () => void;
-
+/**
+ * Pagination result object
+ */
 export interface PaginationResult {
+  /**
+   * Current page size
+   */
   pageSize: Ref<number>;
+  /**
+   * Total number of items
+   */
   total: Ref<number>;
+  /**
+   * Current page
+   */
   currentPage: Ref<number>;
+  /**
+   * Current offset
+   */
   offset: Ref<number>;
 
+  /**
+   * Last page number
+   */
   lastPage: Readonly<Ref<number>>;
 
+  /**
+   * next page
+   */
   next: PaginationControl;
+  /**
+   * prev page
+   */
   prev: PaginationControl;
+  /**
+   * first page
+   */
   first: PaginationControl;
+  /**
+   * last page
+   */
   last: PaginationControl;
 }
 
