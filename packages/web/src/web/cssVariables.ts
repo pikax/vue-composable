@@ -192,7 +192,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
 
           // don't force if the current value is the same as the given one
           // or if the given one is empty
-          if (val && val[0] !== getCssVariableFor(val[1], name)) {
+          if (val[1] && val[0] !== getCssVariableFor(val[1], name)) {
             setCssVariableFor(val[1], name as string, val[0]);
           }
         },
