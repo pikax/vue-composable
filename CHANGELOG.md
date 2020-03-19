@@ -3,15 +3,22 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
+
+## Changes
+
+- Updated [composition-api@0.5.0](https://github.com/vuejs/composition-api)
+- stop force-updating css variables #178 - Thanks @hawezo
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - changed default options to `{ attributes: true, childList: true, subtree: true }`
 
 ## 1.0.0-dev.15
 
 _2020-03-25_
 
 ## Fix
+
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - fix not loading fallback when locale is different than fallback. #167
 
 ## 1.0.0-dev.14

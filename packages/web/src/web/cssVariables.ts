@@ -103,7 +103,7 @@ export function setCssVariableFor(
 const defaultOptions: MutationObserverInit = {
   attributes: true,
   childList: true,
-  attributeFilter: ["style"]
+  subtree: true
 };
 
 const sanitizeCssVarName = (name: string) => {
