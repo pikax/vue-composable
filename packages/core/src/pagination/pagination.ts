@@ -10,51 +10,77 @@ export type PaginationControl = () => void;
  */
 export interface PaginationResult {
   /**
+   * @reactive
    * Current page size
    */
   pageSize: Ref<number>;
   /**
+   * @readonly
    * Total number of items
    */
-  total: Ref<number>;
+  total: Readonly<Ref<Readonly<number>>>;
+
   /**
+   * @reactive
    * Current page
    */
   currentPage: Ref<number>;
+
   /**
+   * @reactive
    * Current offset
    */
   offset: Ref<number>;
 
   /**
+   * @readonly
    * Last page number
    */
   lastPage: Readonly<Ref<number>>;
 
   /**
-   * next page
+   * go next page
    */
   next: PaginationControl;
   /**
-   * prev page
+   * go prev page
    */
   prev: PaginationControl;
   /**
-   * first page
+   * go first page
    */
   first: PaginationControl;
   /**
-   * last page
+   * go last page
    */
   last: PaginationControl;
 }
 
+/**
+ * Pagination Options
+ */
 export interface PaginationOptions {
+  /**
+   * @reactive
+   * Page size
+   */
   pageSize: RefTyped<number>;
+  /**
+   * @reactive
+   * Total number of pages
+   */
   total: RefTyped<number>;
+  /**
+   * @reactive
+   * Starting page
+   */
   currentPage: RefTyped<number>;
 }
 
+/**
+ * Create a pagination controller based on the arguments
+ * @param options -
+ */
 export function usePagination(options: PaginationOptions): PaginationResult {
   const _currentPage = wrap(options.currentPage);
   const _pageSize = wrap(options.pageSize);
