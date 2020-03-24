@@ -84,7 +84,6 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
   const exec = async (...args: TArgs): Promise<PromiseType<T> | undefined> => {
     loading.value = true;
     error.value = null;
-    result.value = null;
 
     let throwExp =
       args &&
