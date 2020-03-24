@@ -1,5 +1,6 @@
 import { usePromise } from "../../src/promise/promise";
 import { nextTick } from "../utils";
+import { promisedTimeout } from "../../src/";
 
 describe("promise", () => {
   let cb: ((...args: any[]) => void) | null = null;
@@ -180,6 +181,23 @@ describe("promise", () => {
       loading: { value: true },
       error: { value: null }
     });
+  });
+
+  it("should only update result after the promise is resolved", async () => {
+    // result should not be set to `null` between executions
+    let v = 1;
+    const use = usePromise(x => promisedTimeout(20).then(() => (v = x)));
+
+    expect(use.result.value).toBe(null);
+
+    await use.exec(12);
+
+    expect(use.result.value).toBe(v);
+    use.exec(1);
+    await promisedTimeout(5);
+    expect(use.result.value).toBe(12);
+    await promisedTimeout(17);
+    expect(use.result.value).toBe(1);
   });
 
   describe("throw exception", () => {
