@@ -50,6 +50,14 @@ const routes = [
   {
     path: "/i18n",
     component: () => import("./components/I18n")
+  },
+  {
+    path: "/intl",
+    component: () => import("./components/Intl")
+  },
+  {
+    path: "/currency",
+    component: () => import("./components/CurrencyFormat")
   }
 ];
 const router = new VueRouter({
