@@ -28,16 +28,13 @@ export function useIntlNumberFormat(
 export function useIntlNumberFormat(
   options: RefTyped<IntlNumberFormatOptions>
 ): NumberFormatReturn;
-// export function useIntlNumberFormat(
-//   locales: IntlNumberFormatLocales,
-//   options?: RefTyped<Intl.NumberFormatOptions>
-// ): NumberFormatReturn;
-// export function useIntlNumberFormat(
-//   options: RefTyped<Intl.NumberFormatOptions>
-// ): NumberFormatReturn;
+export function useIntlNumberFormat(
+  locales: IntlNumberFormatLocales,
+  options: RefTyped<Intl.NumberFormatOptions>
+): NumberFormatReturn;
 export function useIntlNumberFormat(
   localesOptions: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
-  opts?: RefTyped<IntlNumberFormatOptions>
+  opts?: any
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
     localesOptions as any,

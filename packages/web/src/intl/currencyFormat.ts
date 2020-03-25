@@ -6,16 +6,22 @@ import {
 } from "./numberFormat";
 import { computed, Ref } from "@vue/composition-api";
 import { intlDateFormatExtractArguments } from "./_helper";
-import { CurrencyCodes, IntlNumberFormatOptions } from "./types";
+import {
+  CurrencyCodes,
+  IntlNumberFormatOptions,
+  CurrencyDisplay
+} from "./types";
 
 export interface CurrencyFormatReturn extends NumberFormatReturn {
   formatAmount: (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>
+    currency?: RefTyped<CurrencyCodes>,
+    display?: RefTyped<CurrencyDisplay>
   ) => Ref<Readonly<string>>;
   formatAmountString: (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>
+    currency?: RefTyped<CurrencyCodes>,
+    display?: RefTyped<CurrencyDisplay>
   ) => string;
 }
 
@@ -50,17 +56,23 @@ export function useCurrencyFormat(
 
   const formatAmountString = (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>
+    currency?: RefTyped<CurrencyCodes>,
+    display?: RefTyped<CurrencyDisplay>
   ) => {
     const c = unwrap(currency);
-    return numberFormat.formatString(unwrap(amount), c && { currency: c });
+    const d = unwrap(display);
+    return numberFormat.formatString(
+      unwrap(amount),
+      (c || d) && { currency: c, currencyDisplay: d }
+    );
   };
 
   const formatAmount = (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>
+    currency?: RefTyped<CurrencyCodes>,
+    display?: RefTyped<CurrencyDisplay>
   ) => {
-    return computed(() => formatAmountString(amount, currency));
+    return computed(() => formatAmountString(amount, currency, display));
   };
 
   return {

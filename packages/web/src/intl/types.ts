@@ -4,6 +4,8 @@ export type IntlNumberFormatOptions = Intl.NumberFormatOptions & {
   currencyDisplay?: CurrencyDisplay & string;
 };
 
+//https://v8.dev/features/intl-numberformat
+
 export type IntNumberFormatOptionStyle =
   /**
    * A decimal style format

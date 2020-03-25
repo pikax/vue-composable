@@ -1,5 +1,11 @@
 import { IntlNumberFormatLocales } from "./numberFormat";
-import { RefTyped, wrap, isObject, isArray } from "@vue-composable/core";
+import {
+  RefTyped,
+  wrap,
+  isObject,
+  isArray,
+  isString
+} from "@vue-composable/core";
 import { Ref } from "@vue/composition-api";
 
 export function intlDateFormatExtractArguments(
@@ -25,7 +31,8 @@ export function intlDateFormatExtractArguments(
   return isObject(wrappedOpts.value)
     ? [wrappedLocalesOptions as Ref<string>, wrappedOpts]
     : isObject(wrappedLocalesOptions.value) &&
-      !isArray(wrappedLocalesOptions.value)
+      !isArray(wrappedLocalesOptions.value) &&
+      !isString(wrappedLocalesOptions.value)
     ? [undefined, wrappedLocalesOptions as Ref<Intl.NumberFormatOptions>]
     : [wrappedLocalesOptions as Ref<string>, undefined];
 }
