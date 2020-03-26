@@ -27,7 +27,7 @@ export interface CurrencyFormatReturn extends NumberFormatReturn {
 
 export function useCurrencyFormat(
   currencyCode: RefTyped<CurrencyCodes>,
-  locales: IntlNumberFormatLocales,
+  locales?: IntlNumberFormatLocales,
   options?: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn;
 export function useCurrencyFormat(

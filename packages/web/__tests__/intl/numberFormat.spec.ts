@@ -48,13 +48,13 @@ describe("intl numberFormat", () => {
     }
   });
 
-  it("should call new Intl.NumberFormat with the write options", () => {
+  it("should call new Intl.NumberFormat with the write options", async () => {
     let locales: string | string[] | undefined = "en-GB";
     let options: Intl.DateTimeFormatOptions = {};
     const { formatter } = useIntlNumberFormat(locales, options);
 
     expect(formatter.value).toBeDefined();
     // expect(Intl.NumberFormat).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledWith(locales, options);
+    expect(spy).toHaveBeenLastCalledWith(locales, options);
   });
 });

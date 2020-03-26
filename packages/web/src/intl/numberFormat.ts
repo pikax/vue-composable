@@ -32,8 +32,9 @@ export function useIntlNumberFormat(
   locales: IntlNumberFormatLocales,
   options: RefTyped<Intl.NumberFormatOptions>
 ): NumberFormatReturn;
+export function useIntlNumberFormat(): NumberFormatReturn;
 export function useIntlNumberFormat(
-  localesOptions: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
+  localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
   opts?: any
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
