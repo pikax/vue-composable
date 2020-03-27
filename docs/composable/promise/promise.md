@@ -56,6 +56,10 @@ const { exec } = usePromise();
 | ------------- | -------------------- |
 | `exec(args?)` | Resolves new promise |
 
+::: tip
+You can pass `throwException` on the last argument of the `exec` to override the default behaviour
+:::
+
 ## Example
 
 <promise-example/>

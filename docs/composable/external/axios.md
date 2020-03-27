@@ -89,7 +89,7 @@ const { exec, cancel } = useAxios();
 | `cancel(message?)`          | Cancels the last request |
 
 ::: tip
-You can pass `throwException` on the last argument of the `exec` to override the default behaviour, this only happens if the number of the factory args is less the args passed to exec and the last argument is boolean
+You can pass `throwException` on the last argument of the `exec` to override the default behaviour
 :::
 
 ## Example
