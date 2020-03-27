@@ -7,13 +7,23 @@ Provides promise state
 ```js
 import { usePromise } from "vue-composable";
 
-const promise = usePromise(factory, throwException?);
+usePromise(factory, lazy?);
+usePromise(factory, {
+  lazy?,
+  throwException?
+});
 ```
 
 | Parameters     | Type       | Required | Default | Description                                                                                                   |
 | -------------- | ---------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
 | factory        | `Function` | `true`   |         | Factory will be called every time the exec is called, the arguments will be passed to the factory. `Required` |
+| lazy           | `Boolean`  | `false`  | `false` | Defers execution of the factory until `exec` is called                                                        |
 | throwException | `Boolean`  | `false`  | `false` | Makes `exec` throw exceptions, when `false` the error will be handled only by the `usePromise`                |
+
+::: warning
+If `factory` argument has parameters, if `lazy` is `false` or not specified, the factory will be called without parameters.
+A warning will be raised in `dev`, to remove the warning please pass `lazy:false`
+:::
 
 ## State
 

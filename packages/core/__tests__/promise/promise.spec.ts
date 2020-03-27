@@ -12,8 +12,26 @@ describe("promise", () => {
     currentPromise = null;
   });
 
-  it("should not resolve immediately", () => {
+  it("should resolve immediately", async () => {
     expect(usePromise(factory)).toMatchObject({
+      promise: { value: currentPromise },
+      result: { value: null },
+      loading: { value: true },
+      error: { value: null }
+    });
+  });
+
+  it("should not resolve immediately", () => {
+    expect(usePromise(factory, true)).toMatchObject({
+      promise: { value: undefined },
+      result: { value: null },
+      loading: { value: false },
+      error: { value: null }
+    });
+  });
+
+  it("should not resolve immediately with options", () => {
+    expect(usePromise(factory, { lazy: true })).toMatchObject({
       promise: { value: undefined },
       result: { value: null },
       loading: { value: false },
@@ -74,7 +92,7 @@ describe("promise", () => {
       error: { value: null }
     });
 
-    callbacks[1](1);
+    callbacks[2](1);
     await nextTick();
 
     expect(use).toMatchObject({
@@ -155,7 +173,7 @@ describe("promise", () => {
 
     const arr = [use.exec(), use.exec()];
 
-    callbacks[0](1);
+    callbacks[1](1);
     expect(await arr[0]).toBe(1);
   });
 
@@ -200,12 +218,37 @@ describe("promise", () => {
     expect(use.result.value).toBe(1);
   });
 
+  describe("__DEV__ warns", () => {
+    const consoleWarnSpy = jest.spyOn(console, "warn");
+
+    it("should warn if the factory has argument but lazy no specified", () => {
+      usePromise((a: any) => {});
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments."
+      );
+
+      consoleWarnSpy.mockClear();
+      usePromise((a: any) => {}, true);
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      usePromise((a: any) => {}, { lazy: true });
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+      usePromise((a: any) => {}, { throwException: true });
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments."
+      );
+    });
+  });
+
   describe("throw exception", () => {
     it("should throw when throwException is true at creation", async () => {
       expect.assertions(2);
 
       const error = new Error("error");
-      const use = usePromise(() => Promise.reject(error), true);
+      const use = usePromise(() => Promise.reject(error), {
+        throwException: true
+      });
 
       try {
         await use.exec();

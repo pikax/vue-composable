@@ -7,12 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ---
 
+## Added
+
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
+
 ## Changes
 
 - Updated [composition-api@0.5.0](https://github.com/vuejs/composition-api)
 - stop force-updating css variables #178 - Thanks @hawezo
 - [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - changed default options to `{ attributes: true, childList: true, subtree: true }`
 - [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - do not reset `result` between executions
+
+## Breaking
+
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Now Promises will execute at creation, please check [documentation](https://pikax.me/vue-composable/composable/promise/promise)
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Replaced `throwException` argument to `lazy`
 
 ## 1.0.0-dev.15
 
