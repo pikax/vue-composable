@@ -152,6 +152,7 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/promise/promise", "promise"],
+            ["composable/promise/promiseLazy", "Lazy Promise"],
             ["composable/promise/cancellablePromise", "cancellablePromise"],
             ["composable/promise/retry", "retry"]
           ]
