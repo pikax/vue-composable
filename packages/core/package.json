@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.15",
+  "version": "1.0.0-dev.16",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
