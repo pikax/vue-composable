@@ -87,6 +87,10 @@ const { exec, cancel } = useFetch();
 | `cancel`  | Cancels the fetch request if browser supports `AbortController`, otherwise the request will complete but will not update the state. |
 | `exec`    | Executes the request similar to `fetch`. It returns [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)           |
 
+::: tip
+You can pass `throwException` on the last argument of the `exec` to override the default behaviour
+:::
+
 ## Example
 
 <fetch-example/>

@@ -23,8 +23,7 @@ export function useFetch<T = any>(
   const blob = ref<Blob>();
 
   const isOptions = options
-    ? isBoolean((options as UseFetchOptions).isJson) ||
-      isBoolean((options as UseFetchOptions).isJson)
+    ? isBoolean((options as UseFetchOptions).isJson)
     : false;
 
   const jsonError = ref<any | null>(null);
@@ -96,7 +95,7 @@ export function useFetch<T = any>(
       }
     }
     return response;
-  });
+  }, true);
 
   const status = computed(
     () => (use.result.value && use.result.value.status) || null

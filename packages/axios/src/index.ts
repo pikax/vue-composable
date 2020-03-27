@@ -82,22 +82,27 @@ export function useAxios<TData = any>(
     }
     cancelToken.cancel(message);
     isCancelled.value = true;
-    ``;
     cancelledMessage.value = message;
   };
 
-  const use = usePromise(async (request: AxiosRequestConfig | string) => {
-    cancelToken = axios.CancelToken.source();
-    isCancelled.value = false;
-    cancelledMessage.value = null;
+  const use = usePromise(
+    async (request: AxiosRequestConfig | string) => {
+      cancelToken = axios.CancelToken.source();
+      isCancelled.value = false;
+      cancelledMessage.value = null;
 
-    const opts = isString(request) ? { url: request } : request;
+      const opts = isString(request) ? { url: request } : request;
 
-    return axiosClient.request<any, AxiosResponse<TData>>({
-      cancelToken: cancelToken.token,
-      ...opts
-    });
-  }, throwException);
+      return axiosClient.request<any, AxiosResponse<TData>>({
+        cancelToken: cancelToken.token,
+        ...opts
+      });
+    },
+    {
+      lazy: true,
+      throwException
+    }
+  );
 
   const data = computed<TData>(
     () =>
