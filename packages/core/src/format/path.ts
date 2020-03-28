@@ -1,12 +1,12 @@
 import { RefTyped, unwrap, isObject, NO_OP } from "../utils";
 import { computed, Ref } from "@vue/composition-api";
 
-export type UsePathNotFoundReturn = (
+export type UsePathNotFoundReturn<T = any> = (
   path: string,
   source: any,
   fullPath: string,
   originalSource: any
-) => any;
+) => T;
 
 export function usePath<T = any>(
   source: RefTyped<object>,
