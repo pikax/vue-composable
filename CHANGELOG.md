@@ -3,11 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!--
 ## [Unreleased]
 
 ---
- -->
+
+## Changed
+
+- [path](https://pikax.me/vue-composable/composable/format/path) - Improve [array path access](https://pikax.me/vue-composable/composable/format/path.html#access) and add dev warnings
 
 ## 1.0.0-dev.16
 
