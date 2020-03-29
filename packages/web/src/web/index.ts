@@ -8,3 +8,4 @@ export * from "./language";
 export * from "./broadcastChannel";
 export * from "./geolocation";
 export * from "./cssVariables";
+export * from "./webWorker";
