@@ -26,10 +26,6 @@ describe("breakpoint", () => {
     matchMediaSpy.mockClear();
   });
 
-  // afterAll(() => {
-  //   matchMediaSpy.mockRestore();
-  // });
-
   let callback: () => void;
   const addEventListenerMock = jest.fn((_, cb) => (callback = cb));
   const removeEventListenerMock = jest.fn();
@@ -199,6 +195,29 @@ describe("breakpoint", () => {
     vm.$destroy();
 
     expect(matchMedia).not.toHaveBeenCalled();
+
+    expect(breakpoint).toMatchObject({
+      S: { value: true }
+    });
+  });
+
+  it("should still work with invalid breakpoint", () => {
+    const breakpoints = {
+      S: false
+    };
+
+    let breakpoint: any;
+    const vm = new Vue({
+      template: "<div></div>",
+      setup() {
+        return (breakpoint = useBreakpoint(breakpoints as any));
+      }
+    });
+
+    vm.$mount();
+    vm.$destroy();
+
+    expect(matchMedia).toHaveBeenCalledWith(false);
 
     expect(breakpoint).toMatchObject({
       S: { value: true }
