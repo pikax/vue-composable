@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { useWebWorkerFunction, useDateNow } from "vue-composable";
+import { useWorkerFunction, useDateNow } from "vue-composable";
 import { defineComponent, computed, ref } from "@vue/composition-api";
 import { promises } from "fs";
 
@@ -80,14 +80,14 @@ export default defineComponent({
       Math.floor(Math.random() * 1000000)
     );
 
-    const { exec: sortWorker } = useWebWorkerFunction(sortDates, {
+    const { exec: sortWorker } = useWorkerFunction(sortDates, {
       dependencies: [
         "https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"
       ],
       timeout
     });
 
-    const work = useWebWorkerFunction(bubleSort, { timeout });
+    const work = useWorkerFunction(bubleSort, { timeout });
 
     const exec = async () => {
       console.log("starting");

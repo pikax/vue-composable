@@ -69,6 +69,9 @@ export interface DefaultTailwindBreakpoints {
   xl: 1280;
 }
 
+// @public (undocumented)
+export function exposeWorker(this: Worker, func: (...args: any[]) => any): void;
+
 // Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -715,21 +718,14 @@ export function useWebStorage(
 };
 
 // @public (undocumented)
-export function useWebWorkerFunction<
+export function useWorkerFunction<
   T extends Promise<any>,
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): {
-  exec: (...args: TArgs) => Promise<unknown>;
-  promise: import("@vue/composition-api").Ref<Promise<unknown> | undefined>;
-  result: import("@vue/composition-api").Ref<unknown>;
-  loading: import("@vue/composition-api").Ref<boolean>;
-  error: import("@vue/composition-api").Ref<any>;
-  cancel: (result?: any) => void;
-  cancelled: import("@vue/composition-api").Ref<boolean>;
-};
+): import("../../../core/src").PromiseResultFactory<Promise<unknown>, TArgs> &
+  import("../../../core/src").CancellablePromiseResult<any>;
 
 // @public (undocumented)
 export interface WebStorage {
