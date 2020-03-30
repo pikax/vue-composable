@@ -1,5 +1,4 @@
-import { isClient, NO_OP } from "@vue-composable/core";
-import { ref, onMounted, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/composition-api";
 
 // from https://github.com/dai-shi/react-hooks-worker/blob/1e842ad15c558fc04dd7339a62aaa43f46d1c7cd/src/exposeWorker.js
 export function exposeWorker(this: Worker, func: (...args: any[]) => any) {

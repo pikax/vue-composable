@@ -718,14 +718,36 @@ export function useWebStorage(
 };
 
 // @public (undocumented)
+export function useWorker<TData = any, TArgs = any | any[]>(
+  stringUrl: string | URL,
+  args?: TArgs,
+  options?: WorkerOptions
+): {
+  worker: Worker;
+  data: import("@vue/composition-api").Ref<TData | undefined>;
+  postMessage: (data: TArgs) => void;
+  errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
+  errored: import("@vue/composition-api").Ref<boolean>;
+  terminated: import("@vue/composition-api").Ref<boolean>;
+};
+
+// @public (undocumented)
 export function useWorkerFunction<
   T extends Promise<any>,
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): import("../../../core/src").PromiseResultFactory<Promise<unknown>, TArgs> &
-  import("../../../core/src").CancellablePromiseResult<any>;
+): {
+  supported: boolean;
+  exec: (...args: TArgs) => Promise<unknown>;
+  promise: import("@vue/composition-api").Ref<Promise<unknown> | undefined>;
+  result: import("@vue/composition-api").Ref<unknown>;
+  loading: import("@vue/composition-api").Ref<boolean>;
+  error: import("@vue/composition-api").Ref<any>;
+  cancel: (result?: any) => void;
+  cancelled: import("@vue/composition-api").Ref<boolean>;
+};
 
 // @public (undocumented)
 export interface WebStorage {
