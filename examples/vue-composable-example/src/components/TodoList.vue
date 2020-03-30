@@ -24,7 +24,7 @@ type EventT = {
 export default createComponent({
   setup() {
     const event: Event = <any>reactive({
-      todos:[]
+      todos: []
     });
 
     async function fetchTodos() {

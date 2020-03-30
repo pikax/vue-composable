@@ -715,14 +715,20 @@ export function useWebStorage(
 };
 
 // @public (undocumented)
-export function useWorker<T extends Promise<any>, TArgs extends Array<any>>(
-  fn: (...args: TArgs) => T
+export function useWebWorkerFunction<
+  T extends Promise<any>,
+  TArgs extends Array<any>
+>(
+  fn: (...args: TArgs) => T,
+  options?: WebWorkerFunctionOptions
 ): {
   exec: (...args: TArgs) => Promise<unknown>;
   promise: import("@vue/composition-api").Ref<Promise<unknown> | undefined>;
   result: import("@vue/composition-api").Ref<unknown>;
   loading: import("@vue/composition-api").Ref<boolean>;
   error: import("@vue/composition-api").Ref<any>;
+  cancel: (result?: any) => void;
+  cancelled: import("@vue/composition-api").Ref<boolean>;
 };
 
 // @public (undocumented)
@@ -745,6 +751,14 @@ export interface WebStorage {
   setSync(key: string, sync: boolean): void;
   // (undocumented)
   updateItem(key: string, value: string): void;
+}
+
+// @public (undocumented)
+export interface WebWorkerFunctionOptions {
+  // (undocumented)
+  dependencies?: RefTyped<string[]>;
+  // (undocumented)
+  timeout?: RefTyped<number>;
 }
 
 // (No @packageDocumentation comment for this package)
