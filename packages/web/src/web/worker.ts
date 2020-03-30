@@ -68,6 +68,7 @@ export function useWorker<TData = any, TArgs = any | any[]>(
     data,
 
     postMessage,
+    terminate,
 
     errorEvent,
     errored,
