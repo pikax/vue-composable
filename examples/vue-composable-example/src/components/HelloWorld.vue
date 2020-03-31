@@ -82,6 +82,8 @@ export default defineComponent({
 
     const { exec: sortWorker } = useWorkerFunction(sortDates, {
       dependencies: [
+        "https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js",
         "https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"
       ],
       timeout

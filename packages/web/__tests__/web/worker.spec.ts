@@ -219,9 +219,6 @@ describe("worker", () => {
 
       await send(null);
       expect(postMessageFn).toHaveBeenLastCalledWith(null);
-      // expect(warnSpy).toHaveBeenCalledWith(
-      //   "[exposeWorker] returned `null`, this might cause unexpected behaviour"
-      // );
 
       let expected: any = "1";
       await send(expected);
@@ -271,7 +268,5 @@ describe("worker", () => {
         expect(postMessageFn).toHaveBeenNthCalledWith(i + 1, v)
       );
     });
-
-    // it("");
   });
 });

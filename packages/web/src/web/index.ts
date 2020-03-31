@@ -9,4 +9,4 @@ export * from "./broadcastChannel";
 export * from "./geolocation";
 export * from "./cssVariables";
 export * from "./worker";
-export * from "./workerFunction";
+export { useWorkerFunction, WebWorkerFunctionOptions } from "./workerFunction";

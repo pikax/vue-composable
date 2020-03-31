@@ -1,28 +1,40 @@
-import { useCancellablePromise, RefTyped, unwrap } from "@vue-composable/core";
-import { watch, computed } from "@vue/composition-api";
+import {
+  useCancellablePromise,
+  RefTyped,
+  unwrap,
+  PASSIVE_EV,
+  NO_OP
+} from "@vue-composable/core";
+import { watch, computed, isRef } from "@vue/composition-api";
 
-function createBlobUrl(fn: Function, dependencies: string[]) {
-  const scripts =
-    dependencies.length > 0
-      ? `importScripts("${dependencies.join(",")}");`
-      : "";
-
-  const r = (f: Function) => (e: MessageEvent) => {
+export const inlineWorkExecution = (f: Function) =>
+  function(e: MessageEvent) {
     const args = e.data || [];
 
-    return (
-      Promise.resolve(f(...args))
+    return new Promise(res => {
+      try {
+        Promise.resolve(f(...args))
+          // @ts-ignore
+          .then(x => res(postMessage([true, x])))
+          // @ts-ignore
+          .catch(x => res(postMessage([false, x])));
+      } catch (e) {
         // @ts-ignore
-        .then(x => postMessage([true, x]))
-        // @ts-ignore
-        .catch(x => postMessage([false, x]))
-    );
+        res(postMessage([false, e]));
+      }
+    });
   };
+
+export function createBlobUrl(fn: Function, dependencies: readonly string[]) {
+  const scripts =
+    dependencies.length > 0
+      ? `importScripts("${dependencies.join('","')}");`
+      : "";
 
   const blobScript = [
     scripts,
     "onmessage=",
-    `(${r.toString()})(${fn.toString()})`
+    `(${inlineWorkExecution.toString()})(${fn.toString()})`
   ];
 
   const blob = new Blob(blobScript, { type: "text/javascript" });
@@ -39,16 +51,15 @@ export function useWorkerFunction<
   TArgs extends Array<any>
 >(fn: (...args: TArgs) => T, options?: WebWorkerFunctionOptions) {
   // reactive
-  const dependencies = computed(() => options && unwrap(options.dependencies));
+  const dependencies = computed(
+    () => (options && unwrap(options.dependencies)) || []
+  );
   const timeoutRef = computed(() => options && unwrap(options.timeout));
 
   const promise = useCancellablePromise(
     (...args: TArgs) =>
       new Promise((res, rej) => {
-        const blobUrl = createBlobUrl(
-          fn,
-          (dependencies.value as string[]) || []
-        );
+        const blobUrl = createBlobUrl(fn, dependencies.value);
         const worker = new Worker(blobUrl);
 
         let timeoutId = -1;
@@ -61,21 +72,48 @@ export function useWorkerFunction<
           removeWatch();
         };
 
-        const removeWatch = watch(promise.cancelled, terminate, { lazy: true });
+        // if the last argument is ref(false) we should also track it
+        const watchCancel =
+          args.length === fn.length + 1 &&
+          isRef(args[args.length - 1]) &&
+          args[args.length - 1].value === false
+            ? computed(
+                () => promise.cancelled.value || args[args.length - 1].value
+              )
+            : promise.cancelled;
 
-        worker.onmessage = e => {
-          if (e.data[0]) {
-            res(e.data[1]);
-          } else {
-            rej(e.data[1]);
-          }
-          terminate();
-        };
+        const removeWatch = watchCancel
+          ? watch(
+              watchCancel as any,
+              () => {
+                terminate();
+                res(undefined);
+              },
+              { lazy: true }
+            )
+          : NO_OP;
 
-        worker.onerror = e => {
-          rej(e);
-          terminate();
-        };
+        worker.addEventListener(
+          "message",
+          e => {
+            if (e.data[0]) {
+              res(e.data[1]);
+            } else {
+              rej(e.data[1]);
+            }
+            terminate();
+          },
+          PASSIVE_EV
+        );
+
+        worker.addEventListener(
+          "error",
+          e => {
+            terminate();
+            rej(e);
+          },
+          PASSIVE_EV
+        );
 
         worker.postMessage([...args]);
 

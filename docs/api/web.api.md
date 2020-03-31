@@ -726,6 +726,7 @@ export function useWorker<TData = any, TArgs = any | any[]>(
   worker: Worker;
   data: import("@vue/composition-api").Ref<TData | undefined>;
   postMessage: (data: TArgs) => void;
+  terminate: () => void;
   errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
   errored: import("@vue/composition-api").Ref<boolean>;
   terminated: import("@vue/composition-api").Ref<boolean>;
@@ -738,16 +739,8 @@ export function useWorkerFunction<
 >(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): {
-  supported: boolean;
-  exec: (...args: TArgs) => Promise<unknown>;
-  promise: import("@vue/composition-api").Ref<Promise<unknown> | undefined>;
-  result: import("@vue/composition-api").Ref<unknown>;
-  loading: import("@vue/composition-api").Ref<boolean>;
-  error: import("@vue/composition-api").Ref<any>;
-  cancel: (result?: any) => void;
-  cancelled: import("@vue/composition-api").Ref<boolean>;
-};
+): import("../../../core/src").PromiseResultFactory<Promise<unknown>, TArgs> &
+  import("../../../core/src").CancellablePromiseResult<any>;
 
 // @public (undocumented)
 export interface WebStorage {
