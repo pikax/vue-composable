@@ -3,7 +3,8 @@ import {
   RefTyped,
   unwrap,
   PASSIVE_EV,
-  NO_OP
+  NO_OP,
+  isClient
 } from "@vue-composable/core";
 import { watch, computed, isRef } from "@vue/composition-api";
 
@@ -13,7 +14,7 @@ export const inlineWorkExecution = (f: Function) =>
 
     return new Promise(res => {
       try {
-        Promise.resolve(f(...args))
+        Promise.resolve(f.apply(f, args))
           // @ts-ignore
           .then(x => res(postMessage([true, x])))
           // @ts-ignore
@@ -46,15 +47,20 @@ export interface WebWorkerFunctionOptions {
   timeout?: RefTyped<number>;
 }
 
-export function useWorkerFunction<
-  T extends Promise<any>,
-  TArgs extends Array<any>
->(fn: (...args: TArgs) => T, options?: WebWorkerFunctionOptions) {
+export function useWorkerFunction<T, TArgs extends Array<any>>(
+  fn: (...args: TArgs) => T,
+  options?: WebWorkerFunctionOptions
+) {
+  const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
     () => (options && unwrap(options.dependencies)) || []
   );
   const timeoutRef = computed(() => options && unwrap(options.timeout));
+
+  if (!supported) {
+    return useCancellablePromise(fn, { lazy: true, throwException: true });
+  }
 
   const promise = useCancellablePromise(
     (...args: TArgs) =>

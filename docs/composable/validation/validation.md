@@ -249,12 +249,12 @@ interface ValidationGroupResult {
 </template>
 
 <script>
-import { createComponent, ref, reactive, computed } from "@vue/composition-api";
+import { defineComponent, ref, reactive, computed } from "@vue/composition-api";
 import { useValidation } from "vue-composable";
 
 const required = x => !!x;
 
-export default createComponent({
+export default defineComponent({
   setup() {
     const name = ref("");
     const surname = ref("");

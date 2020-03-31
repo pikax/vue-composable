@@ -733,10 +733,7 @@ export function useWorker<TData = any, TArgs = any | any[]>(
 };
 
 // @public (undocumented)
-export function useWorkerFunction<
-  T extends Promise<any>,
-  TArgs extends Array<any>
->(
+export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
 ): import("../../../core/src").PromiseResultFactory<Promise<unknown>, TArgs> &
