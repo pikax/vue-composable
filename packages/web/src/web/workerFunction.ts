@@ -1,9 +1,4 @@
-import {
-  useCancellablePromise,
-  RefTyped,
-  unwrap,
-  isClient
-} from "@vue-composable/core";
+import { useCancellablePromise, RefTyped, unwrap } from "@vue-composable/core";
 import { watch, computed } from "@vue/composition-api";
 
 function createBlobUrl(fn: Function, dependencies: string[]) {
@@ -43,8 +38,6 @@ export function useWorkerFunction<
   T extends Promise<any>,
   TArgs extends Array<any>
 >(fn: (...args: TArgs) => T, options?: WebWorkerFunctionOptions) {
-  const supported = isClient && "Worker" in window;
-
   // reactive
   const dependencies = computed(() => options && unwrap(options.dependencies));
   const timeoutRef = computed(() => options && unwrap(options.timeout));
@@ -98,8 +91,5 @@ export function useWorkerFunction<
     }
   );
 
-  return {
-    ...promise,
-    supported
-  };
+  return promise;
 }
