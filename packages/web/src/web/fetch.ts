@@ -15,7 +15,7 @@ export interface UseFetchOptions {
 }
 
 export function useFetch<T = any>(
-  options?: UseFetchOptions & Partial<RequestInfo>,
+  options?: (UseFetchOptions & Request) | string,
   requestInit?: RequestInit
 ) {
   const json = ref<T>(null);
