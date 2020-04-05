@@ -4,8 +4,9 @@ import {
   BreakpointObject,
   useBreakpoint
 } from "./breakpoint";
-import { isArray, isString, isObject } from "@vue-composable/core";
+import { isArray, isString, isObject, isNumber } from "@vue-composable/core";
 
+// istanbul ignore next
 const BREAKPOINT_TAILWIND_KEY: InjectionKey<any> = /*#__PURE__*/ Symbol(
   (__DEV__ && "TAILWIND_BREAKPOINTS") || ``
 );
@@ -24,28 +25,32 @@ const defaultTailwindBreakpoint: BreakpointObject = ({
   xl: 1280
 } as DefaultTailwindBreakpoints) as any;
 
-interface TailwindScreenBreakpointRaw {
+export interface TailwindScreenBreakpointRaw {
   raw: string;
 }
 
-interface TailwindScreenBreakpointRange {
-  min?: string;
-  max?: string;
+export interface TailwindScreenBreakpointRange {
+  min?: string | number;
+  max?: string | number;
 }
 
-type TailwindScreen =
+export type TailwindScreen =
   | TailwindScreenBreakpointRaw
   | TailwindScreenBreakpointRange
+  | number
   | string
   | Array<TailwindScreenBreakpointRange>;
 
-interface TailwindConfigEmpty {
+export interface TailwindConfigEmpty {
   theme: {
-    screens: TailwindScreen | Array<TailwindScreen> | undefined | null;
+    screens: Record<
+      string,
+      TailwindScreen | Array<TailwindScreen> | undefined | null
+    >;
   };
 }
 
-interface TailwindConfig extends TailwindConfigEmpty {
+export interface TailwindConfig extends TailwindConfigEmpty {
   theme: {
     screens: BreakpointObject;
   };
@@ -57,28 +62,42 @@ export type ExtractTailwindScreens<
   ? DefaultTailwindBreakpoints
   : T["theme"]["screens"];
 
-function isTailwind(t: any): t is TailwindConfig {
-  return isObject(t.theme) && isObject(t.theme.screen);
+export function isTailwind(t: any): t is TailwindConfig {
+  return isObject(t) && isObject(t.theme) && isObject(t.theme.screens);
 }
 
-function isRawScreen(t: any): t is TailwindScreenBreakpointRaw {
-  return isString(t.raw);
+export function isRawScreen(t: any): t is TailwindScreenBreakpointRaw {
+  return isObject(t) && isString(t.raw);
 }
 
-function isRangeScreen(t: any): t is TailwindScreenBreakpointRange {
-  return isString(t.min) || isString(t.max);
+export function isRangeScreen(t: any): t is TailwindScreenBreakpointRange {
+  if (!isObject(t)) return false;
+  return (
+    isString(t.min) || isString(t.max) || isNumber(t.min) || isNumber(t.max)
+  );
 }
 
-function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
+export function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
+  if (!isRangeScreen(s)) {
+    // istanbul ignore else
+    if (__DEV__) {
+      console.warn(
+        "[useBreakpointTailwind] screen range provided is not valid"
+      );
+    }
+    return "";
+  }
   const condition = [
     s.max && `max-width: ${s.max}`,
     s.min && `min-width: ${s.min}`
-  ].join(" and ");
+  ]
+    .filter(Boolean)
+    .join(" and ");
 
   return `(${condition})`;
 }
 
-function screenToBreakpoint(s: TailwindScreen): string[] {
+export function screenToBreakpoint(s: TailwindScreen): string[] {
   const conditions: string[] = [];
 
   if (isArray(s)) {
@@ -87,13 +106,18 @@ function screenToBreakpoint(s: TailwindScreen): string[] {
       const b = bks[i];
       conditions.push(...b);
     }
+  } else if (isRawScreen(s)) {
+    conditions.push(s.raw);
+  } else if (isRangeScreen(s)) {
+    conditions.push(screenRangeToBreakpoint(s));
+  } else if (isString(s) || isNumber(s)) {
+    conditions.push(`min-width: ${s}`);
   } else {
-    if (isRawScreen(s)) {
-      conditions.push(s.raw);
-    } else if (isRangeScreen(s)) {
-      conditions.push(screenRangeToBreakpoint(s));
-    } else {
-      conditions.push(`min-width: ${s}`);
+    // istanbul ignore else
+    if (__DEV__) {
+      console.warn(
+        "[useBreakpointTailwind] unknown type used for the breakpoint`"
+      );
     }
   }
   return conditions;
@@ -112,8 +136,9 @@ export function setBreakpointTailwindCSS<T extends BreakpointObject>(
 
   if (isTailwind(breakpoints)) {
     for (const k in bk) {
+      // istanbul ignore else
       if (bk.hasOwnProperty(k)) {
-        bk[k] = screenToBreakpoint(bk).join(" or ");
+        bk[k] = screenToBreakpoint(bk[k]).join(" or ");
       }
     }
   }

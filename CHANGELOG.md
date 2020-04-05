@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Fixes
 
 - [useValidation] - Fix tracking of `$value` when is not `ref`
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - improve typings and fix bug when sending custom breakpoints
 
 ## 1.0.0-dev.16
 
