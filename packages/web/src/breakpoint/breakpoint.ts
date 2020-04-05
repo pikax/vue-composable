@@ -91,15 +91,17 @@ export function useBreakpoint<T extends BreakpointObject>(
     ? () => window.removeEventListener("resize", processResize)
     : NO_OP;
 
-  onMounted(() => {
-    resize();
-    window.addEventListener("resize", processResize, PASSIVE_EV);
-  });
+  if (isClient) {
+    onMounted(() => {
+      resize();
+      window.addEventListener("resize", processResize, PASSIVE_EV);
+    });
 
-  onUnmounted(() => {
-    remove();
-    removeMedia.forEach(x => x());
-  });
+    onUnmounted(() => {
+      remove();
+      removeMedia.forEach(x => x());
+    });
+  }
 
   return {
     ...result,

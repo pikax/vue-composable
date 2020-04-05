@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { Vue } from "../utils";
+import { Vue, nextTick } from "../utils";
 import { useEvent } from "../../src";
 import { NO_OP } from "@vue-composable/core";
 
@@ -139,5 +139,39 @@ describe("event", () => {
 
   it("should not throw if undefined passed", () => {
     expect(useEvent(undefined as any, "load", NO_OP)).toBe(NO_OP);
+  });
+
+  it("should remove event listener if ref changes", async () => {
+    const element: Element = {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn()
+    } as any;
+    const mockHandler = jest.fn();
+    const options = {};
+
+    const el = ref(element);
+
+    new Vue({
+      template: "<div></div>",
+      setup() {
+        useEvent(el, "load", mockHandler, options);
+      }
+    }).$mount();
+    expect(element.removeEventListener).not.toHaveBeenCalled();
+    expect(element.addEventListener).toHaveBeenCalled();
+
+    el.value = {
+      ...element
+    };
+
+    await nextTick();
+
+    expect(element.removeEventListener).toHaveBeenCalled();
+    expect(element.addEventListener).toHaveBeenCalledTimes(2);
+
+    el.value = null as any;
+
+    await nextTick();
+    expect(element.removeEventListener).toHaveBeenCalledTimes(2);
   });
 });
