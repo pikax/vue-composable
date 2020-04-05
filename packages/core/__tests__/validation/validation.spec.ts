@@ -157,6 +157,7 @@ describe("validation", () => {
       }
     });
 
+    v.password.$value;
     expect(v.password.required.$pending).toBe(true);
     expect(v.password.required.$message).toBe("Err");
 
@@ -165,5 +166,27 @@ describe("validation", () => {
 
     expect(v.password.required.$pending).toBe(false);
     expect(v.password.required.$message).toBe("Err");
+  });
+
+  it("should test error ", async () => {
+    const v = useValidation({
+      input: {
+        $value: "",
+
+        required() {
+          throw Error("error 1");
+        },
+        match() {
+          throw Error("error 2");
+        }
+      }
+    });
+    v.input.$value = "1";
+    await nextTick();
+
+    expect(v.input.$errors).toStrictEqual([
+      new Error("error 1"),
+      new Error("error 2")
+    ]);
   });
 });

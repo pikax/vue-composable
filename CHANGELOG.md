@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added `$tc`, same as `$t` but returns a string, sugar for usage in the template.
 
+## Fixes
+
+- [useValidation] - Fix tracking of `$value` when is not `ref`
+
 ## 1.0.0-dev.16
 
 _2020-03-27_
