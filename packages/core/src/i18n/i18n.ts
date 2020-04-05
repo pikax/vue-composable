@@ -1,3 +1,4 @@
+import Vue from "vue";
 import {
   Ref,
   ref,
@@ -17,6 +18,7 @@ import {
 } from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
+// istanbul ignore next
 const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<
   string[],
   string
@@ -52,7 +54,9 @@ interface i18nDefinition<TMessage> {
 
   fallback?: keyof TMessage;
 
-  messages: { [K in keyof TMessage]: i18n | (() => Promise<i18n>) };
+  messages: {
+    [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
+  };
 
   /**
    * Resolves the translation for i18n
@@ -78,9 +82,17 @@ interface i18nResult<TLocales, TMessages extends any = i18n> {
 
   $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
 
+  $ts(path: string, args?: object | Array<object>): string;
+
   addLocale(locale: string, messages: TMessages): void;
   removeLocale(locale: TLocales): void;
 }
+
+type PromiseResult<T> = T extends Promise<infer R> ? R : T;
+
+type I18nExtractLocale<T> = T extends (...args: any[]) => any
+  ? PromiseResult<ReturnType<T>>
+  : PromiseResult<T>;
 
 export function useI18n<
   T extends i18nDefinition<TMessage>,
@@ -96,7 +108,12 @@ export function useI18n(definition?: any): any {
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]> {
+>(
+  definition: T
+): i18nResult<
+  keyof T["messages"],
+  I18nExtractLocale<T["messages"][T["locale"]]>
+> {
   const locales = ref<Array<keyof TMessage>>(Object.keys(definition.messages));
   const localeMessages = ref<
     Record<keyof TMessage, i18n | (() => Promise<any>)>
@@ -109,7 +126,9 @@ export function buildI18n<
 
   const loadLocale = (
     locale: string,
-    localeMessages: Ref<Record<string, i18n | (() => Promise<any>)>>
+    localeMessages: Ref<
+      Record<string, i18n | (() => Promise<any>) | (() => i18n)>
+    >
   ): Ref<i18n> | Promise<Ref<i18n>> => {
     if (cache[locale]) {
       return cache[locale];
@@ -120,9 +139,16 @@ export function buildI18n<
       return ref({});
     }
 
-    if (isFunction(l)) {
-      return Promise.resolve(l()).then(x => (cache[locale] = wrap<i18n>(x)));
+    let m = isFunction(l) ? l() : l;
+    if (isPromise(m)) {
+      return m.then(x => (cache[locale] = wrap<i18n>(x)));
     }
+
+    // if it was function we don't keep track on that
+    if (isFunction(l)) {
+      return wrap(m);
+    }
+
     return (cache[locale] = computed(() => localeMessages.value[locale]));
   };
 
@@ -140,19 +166,25 @@ export function buildI18n<
     );
     if (isPromise(fallbackI18n)) {
       fallbackI18n.then(x => {
-        fallback = x;
+        fallback.value = x.value;
       });
       fallbackIsPromise = true;
     } else {
-      fallback = fallbackI18n;
+      fallback.value = fallbackI18n.value;
     }
   } else {
     fallback.value = {};
   }
 
-  watch(  
-    [locale, fallback],
-    async ([l, fb]: [keyof TMessage, i18n | undefined]) => {
+  const localeChangesCount = ref(0);
+  watch(localeMessages, () => localeChangesCount.value++, {
+    deep: true,
+    lazy: true
+  });
+
+  watch(
+    [locale, fallback, localeChangesCount],
+    async ([l, fb, _]: [keyof TMessage, i18n | undefined, any]) => {
       if (l === definition.fallback && shouldFallback) {
         i18n.value = fb!;
       } else {
@@ -172,31 +204,81 @@ export function buildI18n<
     if (definition.resolve) {
       return wrap(definition.resolve(i18n.value, path, args));
     }
-    return useFormat(usePath(i18n, path, ".", (_, _1, p) => p) as any, args);
+    return useFormat(
+      usePath(i18n, path, ".", (_, _1, p, _2) => p) as Ref<any>,
+      args
+    );
+  };
+
+  const $ts = (
+    path: Readonly<RefTyped<string>>,
+    args: RefTyped<FormatObject> | Array<FormatValue> | undefined
+  ): string => {
+    return $t(path, args).value;
   };
 
   const addLocale = (l: string, m: any) => {
     if (locales.value.indexOf(l as any) >= 0) {
+      /* istanbul ignore else */
       if (__DEV__) {
-        console.warn("Locale already exists, overriding it");
+        console.warn(
+          `[useI18n] Locale "${l}" already exists, overriding it...`
+        );
       }
     } else {
       locales.value.push(l as any);
     }
     delete cache[l];
-    (localeMessages.value as Record<string, i18n>)[l] = m;
+
+    localeMessages.value = {
+      ...localeMessages.value,
+      [l]: m
+    };
+    // Vue.set(localeMessages.value, l, m);
+    // (localeMessages.value as Record<string, i18n>)[l] = m;
   };
 
   const removeLocale = (l: keyof TMessage) => {
     const index = locales.value.indexOf(l);
     if (index >= 0) {
+      const nextLocale = [
+        locale.value,
+        fallback.value && definition.fallback,
+        ...locales.value
+      ].find(x => x && x !== l);
+
+      if (nextLocale) {
+        if (l === definition.fallback) {
+          /* istanbul ignore else */
+          if (__DEV__) {
+            console.warn(`[useI18n] removing default fallback locale "${l}"`);
+          }
+          fallback.value = undefined;
+        }
+        if (l === locale.value) {
+          /* istanbul ignore else */
+          if (__DEV__) {
+            console.warn(
+              `[useI18n] removing current locale "${l}", setting current locale to "${nextLocale}"`
+            );
+          }
+          locale.value = nextLocale;
+        }
+      } else {
+        /* istanbul ignore else */
+        if (__DEV__) {
+          console.error("[useI18n] No locales available to use");
+        }
+      }
       locales.value.splice(index, 1);
     } else {
+      /* istanbul ignore else */
       if (__DEV__) {
-        console.warn("Locale doesn't exist");
+        console.warn(`[useI18n] Locale "${l}" doesn't exist`);
       }
     }
-    delete localeMessages.value[l];
+    Vue.delete(localeMessages.value, l as string);
+    // delete localeMessages.value[l];
     delete cache[l as string];
   };
 
@@ -207,6 +289,7 @@ export function buildI18n<
     i18n,
 
     $t,
+    $ts,
 
     addLocale,
     removeLocale

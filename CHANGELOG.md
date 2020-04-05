@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ---
 
-## Changed
+## Changes
 
 - [path](https://pikax.me/vue-composable/composable/format/path) - Improve [array path access](https://pikax.me/vue-composable/composable/format/path.html#access) and add dev warnings
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Allow to have factory based locale messages
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added console warnings when removing locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Improve overriding locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Setting new locale if the current locale is removed
+
+## Added
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added `$tc`, same as `$t` but returns a string, sugar for usage in the template.
+
+## Fixes
+
+- [useValidation] - Fix tracking of `$value` when is not `ref`
 
 ## 1.0.0-dev.16
 
