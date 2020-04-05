@@ -35,6 +35,39 @@ const name = usePath<string>({ user: { name: "test" } }, "user.name");
 | ----- | -------- | ------------------------------------------------- |
 | name  | `Ref<T>` | Readonly `ref` with the object value for the path |
 
+## Access
+
+```js
+const o = {
+  a: {
+    a: 1,
+    b: [
+      2,
+      {
+        c: {
+          ["a-b-c-d"]: 3
+        }
+      }
+    ]
+  }
+};
+
+usePath(o, "a[a]"); // result: 1 | equivalent: a.a
+usePath(o, "[a]['a']"); // result: 1  | equivalent: a.a
+usePath(o, '["a"][`b`][0]'); // result: 2 | equivalent: a.b["0"]
+usePath(o, "a.b[1].c[a-b-c-d]"); // result: 3  | equivalent: a.b[1].c["a-b-c-d"]
+```
+
+## Limitations
+
+The access in `[]` is limited to this regex expression:
+
+```regex
+ /\[[`'"]?([^`'"\]]*)[`'"]?\]/g
+```
+
+If you want to improve this, please raise an [issue](https://github.com/pikax/vue-composable/issues/new) or create a [PR](https://github.com/pikax/vue-composable/pulls)
+
 ## Example
 
 <path-example/>
