@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Changes
 
-- [fetch](https://pikax.me/vue-composable/composable/web/fetch) - fix parameter typing
+- [fetch](https://pikax.me/vue-composable/composable/web/fetch) - fix parameter typing and tweak API
 
 ## 1.0.0-dev.16
 

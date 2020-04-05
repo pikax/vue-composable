@@ -283,6 +283,46 @@ describe("fetch", () => {
     });
   });
 
+  it("should use first parameter as requestInit", () => {
+    const headers = new Headers({
+      test: "1"
+    });
+    const { exec } = useFetch({
+      headers
+    });
+
+    exec("./api/1");
+
+    expect(fetchSpy).toBeCalledWith(
+      "./api/1",
+      expect.objectContaining({ headers })
+    );
+  });
+
+  it("should use second argument as arguments", () => {
+    const req: Partial<RequestInfo> = {
+      url: "./api/1"
+    };
+    const init = {
+      method: "POST",
+      isJson: true
+    };
+    useFetch(req, init);
+    expect(fetchSpy).toBeCalledWith(
+      expect.objectContaining(req),
+      expect.objectContaining(init)
+    );
+  });
+
+  it("should execute request if string is passed", () => {
+    const url = "./api/1";
+
+    const init: RequestInit = {
+      method: "POST"
+    };
+    useFetch(url, init);
+    expect(fetchSpy).toBeCalledWith(url, expect.objectContaining(init));
+  });
   it("should execute request if request is passed", () => {
     const req: Partial<RequestInfo> = {
       url: "./api/1"
