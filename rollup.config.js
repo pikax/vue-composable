@@ -37,7 +37,7 @@ const configs = {
     globals: {
       "@vue/composition-api": "vueCompositionApi",
       axios: "axios",
-      Vue: "vue"
+      vue: "Vue"
     }
   },
   esm: {
