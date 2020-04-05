@@ -37,7 +37,8 @@
   "homepage": "https://github.com/pikax/vue-composable",
   "sideEffects": false,
   "peerDependencies": {
-    "@vue/composition-api": "^0.5.0"
+    "@vue/composition-api": "^0.5.0",
+    "vue": "^2.6.10"
   },
   "devDependencies": {
     "vue": "^2.6.10"
