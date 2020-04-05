@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added console warnings when removing locales
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Improve overriding locales
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Setting new locale if the current locale is removed
+- update peer dependency to [composition-api@0.5.0](https://github.com/vuejs/composition-api)
 
 ## Added
 

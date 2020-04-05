@@ -59,27 +59,6 @@ export interface CssVariablesMethods {
 }
 
 // @public (undocumented)
-export interface DefaultTailwindBreakpoints {
-  // (undocumented)
-  lg: 1024;
-  // (undocumented)
-  md: 768;
-  // (undocumented)
-  sm: 640;
-  // (undocumented)
-  xl: 1280;
-}
-
-// Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export type ExtractTailwindScreens<
-  T extends TailwindConfigEmpty
-> = keyof T["theme"]["screens"] extends never
-  ? DefaultTailwindBreakpoints
-  : T["theme"]["screens"];
-
-// @public (undocumented)
 export interface GeolocationOptions {
   immediate?: boolean;
 }
@@ -301,6 +280,9 @@ export interface ScrollResult {
   scrollTopTo: (y: number) => void;
 }
 
+// Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ExtractTailwindScreens" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export function setBreakpointTailwindCSS<T extends TailwindConfigEmpty>(
   tailwindConfig: T
@@ -357,6 +339,8 @@ export function useBreakpointTailwindCSS<
   T extends TailwindConfigEmpty
 >(): BreakpointReturn<ExtractTailwindScreens<T>>;
 
+// Warning: (ae-forgotten-export) The symbol "DefaultTailwindBreakpoints" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export function useBreakpointTailwindCSS(): BreakpointReturn<
   DefaultTailwindBreakpoints
@@ -419,7 +403,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any
 ): RemoveEventFunction;
@@ -437,7 +421,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any,
   options?: boolean | AddEventListenerOptions
@@ -453,7 +437,7 @@ export function useEvent<K extends keyof WindowEventMap>(
 
 // @public (undocumented)
 export function useEvent<K extends keyof DocumentEventMap>(
-  el: RefTyped<Element>,
+  el: Element | Ref<Element | undefined>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
@@ -463,7 +447,7 @@ export function useEvent<K extends keyof DocumentEventMap>(
 //
 // @public (undocumented)
 export function useFetch<T = any>(
-  request?: RequestInfo,
+  request?: Partial<RequestInfo>,
   init?: RequestInit & UseFetchOptions
 ): FetchReturn<T>;
 

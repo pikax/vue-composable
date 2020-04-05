@@ -36,7 +36,8 @@ const configs = {
     format: `iife`,
     globals: {
       "@vue/composition-api": "vueCompositionApi",
-      axios: "axios"
+      axios: "axios",
+      Vue: "vue"
     }
   },
   esm: {
