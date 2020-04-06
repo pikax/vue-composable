@@ -2,11 +2,10 @@
   <div>
     <h3>Sort</h3>
     <p>time: {{ now }}</p>
-
-    <div>
-      <label>Size</label>
-      <input v-model.number="size" type="number" />
-    </div>
+    <h6>
+      If UI thread is working the refresh rate should go down and the time will
+      stop
+    </h6>
     <div>
       <label>Timeout</label>
       <input v-model.number="timeout" type="number" />
@@ -94,7 +93,6 @@ export default defineComponent({
       now,
       timeout,
 
-      size,
       firstSegment,
       lastSegment,
 

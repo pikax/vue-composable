@@ -59,6 +59,9 @@ export interface CssVariablesMethods {
 }
 
 // @public (undocumented)
+export function exposeWorker(this: Worker, func: (...args: any[]) => any): void;
+
+// @public (undocumented)
 export interface GeolocationOptions {
   immediate?: boolean;
 }
@@ -689,6 +692,28 @@ export function useWebStorage(
 };
 
 // @public (undocumented)
+export function useWorker<TData = any, TArgs = any | any[]>(
+  stringUrl: string | URL,
+  args?: TArgs,
+  options?: WorkerOptions
+): {
+  worker: Worker;
+  data: import("@vue/composition-api").Ref<TData | undefined>;
+  postMessage: (data: TArgs) => void;
+  terminate: () => void;
+  errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
+  errored: import("@vue/composition-api").Ref<boolean>;
+  terminated: import("@vue/composition-api").Ref<boolean>;
+};
+
+// @public (undocumented)
+export function useWorkerFunction<T, TArgs extends Array<any>>(
+  fn: (...args: TArgs) => T,
+  options?: WebWorkerFunctionOptions
+): import("../../../core/src").PromiseResultFactory<Promise<unknown>, TArgs> &
+  import("../../../core/src").CancellablePromiseResult<any>;
+
+// @public (undocumented)
 export interface WebStorage {
   // (undocumented)
   $quotaError: Ref<boolean>;
@@ -708,6 +733,14 @@ export interface WebStorage {
   setSync(key: string, sync: boolean): void;
   // (undocumented)
   updateItem(key: string, value: string): void;
+}
+
+// @public (undocumented)
+export interface WebWorkerFunctionOptions {
+  // (undocumented)
+  dependencies?: RefTyped<string[]>;
+  // (undocumented)
+  timeout?: RefTyped<number>;
 }
 
 // (No @packageDocumentation comment for this package)
