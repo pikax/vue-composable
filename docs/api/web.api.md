@@ -696,15 +696,25 @@ export function useWorker<TData = any, TArgs = any | any[]>(
   stringUrl: string | URL,
   args?: TArgs,
   options?: WorkerOptions
-): {
-  worker: Worker;
-  data: import("@vue/composition-api").Ref<TData | undefined>;
-  postMessage: (data: TArgs) => void;
-  terminate: () => void;
-  errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
-  errored: import("@vue/composition-api").Ref<boolean>;
-  terminated: import("@vue/composition-api").Ref<boolean>;
-};
+):
+  | {
+      worker: undefined;
+      data: import("@vue/composition-api").Ref<TData | undefined>;
+      postMessage: () => void;
+      terminate: () => void;
+      errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
+      errored: import("@vue/composition-api").Ref<boolean>;
+      terminated: import("@vue/composition-api").Ref<boolean>;
+    }
+  | {
+      worker: Worker;
+      data: import("@vue/composition-api").Ref<TData | undefined>;
+      postMessage: (data: TArgs) => void;
+      terminate: () => void;
+      errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
+      errored: import("@vue/composition-api").Ref<boolean>;
+      terminated: import("@vue/composition-api").Ref<boolean>;
+    };
 
 // @public (undocumented)
 export function useWorkerFunction<T, TArgs extends Array<any>>(
