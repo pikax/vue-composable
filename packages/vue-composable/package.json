@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-dev.18",
+  "version": "1.0.0-dev.20",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
@@ -44,7 +44,7 @@
     "vue": "^2.6.10"
   },
   "dependencies": {
-    "@vue-composable/core": "1.0.0-dev.18",
-    "@vue-composable/web": "1.0.0-dev.18"
+    "@vue-composable/core": "1.0.0-dev.20",
+    "@vue-composable/web": "1.0.0-dev.20"
   }
 }

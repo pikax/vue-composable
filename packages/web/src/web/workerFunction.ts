@@ -5,7 +5,8 @@ import {
   PASSIVE_EV,
   NO_OP,
   isClient,
-  CancellablePromiseResult
+  CancellablePromiseResult,
+  PromiseResultFactory
 } from "@vue-composable/core";
 import { watch, computed, isRef } from "@vue/composition-api";
 
@@ -51,7 +52,7 @@ export interface WebWorkerFunctionOptions {
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): CancellablePromiseResult<T> {
+): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult {
   const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
@@ -63,7 +64,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
     return useCancellablePromise(fn, { lazy: true, throwException: true });
   }
 
-  const promise = useCancellablePromise(
+  const promise = useCancellablePromise<T, TArgs>(
     (...args: TArgs) =>
       new Promise((res, rej) => {
         const blobUrl = createBlobUrl(fn, dependencies.value);
