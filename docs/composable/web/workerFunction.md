@@ -97,6 +97,39 @@ const { exec, cancel } = useWorkerFunction();
 </template>
 
 <script>
+<template>
+  <div>
+    <h3>Sort</h3>
+    <p>time: {{ now }}</p>
+    <h6>
+      If UI thread is working the refresh rate should go down and the time will
+      stop
+    </h6>
+    <div>
+      <label>Timeout</label>
+      <input v-model.number="timeout" type="number" />
+    </div>
+
+    <p>
+      Numbers:
+      <b>{{ firstSegment }}</b
+      >...
+      <b>{{ lastSegment }}</b>
+    </p>
+
+    <ul>
+      <li>
+        <button @click="suffleArray">Function</button>
+      </li>
+      <li>
+        <button @click="suffleWorker" :disabled="working">Worker</button>
+        <p v-if="cancelled" :style="{ color: 'red' }">{{ error }}</p>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
 import {
   defineComponent,
   ref,
@@ -105,7 +138,7 @@ import {
 } from "@vue/composition-api";
 import { useWorkerFunction, useDateNow } from "vue-composable";
 
-const bubleSort = input => {
+const bubbleSort = input => {
   let swap;
   let n = input.length - 1;
   const sortedArray = input.slice();
@@ -141,14 +174,14 @@ export default defineComponent({
     const lastSegment = computed(() => sortedNumbers.value.slice(-10));
 
     const suffleArray = () => {
-      sortedNumbers.value = bubleSort(numbers);
+      sortedNumbers.value = bubbleSort(numbers);
     };
     const {
       exec,
       loading: working,
       error,
       cancelled
-    } = useWorkerFunction(bubleSort, { timeout });
+    } = useWorkerFunction(bubbleSort, { timeout });
     const suffleWorker = () => {
       exec(numbers)
         .then(x => (sortedNumbers.value = x))
@@ -159,7 +192,6 @@ export default defineComponent({
       now,
       timeout,
 
-      size,
       firstSegment,
       lastSegment,
 

@@ -1,13 +1,11 @@
 import { ref, onUnmounted } from "@vue/composition-api";
-import { PASSIVE_EV } from "@vue-composable/core";
+import { PASSIVE_EV, isClient, NO_OP, isArray } from "@vue-composable/core";
 
 // from https://github.com/dai-shi/react-hooks-worker/blob/1e842ad15c558fc04dd7339a62aaa43f46d1c7cd/src/exposeWorker.js
 // export function exposeWorker(func: (...args: any[]) => any): void;
 export function exposeWorker(this: Worker, func: (...args: any[]) => any) {
   this.onmessage = async (e: MessageEvent) => {
     const r = func(e.data);
-
-    console.warn(`returning`, r);
 
     if (r === undefined) {
       // istanbul ignore else
@@ -18,6 +16,8 @@ export function exposeWorker(this: Worker, func: (...args: any[]) => any) {
       }
       this.postMessage(r);
     } else if (r === null) {
+      this.postMessage(r);
+    } else if (isArray(r)) {
       this.postMessage(r);
     } else if (r[Symbol.asyncIterator]) {
       for await (const i of r) this.postMessage(i);
@@ -34,11 +34,28 @@ export function useWorker<TData = any, TArgs = any | any[]>(
   args?: TArgs,
   options?: WorkerOptions
 ) {
+  const supported = isClient && "Worker" in self;
   const errorEvent = ref<Event>();
   const data = ref<TData>();
 
-  const terminated = ref(false);
-  const errored = ref(false);
+  const terminated = ref(!supported);
+  const errored = ref(!supported);
+
+  if (!supported) {
+    terminated.value = true;
+
+    return {
+      worker: undefined,
+      data,
+
+      postMessage: NO_OP,
+      terminate: NO_OP,
+
+      errorEvent,
+      errored,
+      terminated
+    };
+  }
 
   const worker = new Worker(stringUrl, options);
 

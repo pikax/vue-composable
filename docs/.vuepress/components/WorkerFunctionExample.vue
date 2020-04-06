@@ -20,10 +20,10 @@
 
     <ul>
       <li>
-        <button @click="suffleArray">Function</button>
+        <button @click="sortArray">Function</button>
       </li>
       <li>
-        <button @click="suffleWorker" :disabled="working">Worker</button>
+        <button @click="sortWorker" :disabled="working">Worker</button>
         <p v-if="cancelled" :style="{ color: 'red' }">{{ error }}</p>
       </li>
     </ul>
@@ -39,7 +39,7 @@ import {
 } from "@vue/composition-api";
 import { useWorkerFunction, useDateNow } from "vue-composable";
 
-const bubleSort = input => {
+const bubbleSort = input => {
   let swap;
   let n = input.length - 1;
   const sortedArray = input.slice();
@@ -62,7 +62,7 @@ const bubleSort = input => {
 export default defineComponent({
   name: "worker-function-example",
   setup() {
-    const timeout = ref(1500);
+    const timeout = ref(15000);
     const { now } = useDateNow({ refreshMs: 10 });
 
     const numbers = [...Array(50000)].map(() =>
@@ -74,16 +74,16 @@ export default defineComponent({
     const firstSegment = computed(() => sortedNumbers.value.slice(0, 10));
     const lastSegment = computed(() => sortedNumbers.value.slice(-10));
 
-    const suffleArray = () => {
-      sortedNumbers.value = bubleSort(numbers);
+    const sortArray = () => {
+      sortedNumbers.value = bubbleSort(numbers);
     };
     const {
       exec,
       loading: working,
       error,
       cancelled
-    } = useWorkerFunction(bubleSort, { timeout });
-    const suffleWorker = () => {
+    } = useWorkerFunction(bubbleSort, { timeout });
+    const sortWorker = () => {
       exec(numbers)
         .then(x => (sortedNumbers.value = x))
         .catch(x => (sortedNumbers.value = ["error", x]));
@@ -96,9 +96,9 @@ export default defineComponent({
       firstSegment,
       lastSegment,
 
-      suffleArray,
+      sortArray,
 
-      suffleWorker,
+      sortWorker,
       working,
       error,
       cancelled

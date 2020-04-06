@@ -225,11 +225,11 @@ describe("worker", () => {
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       expected = ["1"];
-      await send([expected]);
+      await send(expected);
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       expected = [1, 3, 5, "rr"];
-      await send([expected]);
+      await send(expected);
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       expected = { a: 1 };
@@ -237,7 +237,7 @@ describe("worker", () => {
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       expected = 11;
-      await send([expected]);
+      await send(expected);
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       postMessageFn.mockClear();
