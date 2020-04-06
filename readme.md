@@ -108,6 +108,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 - [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ### External
 
