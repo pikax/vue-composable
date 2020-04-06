@@ -53,7 +53,10 @@ export function useCurrencyFormat(
 ): CurrencyFormatReturn;
 
 export function useCurrencyFormat(
-  currencyCode?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+  currencyCode?:
+    | Readonly<RefTyped<Readonly<CurrencyCodes>>>
+    | string
+    | Ref<string>,
   localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
   opts?: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn {
@@ -65,7 +68,7 @@ export function useCurrencyFormat(
   const options = computed(() => {
     return {
       style: "currency",
-      currency: unwrap(currencyCode) || "GBP",
+      currency: unwrap(currencyCode),
       ...unwrap(argOptions)
     } as IntlNumberFormatOptions;
   });

@@ -9,7 +9,7 @@ export type IntlNumberFormatLocales =
   | undefined;
 
 export type IntNumberFormatterFormat<T> = (
-  value: RefTyped<number>,
+  value: Readonly<RefTyped<Readonly<number>>>,
   overrideOpts?: RefTyped<Intl.NumberFormatOptions>,
   overrideLocale?: RefTyped<IntlNumberFormatLocales>
 ) => T;
@@ -20,6 +20,8 @@ export interface NumberFormatReturn {
   format: IntNumberFormatterFormat<Ref<Readonly<string>>>;
   formatString: IntNumberFormatterFormat<string>;
 }
+
+export function useIntlNumberFormat(): NumberFormatReturn;
 
 export function useIntlNumberFormat(
   locales: IntlNumberFormatLocales,
@@ -32,7 +34,6 @@ export function useIntlNumberFormat(
   locales: IntlNumberFormatLocales,
   options: RefTyped<Intl.NumberFormatOptions>
 ): NumberFormatReturn;
-export function useIntlNumberFormat(): NumberFormatReturn;
 export function useIntlNumberFormat(
   localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
   opts?: any

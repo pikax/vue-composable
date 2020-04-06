@@ -34,5 +34,10 @@ export function intlDateFormatExtractArguments(
       !isArray(wrappedLocalesOptions.value) &&
       !isString(wrappedLocalesOptions.value)
     ? [undefined, wrappedLocalesOptions as Ref<Intl.NumberFormatOptions>]
-    : [wrappedLocalesOptions as Ref<string>, undefined];
+    : [
+        wrappedLocalesOptions.value
+          ? (wrappedLocalesOptions as Ref<string>)
+          : undefined,
+        undefined
+      ];
 }

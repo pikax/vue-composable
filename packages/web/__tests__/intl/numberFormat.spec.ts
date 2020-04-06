@@ -11,27 +11,6 @@ describe("intl numberFormat", () => {
     }
   }
 
-  // // https://formatjs.io/guides/runtime-environments/#server
-  // if (global.Intl) {
-  //   // @ts-ignore
-  //   Intl.NumberFormat = Test;
-  // } else {
-  //   window.Intl = global.Intl = {
-  //     NumberFormat: Test
-  //   } as any;
-  // }
-  // Object.defineProperty(window.Intl, "NumberFormat", {
-  //   writable: true,
-  //   configurable: true,
-  //   value: Test
-  // });
-
-  // Object.defineProperty(global.Intl, "NumberFormat", {
-  //   writable: true,
-  //   configurable: true,
-  //   value: Test
-  // });
-
   Object.defineProperty(window, "Intl", {
     writable: true,
     configurable: true,

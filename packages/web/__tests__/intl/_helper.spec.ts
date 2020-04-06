@@ -78,5 +78,11 @@ describe("intl_helper", () => {
         options
       ]);
     });
+
+    it("should work", () => {
+      expect(
+        intlDateFormatExtractArguments(undefined, undefined)
+      ).toMatchObject([undefined, undefined]);
+    });
   });
 });
