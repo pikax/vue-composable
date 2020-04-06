@@ -11,32 +11,50 @@ import {
   IntlNumberFormatOptions,
   CurrencyDisplay
 } from "./types";
-
 export interface CurrencyFormatReturn extends NumberFormatReturn {
   formatAmount: (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
     display?: RefTyped<CurrencyDisplay>
   ) => Ref<Readonly<string>>;
   formatAmountString: (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
     display?: RefTyped<CurrencyDisplay>
   ) => string;
 }
 
+export function useCurrencyFormat(): CurrencyFormatReturn;
 export function useCurrencyFormat(
-  currencyCode: RefTyped<CurrencyCodes>,
-  locales?: IntlNumberFormatLocales,
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>
+): CurrencyFormatReturn;
+export function useCurrencyFormat(
+  currencyCode: Ref<string> | string
+): CurrencyFormatReturn;
+
+export function useCurrencyFormat(
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+  locales: IntlNumberFormatLocales,
   options?: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn;
 export function useCurrencyFormat(
-  currencyCode: RefTyped<CurrencyCodes>,
+  currencyCode: Ref<string> | string,
+  locales: IntlNumberFormatLocales,
+  options?: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+export function useCurrencyFormat(
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
   options: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn;
 export function useCurrencyFormat(
-  currencyCode: RefTyped<CurrencyCodes>,
-  localesOptions: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
+  currencyCode: Ref<string> | string,
+  options: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+export function useCurrencyFormat(
+  currencyCode?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+  localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
   opts?: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn {
   const [locales, argOptions] = intlDateFormatExtractArguments(
@@ -47,16 +65,19 @@ export function useCurrencyFormat(
   const options = computed(() => {
     return {
       style: "currency",
-      currency: unwrap(currencyCode),
+      currency: unwrap(currencyCode) || "GBP",
       ...unwrap(argOptions)
     } as IntlNumberFormatOptions;
   });
 
-  const numberFormat = useIntlNumberFormat(locales, options);
+  const numberFormat = useIntlNumberFormat(
+    locales,
+    options.value.currency ? options : undefined // if currency is not passed we don't need to
+  );
 
   const formatAmountString = (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
     display?: RefTyped<CurrencyDisplay>
   ) => {
     const c = unwrap(currency);
@@ -69,7 +90,7 @@ export function useCurrencyFormat(
 
   const formatAmount = (
     amount: RefTyped<number>,
-    currency?: RefTyped<CurrencyCodes>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
     display?: RefTyped<CurrencyDisplay>
   ) => {
     return computed(() => formatAmountString(amount, currency, display));
