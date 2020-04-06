@@ -14,7 +14,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any
 ): RemoveEventFunction;
@@ -30,7 +30,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any,
   options?: boolean | AddEventListenerOptions
@@ -42,13 +42,13 @@ export function useEvent<K extends keyof WindowEventMap>(
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 export function useEvent<K extends keyof DocumentEventMap>(
-  el: RefTyped<Element>,
+  el: Element | Ref<Element | undefined>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 export function useEvent(
-  el: RefTyped<Element> | RefTyped<Window> | RefTyped<any>,
+  el: Element | Ref<Element | undefined> | RefTyped<Window> | RefTyped<any>,
   name: string,
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions

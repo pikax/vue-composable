@@ -1,5 +1,10 @@
-import { usePromise, isBoolean, isString } from "@vue-composable/core";
-import { ref, computed } from "@vue/composition-api";
+import {
+  usePromise,
+  isBoolean,
+  isString,
+  PromiseResultFactory
+} from "@vue-composable/core";
+import { ref, computed, Ref } from "@vue/composition-api";
 
 export interface UseFetchOptions {
   /**
@@ -14,25 +19,67 @@ export interface UseFetchOptions {
   parseImmediate?: boolean;
 }
 
+type ExtractArguments<T = any> = T extends (...args: infer TArgs) => void
+  ? TArgs
+  : never;
+
+interface FetchReturn<T>
+  extends PromiseResultFactory<
+    Promise<Response>,
+    ExtractArguments<(request: RequestInfo, init?: RequestInit) => void>
+  > {
+  cancel(message?: string): void;
+  isCancelled: Ref<Readonly<boolean>>;
+  cancelledMessage: Ref<Readonly<string | undefined>>;
+
+  text: Ref<Readonly<string>>;
+  blob: Ref<Readonly<Blob | undefined>>;
+
+  json: Ref<T | null>;
+  jsonError: Ref<string>;
+  status: Ref<number | null>;
+  statusText: Ref<string | null>;
+}
+
+function isFetchOptions(v: any): v is UseFetchOptions {
+  return v && (isBoolean(v.isJson) || isBoolean(v.parseImmediate));
+}
+
 export function useFetch<T = any>(
-  options?: UseFetchOptions & Partial<RequestInfo>,
-  requestInit?: RequestInit
-) {
+  request?: Partial<RequestInfo>,
+  init?: RequestInit & UseFetchOptions
+): FetchReturn<T>;
+export function useFetch<T = any>(
+  init?: RequestInit & UseFetchOptions
+): FetchReturn<T>;
+export function useFetch<T = any>(
+  options?: Partial<RequestInfo> | (UseFetchOptions & RequestInit),
+  requestInitOptions?: RequestInit & UseFetchOptions
+): FetchReturn<T> {
   const json = ref<T>(null);
   const text = ref("");
   const blob = ref<Blob>();
 
-  const isOptions = options
-    ? isBoolean((options as UseFetchOptions).isJson)
-    : false;
-
   const jsonError = ref<any | null>(null);
-  const isJson = isOptions
-    ? (options as UseFetchOptions).isJson !== false
-    : true;
-  const parseImmediate = isOptions
-    ? (options as UseFetchOptions).parseImmediate !== false
-    : true;
+
+  const [isJson, parseImmediate] = isFetchOptions(options)
+    ? [options.isJson !== false, options.parseImmediate !== false]
+    : isFetchOptions(requestInitOptions)
+    ? [
+        requestInitOptions.isJson !== false,
+        requestInitOptions.parseImmediate !== false
+      ]
+    : [true, true];
+
+  const requestInit = options
+    ? isString(options)
+      ? (requestInitOptions as RequestInit)
+      : isFetchOptions(options)
+      ? options
+      : isString(options.url)
+      ? requestInitOptions
+      : options
+    : undefined;
 
   const isCancelled = ref(false);
   const cancelledMessage = ref<string>();
@@ -107,7 +154,7 @@ export function useFetch<T = any>(
   // if not options are provided in the config, execute it straight away
   // NOTE: `false` is passed to the `exec` to prevent the exception to be thrown
   if (options) {
-    if (isString(options) || !isOptions) {
+    if (isString(options) || isString((options as Request).url)) {
       (use.exec as any)(options, undefined, false);
     }
   }
