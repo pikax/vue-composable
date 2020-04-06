@@ -92,6 +92,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 - [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
 

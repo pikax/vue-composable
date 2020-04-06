@@ -3,6 +3,12 @@ import { promisedTimeout } from "@vue-composable/core";
 import { nextTick } from "../utils";
 
 describe("cancellablePromise", () => {
+  const consoleWarnSpy = jest.spyOn(console, "warn");
+
+  beforeEach(() => {
+    consoleWarnSpy.mockClear();
+  });
+
   it("should resolve promise", async () => {
     const use = useCancellablePromise(() => promisedTimeout(100).then(x => 34));
 
@@ -47,5 +53,17 @@ describe("cancellablePromise", () => {
       result: { value: null },
       loading: { value: false }
     });
+  });
+
+  it("should not cancel if promise has not being called", () => {
+    const { cancel, cancelled } = useCancellablePromise(() => {}, true);
+
+    cancel(true);
+
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`"
+    );
+
+    expect(cancelled.value).toBe(false);
   });
 });

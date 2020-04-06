@@ -1,5 +1,5 @@
 import { Ref, ref } from "@vue/composition-api";
-import { usePromise, PromiseResultFactory } from "./promise";
+import { usePromise, PromiseResultFactory, PromiseOptions } from "./promise";
 
 export interface CancellablePromiseResult<TCancel = any> {
   cancel: (result?: TCancel) => void;
@@ -12,7 +12,12 @@ export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
+
+export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
+  fn: (...args: TArgs) => Promise<T>,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any>(
@@ -21,7 +26,12 @@ export function useCancellablePromise<T extends any>(
 
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
+
+export function useCancellablePromise<T extends any>(
+  fn: () => T,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<
@@ -38,7 +48,16 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
+
+export function useCancellablePromise<
+  T extends Promise<TR>,
+  TR,
+  TArgs extends Array<any>
+>(
+  fn: (...args: TArgs) => T,
+  options: PromiseOptions
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T = any>(
@@ -47,7 +66,12 @@ export function useCancellablePromise<T = any>(
 
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
+
+export function useCancellablePromise<T = any>(
+  fn: () => T,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends Promise<TR>, TR>(
@@ -60,12 +84,23 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  throwException = false
+  lazyOptions?: PromiseOptions | boolean
 ): PromiseResultFactory<Promise<TR>, TArgs> & CancellablePromiseResult<TR> {
   const cancelled = ref(false);
   let _cancel: ((result?: TR) => void) | undefined = undefined;
 
-  const cancel = (result?: TR) => _cancel!(result); // TODO add warning if cancel is undefined
+  const cancel = (result?: TR) => {
+    if (!_cancel) {
+      /* istanbul ignore else */
+      if (__DEV__) {
+        console.warn(
+          "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`"
+        );
+      }
+      return;
+    }
+    _cancel!(result);
+  };
 
   const promise = (p: T): T =>
     new Promise<TR>((res, rej) => {
@@ -78,7 +113,7 @@ export function useCancellablePromise<
 
   const use = usePromise<TR, TArgs>(
     (...args: TArgs) => promise(fn(...args)),
-    throwException
+    lazyOptions as PromiseOptions
   );
 
   return {

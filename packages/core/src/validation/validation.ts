@@ -1,4 +1,11 @@
-import { UnwrapRef, isObject, isPromise, isBoolean, RefTyped } from "../utils";
+import {
+  UnwrapRef,
+  isObject,
+  isPromise,
+  isBoolean,
+  RefTyped,
+  wrap
+} from "../utils";
 import { ref, Ref, watch, computed, reactive } from "@vue/composition-api";
 
 type ValidatorFunc<T, TContext = any> = (
@@ -16,6 +23,8 @@ type Validator<T> = ValidatorFunc<T> | ValidatorObject<ValidatorFunc<T>>;
 interface ValidationValue<T> {
   $value: UnwrapRef<T>;
   $dirty: boolean;
+  $errors: Array<any>;
+  $anyInvalid: boolean;
 }
 
 interface ValidatorResult {
@@ -70,16 +79,17 @@ type ValidatorOutput<T extends Validator<E>, E = any> = T extends ValidatorFunc<
 
 // TODO variables started with $ are not treated as validators, not
 // sure how to do that on typescript :/
+
+type ValidatorObjectOutput<T, TK extends keyof T> = {
+  [K in TK]: T[K] extends Validator<infer V> ? ValidatorOutput<T[K], V> : never;
+};
+
 type ValidationOutput<T extends Record<string, any>> = T extends {
-  $value: infer TValue;
+  $value: any;
 }
   ? ValidationValue<T["$value"]> &
-      {
-        [K in Exclude<keyof T, "$value">]: T[K] extends Validator<infer V>
-          ? ValidatorOutput<T[K], V>
-          : never;
-      }
-  : { [K in keyof T]: ValidationOutput<T[K]> & ValidationGroupResult };
+      ValidatorObjectOutput<T, Exclude<keyof T, "$value">>
+  : { [K in keyof T]: ValidationOutput<T[K]> };
 
 /* /Output */
 
@@ -182,7 +192,7 @@ const buildValidation = <T>(
   handlers: Array<Function>
 ): Record<string, ValidationOutput<any>> => {
   const r: Record<string, ValidationOutput<any>> = {};
-  const $value = isValidation(o) ? o.$value : undefined;
+  const $value: any | undefined = isValidation(o) ? wrap(o.$value) : undefined;
   for (const k of Object.keys(o)) {
     if (k[0] === "$") {
       if (k === "$value") {
@@ -230,13 +240,9 @@ const buildValidation = <T>(
         const validations = Object.keys(validation)
           .filter(x => x[0] !== "$")
           .map(x => (validation[x] as any) as ValidatorResult);
-        $errors = computed(() => {
-          return validations
-            .map(x => x.$error)
-            .filter(x =>
-              Boolean(x) && Array.isArray(x) ? x.some(Boolean) : x
-            );
-        }) as Ref<[]>;
+        $errors = computed(() =>
+          validations.map(x => x.$error).filter(Boolean)
+        ) as Ref<[]>;
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() => validations.some(x => !!x.$invalid));
       } else {
@@ -252,8 +258,7 @@ const buildValidation = <T>(
         $anyDirty = computed(() =>
           validations.some(
             x =>
-              (x.$anyDirty && x.$anyDirty) ||
-              (isBoolean((x as any).$dirty) && (x as any).$dirty)
+              x.$anyDirty || (isBoolean((x as any).$dirty) && (x as any).$dirty)
           )
         );
         $anyInvalid = computed(() => validations.some(x => !!x.$anyInvalid));

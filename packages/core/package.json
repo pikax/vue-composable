@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.15",
+  "version": "1.0.0-dev.17",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
@@ -38,6 +38,7 @@
     "vue": "^2.6.10"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^0.4.0"
+    "@vue/composition-api": "^0.5.0",
+    "vue": "^2.6.10"
   }
 }

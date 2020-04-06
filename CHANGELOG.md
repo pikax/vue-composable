@@ -3,9 +3,41 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!-- ## [Unreleased]
 
----
+--- -->
+
+## 1.0.0-dev.17
+
+_2020-04-05_
+
+## Changes
+
+- [fetch](https://pikax.me/vue-composable/composable/web/fetch) - fix parameter typing and tweak API
+- [event][https://pikax.me/vue-composable/composable/event/event.html] - improve typing
+- [path](https://pikax.me/vue-composable/composable/format/path) - Improve [array path access](https://pikax.me/vue-composable/composable/format/path.html#access) and add dev warnings
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Allow to have factory based locale messages
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added console warnings when removing locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Improve overriding locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Setting new locale if the current locale is removed
+- update peer dependency to [composition-api@0.5.0](https://github.com/vuejs/composition-api)
+
+## Added
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added `$tc`, same as `$t` but returns a string, sugar for usage in the template.
+
+## Fixes
+
+- [useValidation] - Fix tracking of `$value` when is not `ref`
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - improve typings and fix bug when sending custom breakpoints
+
+## 1.0.0-dev.16
+
+_2020-03-27_
+
+## Added
+
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 
 ## Changes
 
@@ -14,9 +46,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - changed default options to `{ attributes: true, childList: true, subtree: true }`
 - [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - do not reset `result` between executions
 
+## Breaking
+
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Now Promises will execute at creation, please check [documentation](https://pikax.me/vue-composable/composable/promise/promise)
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Replaced `throwException` argument to `lazy`
+
 ## 1.0.0-dev.15
 
-_2020-03-25_
+_2020-03-09_
 
 ## Fix
 

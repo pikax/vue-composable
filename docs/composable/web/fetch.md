@@ -8,8 +8,8 @@
 import { useFetch } from "vue-composable";
 
 // string
-useFetch(url, init?);
-useFetch(options, init?);
+useFetch(request, optionsInit?);
+useFetch(optionsInit?);
 
 interface UseFetchOptions {
   /**
@@ -26,14 +26,13 @@ interface UseFetchOptions {
 
 ```
 
-| Parameters | Type                        | Required | Default     | Description                                                                                  |
-| ---------- | --------------------------- | -------- | ----------- | -------------------------------------------------------------------------------------------- |
-| url        | `string`                    | `false`  | `undefined` | Url for the first request                                                                    |
-| options    | `UseFetchOptions & Request` | `false`  | `undefined` | Options for useFetch and [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) |
-| init       | `RequestInit`               | `false`  | `undefined` | [RequestOptions](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)     |
+| Parameters  | Type                            | Required | Default     | Description                                                                                                       |
+| ----------- | ------------------------------- | -------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| request     | `Request|string`                | `false`  | `undefined` | [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) for the first request                         |
+| optionsInit | `UseFetchOptions & RequestInit` | `false`  | `undefined` | Options for useFetch and [RequestOptions](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) |
 
 ::: tip
-If url or options are passed, the request will execute immediately, otherwise you need to call `exec(url)`
+If `request` is passed, the request will execute immediately, otherwise you need to call `exec(url)`
 :::
 
 ## State
@@ -86,6 +85,10 @@ const { exec, cancel } = useFetch();
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `cancel`  | Cancels the fetch request if browser supports `AbortController`, otherwise the request will complete but will not update the state. |
 | `exec`    | Executes the request similar to `fetch`. It returns [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)           |
+
+::: tip
+You can pass `throwException` on the last argument of the `exec` to override the default behaviour
+:::
 
 ## Example
 
