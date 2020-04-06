@@ -171,7 +171,9 @@ module.exports = {
             ["composable/web/language", "Language"],
             ["composable/web/broadcastChannel", "BroadcastChannel API"],
             ["composable/web/geolocation", "Geolocation API"],
-            ["composable/web/cssVariables", "CSS variables"]
+            ["composable/web/cssVariables", "CSS variables"],
+            ["composable/web/worker", "WebWorker API"],
+            ["composable/web/workerFunction", "WebWorker Function"]
           ]
         },
         {

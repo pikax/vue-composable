@@ -3,7 +3,17 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+<<<<<<< HEAD
+
+## [Unreleased]
+
+---
+
+## Added
+
+- [useWorker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- # [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+  <!-- ## [Unreleased]
 
 --- -->
 
@@ -30,6 +40,7 @@ _2020-04-05_
 
 - [useValidation] - Fix tracking of `$value` when is not `ref`
 - [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - improve typings and fix bug when sending custom breakpoints
+  > > > > > > > master
 
 ## 1.0.0-dev.16
 

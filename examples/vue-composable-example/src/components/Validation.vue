@@ -6,12 +6,7 @@
       <input v-model="form.lastName.$value" placeholder="lastName" />
       <input v-model="form.password.$value" placeholder="password" />
       <input v-model="form.samePassword.$value" placeholder="password2" />
-      <p
-        v-if="
-          form.samePassword.$dirty &&
-            form.samePassword.match.$invalid
-        "
-      >
+      <p v-if="form.samePassword.$dirty && form.samePassword.match.$invalid">
         {{ form.samePassword.match.$message }}
       </p>
     </form>
@@ -20,12 +15,12 @@
 </template>
 
 <script>
-import { createComponent, ref, reactive } from "@vue/composition-api";
+import { defineComponent, ref, reactive } from "@vue/composition-api";
 import { useValidation } from "vue-composable";
 
 const required = x => !!x;
 
-export default createComponent({
+export default defineComponent({
   setup() {
     const name = ref("pikax");
     const surname = ref("stuff");

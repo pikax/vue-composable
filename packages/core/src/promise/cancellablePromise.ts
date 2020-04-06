@@ -99,7 +99,7 @@ export function useCancellablePromise<
       }
       return;
     }
-    _cancel!(result);
+    _cancel(result);
   };
 
   const promise = (p: T): T =>
