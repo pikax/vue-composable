@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.19
+
+_2020-04-06_
+
+## Types
+
+- fixed return type for [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction)
+
 ## 1.0.0-dev.18
+
+_2020-04-06_
 
 ## Added
 

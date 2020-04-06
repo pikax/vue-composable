@@ -4,7 +4,8 @@ import {
   unwrap,
   PASSIVE_EV,
   NO_OP,
-  isClient
+  isClient,
+  CancellablePromiseResult
 } from "@vue-composable/core";
 import { watch, computed, isRef } from "@vue/composition-api";
 
@@ -50,7 +51,7 @@ export interface WebWorkerFunctionOptions {
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-) {
+): CancellablePromiseResult<T> {
   const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
