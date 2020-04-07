@@ -35,7 +35,8 @@ export type CssVarDef = CssVarDefinition | string;
 
 const defaultOptions = {
   attributes: true,
-  attributeFilter: ["style"]
+  childList: true,
+  subtree: true
 };
 ```
 

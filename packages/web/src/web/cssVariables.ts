@@ -103,7 +103,7 @@ export function setCssVariableFor(
 const defaultOptions: MutationObserverInit = {
   attributes: true,
   childList: true,
-  attributeFilter: ["style"]
+  subtree: true
 };
 
 const sanitizeCssVarName = (name: string) => {
@@ -189,10 +189,11 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
         [result[key], wrap(element)] as any,
         (val: [CssVariable, HTMLElement]) => {
           if (!observing) return;
-          if (val) {
+
+          // don't force if the current value is the same as the given one
+          // or if the given one is empty
+          if (val[1] && val[0] !== getCssVariableFor(val[1], name)) {
             setCssVariableFor(val[1], name as string, val[0]);
-          } else {
-            // todo remove?
           }
         },
         { lazy: isRef(element) }

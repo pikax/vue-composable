@@ -12,11 +12,18 @@ export interface ArrayPaginationResult<T extends Array<any>>
   result: Readonly<Ref<T>>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "I18nExtractLocale" needs to be exported by the entry point index.d.ts
+//
 // @public
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+>(
+  definition: T
+): i18nResult<
+  keyof T["messages"],
+  I18nExtractLocale<T["messages"][T["locale"]]>
+>;
 
 // @public (undocumented)
 export interface CancellablePromiseResult<TCancel = any> {
@@ -67,7 +74,7 @@ export interface i18nDefinition<TMessage> {
   fallback?: keyof TMessage;
   locale: keyof TMessage;
   messages: {
-    [K in keyof TMessage]: i18n | (() => Promise<i18n>);
+    [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
   };
   notFoundFallback?: boolean;
   resolve?: i18nResolver;
@@ -104,6 +111,8 @@ export type i18nResolver = (
 // @public
 export interface i18nResult<TLocales, TMessages extends any = i18n> {
   $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
+  $ts(path: string, args?: object | Array<object>): string;
+  // (undocumented)
   addLocale(locale: string, messages: TMessages): void;
   i18n: Readonly<Ref<Readonly<TMessages>>>;
   locale: Ref<TLocales>;
@@ -167,13 +176,10 @@ export type Options = {
 // @public
 export type PaginationControl = () => void;
 
-// @public (undocumented)
+// @public
 export interface PaginationOptions {
-  // (undocumented)
   currentPage: RefTyped<number>;
-  // (undocumented)
   pageSize: RefTyped<number>;
-  // (undocumented)
   total: RefTyped<number>;
 }
 
@@ -187,7 +193,7 @@ export interface PaginationResult {
   offset: Ref<number>;
   pageSize: Ref<number>;
   prev: PaginationControl;
-  total: Ref<number>;
+  total: Readonly<Ref<Readonly<number>>>;
 }
 
 // @public (undocumented)
@@ -198,6 +204,12 @@ export type Procedure = (...args: any[]) => void;
 
 // @public (undocumented)
 export function promisedTimeout(timeout: number): Promise<void>;
+
+// @public (undocumented)
+export interface PromiseOptions {
+  lazy?: boolean;
+  throwException?: boolean;
+}
 
 // Warning: (ae-forgotten-export) The symbol "PromiseResult" needs to be exported by the entry point index.d.ts
 //
@@ -235,7 +247,12 @@ export interface RetryReturnNoFactory extends RetryReturn {
 export function setI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+>(
+  definition: T
+): i18nResult<
+  keyof T["messages"],
+  I18nExtractLocale<T["messages"][T["locale"]]>
+>;
 
 // @public (undocumented)
 export function unwrap<T>(o: RefTyped<T>): T;
@@ -257,7 +274,13 @@ export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
 // @public (undocumented)
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
+
+// @public (undocumented)
+export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
+  fn: (...args: TArgs) => Promise<T>,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -268,7 +291,13 @@ export function useCancellablePromise<T extends any>(
 // @public (undocumented)
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
+
+// @public (undocumented)
+export function useCancellablePromise<T extends any>(
+  fn: () => T,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -287,7 +316,17 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
+
+// @public (undocumented)
+export function useCancellablePromise<
+  T extends Promise<TR>,
+  TR,
+  TArgs extends Array<any>
+>(
+  fn: (...args: TArgs) => T,
+  options: PromiseOptions
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -298,7 +337,13 @@ export function useCancellablePromise<T = any>(
 // @public (undocumented)
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
+
+// @public (undocumented)
+export function useCancellablePromise<T = any>(
+  fn: () => T,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -323,6 +368,12 @@ export function useDebounce<T extends Procedure>(
 
 // @public
 export function useFormat(
+  format: RefTyped<Readonly<string>>,
+  obj?: RefTyped<FormatObject>
+): Readonly<Ref<string>>;
+
+// @public (undocumented)
+export function useFormat(
   format: Readonly<RefTyped<string>>,
   obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
@@ -337,6 +388,12 @@ export function useFormat(
 export function useFormat(
   format: Readonly<RefTyped<string>>,
   obj?: RefTyped<FormatObject> | Array<FormatValue>
+): Readonly<Ref<string>>;
+
+// @public (undocumented)
+export function useFormat(
+  format: RefTyped<string>,
+  args: any
 ): Readonly<Ref<string>>;
 
 // @public
@@ -361,7 +418,7 @@ export interface UseNowOptions {
   timeFn?: () => number;
 }
 
-// @public (undocumented)
+// @public
 export function usePagination(options: PaginationOptions): PaginationResult;
 
 // @public
@@ -391,7 +448,13 @@ export function usePerformanceNow(
 // @public (undocumented)
 export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  throwException?: boolean
+  lazy?: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => Promise<T>,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs>;
 
 // @public (undocumented)
@@ -402,7 +465,13 @@ export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
 // @public (undocumented)
 export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
   fn: (...args: TArgs) => T,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => T,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs>;
 
 // @public (undocumented)
@@ -413,7 +482,13 @@ export function usePromise<T = any, TArgs extends Array<any> = Array<any>>(
 // @public (undocumented)
 export function usePromise<T = any>(
   fn: () => Promise<T>,
-  throwException: boolean
+  lazy: boolean
+): PromiseResultFactory<Promise<T>>;
+
+// @public (undocumented)
+export function usePromise<T = any>(
+  fn: () => Promise<T>,
+  options: PromiseOptions
 ): PromiseResultFactory<Promise<T>>;
 
 // @public (undocumented)
@@ -424,11 +499,61 @@ export function usePromise<T = any>(
 // @public (undocumented)
 export function usePromise<T = any>(
   fn: () => T,
-  throwException: boolean
+  lazy: boolean
 ): PromiseResultFactory<Promise<T>>;
 
 // @public (undocumented)
 export function usePromise<T = any>(
+  fn: () => T,
+  options: PromiseOptions
+): PromiseResultFactory<Promise<T>>;
+
+// @public (undocumented)
+export function usePromise<T = any>(
+  fn: () => T
+): PromiseResultFactory<Promise<T>>;
+
+// @public
+export function usePromiseLazy<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => Promise<T>,
+  throwException?: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => Promise<T>
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => T,
+  throwException: boolean
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any, TArgs extends Array<any> = Array<any>>(
+  fn: (...args: TArgs) => T
+): PromiseResultFactory<Promise<T>, TArgs>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any>(
+  fn: () => Promise<T>,
+  throwException: boolean
+): PromiseResultFactory<Promise<T>>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any>(
+  fn: () => Promise<T>
+): PromiseResultFactory<Promise<T>>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any>(
+  fn: () => T,
+  throwException: boolean
+): PromiseResultFactory<Promise<T>>;
+
+// @public (undocumented)
+export function usePromiseLazy<T = any>(
   fn: () => T
 ): PromiseResultFactory<Promise<T>>;
 

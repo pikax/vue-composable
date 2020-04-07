@@ -92,6 +92,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 - [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
 
@@ -107,6 +108,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 - [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ### External
 

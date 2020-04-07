@@ -24,7 +24,7 @@ describe("axios", () => {
   });
 
   it("should call axios", async () => {
-    const { exec, client } = useAxios();
+    const { exec, client } = useAxios(false);
     const request: AxiosRequestConfig = {
       method: "GET",
       url: "./api/1"
@@ -34,6 +34,20 @@ describe("axios", () => {
 
     expect(client.value.request).toBeCalledWith(
       expect.objectContaining(request)
+    );
+  });
+
+  it("should call axios using string and options", async () => {
+    const url = "./api/1";
+    const request: AxiosRequestConfig = {
+      method: "GET"
+    };
+    const { exec, client } = useAxios(url, request);
+
+    await exec(url);
+
+    expect(client.value.request).toBeCalledWith(
+      expect.objectContaining({ url, ...request })
     );
   });
 
@@ -190,7 +204,7 @@ describe("axios", () => {
     const req: Partial<AxiosRequestConfig> = {
       url: "./api/1"
     };
-    useAxios(req);
+    useAxios(req, false);
     expect(request).toBeCalledWith(expect.objectContaining(req));
   });
 
@@ -202,6 +216,13 @@ describe("axios", () => {
 
   it("should warn if cancel is called before any request has been made", () => {
     const { cancel } = useAxios();
+    expect(cancel).toThrowError(
+      "Cannot cancel because no request has been made"
+    );
+  });
+
+  it("should warn if cancel is called before any request has been made", () => {
+    const { cancel } = useAxios(true);
     expect(cancel).toThrowError(
       "Cannot cancel because no request has been made"
     );

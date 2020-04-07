@@ -89,6 +89,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### Promise
 
 - [Promise](composable/promise/promise) - `Promise` reactive resolve and reject
+- [promiseLazy](composable/promise/promiseLazy) - Sugar for [usePromise](composable/promise/promise) `lazy:true`
 - [Cancellable Promise](composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](composable/promise/retry) - Provides functionality to retry `promise`
 
@@ -104,6 +105,8 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
 - [CSS variables](composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ### Validation
 

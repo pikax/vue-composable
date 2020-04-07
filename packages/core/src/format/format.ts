@@ -19,6 +19,11 @@ export interface FormatObject {
  * @param obj - object to get values from
  */
 export function useFormat(
+  format: RefTyped<Readonly<string>>,
+  obj?: RefTyped<FormatObject>
+): Readonly<Ref<string>>;
+
+export function useFormat(
   format: Readonly<RefTyped<string>>,
   obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
@@ -41,6 +46,11 @@ export function useFormat(
 export function useFormat(
   format: Readonly<RefTyped<string>>,
   obj?: RefTyped<FormatObject> | Array<FormatValue>
+): Readonly<Ref<string>>;
+
+export function useFormat(
+  format: RefTyped<string>,
+  args: any
 ): Readonly<Ref<string>>;
 
 export function useFormat(

@@ -152,6 +152,7 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/promise/promise", "promise"],
+            ["composable/promise/promiseLazy", "Lazy Promise"],
             ["composable/promise/cancellablePromise", "cancellablePromise"],
             ["composable/promise/retry", "retry"]
           ]
@@ -170,7 +171,9 @@ module.exports = {
             ["composable/web/language", "Language"],
             ["composable/web/broadcastChannel", "BroadcastChannel API"],
             ["composable/web/geolocation", "Geolocation API"],
-            ["composable/web/cssVariables", "CSS variables"]
+            ["composable/web/cssVariables", "CSS variables"],
+            ["composable/web/worker", "WebWorker API"],
+            ["composable/web/workerFunction", "WebWorker Function"]
           ]
         },
         {

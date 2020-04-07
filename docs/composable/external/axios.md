@@ -88,6 +88,10 @@ const { exec, cancel } = useAxios();
 | `exec(AxiosRequest|string)` | Executes axios request   |
 | `cancel(message?)`          | Cancels the last request |
 
+::: tip
+You can pass `throwException` on the last argument of the `exec` to override the default behaviour
+:::
+
 ## Example
 
 <axios-example/>

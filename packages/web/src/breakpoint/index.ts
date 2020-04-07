@@ -1,3 +1,6 @@
 export * from "./breakpoint";
 export * from "./breakpointChrome";
-export * from "./breakpointTailwind";
+export {
+  setBreakpointTailwindCSS,
+  useBreakpointTailwindCSS
+} from "./breakpointTailwind";
