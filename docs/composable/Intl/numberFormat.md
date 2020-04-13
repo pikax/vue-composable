@@ -48,6 +48,7 @@ const { format, formatString } = useIntlNumberFormat();
 ## Example
 
 <intl-number-format-example/>
+
 ### Code
 
 ```vue
@@ -112,7 +113,7 @@ export default defineComponent({
     const { languages, language } = useLanguage();
     const locales = languages.value.concat(...["pt-PT", "pt-BR"]);
 
-    const selectedLocale = ref(language.value);
+    const selectedLocale = ref(language.value || "en");
 
     const options = ref({
       style: "currency",
