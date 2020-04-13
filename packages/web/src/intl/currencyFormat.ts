@@ -1,9 +1,5 @@
-import { RefTyped, unwrap } from "@vue-composable/core";
-import {
-  IntlNumberFormatLocales,
-  useIntlNumberFormat,
-  NumberFormatReturn
-} from "./numberFormat";
+import { RefTyped, unwrap, isObject } from "@vue-composable/core";
+import { IntlNumberFormatLocales, useIntlNumberFormat } from "./numberFormat";
 import { computed, Ref } from "@vue/composition-api";
 import { intlDateFormatExtractArguments } from "./_helper";
 import {
@@ -11,20 +7,28 @@ import {
   IntlNumberFormatOptions,
   CurrencyDisplay
 } from "./types";
-export interface CurrencyFormatReturn extends NumberFormatReturn {
-  formatAmount: (
+export interface CurrencyFormatReturn {
+  format: (
     amount: RefTyped<number>,
     currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
-    display?: RefTyped<CurrencyDisplay>
+    display?: RefTyped<CurrencyDisplay>,
+    overrideOptions?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
   ) => Ref<Readonly<string>>;
-  formatAmountString: (
+  formatString: (
     amount: RefTyped<number>,
     currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
-    display?: RefTyped<CurrencyDisplay>
+    display?: RefTyped<CurrencyDisplay>,
+    overrideOptions?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
   ) => string;
 }
 
 export function useCurrencyFormat(): CurrencyFormatReturn;
+export function useCurrencyFormat(
+  options: RefTyped<IntlNumberFormatOptions>,
+  locales?: IntlNumberFormatLocales
+): CurrencyFormatReturn;
 export function useCurrencyFormat(
   currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>
 ): CurrencyFormatReturn;
@@ -53,56 +57,95 @@ export function useCurrencyFormat(
 ): CurrencyFormatReturn;
 
 export function useCurrencyFormat(
-  currencyCode?:
+  currencyCodeOptions?:
     | Readonly<RefTyped<Readonly<CurrencyCodes>>>
     | string
-    | Ref<string>,
+    | Ref<string>
+    | RefTyped<IntlNumberFormatOptions>,
   localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
   opts?: RefTyped<IntlNumberFormatOptions>
 ): CurrencyFormatReturn {
+  const unwrapCodeOptions = unwrap(currencyCodeOptions);
+  const hasCurrency = !isObject(unwrapCodeOptions);
+
+  const currencyCode = hasCurrency
+    ? currencyCodeOptions
+    : computed(() => {
+        const o = (unwrap(
+          currencyCodeOptions
+        ) as unknown) as IntlNumberFormatOptions;
+        return o.currency;
+      });
+
   const [locales, argOptions] = intlDateFormatExtractArguments(
     localesOptions as any,
-    opts
+    hasCurrency
+      ? opts
+      : (currencyCodeOptions as RefTyped<IntlNumberFormatOptions>)
   );
 
   const options = computed(() => {
+    const opts = unwrap(argOptions) || {};
+    const currency = unwrap(currencyCode) || opts.currency;
     return {
       style: "currency",
-      currency: unwrap(currencyCode),
-      ...unwrap(argOptions)
+      ...opts,
+      currency
     } as IntlNumberFormatOptions;
   });
 
-  const numberFormat = useIntlNumberFormat(
-    locales,
-    options.value.currency ? options : undefined // if currency is not passed we don't need to
-  );
+  const numberFormat = useIntlNumberFormat(locales);
 
-  const formatAmountString = (
+  const formatString = (
     amount: RefTyped<number>,
     currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
-    display?: RefTyped<CurrencyDisplay>
+    display?: RefTyped<CurrencyDisplay>,
+    opts?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
   ) => {
-    const c = unwrap(currency);
-    const d = unwrap(display);
+    const o = { ...options.value, ...unwrap(opts) };
+    const c = unwrap(currency) || o.currency;
+    const d = unwrap(display) || o.currencyDisplay;
+
+    // istanbul ignore else
+    if (__DEV__) {
+      if (!c) {
+        console.error("[useCurrencyFormat] No currency provided.");
+        return "";
+      }
+
+      if (o.style !== "currency") {
+        console.warn(
+          "[useCurrencyFormat] invalid style passed in options, please leave it undefined."
+        );
+      }
+    }
+
     return numberFormat.formatString(
-      unwrap(amount),
-      (c || d) && { currency: c, currencyDisplay: d }
+      amount,
+      {
+        ...o,
+        currency: c,
+        currencyDisplay: d
+      },
+      overrideLocale
     );
   };
 
-  const formatAmount = (
+  const format = (
     amount: RefTyped<number>,
     currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
-    display?: RefTyped<CurrencyDisplay>
+    display?: RefTyped<CurrencyDisplay>,
+    opts?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
   ) => {
-    return computed(() => formatAmountString(amount, currency, display));
+    return computed(() =>
+      formatString(amount, currency, display, opts, overrideLocale)
+    );
   };
 
   return {
-    ...numberFormat,
-
-    formatAmount,
-    formatAmountString
+    format,
+    formatString
   };
 }

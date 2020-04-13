@@ -5,8 +5,6 @@ describe("intl numberFormat", () => {
 
   class Test {
     constructor(...args: any[]) {
-      debugger;
-      console.log("arg", args);
       spy(...args);
     }
   }

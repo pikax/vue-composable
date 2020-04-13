@@ -29,7 +29,12 @@ export function intlDateFormatExtractArguments(
   const wrappedLocalesOptions = wrap(localesOptions);
 
   return isObject(wrappedOpts.value)
-    ? [wrappedLocalesOptions as Ref<string>, wrappedOpts]
+    ? [
+        wrappedLocalesOptions.value !== undefined
+          ? wrappedLocalesOptions
+          : undefined,
+        wrappedOpts
+      ]
     : isObject(wrappedLocalesOptions.value) &&
       !isArray(wrappedLocalesOptions.value) &&
       !isString(wrappedLocalesOptions.value)

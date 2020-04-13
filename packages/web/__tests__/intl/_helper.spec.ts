@@ -22,7 +22,7 @@ describe("intl_helper", () => {
 
       locale = undefined;
       expect(intlDateFormatExtractArguments(locale, options)).toMatchObject([
-        { value: locale },
+        undefined,
         { value: options }
       ]);
 
@@ -60,7 +60,7 @@ describe("intl_helper", () => {
 
       locale = ref(undefined);
       expect(intlDateFormatExtractArguments(locale, options)).toMatchObject([
-        locale,
+        undefined,
         options
       ]);
 
