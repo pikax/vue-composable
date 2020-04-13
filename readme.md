@@ -43,7 +43,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Event
 
 - [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event listener to a DOM element
-- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
+- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
@@ -108,6 +108,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
 - [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ### External
 

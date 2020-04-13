@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { ref, createComponent, reactive, toRefs } from "@vue/composition-api";
+import { ref, defineComponent, reactive, toRefs } from "@vue/composition-api";
 
 type Todo = {
   id: number;
@@ -21,10 +21,10 @@ type EventT = {
   todos: Todo[];
 };
 
-export default createComponent({
+export default defineComponent({
   setup() {
     const event: Event = <any>reactive({
-      todos:[]
+      todos: []
     });
 
     async function fetchTodos() {

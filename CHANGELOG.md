@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.20
+
+_2020-04-06_
+
+## Types
+
+- fixed return type for [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction)
+
+## 1.0.0-dev.18
+
+_2020-04-06_
+
+## Added
+
+- [useWorker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+
 ## 1.0.0-dev.17
 
 _2020-04-05_
@@ -30,6 +47,7 @@ _2020-04-05_
 
 - [useValidation] - Fix tracking of `$value` when is not `ref`
 - [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - improve typings and fix bug when sending custom breakpoints
+  > > > > > > > master
 
 ## 1.0.0-dev.16
 
