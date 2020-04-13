@@ -24,18 +24,32 @@ export interface NumberFormatReturn {
 export function useIntlNumberFormat(): NumberFormatReturn;
 
 export function useIntlNumberFormat(
-  locales: IntlNumberFormatLocales,
-  options?: RefTyped<IntlNumberFormatOptions>
+  locales: IntlNumberFormatLocales
 ): NumberFormatReturn;
+
 export function useIntlNumberFormat(
   options: RefTyped<IntlNumberFormatOptions>
 ): NumberFormatReturn;
+
 export function useIntlNumberFormat(
-  locales: IntlNumberFormatLocales,
   options: RefTyped<Intl.NumberFormatOptions>
 ): NumberFormatReturn;
+
 export function useIntlNumberFormat(
-  localesOptions?: IntlNumberFormatLocales | RefTyped<IntlNumberFormatOptions>,
+  locales: IntlNumberFormatLocales,
+  options?: RefTyped<IntlNumberFormatOptions | undefined>
+): NumberFormatReturn;
+
+export function useIntlNumberFormat(
+  locales: IntlNumberFormatLocales,
+  options: RefTyped<Intl.NumberFormatOptions | undefined>
+): NumberFormatReturn;
+
+export function useIntlNumberFormat(
+  localesOptions?:
+    | IntlNumberFormatLocales
+    | RefTyped<IntlNumberFormatOptions>
+    | RefTyped<Intl.NumberFormatOptions>,
   opts?: any
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
@@ -60,7 +74,7 @@ export function useIntlNumberFormat(
       overrideOpts || overrideLocale
         ? new Intl.NumberFormat(
             unwrap(overrideLocale as RefTyped<string>) ||
-              unwrap(locales as Ref<string | string[]> | undefined),
+              unwrap(locales as Ref<string | string[]>),
             { ...unwrap(options), ...unwrap(overrideOpts) }
           )
         : formatter.value;

@@ -6,7 +6,7 @@ import {
   isArray,
   isString
 } from "@vue-composable/core";
-import { Ref } from "@vue/composition-api";
+import { Ref, isRef } from "@vue/composition-api";
 
 export function intlDateFormatExtractArguments(
   locales: IntlNumberFormatLocales,
@@ -28,7 +28,7 @@ export function intlDateFormatExtractArguments(
   const wrappedOpts = wrap(opts);
   const wrappedLocalesOptions = wrap(localesOptions);
 
-  return isObject(wrappedOpts.value)
+  return isObject(wrappedOpts.value) || isRef(opts)
     ? [
         wrappedLocalesOptions.value !== undefined
           ? wrappedLocalesOptions

@@ -68,7 +68,7 @@ describe("intl_helper", () => {
       options = ref(undefined);
       expect(intlDateFormatExtractArguments(locale, options)).toMatchObject([
         locale,
-        undefined
+        options
       ]);
 
       options = ref({ currencyDisplay: "ss" });
