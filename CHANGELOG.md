@@ -3,9 +3,18 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
+
+## Added
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
+## Types
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - remove `void` return on `useI18n`
 
 ## 1.0.0-dev.20
 

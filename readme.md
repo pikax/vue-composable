@@ -89,6 +89,11 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject

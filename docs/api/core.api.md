@@ -367,7 +367,7 @@ export function useI18n<
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
 
 // @public (undocumented)
-export function useI18n<T = i18n>(): i18nResult<string[], T> | void;
+export function useI18n<T = i18n>(): i18nResult<string[], T>;
 
 // @public
 export function useNow(
