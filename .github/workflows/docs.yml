@@ -25,6 +25,8 @@ jobs:
     - run: yarn
       
     - run: yarn build
+      env:
+        DOCS_BASE: /vue-composable/
 
     - run: yarn docs:build
 
