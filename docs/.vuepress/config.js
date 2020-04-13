@@ -1,6 +1,7 @@
 module.exports = {
   title: "vue-composable",
-  description: "Vue composition-api composable components",
+  description:
+    "Vue composition-api composable components. i18n, validation, pagination, fetch, etc. +30 variable composable functions",
   plugins: [
     "@vuepress/back-to-top",
     [
