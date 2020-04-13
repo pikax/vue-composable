@@ -11,7 +11,7 @@ module.exports = {
       }
     ]
   ],
-  base: "/vue-composable/",
+  base: process.env.DOCS_BASE || "",
   head: [
     ["meta", { charset: "utf-8" }],
     ["meta", { name: "msapplication-TileColor", content: "#ffffff" }],
