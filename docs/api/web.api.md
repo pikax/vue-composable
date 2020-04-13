@@ -60,6 +60,196 @@ export interface CssVariablesMethods {
 }
 
 // @public (undocumented)
+export type CurrencyCodes =
+  | "AFA"
+  | "ALL"
+  | "DZD"
+  | "AOR"
+  | "ARS"
+  | "AMD"
+  | "AWG"
+  | "AUD"
+  | "AZN"
+  | "BSD"
+  | "BHD"
+  | "BDT"
+  | "BBD"
+  | "BYN"
+  | "BZD"
+  | "BMD"
+  | "BTN"
+  | "BOB"
+  | "BWP"
+  | "BRL"
+  | "GBP"
+  | "BND"
+  | "BGN"
+  | "BIF"
+  | "KHR"
+  | "CAD"
+  | "CVE"
+  | "KYD"
+  | "XOF"
+  | "XAF"
+  | "XPF"
+  | "CLP"
+  | "CNY"
+  | "COP"
+  | "KMF"
+  | "CDF"
+  | "CRC"
+  | "HRK"
+  | "CUP"
+  | "CZK"
+  | "DKK"
+  | "DJF"
+  | "DOP"
+  | "XCD"
+  | "EGP"
+  | "SVC"
+  | "ERN"
+  | "EEK"
+  | "ETB"
+  | "EUR"
+  | "FKP"
+  | "FJD"
+  | "GMD"
+  | "GEL"
+  | "GHS"
+  | "GIP"
+  | "XAU"
+  | "XFO"
+  | "GTQ"
+  | "GNF"
+  | "GYD"
+  | "HTG"
+  | "HNL"
+  | "HKD"
+  | "HUF"
+  | "ISK"
+  | "XDR"
+  | "INR"
+  | "IDR"
+  | "IRR"
+  | "IQD"
+  | "ILS"
+  | "JMD"
+  | "JPY"
+  | "JOD"
+  | "KZT"
+  | "KES"
+  | "KWD"
+  | "KGS"
+  | "LAK"
+  | "LVL"
+  | "LBP"
+  | "LSL"
+  | "LRD"
+  | "LYD"
+  | "LTL"
+  | "MOP"
+  | "MKD"
+  | "MGA"
+  | "MWK"
+  | "MYR"
+  | "MVR"
+  | "MRO"
+  | "MUR"
+  | "MXN"
+  | "MDL"
+  | "MNT"
+  | "MAD"
+  | "MZN"
+  | "MMK"
+  | "NAD"
+  | "NPR"
+  | "ANG"
+  | "NZD"
+  | "NIO"
+  | "NGN"
+  | "KPW"
+  | "NOK"
+  | "OMR"
+  | "PKR"
+  | "XPD"
+  | "PAB"
+  | "PGK"
+  | "PYG"
+  | "PEN"
+  | "PHP"
+  | "XPT"
+  | "PLN"
+  | "QAR"
+  | "RON"
+  | "RUB"
+  | "RWF"
+  | "SHP"
+  | "WST"
+  | "STD"
+  | "SAR"
+  | "RSD"
+  | "SCR"
+  | "SLL"
+  | "XAG"
+  | "SGD"
+  | "SBD"
+  | "SOS"
+  | "ZAR"
+  | "KRW"
+  | "LKR"
+  | "SDG"
+  | "SRD"
+  | "SZL"
+  | "SEK"
+  | "CHF"
+  | "SYP"
+  | "TWD"
+  | "TJS"
+  | "TZS"
+  | "THB"
+  | "TOP"
+  | "TTD"
+  | "TND"
+  | "TRY"
+  | "TMT"
+  | "AED"
+  | "UGX"
+  | "XFU"
+  | "UAH"
+  | "UYU"
+  | "USD"
+  | "UZS"
+  | "VUV"
+  | "VEF"
+  | "VND"
+  | "YER"
+  | "ZMK"
+  | "ZWL";
+
+// @public (undocumented)
+export type CurrencyDisplay = "none" | "symbol" | "code";
+
+// @public (undocumented)
+export interface CurrencyFormatReturn {
+  // (undocumented)
+  format: (
+    amount: RefTyped<number>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+    display?: RefTyped<CurrencyDisplay>,
+    overrideOptions?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
+  ) => Ref<Readonly<string>>;
+  // (undocumented)
+  formatString: (
+    amount: RefTyped<number>,
+    currency?: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+    display?: RefTyped<CurrencyDisplay>,
+    overrideOptions?: RefTyped<IntlNumberFormatOptions>,
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>
+  ) => string;
+}
+
+// @public (undocumented)
 export function exposeWorker(this: Worker, func: (...args: any[]) => any): void;
 
 // @public (undocumented)
@@ -98,6 +288,45 @@ export interface IntersectionObserverResult {
   // (undocumented)
   unobserve: (el: RefTyped<Element>) => void;
 }
+
+// @public (undocumented)
+export type IntlNumberFormatLocales =
+  | RefTyped<string>
+  | RefTyped<string[]>
+  | undefined;
+
+// @public (undocumented)
+export type IntlNumberFormatOptions = Intl.NumberFormatOptions & {
+  style?: IntNumberFormatOptionStyle & string;
+  currency?: CurrencyCodes & string;
+  currencyDisplay?: CurrencyDisplay & string;
+};
+
+// @public (undocumented)
+export type IntNumberFormatOptionStyle =
+  /**
+   * A decimal style format
+   */
+  | "decimal"
+  /**
+   * A percent style format.
+   */
+  | "percent"
+  /**
+   * A currency style format that uses the currency symbol defined by the number formatter locale.
+   */
+  | "currency"
+  /**
+   * A unit format
+   */
+  | "unit";
+
+// @public (undocumented)
+export type IntNumberFormatterFormat<T> = (
+  value: Readonly<RefTyped<Readonly<number>>>,
+  overrideOpts?: RefTyped<Intl.NumberFormatOptions>,
+  overrideLocale?: RefTyped<IntlNumberFormatLocales>
+) => T;
 
 // @public (undocumented)
 export interface LocalStorageReturn<T> {
@@ -175,6 +404,16 @@ export interface NetworkInformation {
   //
   // (undocumented)
   readonly type: NetworkInformationType;
+}
+
+// @public (undocumented)
+export interface NumberFormatReturn {
+  // (undocumented)
+  format: IntNumberFormatterFormat<Ref<Readonly<string>>>;
+  // (undocumented)
+  formatString: IntNumberFormatterFormat<string>;
+  // (undocumented)
+  formatter: Ref<Readonly<Intl.NumberFormat>>;
 }
 
 // @public (undocumented)
@@ -396,6 +635,51 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
 ): UseCssVariables<T>;
 
 // @public (undocumented)
+export function useCurrencyFormat(): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  options: RefTyped<IntlNumberFormatOptions>,
+  locales?: IntlNumberFormatLocales
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Ref<string> | string
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+  locales: IntlNumberFormatLocales,
+  options?: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Ref<string> | string,
+  locales: IntlNumberFormatLocales,
+  options?: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Readonly<RefTyped<Readonly<CurrencyCodes>>>,
+  options: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+// @public (undocumented)
+export function useCurrencyFormat(
+  currencyCode: Ref<string> | string,
+  options: RefTyped<IntlNumberFormatOptions>
+): CurrencyFormatReturn;
+
+// @public (undocumented)
 export function useEvent<
   T extends {
     addEventListener: (
@@ -488,6 +772,36 @@ export function useIntersectionObserver(
 export function useIntersectionObserver(
   options: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult;
+
+// @public (undocumented)
+export function useIntlNumberFormat(): NumberFormatReturn;
+
+// @public (undocumented)
+export function useIntlNumberFormat(
+  locales: IntlNumberFormatLocales
+): NumberFormatReturn;
+
+// @public (undocumented)
+export function useIntlNumberFormat(
+  options: RefTyped<IntlNumberFormatOptions>
+): NumberFormatReturn;
+
+// @public (undocumented)
+export function useIntlNumberFormat(
+  options: RefTyped<Intl.NumberFormatOptions>
+): NumberFormatReturn;
+
+// @public (undocumented)
+export function useIntlNumberFormat(
+  locales: IntlNumberFormatLocales,
+  options?: RefTyped<IntlNumberFormatOptions | undefined>
+): NumberFormatReturn;
+
+// @public (undocumented)
+export function useIntlNumberFormat(
+  locales: IntlNumberFormatLocales,
+  options: RefTyped<Intl.NumberFormatOptions | undefined>
+): NumberFormatReturn;
 
 // @public (undocumented)
 export function useLanguage(): {

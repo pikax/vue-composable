@@ -159,6 +159,15 @@ module.exports = {
           ]
         },
         {
+          title: "Intl",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/Intl/numberFormat", "numberFormat"],
+            ["composable/Intl/currencyFormat", "currencyFormat"]
+          ]
+        },
+        {
           title: "Web",
           sidebarDepth: 1,
           collapsable: false,
