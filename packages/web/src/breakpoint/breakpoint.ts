@@ -1,4 +1,4 @@
-import { Ref, onMounted, ref, onUnmounted, UnwrapRef } from "@vue/runtime-core";
+import { Ref, onMounted, ref, onUnmounted } from "@vue/runtime-core";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "./../misc/matchMedia";
 import {
@@ -81,7 +81,7 @@ export function useBreakpoint<T extends BreakpointObject>(
             c = r.name;
           }
         }
-        current.value = c as UnwrapRef<keyof T>;
+        current.value = c;
       }
     : NO_OP;
 

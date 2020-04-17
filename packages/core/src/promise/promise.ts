@@ -1,4 +1,4 @@
-import { ref, Ref, UnwrapRef } from "@vue/runtime-core";
+import { ref, Ref } from "@vue/runtime-core";
 import { isBoolean } from "../utils";
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
@@ -94,9 +94,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
         ? args[args.length - 1]
         : throwException;
 
-    const currentPromise = (promise.value = (fn(...args) as any) as UnwrapRef<
-      T
-    >);
+    const currentPromise = (promise.value = fn(...args));
     try {
       const r = await currentPromise;
       if (promise.value === currentPromise) {

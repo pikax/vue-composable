@@ -35,6 +35,6 @@
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
   "sideEffects": false,
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-alpha.4"
+    "@vue/runtime-core": "^3.0.0-beta.1"
   }
 }

@@ -20,7 +20,8 @@ export interface ArrayPaginationResult<T extends Array<any>>
 // @public (undocumented)
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
-  TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
+  TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>,
+  TLocales extends keyof TMessage = keyof TMessage
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
 
 // @public (undocumented)

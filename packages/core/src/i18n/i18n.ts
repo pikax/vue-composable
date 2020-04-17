@@ -95,26 +95,27 @@ export function useI18n(definition?: any): any {
 
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
-  TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
+  TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>,
+  TLocales extends keyof TMessage = keyof TMessage
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]> {
-  const locales: Ref<Array<keyof TMessage>> = ref(
-    Object.keys(definition.messages) as Array<keyof TMessage>
+  const locales: Ref<Array<TLocales>> = ref(
+    Object.keys(definition.messages) as Array<TLocales>
   );
-  const localeMessages = ref<
-    Record<keyof TMessage, i18n | (() => Promise<any>)>
-  >(definition.messages);
-  const locale: Ref<keyof TMessage> = ref(definition.locale);
+  const localeMessages: Ref<TMessage> = ref(definition.messages) as any;
+  const locale: Ref<TLocales> = ref<TLocales>(
+    definition.locale as TLocales
+  ) as any;
   const i18n = ref<any>({});
   let fallback = ref<i18n>();
 
-  const cache: Record<string, Ref<i18n>> = {};
+  const cache: Partial<Record<TLocales, Ref<i18n>>> = {};
 
   const loadLocale = (
-    locale: string,
-    localeMessages: Ref<Record<string, i18n | (() => Promise<any>)>>
+    locale: TLocales,
+    localeMessages: Ref<TMessage>
   ): Ref<i18n> | Promise<Ref<i18n>> => {
     if (cache[locale]) {
-      return cache[locale];
+      return cache[locale]!;
     }
 
     const l = localeMessages.value[locale];
@@ -123,7 +124,9 @@ export function buildI18n<
     }
 
     if (isFunction(l)) {
-      return Promise.resolve(l()).then(x => (cache[locale] = wrap<i18n>(x)));
+      return Promise.resolve((l as Function)()).then(
+        x => (cache[locale] = wrap<i18n>(x))
+      );
     }
     return (cache[locale] = computed(
       () => localeMessages.value[locale] as i18n
@@ -138,7 +141,7 @@ export function buildI18n<
 
   let fallbackIsPromise = false;
   if (shouldFallback) {
-    const fallbackI18n = loadLocale(locale.value as string, localeMessages);
+    const fallbackI18n = loadLocale(locale.value, localeMessages);
     if (isPromise(fallbackI18n)) {
       fallbackI18n.then(x => {
         fallback = x;
@@ -152,12 +155,12 @@ export function buildI18n<
   }
 
   watch(
-    [locale, fallback],
-    async ([l, fb]: [keyof TMessage, i18n]) => {
+    [locale, fallback] as const,
+    async ([l, fb]) => {
       if (l === definition.fallback && shouldFallback) {
         i18n.value = fb!;
       } else {
-        const localeMessage = await loadLocale(l as string, localeMessages);
+        const localeMessage = await loadLocale(l, localeMessages);
         i18n.value = deepClone<any>({}, fb, localeMessage.value);
       }
     },
@@ -177,18 +180,18 @@ export function buildI18n<
   };
 
   const addLocale = (l: string, m: any) => {
-    if (locales.value.indexOf(l as any) >= 0) {
+    if (locales.value.indexOf(l as TLocales) >= 0) {
       if (__DEV__) {
         console.warn("Locale already exists, overriding it");
       }
     } else {
       locales.value.push(l as any);
     }
-    delete cache[l];
+    delete cache[l as TLocales];
     (localeMessages.value as Record<string, i18n>)[l] = m;
   };
 
-  const removeLocale = (l: keyof TMessage) => {
+  const removeLocale = (l: TLocales) => {
     const index = locales.value.indexOf(l);
     if (index >= 0) {
       locales.value.splice(index, 1);
@@ -198,7 +201,7 @@ export function buildI18n<
       }
     }
     delete localeMessages.value[l];
-    delete cache[l as string];
+    delete cache[l];
   };
 
   return {

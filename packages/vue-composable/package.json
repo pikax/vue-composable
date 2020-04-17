@@ -41,6 +41,6 @@
     "@vue-composable/web": "1.0.0-alpha.8"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-alpha.4"
+    "@vue/runtime-core": "^3.0.0-beta.1"
   }
 }

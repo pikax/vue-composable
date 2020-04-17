@@ -1,11 +1,9 @@
 import {
   ref,
-  Ref,
   watch,
   onUnmounted,
   computed,
-  getCurrentInstance,
-  UnwrapRef
+  getCurrentInstance
 } from "@vue/runtime-core";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "@vue-composable/core";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
@@ -85,7 +83,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
   // who's listening to this broadcast
   const targets = ref<number[]>([]);
-  const data: Ref<T> = ref(defaultValue!);
+  const data = ref(defaultValue);
 
   // if the state was updated by an event it sets to true
   let updateState = false;
@@ -156,7 +154,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       }
       case RefSharedMessageType.UPDATE: {
         updateState = true;
-        data.value = e.data.value as UnwrapRef<T>;
+        data.value = e.data.value;
         mind.value = e.data.mind;
         break;
       }
@@ -198,7 +196,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       // mind is set to MASTER and we are not master, we shouldn't update!
       if (mind.value === SharedRefMind.MASTER && master.value === false) {
         updateState = true;
-        data.value = o as UnwrapRef<T>;
+        data.value = o;
         return;
       }
 
@@ -246,7 +244,14 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
-  const name = id ? id : vm.vnode.el;
+  const name = id ? id : vm.vnode.scopeId; // TODO test this :/ NOTE @vue/composition-api might be different
+
+  if (!name) {
+    if (__DEV__) {
+      console.warn("[refShared] please assign an id, returning `ref`");
+    }
+    return ref(defaultValue);
+  }
 
   /* istanbul ignore else  */
   if (__DEV__) {
