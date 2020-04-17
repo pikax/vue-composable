@@ -14,9 +14,9 @@
 
 <script>
 import { useSharedRef } from "vue-composable";
-import { computed } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 
-export default {
+export default defineComponent({
   setup() {
     const s = useSharedRef("test", 0);
 
@@ -39,5 +39,5 @@ export default {
       changeMind
     };
   }
-};
+});
 </script>
