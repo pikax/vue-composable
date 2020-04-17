@@ -1,4 +1,4 @@
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { useOnScroll, ScrollResult } from "../../src/event/onScroll";
 import { promisedTimeout } from "@vue-composable/core";
 
@@ -17,12 +17,12 @@ describe("onScroll", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ScrollResult | undefined = undefined;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
       }
-    }).$mount();
+    }).mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
@@ -53,12 +53,12 @@ describe("onScroll", () => {
     } as any;
     let use: ScrollResult | undefined = undefined;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
       }
-    }).$mount();
+    }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     use!.remove();
@@ -81,12 +81,12 @@ describe("onScroll", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, wait);
       }
-    }).$mount();
+    }).mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
@@ -123,12 +123,12 @@ describe("onScroll", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         return useOnScroll(element, options);
       }
-    }).$mount();
+    }).mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
       expect.any(Function),
@@ -154,12 +154,12 @@ describe("onScroll", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, options, wait);
       }
-    }).$mount();
+    }).mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
       expect.any(Function),
@@ -206,12 +206,12 @@ describe("onScroll", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(wait);
       }
-    }).$mount();
+    }).mount();
     expect(window.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {

@@ -1,4 +1,4 @@
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { useOnResize, ResizeResult } from "../../src/event/onResize";
 import { promisedTimeout } from "@vue-composable/core";
 
@@ -30,12 +30,12 @@ describe("onResize", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ResizeResult | undefined = undefined;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
       }
-    }).$mount();
+    }).mount();
 
     expect(window.addEventListener).toHaveBeenCalled();
 
@@ -65,12 +65,12 @@ describe("onResize", () => {
     let use: ResizeResult | undefined = undefined;
     window.removeEventListener = jest.fn();
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
       }
-    }).$mount();
+    }).mount();
     expect(window.removeEventListener).not.toHaveBeenCalled();
 
     use!.remove();
@@ -92,12 +92,12 @@ describe("onResize", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element, wait);
       }
-    }).$mount();
+    }).mount();
     expect(window.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
@@ -133,12 +133,12 @@ describe("onResize", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         return useOnResize(element, options);
       }
-    }).$mount();
+    }).mount();
     expect(window.addEventListener).toHaveBeenCalledWith(
       "resize",
       expect.any(Function),
@@ -163,12 +163,12 @@ describe("onResize", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element, options, wait);
       }
-    }).$mount();
+    }).mount();
     expect(window.addEventListener).toHaveBeenCalledWith(
       "resize",
       expect.any(Function),

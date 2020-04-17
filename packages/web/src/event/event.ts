@@ -70,14 +70,18 @@ export function useEvent(
     };
     onUnmounted(remove);
     onMounted(() => {
-      watch(element, (n, o) => {
-        if (o) {
-          removeEventListener(o);
-        }
-        if (n) {
-          addEventListener(n);
-        }
-      });
+      watch(
+        element,
+        (n, o) => {
+          if (o) {
+            removeEventListener(o);
+          }
+          if (n) {
+            addEventListener(n);
+          }
+        },
+        { immediate: true }
+      );
     });
   }
 

@@ -1,14 +1,6 @@
-import { Component, render } from "vue";
-
 export { nextTick } from "@vue/runtime-core";
-
+import { Component } from "vue";
 import { createApp } from "vue";
-
-// export class Vue  {
-//   constructor(component: Component) {
-
-//   }
-// }
 
 export const createVue = (component: Component, props?: any) => {
   const app = createApp(component, props);
@@ -17,8 +9,15 @@ export const createVue = (component: Component, props?: any) => {
 
   const mount = () => app.mount(el);
 
-  const destroy = () => render(null, el);
+  const destroy = () => app.unmount(el);
 
+  app.config.warnHandler = (err: any) => {
+    throw err;
+  };
+
+  app.config.errorHandler = (err: any) => {
+    throw err;
+  };
   return {
     el,
     mount,

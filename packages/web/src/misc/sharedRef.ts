@@ -83,7 +83,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
   // who's listening to this broadcast
   const targets = ref<number[]>([]);
-  const data = ref(defaultValue);
+  const data = ref<T>(defaultValue!);
 
   // if the state was updated by an event it sets to true
   let updateState = false;
