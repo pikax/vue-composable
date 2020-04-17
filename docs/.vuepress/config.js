@@ -1,6 +1,7 @@
 module.exports = {
   title: "vue-composable",
-  description: "Vue composition-api composable components",
+  description:
+    "Vue composition-api composable components. i18n, validation, pagination, fetch, etc. +30 variable composable functions",
   plugins: [
     "@vuepress/back-to-top",
     [
@@ -11,7 +12,7 @@ module.exports = {
       }
     ]
   ],
-  base: "/vue-composable/",
+  base: process.env.DOCS_BASE || "",
   head: [
     ["meta", { charset: "utf-8" }],
     ["meta", { name: "msapplication-TileColor", content: "#ffffff" }],
@@ -155,6 +156,15 @@ module.exports = {
             ["composable/promise/promiseLazy", "Lazy Promise"],
             ["composable/promise/cancellablePromise", "cancellablePromise"],
             ["composable/promise/retry", "retry"]
+          ]
+        },
+        {
+          title: "Intl",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [
+            ["composable/Intl/numberFormat", "numberFormat"],
+            ["composable/Intl/currencyFormat", "currencyFormat"]
           ]
         },
         {

@@ -43,7 +43,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Event
 
 - [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event listener to a DOM element
-- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
+- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
@@ -88,6 +88,11 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### i18n
 
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
 
 ### Promise
 

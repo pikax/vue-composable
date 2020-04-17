@@ -27,7 +27,9 @@ jobs:
     - run: yarn build
 
     - run: yarn docs:build
-
+      env:
+        DOCS_BASE: /vue-composable/
+        
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2
       env:

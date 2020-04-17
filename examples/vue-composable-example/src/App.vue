@@ -33,6 +33,14 @@
       <li>
         <router-link to="/i18n">I18n</router-link>
       </li>
+
+      <li>
+        <router-link to="/intl">Intl</router-link>
+      </li>
+
+      <li>
+        <router-link to="/currency">CurrencyFormat</router-link>
+      </li>
     </ul>
     <router-view></router-view>
   </div>

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.21
+
+_2020-04-13_
+
+## Added
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
+## Types
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - remove `void` return on `useI18n`
+
 ## 1.0.0-dev.20
 
 _2020-04-06_
