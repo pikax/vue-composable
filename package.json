@@ -69,8 +69,8 @@
     "@rollup/plugin-replace": "^2.3.1",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.11.1",
-    "@vue/runtime-core": "^3.0.0-beta.1",
-    "@vue/compiler-sfc": "^3.0.0-beta.1",
+    "@vue/compiler-sfc": "^3.0.0-beta.2",
+    "@vue/runtime-core": "^3.0.0-beta.2",
     "@vuepress/plugin-back-to-top": "^1.4.1",
     "@vuepress/plugin-pwa": "^1.4.1",
     "axios": "^0.19.2",
@@ -95,7 +95,7 @@
     "ts-jest": "^25.4.0",
     "tsd": "^0.11.0",
     "typescript": "^3.8.3",
-    "vue": "^3.0.0-beta.1",
+    "vue": "^3.0.0-beta.2",
     "vuepress": "^1.4.1",
     "zlib": "^1.0.5"
   }
