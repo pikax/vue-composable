@@ -55,7 +55,7 @@ export function useOnResize(
   // resize seems only to be fired against the window
   const remove = isClient
     ? useEvent(window, "resize", handler, eventOptions || PASSIVE_EV)
-    : NO_OP;
+    : /* istanbul ignore next */ NO_OP;
 
   return {
     height,

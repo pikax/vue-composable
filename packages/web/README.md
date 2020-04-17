@@ -46,6 +46,11 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
 ### Storage
 
 - [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
@@ -64,6 +69,9 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ## Contributing
 

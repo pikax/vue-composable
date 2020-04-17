@@ -1,9 +1,15 @@
-export function useDebounce<T extends Function>(
+/**
+ * Create `debounced` function, options object can be changed after creation to update behaviour
+ * @param handler - function to be debounced
+ * @param wait - debounce ms
+ * @param options - debounce options
+ */
+export function useDebounce<T extends Procedure>(
   handler: T,
   wait?: number,
   options?: Options
 ): T {
-  return debounce(handler as any, wait, options);
+  return debounce(handler, wait, options);
 }
 
 /**
@@ -13,6 +19,9 @@ export function useDebounce<T extends Function>(
 export type Procedure = (...args: any[]) => void;
 
 export type Options = {
+  /**
+   * calls debounce immediately
+   */
   isImmediate: boolean;
 };
 

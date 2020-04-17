@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted } from "@vue/runtime-core";
+import { onMounted, onUnmounted, watch, Ref } from "@vue/runtime-core";
 import { RefTyped, wrap, NO_OP } from "@vue-composable/core";
 
 export type RemoveEventFunction = () => void;
@@ -14,7 +14,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any
 ): RemoveEventFunction;
@@ -30,7 +30,7 @@ export function useEvent<
   M,
   K extends keyof M
 >(
-  el: RefTyped<T>,
+  el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any,
   options?: boolean | AddEventListenerOptions
@@ -42,13 +42,13 @@ export function useEvent<K extends keyof WindowEventMap>(
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 export function useEvent<K extends keyof DocumentEventMap>(
-  el: RefTyped<Element>,
+  el: Element | Ref<Element | undefined>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 export function useEvent(
-  el: RefTyped<Element> | RefTyped<Window> | RefTyped<any>,
+  el: Element | Ref<Element | undefined> | RefTyped<Window> | RefTyped<any>,
   name: string,
   listener: EventListenerOrEventListenerObject,
   options?: boolean | AddEventListenerOptions
@@ -56,11 +56,29 @@ export function useEvent(
   let remove = NO_OP;
 
   if (el) {
-    const element = wrap(el as Element);
-    remove = () => element.value!.removeEventListener(name, listener);
+    const element: Ref<Element> = wrap(el as Element);
 
-    onMounted(() => element.value!.addEventListener(name, listener, options));
+    const removeEventListener = (e: Element) =>
+      e.removeEventListener(name, listener);
+    const addEventListener = (e: Element) =>
+      e.addEventListener(name, listener, options);
+
+    let removeWatch = NO_OP;
+    remove = () => {
+      removeEventListener(element.value);
+      removeWatch();
+    };
     onUnmounted(remove);
+    onMounted(() => {
+      watch(element, (n, o) => {
+        if (o) {
+          removeEventListener(o);
+        }
+        if (n) {
+          addEventListener(n);
+        }
+      });
+    });
   }
 
   return remove;

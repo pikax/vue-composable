@@ -7,3 +7,6 @@ export * from "./pageVisibility";
 export * from "./language";
 export * from "./broadcastChannel";
 export * from "./geolocation";
+export * from "./cssVariables";
+export * from "./worker";
+export { useWorkerFunction, WebWorkerFunctionOptions } from "./workerFunction";

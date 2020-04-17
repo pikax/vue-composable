@@ -52,10 +52,12 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Format
 
 - [format][format] - Reactive string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
 
 ## Promise
 
 - [usePromise][promise] : Handles promise states
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 - [useCancellablePromise][cancellable-promise] : Uses [usePromise][promise] and prevent setting `result` if canceled
 - [useRetry][retry] : Allows to retry if a promise throws an exception
 

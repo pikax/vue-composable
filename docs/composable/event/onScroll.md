@@ -36,10 +36,10 @@ import { useOnScroll } from "vue-composable";
 const { scrollTop, scrollLeft } = useOnScroll();
 ```
 
-| State      | Type     | Description         |
-| ---------- | -------- | ------------------- |
-| scrollTop  | `Number` | Scroll top position |
-| scrollLeft | `Number` | Scroll let position |
+| State      | Type     | Description                                                    |
+| ---------- | -------- | -------------------------------------------------------------- |
+| scrollTop  | `Number` | Scroll top position, if value is set it will call scrollTopTo  |
+| scrollLeft | `Number` | Scroll let position, if value is set it will call scrollLeftTo |
 
 ## Methods
 
@@ -48,12 +48,15 @@ The `useOnScroll` function exposes the following methods:
 ```js
 import { useOnScroll } from "vue-composable";
 
-const { remove } = useOnScroll();
+const { remove, scrollTo, scrollLeftTo, scrollTopTo } = useOnScroll();
 ```
 
-| Signature | Description                         |
-| --------- | ----------------------------------- |
-| `remove`  | Manually removes the event listener |
+| Signature      | Description                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| `remove`       | Manually removes the event listener                                                                    |
+| `scrollTo`     | Same as calling [element.scrollTo()](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo) |
+| `scrollLeftTo` | Calls scrollTo with left argument                                                                      |
+| `scrollTopTo`  | Calls scrollTo with top argument                                                                       |
 
 ## Example
 

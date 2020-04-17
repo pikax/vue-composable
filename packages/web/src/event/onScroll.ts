@@ -1,4 +1,4 @@
-import { Ref, ref, isRef } from "@vue/runtime-core";
+import { Ref, ref, isRef, watch } from "@vue/runtime-core";
 import {
   RefElement,
   wrap,
@@ -18,6 +18,8 @@ export interface ScrollResult {
   remove: RemoveEventFunction;
 
   scrollTo: Element["scrollTo"];
+  scrollTopTo: (y: number) => void;
+  scrollLeftTo: (x: number) => void;
 }
 
 export function useOnScroll(): ScrollResult;
@@ -68,7 +70,12 @@ export function useOnScroll(
   };
 
   const scrollTo: Element["scrollTo"] = (...args: any) =>
+    scrollableElement.value &&
+    scrollableElement.value.scrollTo &&
     scrollableElement.value.scrollTo.apply(scrollableElement.value, args);
+
+  const scrollTopTo = (top: number) => scrollTo({ top });
+  const scrollLeftTo = (left: number) => scrollTo({ left });
 
   const [eventOptions, ms] =
     isNumber(el) || !el
@@ -81,7 +88,14 @@ export function useOnScroll(
     handler = useDebounce(handler, wait);
   }
 
-  const remove = useEvent(element, "scroll", handler, eventOptions);
+  const eventRemove = useEvent(element, "scroll", handler, eventOptions);
+  const watchRemoveTop = watch(scrollTop, scrollTopTo, { immediate: false });
+  const watchRemoveLeft = watch(scrollLeft, scrollLeftTo, { immediate: false });
+  const remove = () => {
+    eventRemove();
+    watchRemoveLeft();
+    watchRemoveTop();
+  };
 
   return {
     scrollTop,
@@ -89,6 +103,8 @@ export function useOnScroll(
 
     scrollTo,
 
-    remove
+    remove,
+    scrollTopTo,
+    scrollLeftTo
   };
 }

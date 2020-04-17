@@ -3,23 +3,35 @@ import { isFunction, isClient, NO_OP, isBoolean } from "../utils";
 
 export interface NowOptions {
   /**
-   * @description - interval in ms
+   * Refresh rate in milliseconds that the now gets updated
+   * @default 1000
    */
   refreshMs?: number;
 
   /**
-   * @description - sync with seconds the clock
+   * Sync with the clock by the second
+   * @default true
    */
   sync?: boolean;
 }
 
 export interface UseNowOptions {
   /**
-   * @description - time factory, it should retrieve `now` in ms
+   * Function called when refresh the date
+   *  * @example
+   * ```ts
+   *  () => Date.now()
+   * // or
+   * () => performance.now()
+   * ```
    */
   timeFn?: () => number;
 }
 
+/**
+ * Reactive custom timer with specified refresh rate
+ * @param options - Configuration
+ */
 export function useNow(options?: NowOptions & UseNowOptions) {
   const SYNC_MS = 1000;
   const ms = (options && options.refreshMs) || SYNC_MS;

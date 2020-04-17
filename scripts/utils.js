@@ -6,14 +6,19 @@ const targets = (exports.targets = fs
   .readdirSync("packages")
   .filter(f => fs.statSync(`packages/${f}`).isDirectory())
   .map(f => {
-    const pkg = require(`../packages/${f}/package.json`);
-    if (pkg.private && !pkg.buildOptions) {
+    try {
+      const pkg = require(`../packages/${f}/package.json`);
+      if (pkg.private && !pkg.buildOptions) {
+        return false;
+      }
+      return {
+        package: f,
+        priority: pkg.buildOptions.priority || 99
+      };
+    } catch (e) {
+      console.error(e);
       return false;
     }
-    return {
-      package: f,
-      priority: pkg.buildOptions.priority || 99
-    };
   })
   .filter(x => x !== false)
   .sort((a, b) => a.priority - b.priority)

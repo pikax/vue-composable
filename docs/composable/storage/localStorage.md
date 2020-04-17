@@ -7,13 +7,14 @@
 ```js
 import { useLocalStorage } from "vue-composable";
 
-const localStorage = useLocalStorage(key, defaultValue?);
+const localStorage = useLocalStorage(key, defaultValue?, sync?);
 ```
 
-| Parameters   | Type                          | Required | Default     | Description                                    |
-| ------------ | ----------------------------- | -------- | ----------- | ---------------------------------------------- |
-| key          | `string|LocalStorageTyped<T>` | `true`   |             | Key that will be used to store in localStorage |
-| defaultValue | `object`                      | `false`  | `undefined` | default value stored in the localStorage       |
+| Parameters   | Type                          | Required | Default     | Description                                         |
+| ------------ | ----------------------------- | -------- | ----------- | --------------------------------------------------- |
+| key          | `string|LocalStorageTyped<T>` | `true`   |             | Key that will be used to store in localStorage      |
+| defaultValue | `object`                      | `false`  | `undefined` | default value stored in the localStorage            |
+| sync         | `Boolean`                     | `false`  | `true`      | sets the storage to sync automatically between tabs |
 
 ## State
 
@@ -45,6 +46,12 @@ const { remove, clear, setSync } = useLocalStorage(key);
 | `remove()`         | Removes key from the localStorage, equivalent as `storage.value = undefined` |
 | `clear()`          | Clears all used localStorage used so far                                     |
 | `setSync(boolean)` | Update the local `storage` if the value is changed in other tab              |
+
+## Sync
+
+::: warning
+When using `sync: true`, only the **last** ref per key will be able to update
+:::
 
 ## Example
 

@@ -61,6 +61,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Format
 
 - [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
 
 ### Breakpoint
 
@@ -93,6 +94,11 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
@@ -110,6 +116,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
 
 ### External
 

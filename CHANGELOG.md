@@ -7,6 +7,124 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.21
+
+_2020-04-13_
+
+## Added
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
+## Types
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - remove `void` return on `useI18n`
+
+## 1.0.0-dev.20
+
+_2020-04-06_
+
+## Types
+
+- fixed return type for [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction)
+
+## 1.0.0-dev.18
+
+_2020-04-06_
+
+## Added
+
+- [useWorker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [useWorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+
+## 1.0.0-dev.17
+
+_2020-04-05_
+
+## Changes
+
+- [fetch](https://pikax.me/vue-composable/composable/web/fetch) - fix parameter typing and tweak API
+- [event][https://pikax.me/vue-composable/composable/event/event.html] - improve typing
+- [path](https://pikax.me/vue-composable/composable/format/path) - Improve [array path access](https://pikax.me/vue-composable/composable/format/path.html#access) and add dev warnings
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Allow to have factory based locale messages
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added console warnings when removing locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Improve overriding locales
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Setting new locale if the current locale is removed
+- update peer dependency to [composition-api@0.5.0](https://github.com/vuejs/composition-api)
+
+## Added
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Added `$tc`, same as `$t` but returns a string, sugar for usage in the template.
+
+## Fixes
+
+- [useValidation] - Fix tracking of `$value` when is not `ref`
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - improve typings and fix bug when sending custom breakpoints
+  > > > > > > > master
+
+## 1.0.0-dev.16
+
+_2020-03-27_
+
+## Added
+
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
+
+## Changes
+
+- Updated [composition-api@0.5.0](https://github.com/vuejs/composition-api)
+- stop force-updating css variables #178 - Thanks @hawezo
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - changed default options to `{ attributes: true, childList: true, subtree: true }`
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - do not reset `result` between executions
+
+## Breaking
+
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Now Promises will execute at creation, please check [documentation](https://pikax.me/vue-composable/composable/promise/promise)
+- [usePromise](https://pikax.me/vue-composable/composable/promise/promise) - Replaced `throwException` argument to `lazy`
+
+## 1.0.0-dev.15
+
+_2020-03-09_
+
+## Fix
+
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - fix not loading fallback when locale is different than fallback. #167
+
+## 1.0.0-dev.14
+
+_2020-03-25_
+
+### Added
+
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+
+## 1.0.0-dev.13
+
+_2020-02-27_
+
+### Breaking-Change
+
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage): can only keep one `ref` per key!
+
+## 1.0.0-dev.12
+
+_2020-02-27_
+
+### Breaking-Change
+
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Added `sync` argument, defaults to `true`, when true it will sync the storage with other tabs
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll.html) - Now `scrollTop` and `scrollLeft` are watched automatically for changes and will call `scrollTopTo` and `scrollLeftTo` respectably on change
+
+### Changed
+
+- [onScroll](https://pikax.me/vue-composable/composable/event/onScroll.html) - Added `scrollTopTo`, `scrollLeftTo`
+- [webStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - when storage item is saved it dispatches a `StorageEvent`
+- [event][https://pikax.me/vue-composable/composable/event/event.html] - if Element `isRef` it will reattach new listener on change
+
+## Updated
+
+- updated to `@vue/composition-api@0.4.0`
+
 ## 1.0.0-dev.11
 
 _2020-02-24_
@@ -89,13 +207,13 @@ _2020-01-19_
 - [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
 - [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
-- [WebStorage](composable/misc/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
-- [storage](composable/misc/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
-- [sessionStorage](composable/misc/sessionStorage) - Reactive access to a `sessionStorage`
+- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Changed
 
-- [localStorage](composable/misc/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - refractor implementation to `useWebStorage` and added tab sync functionality
 
 ## 1.0.0-dev.4
 

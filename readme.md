@@ -52,7 +52,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Event
 
 - [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event listener to a DOM element
-- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
+- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
@@ -65,6 +65,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Format
 
 - [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
 
 ### Breakpoint
 
@@ -97,9 +98,15 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
 
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
 ### Promise
 
 - [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 - [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
 
@@ -114,6 +121,9 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
 - [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 
 ### External
 

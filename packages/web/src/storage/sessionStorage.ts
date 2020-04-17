@@ -5,13 +5,19 @@ import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 
 export function useSessionStorage(
   key: string,
-  defaultValue?: RefTyped<string>
+  defaultValue?: RefTyped<string>,
+  sync?: boolean
 ): LocalStorageReturn<string>;
 export function useSessionStorage<T extends object = object>(
   key: LocalStorageTyped<T> | string,
-  defaultValue?: RefTyped<T>
+  defaultValue?: RefTyped<T>,
+  sync?: boolean
 ): LocalStorageReturn<T>;
-export function useSessionStorage(key: string, defaultValue?: any) {
+export function useSessionStorage(
+  key: string,
+  defaultValue?: any,
+  sync?: boolean
+) {
   const { supported, store } = useWebStorage("sessionStorage");
 
   let remove = NO_OP;
@@ -24,6 +30,9 @@ export function useSessionStorage(key: string, defaultValue?: any) {
     if (__DEV__) {
       setSync = () =>
         console.warn("sync is not supported, please `useLocalStorage` instead");
+      if (sync) {
+        setSync(sync);
+      }
     }
     remove = () => store.removeItem(key);
     clear = () => store.clear();

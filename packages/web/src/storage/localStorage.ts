@@ -27,13 +27,19 @@ export interface LocalStorageReturn<T> {
 
 export function useLocalStorage(
   key: string,
-  defaultValue?: RefTyped<string>
+  defaultValue?: RefTyped<string>,
+  sync?: boolean
 ): LocalStorageReturn<string>;
 export function useLocalStorage<T extends object = any>(
   key: LocalStorageTyped<T> | string,
-  defaultValue?: RefTyped<T>
+  defaultValue?: RefTyped<T>,
+  sync?: boolean
 ): LocalStorageReturn<T>;
-export function useLocalStorage(key: string, defaultValue?: any) {
+export function useLocalStorage(
+  key: string,
+  defaultValue?: RefTyped<any>,
+  sync?: boolean
+) {
   const { supported, store } = useWebStorage("localStorage");
 
   let remove = NO_OP;
@@ -49,6 +55,10 @@ export function useLocalStorage(key: string, defaultValue?: any) {
     storage = store.getItem(key);
     if (!storage) {
       storage = store.setItem(key, defaultValue);
+    }
+
+    if (sync !== false) {
+      setSync(true);
     }
   } else {
     /* istanbul ignore else */

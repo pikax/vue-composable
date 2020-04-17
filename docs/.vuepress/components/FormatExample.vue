@@ -1,7 +1,7 @@
 <template>
   <div id="format">
     <div>
-      <h4>Array based example</h4>
+      <h4>Format example</h4>
       <div>
         Format:
         <input v-model="inputFormat" />
