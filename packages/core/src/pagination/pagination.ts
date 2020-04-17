@@ -15,10 +15,9 @@ export interface PaginationResult {
    */
   pageSize: Ref<number>;
   /**
-   * @readonly
    * Total number of items
    */
-  total: Readonly<Ref<Readonly<number>>>;
+  total: Ref<number>;
 
   /**
    * @reactive
