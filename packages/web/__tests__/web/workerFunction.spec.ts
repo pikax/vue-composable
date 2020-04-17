@@ -9,7 +9,7 @@ import {
   inlineWorkExecution
 } from "../../src/web/workerFunction";
 import { NO_OP, useCancellablePromise } from "@vue-composable/core";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 import { nextTick } from "../utils";
 
 const mockBlob = (fn: jest.Mock<any, any>) => {

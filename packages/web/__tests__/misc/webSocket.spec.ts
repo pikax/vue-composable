@@ -1,6 +1,6 @@
 import { useWebSocket } from "../../src";
 import { WS } from "jest-websocket-mock";
-import { watch } from "@vue/composition-api";
+import { watch } from "@vue/runtime-core";
 import { nextTick } from "../utils";
 
 describe("WebSocket", () => {

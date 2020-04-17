@@ -244,7 +244,7 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
-  const name = id ? id : vm.vnode.scopeId; // TODO test this :/ NOTE @vue/composition-api might be different
+  const name = id ? id : vm.vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
 
   if (!name) {
     if (__DEV__) {

@@ -4,7 +4,7 @@ import { useEvent } from "../../src";
 import { NO_OP } from "@vue-composable/core";
 
 describe("event", () => {
-  jest.mock("@vue/composition-api");
+  jest.mock("@vue/runtime-core");
 
   it("should add event on lifecycle", () => {
     const element: Element = {

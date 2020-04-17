@@ -33,10 +33,10 @@ This library aim is to be one stop shop for many real-world composable functions
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api vue-composable
+yarn add @vue/runtime-core vue-composable
 
 # install with npm
-npm install @vue/composition-api vue-composable
+npm install @vue/runtime-core vue-composable
 ```
 
 ## Documentation

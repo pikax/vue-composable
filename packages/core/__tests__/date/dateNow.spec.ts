@@ -1,6 +1,6 @@
-import { Vue } from "../utils";
 import { NowOptions, useDateNow } from "../../src";
 import * as nowModule from "../../src/date/now";
+import { createApp } from "vue";
 
 type CoreTypes = typeof import("../../src"); // This is the import type!
 
@@ -29,15 +29,14 @@ describe("dateNow", () => {
 
   const buildUseDateNow = (options?: NowOptions) => {
     let r: ReturnType<CoreTypes["useDateNow"]> = undefined as any;
-    const vm = new Vue({
+    createApp({
       template: "<div></div>",
       setup() {
         r = useDateNow(options);
         return;
       }
-    });
-    vm.$mount();
-    vm.$destroy();
+    }).mount(document.createElement("div"));
+
     return r;
   };
 

@@ -8,7 +8,7 @@ import {
 } from "../../src";
 import { Vue, nextTick } from "../utils";
 
-// import * as compositionApi from '@vue/composition-api';
+// import * as compositionApi from '@vue/runtime-core';
 // import { PASSIVE_EV } from '@vue-composable/core';
 
 describe("sharedRef", () => {

@@ -1,6 +1,6 @@
 import { Vue, nextTick } from "../utils";
 import { NetworkInformation, useNetworkInformation } from "../../src";
-import { reactive } from "@vue/composition-api";
+import { reactive } from "@vue/runtime-core";
 
 describe("network information", () => {
   let eventListener: Function = null as any;

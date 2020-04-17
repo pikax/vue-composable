@@ -1,7 +1,7 @@
 const onUnmountedSpy = jest.fn();
 
-jest.mock("@vue/composition-api", () => ({
-  ...jest.requireActual("@vue/composition-api"),
+jest.mock("@vue/runtime-core", () => ({
+  ...jest.requireActual("@vue/runtime-core"),
   onUnmounted: onUnmountedSpy
 }));
 

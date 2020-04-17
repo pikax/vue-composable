@@ -47,7 +47,7 @@ Check our [documentation](https://pikax.me/vue-composable/composable/external/ax
 </template>
 
 <script>
-import { ref, watch } from "@vue/composition-api";
+import { ref, watch } from "@vue/runtime-core";
 import { useAxios } from "@vue-composable/axios";
 
 export default {

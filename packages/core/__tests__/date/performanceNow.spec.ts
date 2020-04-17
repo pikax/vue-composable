@@ -1,4 +1,4 @@
-import { Vue } from "../utils";
+import { createVue } from "../utils";
 import { NowOptions, usePerformanceNow } from "../../src";
 import * as nowModule from "../../src/date/now";
 
@@ -29,15 +29,15 @@ describe("performanceNow", () => {
 
   const buildUsePerformanceNow = (options?: NowOptions) => {
     let r: ReturnType<CoreTypes["usePerformanceNow"]> = undefined as any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         r = usePerformanceNow(options);
         return;
       }
     });
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
     return r;
   };
 
