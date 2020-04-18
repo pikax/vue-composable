@@ -19,16 +19,36 @@ import {
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
 // istanbul ignore next
+// Symbol used to inject/provide the i18n values
 const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<
   string[],
   string
 >> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
 
-type i18nMessageValue = i18nLocale<any> | RefTyped<string>;
+/**
+ * i18n key and message value
+ */
+export type i18nMessageValue = i18nLocale<any> | RefTyped<string>;
 
+/**
+ * i18n interface
+ * * check [typescript documentation](https://pikax.me/vue-composable/composable/i18n/i18n.html#global-definition)
+ * * @example
+ * ```ts
+ * // types.d.ts
+ * declare module "@vue-composable/core" {
+ *   interface i18n {
+ *     hello: string;
+ *   }
+ * }
+ * ```
+ */
 export interface i18n extends Record<string, i18nMessageValue> {}
 
-type i18nMessage<T> = T extends Ref<string>
+/**
+ * Extracts i18n configuration type to the correct output
+ */
+export type i18nMessage<T> = T extends Ref<string>
   ? string
   : T extends () => Promise<infer P>
   ? i18nLocale<P>
@@ -39,30 +59,50 @@ type i18nMessage<T> = T extends Ref<string>
   : T extends Ref<infer V>
   ? V
   : T;
-
-type i18nLocale<T> = {
+/**
+ * Locale based key/value dictionary
+ */
+export type i18nLocale<T> = {
   [K in keyof T]: i18nMessage<T[K]>;
 };
-type i18nResolver = (
+/**
+ * i18n Message value resolver */
+export type i18nResolver = (
   i18n: i18n,
   path: Readonly<RefTyped<string>>,
   args: RefTyped<FormatObject> | Array<FormatValue> | undefined
 ) => RefTyped<string>;
 
-interface i18nDefinition<TMessage> {
+/**
+ * i18n definition
+ */
+export interface i18nDefinition<TMessage> {
+  /**
+   * Default and current locale
+   * If locale and fallback are different, you may need to wait until next tick to
+   * get the correct i18n values
+   */
   locale: keyof TMessage;
 
+  /**
+   * Fallback locale, it will be used if the current locale doesn't
+   * have value for the key.
+   * Only used if `notFoundFallback !== false`
+   */
   fallback?: keyof TMessage;
 
+  /**
+   * Object containing locale and messages for locale
+   */
   messages: {
     [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
   };
 
   /**
    * Resolves the translation for i18n
-   * @param i18n i18n messages
-   * @param path desired path
-   * @param args arguments
+   * @param i18n - i18n messages
+   * @param path - desired path
+   * @param args - arguments
    */
   resolve?: i18nResolver;
 
@@ -73,18 +113,47 @@ interface i18nDefinition<TMessage> {
   notFoundFallback?: boolean;
 }
 
-interface i18nResult<TLocales, TMessages extends any = i18n> {
+/**
+ * i18n Object
+ */
+export interface i18nResult<TLocales, TMessages extends any = i18n> {
+  /**
+   * Current locale
+   * You can assign a new locale
+   */
   locale: Ref<TLocales>;
 
-  locales: Ref<Array<TLocales>>;
+  /**
+   * @readonly List of available locales
+   */
+  locales: Readonly<Ref<Readonly<Array<TLocales>>>>;
 
+  /**
+   * @readonly Object based locale messages
+   */
   i18n: Readonly<Ref<Readonly<TMessages>>>;
 
+  /**
+   * Function based message locale with support to format and arguments
+   * Inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+   * @param path - Current message path
+   * @param args - Argument passed to format value
+   */
   $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
 
+  /**
+   * Function based message locale with support to format and arguments
+   * Inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+   * @param path - Current message path
+   * @param args - Argument passed to format value
+   */
   $ts(path: string, args?: object | Array<object>): string;
 
   addLocale(locale: string, messages: TMessages): void;
+  /**
+   * Removes locale from the locale list
+   * @param locale - Locale key
+   */
   removeLocale(locale: TLocales): void;
 }
 
@@ -94,17 +163,28 @@ type I18nExtractLocale<T> = T extends (...args: any[]) => any
   ? PromiseResult<ReturnType<T>>
   : PromiseResult<T>;
 
+/**
+ * Calls setI18n
+ * @param definition - Locale definition
+ */
 export function useI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+/**
+ * Inject i18n
+ */
 export function useI18n<T = i18n>(): i18nResult<string[], T>;
 export function useI18n(definition?: any): any {
   if (definition) {
-    return buildI18n(definition);
+    return setI18n(definition);
   } else return inject(I18n_ACCESS_SYMBOL);
 }
 
+/**
+ * Builds i18n object based on the definition
+ * @param definition - i18n definition
+ */
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
@@ -305,6 +385,10 @@ export function buildI18n<
   };
 }
 
+/**
+ * Build and provide i18n definition
+ * @param definition - I18N definition
+ */
 export function setI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>

@@ -14,11 +14,9 @@ export interface ArrayPaginationResult<T extends Array<any>>
   result: ComputedRef<T>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "i18nDefinition" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "i18nResult" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "I18nExtractLocale" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
+// @public
 export function buildI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
@@ -70,10 +68,59 @@ export type FormatValue =
   | RefTyped<string>
   | RefTyped<number>;
 
-// Warning: (ae-forgotten-export) The symbol "i18nMessageValue" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
+// @public
 export interface i18n extends Record<string, i18nMessageValue> {}
+
+// @public
+export interface i18nDefinition<TMessage> {
+  fallback?: keyof TMessage;
+  locale: keyof TMessage;
+  messages: {
+    [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
+  };
+  notFoundFallback?: boolean;
+  resolve?: i18nResolver;
+}
+
+// @public
+export type i18nLocale<T> = {
+  [K in keyof T]: i18nMessage<T[K]>;
+};
+
+// @public
+export type i18nMessage<T> = T extends Ref<string>
+  ? string
+  : T extends () => Promise<infer P>
+  ? i18nLocale<P>
+  : T extends (...args: infer TArgs) => RefTyped<string>
+  ? (...args: TArgs) => string
+  : T extends object
+  ? i18nLocale<T>
+  : T extends Ref<infer V>
+  ? V
+  : T;
+
+// @public
+export type i18nMessageValue = i18nLocale<any> | RefTyped<string>;
+
+// @public
+export type i18nResolver = (
+  i18n: i18n,
+  path: Readonly<RefTyped<string>>,
+  args: RefTyped<FormatObject> | Array<FormatValue> | undefined
+) => RefTyped<string>;
+
+// @public
+export interface i18nResult<TLocales, TMessages extends any = i18n> {
+  $t(path: string, args?: object | Array<object>): Readonly<Ref<string>>;
+  $ts(path: string, args?: object | Array<object>): string;
+  // (undocumented)
+  addLocale(locale: string, messages: TMessages): void;
+  i18n: Readonly<Ref<Readonly<TMessages>>>;
+  locale: Ref<TLocales>;
+  locales: Readonly<Ref<Readonly<Array<TLocales>>>>;
+  removeLocale(locale: TLocales): void;
+}
 
 // @public (undocumented)
 export const isArray: (arg: any) => arg is any[];
@@ -128,38 +175,27 @@ export type Options = {
   isImmediate: boolean;
 };
 
-// @public (undocumented)
+// @public
+export type PaginationControl = () => void;
+
+// @public
 export interface PaginationOptions {
-  // (undocumented)
   currentPage: RefTyped<number>;
-  // (undocumented)
   pageSize: RefTyped<number>;
-  // (undocumented)
   total: RefTyped<number>;
 }
 
-// @public (undocumented)
+// @public
 export interface PaginationResult {
-  // (undocumented)
   currentPage: Ref<number>;
-  // (undocumented)
   first: PaginationControl;
-  // (undocumented)
   last: PaginationControl;
-  // (undocumented)
   lastPage: Readonly<Ref<number>>;
-  // Warning: (ae-forgotten-export) The symbol "PaginationControl" needs to be exported by the entry point index.d.ts
-  //
-  // (undocumented)
   next: PaginationControl;
-  // (undocumented)
   offset: Ref<number>;
-  // (undocumented)
   pageSize: Ref<number>;
-  // (undocumented)
   prev: PaginationControl;
-  // (undocumented)
-  total: Ref<number>;
+  total: Readonly<Ref<Readonly<number>>>;
 }
 
 // @public (undocumented)
@@ -209,7 +245,7 @@ export interface RetryReturnNoFactory extends RetryReturn {
   exec<T>(fn: () => T): T;
 }
 
-// @public (undocumented)
+// @public
 export function setI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
@@ -329,7 +365,7 @@ export function useDebounce<T extends Procedure>(
   options?: Options
 ): T;
 
-// @public (undocumented)
+// @public
 export function useFormat(
   format: RefTyped<Readonly<string>>,
   obj?: RefTyped<FormatObject>
@@ -341,7 +377,7 @@ export function useFormat(
   obj?: RefTyped<FormatObject>
 ): Readonly<Ref<string>>;
 
-// @public (undocumented)
+// @public
 export function useFormat(
   format: Readonly<RefTyped<string>>,
   ...args: Array<FormatValue>
@@ -359,13 +395,13 @@ export function useFormat(
   args: any
 ): Readonly<Ref<string>>;
 
-// @public (undocumented)
+// @public
 export function useI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
 >(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
 
-// @public (undocumented)
+// @public
 export function useI18n<T = i18n>(): i18nResult<string[], T>;
 
 // @public
@@ -381,24 +417,24 @@ export interface UseNowOptions {
   timeFn?: () => number;
 }
 
-// @public (undocumented)
+// @public
 export function usePagination(options: PaginationOptions): PaginationResult;
 
-// @public (undocumented)
-export function usePath<T = any>(
-  source: RefTyped<object>,
+// @public
+export function usePath<T = any, TSource = any>(
+  source: RefTyped<TSource>,
   path: RefTyped<string>,
   separator?: string,
-  notFoundReturn?: UsePathNotFoundReturn
+  notFoundReturn?: UsePathNotFoundReturn<TSource>
 ): Ref<Readonly<T>>;
 
 // @public (undocumented)
-export type UsePathNotFoundReturn<T = any> = (
+export type UsePathNotFoundReturn<TSource> = (
   path: string,
   source: any,
   fullPath: string,
-  originalSource: any
-) => T;
+  originalSource: TSource
+) => any;
 
 // @public
 export function usePerformanceNow(
