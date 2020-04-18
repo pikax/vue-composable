@@ -39,7 +39,7 @@
   "bugs": {
     "url": "https://github.com/pikax/vue-composable/issues"
   },
-  "homepage": "https://github.com/pikax/vue-composable/blob/master/readme.md",
+  "homepage": "https://pikax.me/vue-composable/composable",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
