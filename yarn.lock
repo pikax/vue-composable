@@ -1598,18 +1598,6 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@vue-composable/core@1.0.0-alpha.8":
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@vue-composable/core/-/core-1.0.0-alpha.8.tgz#2efc8ef229a20cd46f23ded6ce01104183b63583"
-  integrity sha512-b+ioNt4iaj56DoFqWLFXdxV7l9Rl0EXLEoQWI3uVsqHGkslKFvBsYyaZxgXRlrgB4GTGSuQSOhqwmftg6CsAIA==
-
-"@vue-composable/web@1.0.0-alpha.8":
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@vue-composable/web/-/web-1.0.0-alpha.8.tgz#d874a773d512b8abd7a3b68ea361a072d8f777d0"
-  integrity sha512-cVLXr2rGaiYz2xpIDuGiwq1WSVbf31VnUFi3YeXLkw4nASAwUcNMTKGAAFE4LL8HbmshxQWtLkPQTSJRMlhCHA==
-  dependencies:
-    "@vue-composable/core" "1.0.0-alpha.8"
-
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -12039,6 +12027,7 @@ vue-template-es2015-compiler@^1.9.0:
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
 "vue3@npm:vue@next", vue@^3.0.0-beta.2:
+  name vue3
   version "3.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.0.0-beta.2.tgz#f808b498d10cbebe4007738aa2130bd0802f393d"
   integrity sha512-/HYhK9i8PWM0fL38YflFK/vY1ots+JyNI2GZa8VtDqj4jD3+2UZ0CH0kjmw9YTmRtHdsU65CXGkVuA3EMV3mXQ==

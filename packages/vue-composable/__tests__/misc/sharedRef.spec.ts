@@ -489,15 +489,15 @@ describe("sharedRef", () => {
     it("should create a broadcastChannel", async () => {
       // var el: any = undefined;
       const { mount, destroy } = createVue({
-        template: "<div ref='el'></div>",
+        template: "<div ></div>",
         setup(props: any, ctx: any) {
           const vm = getCurrentInstance()!;
 
           // istanbul ignore if
           if (__VUE_2__) {
-            (vm as any).$vnode.tag.scopeId = "vue-test-vm";
+            (vm as any).$vnode = { tag: "vue-test-vm" };
           } else {
-            (vm as any).vnode = { scopeId: "vue-test-vm" };
+            (vm as any).vnode.scopeId = "vue-test-vm";
           }
           const r = refShared();
           expect(r.value).toBeUndefined();
@@ -544,9 +544,9 @@ describe("sharedRef", () => {
           const vm = getCurrentInstance()! as any;
           // istanbul ignore if
           if (__VUE_2__) {
-            (vm as any).$vnode.tag.scopeId = "vue-test-vm";
+            (vm as any).$vnode = { tag: "vue-test-vm" };
           } else {
-            (vm as any).vnode = { scopeId: "vue-test-vm" };
+            (vm as any).vnode.scopeId = "vue-test-vm";
           }
 
           const r = refShared();

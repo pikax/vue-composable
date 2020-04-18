@@ -76,7 +76,7 @@ export function watch<T extends WatcherSource<unknown>[]>(
   options?: Partial<WatcherOption>
 ): StopHandle;
 export function watch(source: any, cb: any, options?: any): any {
-  vueWatch(source, cb, {
+  return vueWatch(source, cb, {
     ...options,
     lazy:
       typeof options.immediate === "boolean" ? !options.immediate : undefined

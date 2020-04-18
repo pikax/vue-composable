@@ -1,10 +1,6 @@
 export { nextTick } from "vue3";
 // import { Component, ComponentPublicInstance } from "vue";
-import {
-  createApp,
-  Component,
-  ComponentPublicInstance
-} from "@vue/runtime-dom";
+import { createApp, Component, ComponentPublicInstance } from "vue3";
 
 export const createVue = <
   T extends Component,
@@ -22,7 +18,10 @@ export const createVue = <
   // el.id = MOUNT_ELEMENT_ID
   document.body.appendChild(el);
 
-  const mount = (): ComponentPublicInstance<TProps> => app.mount(el) as any;
+  const mount = (): ComponentPublicInstance<TProps> => {
+    debugger;
+    return app.mount(el as any) as any;
+  };
 
   const destroy = () => app.unmount(el);
 
