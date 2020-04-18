@@ -1,7 +1,7 @@
 import { useWebSocket } from "../../src";
 import { WS } from "jest-websocket-mock";
 import { watch } from "@vue/runtime-core";
-import { nextTick, createVue } from "../utils";
+import { nextTick } from "../utils";
 
 describe("WebSocket", () => {
   const FAKE_URL = `ws://localhost:42`;

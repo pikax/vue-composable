@@ -37,13 +37,17 @@ describe("currencyFormat", () => {
 
     // currency + locales
     expect(useCurrencyFormat("GBP", "en-GB")).toMatchObject(expected);
-    expect(mock).toHaveBeenLastCalledWith({ value: "en-GB" });
+    expect(mock).toHaveBeenLastCalledWith(
+      expect.objectContaining({ value: "en-GB" })
+    );
 
     // currency + locales + options
     expect(
       useCurrencyFormat("GBP", "pt-PT", { currencyDisplay: "symbol" })
     ).toMatchObject(expected);
-    expect(mock).toHaveBeenLastCalledWith({ value: "pt-PT" });
+    expect(mock).toHaveBeenLastCalledWith(
+      expect.objectContaining({ value: "pt-PT" })
+    );
 
     // currency + options
     expect(
@@ -67,7 +71,9 @@ describe("currencyFormat", () => {
     expect(
       useCurrencyFormat({ currencyDisplay: "symbol" }, "pt-PT")
     ).toMatchObject(expected);
-    expect(mock).toHaveBeenLastCalledWith({ value: "pt-PT" });
+    expect(mock).toHaveBeenLastCalledWith(
+      expect.objectContaining({ value: "pt-PT" })
+    );
   });
 
   it("should numberFormat.formatString", () => {

@@ -65,7 +65,7 @@ describe("intl_helper", () => {
       ]);
 
       locale = ref("x");
-      options = ref(undefined);
+      options = undefined;
       expect(intlDateFormatExtractArguments(locale, options)).toMatchObject([
         locale,
         options

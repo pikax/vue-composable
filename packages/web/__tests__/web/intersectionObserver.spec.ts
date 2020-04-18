@@ -193,7 +193,7 @@ describe("IntersectionObserver", () => {
       expect(disconnectFn).toHaveBeenCalledTimes(1);
     });
 
-    it("should call observer on custom element", () => {
+    it("should call observer on custom element", async () => {
       const vm = createVue({
         template: "<div></div>",
         setup() {
@@ -201,6 +201,7 @@ describe("IntersectionObserver", () => {
         }
       });
       vm.mount();
+      await nextTick();
 
       expect(observeFn).toHaveBeenCalledTimes(1);
       expect(disconnectFn).toHaveBeenCalledTimes(0);

@@ -207,7 +207,7 @@ describe("geolocation", () => {
 
           await nextTick();
 
-          expect(geo.coords.value).toBe(pos.coords);
+          expect(geo.coords.value).toStrictEqual(pos.coords);
           expect(geo.timestamp.value).toBe(pos.timestamp);
           expect(geo.error.value).toBeNull();
 
@@ -219,7 +219,7 @@ describe("geolocation", () => {
 
           expect(geo.coords.value).toBeNull();
           expect(geo.timestamp.value).not.toBe(pos.timestamp);
-          expect(geo.error.value).toBe(error);
+          expect(geo.error.value).toStrictEqual(error);
 
           const pos2: Position = {
             coords: {
@@ -238,7 +238,7 @@ describe("geolocation", () => {
 
           await nextTick();
 
-          expect(geo.coords.value).toBe(pos2.coords);
+          expect(geo.coords.value).toStrictEqual(pos2.coords);
           expect(geo.timestamp.value).toBe(pos2.timestamp);
           expect(geo.error.value).toBeNull();
         });

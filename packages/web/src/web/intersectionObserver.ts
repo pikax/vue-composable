@@ -96,7 +96,7 @@ export function useIntersectionObserver(
         const targets = elements.value.map(x => x.target);
         targets.forEach(observer.value.observe);
       },
-      { deep: true }
+      { deep: true, immediate: true }
     );
   }
 
@@ -118,13 +118,13 @@ export function useIntersectionObserver(
   // if the element is passed we should add hooks
   if (element) {
     // if value is defined it is already being observed
-    if (!element.value) {
-      onMounted(() => {
-        if (element.value) {
-          observe(element);
-        }
-      });
-    }
+    // if (!element.value) {
+    onMounted(() => {
+      if (element.value) {
+        observe(element);
+      }
+    });
+    // }
 
     onUnmounted(() => {
       disconnect();

@@ -106,7 +106,7 @@ describe("broadcastChannel", () => {
         addEventListenerFn.mock.calls[1][1](ev);
 
         expect(messageEvent.value).toStrictEqual(ev);
-        expect(data.value).toBe(ev.data);
+        expect(data.value).toStrictEqual(ev.data);
       }
     });
     vm.mount();
@@ -127,7 +127,7 @@ describe("broadcastChannel", () => {
 
         addEventListenerFn.mock.calls[0][1](ev);
 
-        expect(errorEvent.value).toBe(ev);
+        expect(errorEvent.value).toStrictEqual(ev);
         expect(errored.value).toBe(true);
 
         return {};

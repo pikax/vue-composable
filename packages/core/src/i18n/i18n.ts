@@ -13,7 +13,8 @@ import {
   isPromise,
   isFunction,
   isBoolean,
-  wrap
+  wrap,
+  unwrap
 } from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
@@ -183,12 +184,21 @@ export function buildI18n<
 
   watch(
     [locale, fallback, localeChangesCount],
-    async ([l, fb, _]: [keyof TMessage, i18n | undefined, any]) => {
+    ([l, fb, _]: [keyof TMessage, i18n | undefined, any]) => {
       if (l === definition.fallback && shouldFallback) {
         i18n.value = fb!;
       } else {
-        const localeMessage = await loadLocale(l as string, localeMessages);
-        i18n.value = deepClone<any>({}, fb, localeMessage.value);
+        const setI18n = (v: any) =>
+          (i18n.value = deepClone<any>({}, fb, unwrap(v)));
+        // const localeMessage = await loadLocale(l as string, localeMessages);
+        // i18n.value = deepClone<any>({}, fb, localeMessage.value);
+
+        const r = loadLocale(l as string, localeMessages);
+        if (isPromise(r)) {
+          r.then(setI18n);
+        } else {
+          setI18n(r);
+        }
       }
     },
     {

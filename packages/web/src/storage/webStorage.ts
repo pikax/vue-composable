@@ -218,9 +218,9 @@ export function useWebStorage(
           save(k, v);
 
           const stop = watch(
-            () => reference,
+            reference,
             debounce(r => {
-              save(k, r.value);
+              save(k, r);
             }, ms),
             {
               immediate: false,
