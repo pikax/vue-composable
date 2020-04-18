@@ -1,4 +1,4 @@
-import { inject, InjectionKey, provide } from "@vue/composition-api";
+import { inject, InjectionKey, provide } from "@vue/runtime-core";
 import {
   BreakpointReturn,
   BreakpointObject,

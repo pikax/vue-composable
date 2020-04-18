@@ -1,5 +1,5 @@
 import { intlDateFormatExtractArguments } from "../..//src/intl/_helper";
-import { Ref, ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/runtime-core";
 
 describe("intl_helper", () => {
   describe("intlDateFormatExtractArguments", () => {
@@ -65,7 +65,7 @@ describe("intl_helper", () => {
       ]);
 
       locale = ref("x");
-      options = ref(undefined);
+      options = undefined;
       expect(intlDateFormatExtractArguments(locale, options)).toMatchObject([
         locale,
         options

@@ -1,21 +1,23 @@
-export const Vue: any = require("vue/dist/vue.common");
+export { nextTick, onErrorCaptured } from "@vue/runtime-core";
+import { Component } from "vue";
+import { createApp } from "vue";
 
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
+export const createVue = (component: Component, props?: any) => {
+  const app = createApp(component, props);
 
-Vue.config.warnHandler = (err: any) => {
-  throw err;
+  const el = document.createElement("div");
+
+  const mount = () => app.mount(el);
+
+  const destroy = () => app.unmount(el);
+
+  app.config.errorHandler = (err: any) => {
+    throw err;
+  };
+
+  return {
+    el,
+    mount,
+    destroy
+  };
 };
-
-Vue.config.errorHandler = (err: any) => {
-  throw err;
-};
-
-export function nextTick<T>(callback: (this: T) => void, context?: T): void;
-export function nextTick(): Promise<void>;
-export function nextTick<T>(callback?: (this: T) => void, context?: T) {
-  if (!callback) {
-    return Vue.nextTick();
-  }
-  return Vue.nextTick(callback, context);
-}

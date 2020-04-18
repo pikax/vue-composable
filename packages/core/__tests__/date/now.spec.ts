@@ -1,5 +1,5 @@
-import { Vue } from "../utils";
 import { useNow, UseNowOptions, NowOptions } from "../../src";
+import { createVue } from "../utils";
 type CoreTypes = typeof import("../../src"); // This is the import type!
 
 describe("now", () => {
@@ -39,15 +39,15 @@ describe("now", () => {
 
   const buildUseNow = (options?: NowOptions & UseNowOptions) => {
     let r: ReturnType<CoreTypes["useNow"]> = undefined as any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         r = useNow(options);
         return;
       }
     });
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
     return r;
   };
 
@@ -94,14 +94,45 @@ describe("now", () => {
   });
 
   it("it should unmount automatically", () => {
-    const vm = new Vue({
+    // const vm = new Vue({
+    //   template: "<div></div>",
+    //   setup() {
+    //     return useNow();
+    //   },
+    // });
+    // vm.$mount();
+    // vm.$destroy();
+    // const el = document.createElement("div");
+    // render(
+    //   h({
+    //     setup() {
+    //       useNow();
+    //       return () => {
+    //         h("div");
+    //       };
+    //     },
+    //   }),
+    //   el
+    // );
+
+    // render(null, el);
+
+    const { destroy, mount } = createVue({
       template: "<div></div>",
       setup() {
         return useNow();
       }
     });
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
+
+    // createApp({
+    //   template: "<div></div>",
+    //   setup() {
+    //     return useNow();
+    //   },
+    // }).mount(document.createElement("div"));
+
     expect(clearInterval).toHaveBeenCalled();
   });
 

@@ -1,7 +1,7 @@
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { useOnMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
 import { promisedTimeout } from "@vue-composable/core";
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref } from "@vue/runtime-core";
 
 describe("onMouseMove", () => {
   it("should add the correct event", () => {
@@ -15,12 +15,12 @@ describe("onMouseMove", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: MouseMoveResult | undefined = undefined;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element);
       }
-    }).$mount();
+    }).mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
@@ -47,12 +47,12 @@ describe("onMouseMove", () => {
     } as any;
     let use: MouseMoveResult | undefined = undefined;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element);
       }
-    }).$mount();
+    }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     use!.remove();
@@ -72,12 +72,12 @@ describe("onMouseMove", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element, wait);
       }
-    }).$mount();
+    }).mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {
@@ -111,12 +111,12 @@ describe("onMouseMove", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         return useOnMouseMove(element, options);
       }
-    }).$mount();
+    }).mount();
     expect(element.value.addEventListener).toHaveBeenCalledWith(
       "mousemove",
       expect.any(Function),
@@ -139,12 +139,12 @@ describe("onMouseMove", () => {
       passive: true
     };
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         use = useOnMouseMove(element, options, wait);
       }
-    }).$mount();
+    }).mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "mousemove",
       expect.any(Function),

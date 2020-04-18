@@ -1,6 +1,6 @@
 import { useWebSocket } from "../../src";
 import { WS } from "jest-websocket-mock";
-import { watch } from "@vue/composition-api";
+import { watch } from "@vue/runtime-core";
 import { nextTick } from "../utils";
 
 describe("WebSocket", () => {
@@ -37,7 +37,7 @@ describe("WebSocket", () => {
     const { messageEvent } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    expect(messageEvent.value).toBeNull();
+    expect(messageEvent.value).toBeUndefined();
 
     server.send("test");
     expect(messageEvent.value).not.toBeNull();
@@ -84,8 +84,8 @@ describe("WebSocket", () => {
     const { data } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    watch(data, m => received.push(m), {
-      lazy: true
+    watch(data, (m: any) => received.push(m), {
+      immediate: false
     });
 
     for (let i = 0; i < messages.length; i++) {
@@ -103,8 +103,8 @@ describe("WebSocket", () => {
     const { data } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    watch(data, m => received.push(m), {
-      lazy: true
+    watch(data, (m: any) => received.push(m), {
+      immediate: false
     });
 
     for (let i = 0; i < messages.length; i++) {

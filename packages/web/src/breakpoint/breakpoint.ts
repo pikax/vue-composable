@@ -1,6 +1,6 @@
-import { Ref, onMounted, ref, onUnmounted } from "@vue/composition-api";
+import { Ref, onMounted, ref, onUnmounted } from "@vue/runtime-core";
 import { RemoveEventFunction } from "../event/event";
-import { useMatchMedia } from "../misc/matchMedia";
+import { useMatchMedia } from "./../misc/matchMedia";
 import {
   useDebounce,
   isNumber,

@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/runtime-core";
 import { PASSIVE_EV, isClient, NO_OP, isArray } from "@vue-composable/core";
 
 // from https://github.com/dai-shi/react-hooks-worker/blob/1e842ad15c558fc04dd7339a62aaa43f46d1c7cd/src/exposeWorker.js

@@ -2,9 +2,9 @@ const provideSpy = jest.fn();
 const injectSpy = jest.fn();
 const buildI18nSpy = jest
   .fn()
-  .mockImplementation(jest.requireActual("@vue/composition-api").buildI18n);
-jest.mock("@vue/composition-api", () => ({
-  ...jest.requireActual("@vue/composition-api"),
+  .mockImplementation(jest.requireActual("@vue/runtime-core").buildI18n);
+jest.mock("@vue/runtime-core", () => ({
+  ...jest.requireActual("@vue/runtime-core"),
   provide: provideSpy,
   inject: injectSpy,
   buildI18n: buildI18nSpy
@@ -13,7 +13,7 @@ jest.mock("@vue/composition-api", () => ({
 // import Vue from "vue";
 import { buildI18n, promisedTimeout, setI18n, useI18n } from "../../src";
 import { nextTick } from "../utils";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 
 describe("i18n", () => {
   const warnSpy = jest.spyOn(console, "warn");

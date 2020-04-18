@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/runtime-core";
 import { isFunction, isClient, NO_OP, isBoolean } from "../utils";
 
 export interface NowOptions {

@@ -1,17 +1,16 @@
-import { Ref, ref, isRef } from "@vue/composition-api";
+import { Ref, ref, isRef, watch } from "@vue/runtime-core";
 import {
   RefElement,
   wrap,
   RefTyped,
   useDebounce,
   isNumber,
+  PASSIVE_EV,
   isBoolean,
-  isClient,
   isElement,
-  PASSIVE_EV
+  isClient
 } from "@vue-composable/core";
 import { useEvent, RemoveEventFunction } from "./event";
-import { watch } from "@vue/composition-api";
 
 export interface ScrollResult {
   scrollTop: Ref<number>;
@@ -90,8 +89,8 @@ export function useOnScroll(
   }
 
   const eventRemove = useEvent(element, "scroll", handler, eventOptions);
-  const watchRemoveTop = watch(scrollTop, scrollTopTo, { lazy: true });
-  const watchRemoveLeft = watch(scrollLeft, scrollLeftTo, { lazy: true });
+  const watchRemoveTop = watch(scrollTop, scrollTopTo, { immediate: false });
+  const watchRemoveLeft = watch(scrollLeft, scrollLeftTo, { immediate: false });
   const remove = () => {
     eventRemove();
     watchRemoveLeft();

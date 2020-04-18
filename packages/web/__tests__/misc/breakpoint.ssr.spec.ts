@@ -3,7 +3,7 @@ jest.mock("@vue-composable/core", () => ({
   isClient: false
 }));
 
-import { Vue } from "../utils";
+import { createVue } from "../utils";
 import { useBreakpoint } from "../../src";
 
 describe("breakpoint ssr", () => {
@@ -42,7 +42,7 @@ describe("breakpoint ssr", () => {
   });
 
   it("should addEventListener to the window", () => {
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return useBreakpoint({ L: 100 });
@@ -51,11 +51,11 @@ describe("breakpoint ssr", () => {
     expect(addEventListenerMock).not.toHaveBeenCalled();
     expect(removeEventListenerMock).not.toHaveBeenCalled();
 
-    vm.$mount();
+    mount();
     expect(addEventListenerMock).not.toHaveBeenCalled();
     expect(removeEventListenerMock).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
     expect(removeEventListenerMock).not.toHaveBeenCalled();
   });
 });

@@ -12,7 +12,7 @@ import {
   promisedTimeout,
   minMax
 } from "../../src";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 import { isFunction } from "util";
 
 describe("utils", () => {
@@ -32,7 +32,7 @@ describe("utils", () => {
     it("should unwrap if is a ref", () => {
       const v = { a: 1 };
       const r = ref(v);
-      expect(unwrap(r)).toBe(v);
+      expect(unwrap(r)).toStrictEqual(v);
     });
 
     it("should return the same object if ref", () => {

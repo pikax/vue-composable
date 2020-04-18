@@ -4,7 +4,7 @@ import {
   isString,
   PromiseResultFactory
 } from "@vue-composable/core";
-import { ref, computed, Ref } from "@vue/composition-api";
+import { ref, computed, Ref } from "@vue/runtime-core";
 
 export interface UseFetchOptions {
   /**
@@ -56,7 +56,7 @@ export function useFetch<T = any>(
   options?: Partial<RequestInfo> | (UseFetchOptions & RequestInit),
   requestInitOptions?: RequestInit & UseFetchOptions
 ): FetchReturn<T> {
-  const json = ref<T>(null);
+  const json: Ref<T | null> = ref(null);
   const text = ref("");
   const blob = ref<Blob>();
 
@@ -82,7 +82,7 @@ export function useFetch<T = any>(
     : undefined;
 
   const isCancelled = ref(false);
-  const cancelledMessage = ref<string>();
+  const cancelledMessage = ref<string | undefined>();
 
   let abortController: AbortController | undefined = undefined;
   const cancel = (message?: string) => {

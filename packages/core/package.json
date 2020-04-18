@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/core",
-  "version": "1.0.0-dev.21",
+  "version": "1.0.0-alpha.8",
   "description": "@vue-composable/core",
   "main": "index.js",
   "module": "dist/core.esm-bundler.js",
@@ -34,11 +34,7 @@
   },
   "homepage": "https://github.com/pikax/vue-composable/tree/dev/packages/core#readme",
   "sideEffects": false,
-  "devDependencies": {
-    "vue": "^2.6.10"
-  },
   "peerDependencies": {
-    "@vue/composition-api": "^0.5.0",
-    "vue": "^2.6.10"
+    "@vue/runtime-core": "^3.0.0-beta.1"
   }
 }

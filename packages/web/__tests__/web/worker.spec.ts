@@ -1,7 +1,7 @@
 const onUnmountedSpy = jest.fn();
 
-jest.mock("@vue/composition-api", () => ({
-  ...jest.requireActual("@vue/composition-api"),
+jest.mock("@vue/runtime-core", () => ({
+  ...jest.requireActual("@vue/runtime-core"),
   onUnmounted: onUnmountedSpy
 }));
 
@@ -100,15 +100,15 @@ describe("worker", () => {
 
     let expected: any = {};
     await sendMessage(expected);
-    expect(data.value).toBe(expected);
+    expect(data.value).toStrictEqual(expected);
 
     expected = 12;
     await sendMessage(expected);
-    expect(data.value).toBe(expected);
+    expect(data.value).toStrictEqual(expected);
 
     expected = "ddd";
     await sendMessage(expected);
-    expect(data.value).toBe(expected);
+    expect(data.value).toStrictEqual(expected);
   });
 
   it("should warn if the message rate is too high", () => {
@@ -174,7 +174,7 @@ describe("worker", () => {
 
     mock.cb.error(error);
 
-    expect(errorEvent.value).toBe(error);
+    expect(errorEvent.value).toStrictEqual(error);
     expect(errored.value).toBe(true);
   });
 
@@ -194,7 +194,7 @@ describe("worker", () => {
       const c = worker.onmessage;
       sendWorker(() => {});
 
-      expect(worker.onmessage).not.toBe(c);
+      expect(worker.onmessage).not.toStrictEqual(c);
     });
 
     it("should post messages", async () => {

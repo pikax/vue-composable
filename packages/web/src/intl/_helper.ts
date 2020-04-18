@@ -6,7 +6,7 @@ import {
   isArray,
   isString
 } from "@vue-composable/core";
-import { Ref, isRef } from "@vue/composition-api";
+import { Ref, isRef } from "@vue/runtime-core";
 
 export function intlDateFormatExtractArguments(
   locales: IntlNumberFormatLocales,

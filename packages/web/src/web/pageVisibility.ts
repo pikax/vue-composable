@@ -1,4 +1,4 @@
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref } from "@vue/runtime-core";
 import { isClient, PASSIVE_EV } from "@vue-composable/core";
 
 let visibility: Ref<VisibilityState> | undefined = undefined;
@@ -21,7 +21,7 @@ export function usePageVisibility() {
         PASSIVE_EV
       );
     } else {
-      visibility = ref(false);
+      visibility = ref<VisibilityState>("visible");
     }
   }
   return {

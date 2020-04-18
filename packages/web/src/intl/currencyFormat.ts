@@ -1,6 +1,6 @@
 import { RefTyped, unwrap, isObject } from "@vue-composable/core";
 import { IntlNumberFormatLocales, useIntlNumberFormat } from "./numberFormat";
-import { computed, Ref } from "@vue/composition-api";
+import { computed, Ref } from "@vue/runtime-core";
 import { intlDateFormatExtractArguments } from "./_helper";
 import {
   CurrencyCodes,

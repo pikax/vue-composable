@@ -1,4 +1,4 @@
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref } from "@vue/runtime-core";
 import { isClient, PASSIVE_EV } from "@vue-composable/core";
 
 let language: Ref<String> | undefined = undefined;

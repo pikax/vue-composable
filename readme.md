@@ -2,14 +2,23 @@
 
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
-[![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
-[![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
-[![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
-[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
+<!-- [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable) -->
+
+[![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=vue3)](https://coveralls.io/github/pikax/vue-composable?branch=vue3)
+
+<!-- [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable) -->
+
+[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable@next)](https://bundlephobia.com/result?p=vue-composable@next)
+
+# Vue 3
+
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
 
 ## Introduction
 
-`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.
+`vue-composable` is out-of-box ready to use the brand new [Vue 3](https://github.com/vuejs/vue-next) [composition-api](https://vue-composition-api-rfc.netlify.com/) generic components.
 
 100% typescript based composable components and full type support out-of-box.
 
@@ -28,10 +37,10 @@ This library aim is to be one stop shop for many real-world composable functions
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api vue-composable
+yarn add vue@next vue-composable@next
 
 # install with npm
-npm install @vue/composition-api vue-composable
+npm install vue@next vue-composable@next
 ```
 
 ## Documentation

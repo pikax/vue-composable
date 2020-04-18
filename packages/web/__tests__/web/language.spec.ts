@@ -50,13 +50,13 @@ describe("language", () => {
 
     updateLanguage(lang, pref);
     expect(language.value).toBe(lang);
-    expect(languages.value).toBe(pref);
+    expect(languages.value).toStrictEqual(pref);
 
     lang = "en-EN";
     pref = ["pt-PT", "en-EN", "en"];
 
     updateLanguage(lang, pref);
     expect(language.value).toBe(lang);
-    expect(languages.value).toBe(pref);
+    expect(languages.value).toStrictEqual(pref);
   });
 });

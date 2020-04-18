@@ -1,4 +1,4 @@
-import { ref, Ref } from "@vue/composition-api";
+import { ref, Ref } from "@vue/runtime-core";
 import { isBoolean, isObject } from "../utils";
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
@@ -116,7 +116,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
 
   const loading = ref(false);
   const error = ref(null);
-  const result = ref<PromiseType<T> | null>(null);
+  const result: Ref<PromiseType<T> | null> = ref(null);
   const promise = ref<T>();
 
   const exec = async (...args: TArgs): Promise<PromiseType<T> | undefined> => {

@@ -37,19 +37,24 @@ const configs = {
     globals: {
       "@vue/composition-api": "vueCompositionApi",
       axios: "axios",
-      vue: "Vue"
+      "@vue/runtime-core": "VueRuntimeCore"
     }
   },
   esm: {
     file: resolve(`dist/${name}.esm.js`),
-    format: `es`,
-    external: ["vue", "@vue/composition-api", "axios"]
+    format: `es`
   }
 };
 
 const setup = {
   global: {
-    external: ["vue", "@vue/composition-api", "axios"],
+    external: [
+      "vue",
+      "@vue/composition-api",
+      "axios",
+      "@vue/runtime-core",
+      "@vue/reactivity"
+    ],
     plugins: [
       resolvePlugin({
         // mainFields: [

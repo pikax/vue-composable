@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted } from "@vue/runtime-core";
 import { PASSIVE_EV, NO_OP, isClient } from "@vue-composable/core";
 
 export interface BroadcastMessageEvent<T> extends MessageEvent {
@@ -12,8 +12,8 @@ export function useBroadcastChannel<T = any>(
   const supported = isClient && "BroadcastChannel" in self;
   const data = ref<T | null>(null);
 
-  const messageEvent = ref<MessageEvent>(null);
-  const errorEvent = ref<MessageEvent>(null);
+  const messageEvent = ref<MessageEvent | null>(null);
+  const errorEvent = ref<MessageEvent | null>(null);
   const errored = ref(false);
   const isClosed = ref(false);
 

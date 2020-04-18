@@ -1,5 +1,5 @@
 import { RefTyped, unwrap } from "@vue-composable/core";
-import { computed, Ref } from "@vue/composition-api";
+import { computed, Ref } from "@vue/runtime-core";
 import { intlDateFormatExtractArguments } from "./_helper";
 import { IntlNumberFormatOptions } from "./types";
 

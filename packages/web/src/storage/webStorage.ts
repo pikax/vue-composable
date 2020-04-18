@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from "@vue/composition-api";
+import { Ref, ref, watch } from "@vue/runtime-core";
 import { wrap, isString, debounce, isClient } from "@vue-composable/core";
 
 type WebStorageType = "localStorage" | "sessionStorage";
@@ -219,11 +219,11 @@ export function useWebStorage(
 
           const stop = watch(
             reference,
-            debounce((r: any) => {
+            debounce(r => {
               save(k, r);
             }, ms),
             {
-              lazy: true,
+              immediate: false,
               deep: true
             }
           );

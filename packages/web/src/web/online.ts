@@ -1,4 +1,4 @@
-import { Ref, ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/runtime-core";
 import { isClient, PASSIVE_EV } from "@vue-composable/core";
 
 let online: Ref<boolean> | undefined = undefined;

@@ -1,5 +1,5 @@
 import { usePath } from "../../src";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 
 describe("path", () => {
   it("should return the object value", () => {

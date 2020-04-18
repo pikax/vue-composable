@@ -1,5 +1,5 @@
 import { RefTyped, unwrap, isArray } from "../utils";
-import { reactive, computed, Ref, isRef } from "@vue/composition-api";
+import { reactive, computed, Ref, isRef } from "@vue/runtime-core";
 
 export type FormatValue =
   | RefTyped<object>
@@ -62,7 +62,7 @@ export function useFormat(
     if (!args) {
       return f;
     }
-    const r = isRef(args) ? reactive(args.value) : reactive(args);
+    const r = isRef<any>(args) ? reactive(args.value) : reactive(args);
     const regEx = /({?{[\w\s]*}?})/g;
 
     return f.replace(regEx, s => {

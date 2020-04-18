@@ -1,21 +1,37 @@
-export const Vue: any = require("vue/dist/vue.common");
+export { nextTick } from "@vue/runtime-core";
+import { Component, ComponentPublicInstance } from "vue";
+import { createApp } from "vue";
 
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
+export const createVue = <
+  T extends Component,
+  TProps extends Record<string, unknown>
+>(
+  component: T,
+  props?: TProps
+) => {
+  const app = createApp(component, props);
 
-Vue.config.warnHandler = (err: any) => {
-  throw err;
+  const el = document.createElement("div");
+  // Reset the document.body
+  // document.getElementsByTagName('html')[0].innerHTML = ''
+  // const el = document.createElement('div')
+  // el.id = MOUNT_ELEMENT_ID
+  document.body.appendChild(el);
+
+  const mount = (): ComponentPublicInstance<TProps> => app.mount(el) as any;
+
+  const destroy = () => app.unmount(el);
+
+  app.config.warnHandler = (err: any) => {
+    throw err;
+  };
+
+  app.config.errorHandler = (err: any) => {
+    throw err;
+  };
+  return {
+    el,
+    mount,
+    destroy
+  };
 };
-
-Vue.config.errorHandler = (err: any) => {
-  throw err;
-};
-
-export function nextTick<T>(callback: (this: T) => void, context?: T): void;
-export function nextTick(): Promise<void>;
-export function nextTick<T>(callback?: (this: T) => void, context?: T) {
-  if (!callback) {
-    return Vue.nextTick();
-  }
-  return Vue.nextTick(callback, context);
-}

@@ -1,5 +1,5 @@
-jest.mock("@vue/composition-api", () => ({
-  ...jest.requireActual("@vue/composition-api"),
+jest.mock("@vue/runtime-core", () => ({
+  ...jest.requireActual("@vue/runtime-core"),
   provide: jest.fn(),
   inject: jest.fn()
 }));
@@ -16,7 +16,7 @@ import {
 } from "../../src/breakpoint/breakpointTailwind";
 
 import { useBreakpoint } from "../../src/breakpoint/breakpoint";
-import { provide, inject } from "@vue/composition-api";
+import { provide, inject } from "@vue/runtime-core";
 
 describe("breakpointTailwindcss", () => {
   describe("setBreakpoint", () => {

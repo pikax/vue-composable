@@ -1,4 +1,4 @@
-import { Ref, ref, onUnmounted } from "@vue/composition-api";
+import { Ref, ref, onUnmounted } from "@vue/runtime-core";
 import { isClient, NO_OP, PASSIVE_EV } from "@vue-composable/core";
 
 export function useMatchMedia(query: string) {
@@ -28,7 +28,7 @@ export function useMatchMedia(query: string) {
     if (__DEV__) {
       console.warn("[matchMedia] not supported");
     }
-    mediaQueryList = ref<MediaQueryList>({});
+    mediaQueryList = ref<MediaQueryList>({} as MediaQueryList);
     matches = ref(false);
   }
 

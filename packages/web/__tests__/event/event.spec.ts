@@ -1,10 +1,10 @@
-import { Ref, ref } from "@vue/composition-api";
-import { Vue, nextTick } from "../utils";
+import { Ref, ref } from "@vue/runtime-core";
+import { createVue, nextTick } from "../utils";
 import { useEvent } from "../../src";
 import { NO_OP } from "@vue-composable/core";
 
 describe("event", () => {
-  jest.mock("@vue/composition-api");
+  // jest.mock("@vue/runtime-core");
 
   it("should add event on lifecycle", () => {
     const element: Element = {
@@ -14,7 +14,7 @@ describe("event", () => {
     const mockHandler = jest.fn();
     const options = {};
 
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
@@ -23,7 +23,7 @@ describe("event", () => {
     expect(element.addEventListener).not.toHaveBeenCalled();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$mount();
+    mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
@@ -31,7 +31,8 @@ describe("event", () => {
     );
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
+
     expect(element.removeEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler
@@ -46,7 +47,7 @@ describe("event", () => {
     const mockHandler = jest.fn();
     const options = {};
 
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
@@ -55,7 +56,7 @@ describe("event", () => {
     expect(element.addEventListener).not.toHaveBeenCalled();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$mount();
+    mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
@@ -63,7 +64,7 @@ describe("event", () => {
     );
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
     expect(element.removeEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler
@@ -78,7 +79,7 @@ describe("event", () => {
     const mockHandler = jest.fn();
     const options = {};
 
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
@@ -87,7 +88,7 @@ describe("event", () => {
     expect(element.value.addEventListener).not.toHaveBeenCalled();
     expect(element.value.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$mount();
+    mount();
     expect(element.value.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
@@ -95,7 +96,7 @@ describe("event", () => {
     );
     expect(element.value.removeEventListener).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
     expect(element.value.removeEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler
@@ -106,7 +107,7 @@ describe("event", () => {
     const mockHandler = jest.fn();
     const options = {};
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         useEvent(window, "load", mockHandler, options);
@@ -124,12 +125,12 @@ describe("event", () => {
 
     let remove: (() => void) | null = null;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         remove = useEvent(element, "load", mockHandler, options);
       }
-    }).$mount();
+    }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     remove!();
@@ -151,12 +152,12 @@ describe("event", () => {
 
     const el = ref(element);
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         useEvent(el, "load", mockHandler, options);
       }
-    }).$mount();
+    }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
     expect(element.addEventListener).toHaveBeenCalled();
 

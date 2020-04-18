@@ -8,7 +8,7 @@ import {
   CancellablePromiseResult,
   PromiseResultFactory
 } from "@vue-composable/core";
-import { watch, computed, isRef } from "@vue/composition-api";
+import { watch, computed, isRef } from "@vue/runtime-core";
 
 export const inlineWorkExecution = (f: Function) =>
   function(e: MessageEvent) {
@@ -97,7 +97,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
                 terminate();
                 res(undefined);
               },
-              { lazy: true }
+              { immediate: false }
             )
           : NO_OP;
 

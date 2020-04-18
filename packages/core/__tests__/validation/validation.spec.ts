@@ -1,6 +1,6 @@
 import { useValidation, NO_OP } from "../../src";
-import { ref } from "@vue/composition-api";
-import { nextTick } from "../utils";
+import { ref } from "@vue/runtime-core";
+import { nextTick, createVue } from "../utils";
 
 describe("validation", () => {
   it("validation", async () => {
@@ -99,7 +99,7 @@ describe("validation", () => {
       }
     });
 
-    expect(v.password.$args).toBe($args);
+    expect(v.password.$args).toStrictEqual($args);
   });
 
   it("should store error if exception thrown ", async () => {
@@ -115,7 +115,7 @@ describe("validation", () => {
 
     await nextTick();
 
-    expect(v.password.required.$error).toBe(error);
+    expect(v.password.required.$error).toStrictEqual(error);
     expect(v.password.$errors).toMatchObject([error]);
     expect(v.$errors).toMatchObject([[error]]);
   });
@@ -188,5 +188,83 @@ describe("validation", () => {
       new Error("error 1"),
       new Error("error 2")
     ]);
+  });
+
+  describe("render", () => {
+    it("should show error", async () => {
+      const required = (x: any) => !!x;
+      let form = useValidation({
+        firstName: {
+          $value: ref(""),
+          required,
+          otherRequired: {
+            $validator: required,
+            $message: ref("password is required")
+          }
+        }
+      });
+
+      const { mount } = createVue({
+        template: `
+          <input name="firstName" v-model="form.firstName.$value" placeholder="firstName" />
+
+          <p id="form-anyInvalid" v-if="form.$anyInvalid">Invalid</p>
+          <p id="form-dirty-anyError" v-if="form.$anyDirty && form.$anyInvalid">Dirty & Invalid</p>
+          <p id="firstname-error-required" v-if="form.firstName.$dirty && form.firstName.required.$invalid">
+            Invalid
+          </p>
+          <p id="firstname-error" v-if="form.firstName.$dirty && form.firstName.otherRequired.$invalid">
+            {{ form.firstName.otherRequired.$message }}
+          </p>
+        `,
+        setup() {
+          return {
+            form
+          };
+        }
+      });
+
+      mount();
+      await nextTick();
+
+      const input = document.getElementsByName("firstName")[0];
+
+      const anyInvalid = () => document.getElementById("form-anyInvalid");
+      const dirtyInvalid = () => document.getElementById("form-dirty-anyError");
+      const nameRequired = () =>
+        document.getElementById("firstname-error-required");
+      const otherRequired = () => document.getElementById("firstname-error");
+
+      expect(anyInvalid()).not.toBeNull();
+      expect(dirtyInvalid()).toBeNull();
+      expect(nameRequired()).toBeNull();
+      expect(otherRequired()).toBeNull();
+
+      expect((input as any).value).toBe(form.firstName.$value);
+
+      (input as any).value = "hello world";
+      input.dispatchEvent(new InputEvent("input"));
+      await nextTick();
+
+      expect(form.firstName.$value).toBe("hello world");
+
+      expect(dirtyInvalid()).toBeNull();
+      expect(nameRequired()).toBeNull();
+      expect(otherRequired()).toBeNull();
+      expect(anyInvalid()).toBeNull();
+
+      (input as any).value = "";
+      input.dispatchEvent(new InputEvent("input"));
+      await nextTick();
+
+      expect(dirtyInvalid()).not.toBeNull();
+      expect(nameRequired()).not.toBeNull();
+      expect(otherRequired()).not.toBeNull();
+      expect(anyInvalid()).not.toBeNull();
+
+      expect(otherRequired()!.textContent!.trim()).toBe(
+        form.firstName.otherRequired.$message
+      );
+    });
   });
 });

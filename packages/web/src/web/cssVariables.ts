@@ -5,7 +5,7 @@ import {
   isRef,
   watch,
   onMounted
-} from "@vue/composition-api";
+} from "@vue/runtime-core";
 import {
   RefTyped,
   isString,
@@ -196,7 +196,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
             setCssVariableFor(val[1], name as string, val[0]);
           }
         },
-        { lazy: isRef(element) }
+        { immediate: !isRef(element) }
       );
     }
   }

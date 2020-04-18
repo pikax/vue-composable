@@ -1,4 +1,4 @@
-import { ref, watch, onMounted, onUnmounted } from "@vue/composition-api";
+import { ref, watch, onMounted, onUnmounted, Ref } from "@vue/runtime-core";
 import { NO_OP, isBoolean, isClient } from "@vue-composable/core";
 
 export interface GeolocationOptions {
@@ -13,13 +13,15 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
   const supported = isClient && !!navigator.geolocation;
 
   // used to check if the execution is lazy
-  const lazy = ref(options ? options.immediate === false : undefined);
+  const lazy: Ref<boolean | undefined> = ref(
+    options ? options.immediate === false : undefined
+  );
 
-  const error = ref<PositionError>(null);
+  const error = ref<PositionError | null>(null);
 
-  const timestamp = ref<number>(null);
-  const coords = ref<Position["coords"]>(null);
-  const highAccuracy = ref<boolean>(
+  const timestamp = ref<number | null>(null);
+  const coords = ref<Position["coords"] | null>(null);
+  const highAccuracy = ref<boolean | null>(
     (options && options.enableHighAccuracy) || null
   );
 
@@ -81,7 +83,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
           );
         },
         {
-          lazy: lazy.value
+          immediate: !lazy.value
         }
       )
     );

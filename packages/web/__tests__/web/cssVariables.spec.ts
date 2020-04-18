@@ -4,7 +4,7 @@ import {
   useCssVariables,
   UseCssVariables
 } from "../../src";
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 
 describe("CSS variables", () => {
   let callback: () => void;
@@ -89,12 +89,12 @@ describe("CSS variables", () => {
   it("should know if the observer is no longer listening", async () => {
     let variables: UseCssVariables<{}> = {} as any;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         variables = useCssVariables({}) as any;
       }
-    }).$mount();
+    }).mount();
 
     let { observing, stop, resume } = variables;
 
@@ -116,7 +116,7 @@ describe("CSS variables", () => {
   });
 
   it("should automatically start the observer and stops it on destroy", async () => {
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div></div>",
       setup() {
         useCssVariables({
@@ -125,12 +125,12 @@ describe("CSS variables", () => {
       }
     });
 
-    vm.$mount();
+    vm.mount();
 
     expect(observeFn).toHaveBeenCalledTimes(1);
     expect(disconnectFn).toHaveBeenCalledTimes(0);
 
-    vm.$destroy();
+    vm.destroy();
 
     expect(observeFn).toHaveBeenCalledTimes(1);
     expect(disconnectFn).toHaveBeenCalledTimes(1);
@@ -140,7 +140,7 @@ describe("CSS variables", () => {
     const element = document.createElement("div");
     let variables: UseCssVariables<{ test: string }> = {} as any;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         variables = useCssVariables(
@@ -150,7 +150,7 @@ describe("CSS variables", () => {
           element
         );
       }
-    }).$mount();
+    }).mount();
 
     callback = () => {
       variables.test.value = getCssVariableFor(element, "--variable-name");
@@ -171,12 +171,12 @@ describe("CSS variables", () => {
     setCssVariableFor(element, "--dummy-name", "red");
     let variables: UseCssVariables<{ dummyName: string }> = {} as any;
 
-    new Vue({
+    createVue({
       template: "<div></div>",
       setup() {
         variables = useCssVariables({ dummyName: "dummy-name" }, element);
       }
-    }).$mount();
+    }).mount();
 
     let { dummyName } = variables;
 

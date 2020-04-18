@@ -6,9 +6,10 @@ import {
   BroadcastMessageEvent,
   refShared
 } from "../../src";
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
+import { getCurrentInstance } from "vue";
 
-// import * as compositionApi from '@vue/composition-api';
+// import * as compositionApi from '@vue/runtime-core';
 // import { PASSIVE_EV } from '@vue-composable/core';
 
 describe("sharedRef", () => {
@@ -62,7 +63,7 @@ describe("sharedRef", () => {
   });
 
   it("should create sharedRef", () => {
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const { data, targets } = useSharedRef("test");
@@ -82,15 +83,15 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
     expect(closeFn).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
     expect(closeFn).toHaveBeenCalled();
   });
 
   it("should create using default value and allow update", () => {
-    const vm = new Vue({
+    const { mount } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const v = {
@@ -109,11 +110,11 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
   });
 
   it("should update to specific mind", () => {
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const { mind, setMind, master, editable, targets } = useSharedRef(
@@ -155,9 +156,9 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
 
-    vm.$destroy();
+    destroy();
 
     expect(postMessageFn).lastCalledWith(
       expect.objectContaining({
@@ -167,7 +168,7 @@ describe("sharedRef", () => {
   });
 
   it("should send update events", done => {
-    const vm = new Vue({
+    const { mount } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const { /*mind, setMind, master,*/ data } = useSharedRef("test", {
@@ -226,11 +227,11 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
   });
 
   it("should reply to events", () => {
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const v = { v: 1 };
@@ -395,10 +396,10 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
 
     /* ON DISCONNECT */
-    vm.$destroy();
+    destroy();
 
     expect(postMessageFn).toHaveBeenNthCalledWith(
       postMessageFn.mock.calls.length - 1,
@@ -420,7 +421,7 @@ describe("sharedRef", () => {
   });
 
   it("should reply multiple broadcasts", done => {
-    const vm = new Vue({
+    const { mount } = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const all = [
@@ -480,16 +481,18 @@ describe("sharedRef", () => {
         return {};
       }
     });
-    vm.$mount();
+    mount();
   });
 
   describe("helper ref", () => {
     // jest.spyOn(compositionApi, 'getCurrentInstance').mockImplementation(() => 'vue-test-vm');
-    it("should create a broadcastChannel", () => {
-      const vm = new Vue({
+    it("should create a broadcastChannel", async () => {
+      // var el: any = undefined;
+      const { mount, destroy } = createVue({
         template: "<div ref='el'></div>",
         setup(props: any, ctx: any) {
-          ctx.root.$vnode = { tag: "vue-test-vm" };
+          const vm = getCurrentInstance()!;
+          vm.vnode.scopeId = "vue-test-vm";
 
           const r = refShared();
           expect(r.value).toBeUndefined();
@@ -499,15 +502,17 @@ describe("sharedRef", () => {
           return {};
         }
       });
-      vm.$mount();
+
+      mount();
       expect(closeFn).not.toHaveBeenCalled();
 
-      vm.$destroy();
+      destroy();
+      await nextTick();
       expect(closeFn).toHaveBeenCalled();
     });
 
     it("should set the defaultValue and id ", () => {
-      const vm = new Vue({
+      const { mount, destroy } = createVue({
         template: "<div ref='el'></div>",
         setup() {
           const r = refShared(11, "11");
@@ -518,20 +523,21 @@ describe("sharedRef", () => {
           return {};
         }
       });
-      vm.$mount();
+      mount();
       expect(closeFn).not.toHaveBeenCalled();
 
-      vm.$destroy();
+      destroy();
       expect(closeFn).toHaveBeenCalled();
     });
 
     it("should warn if used multiple times in the same component", () => {
       const warnSpy = jest.spyOn(console, "warn");
 
-      new Vue({
+      createVue({
         template: "<div ref='el'></div>",
-        setup(props: any, ctx: any) {
-          ctx.root.$vnode = { tag: "vue-test-vm" };
+        setup(_: any, ctx: any) {
+          const vm = getCurrentInstance()!;
+          vm.vnode.scopeId = "vue-test-vm";
 
           const r = refShared();
           const r2 = refShared();

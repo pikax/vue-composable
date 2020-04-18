@@ -1,4 +1,4 @@
-import { Ref, ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/runtime-core";
 import { RemoveEventFunction, useEvent } from "../event";
 import { NO_OP, isClient, PASSIVE_EV } from "@vue-composable/core";
 
@@ -6,7 +6,7 @@ interface NetworkInformationEventMap {
   change: Event;
 }
 
-type NetworkInformationEffectiveType = "slow-2g" | "2g" | "3g" | "4g";
+type NetworkInformationEffectiveType = "slow-2g" | "2g" | "3g" | "4g" | "none";
 type NetworkInformationType =
   | "bluetooth"
   | "cellular"
@@ -105,7 +105,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
   const supported = !!connection;
   const downlink = ref<number>(0);
   const downlinkMax = ref<number>(0);
-  const effectiveType = ref<NetworkInformationEffectiveType>("unknown");
+  const effectiveType = ref<NetworkInformationEffectiveType>("none");
   const rtt = ref<number>(0);
   const saveData = ref<Boolean>(false);
   const type = ref<NetworkInformationType>("none");

@@ -1,5 +1,5 @@
-import { Ref, computed, watch, ref } from "@vue/composition-api";
 import { isNumber, minMax, wrap, RefTyped } from "../utils";
+import { watch, Ref, computed, ref } from "@vue/runtime-core";
 /**
  * Pagination control
  */
@@ -153,12 +153,12 @@ export function usePagination(options: PaginationOptions): PaginationResult {
 
   watch(
     [total, pageSize],
-    () => {
+    _ => {
       if (currentPage.value > lastPage.value) {
         currentPage.value = lastPage.value;
       }
     },
-    { lazy: true } // no need to run on first render
+    { immediate: false } // no need to run on first render
   );
 
   return {

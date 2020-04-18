@@ -1,4 +1,3 @@
-import Vue from "vue";
 import {
   Ref,
   ref,
@@ -7,14 +6,15 @@ import {
   inject,
   provide,
   computed
-} from "@vue/composition-api";
+} from "@vue/runtime-core";
 import {
   RefTyped,
   deepClone,
   isPromise,
   isFunction,
   isBoolean,
-  wrap
+  wrap,
+  unwrap
 } from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
@@ -194,11 +194,13 @@ export function buildI18n<
   keyof T["messages"],
   I18nExtractLocale<T["messages"][T["locale"]]>
 > {
-  const locales = ref<Array<keyof TMessage>>(Object.keys(definition.messages));
+  const locales = ref<Array<keyof TMessage>>(
+    Object.keys(definition.messages) as any
+  );
   const localeMessages = ref<
     Record<keyof TMessage, i18n | (() => Promise<any>)>
-  >(definition.messages);
-  const locale: Ref<keyof TMessage> = ref(definition.locale);
+  >(definition.messages as any);
+  const locale: Ref<keyof TMessage> = ref(definition.locale as any);
   const i18n = ref<any>({});
   let fallback = ref<i18n>();
 
@@ -206,15 +208,13 @@ export function buildI18n<
 
   const loadLocale = (
     locale: string,
-    localeMessages: Ref<
-      Record<string, i18n | (() => Promise<any>) | (() => i18n)>
-    >
+    messages: typeof localeMessages
   ): Ref<i18n> | Promise<Ref<i18n>> => {
     if (cache[locale]) {
       return cache[locale];
     }
 
-    const l = localeMessages.value[locale];
+    const l = messages.value[locale];
     if (!l) {
       return ref({});
     }
@@ -229,7 +229,7 @@ export function buildI18n<
       return wrap(m);
     }
 
-    return (cache[locale] = computed(() => localeMessages.value[locale]));
+    return (cache[locale] = computed(() => messages.value[locale]));
   };
 
   const shouldFallback = definition.fallback
@@ -259,21 +259,30 @@ export function buildI18n<
   const localeChangesCount = ref(0);
   watch(localeMessages, () => localeChangesCount.value++, {
     deep: true,
-    lazy: true
+    immediate: false
   });
 
   watch(
     [locale, fallback, localeChangesCount],
-    async ([l, fb, _]: [keyof TMessage, i18n | undefined, any]) => {
+    ([l, fb, _]: [keyof TMessage, i18n | undefined, any]) => {
       if (l === definition.fallback && shouldFallback) {
         i18n.value = fb!;
       } else {
-        const localeMessage = await loadLocale(l as string, localeMessages);
-        i18n.value = deepClone<any>({}, fb, localeMessage.value);
+        const setI18n = (v: any) =>
+          (i18n.value = deepClone<any>({}, fb, unwrap(v)));
+        // const localeMessage = await loadLocale(l as string, localeMessages);
+        // i18n.value = deepClone<any>({}, fb, localeMessage.value);
+
+        const r = loadLocale(l as string, localeMessages);
+        if (isPromise(r)) {
+          r.then(setI18n);
+        } else {
+          setI18n(r);
+        }
       }
     },
     {
-      lazy: fallbackIsPromise
+      immediate: !fallbackIsPromise
     }
   );
 
@@ -357,8 +366,8 @@ export function buildI18n<
         console.warn(`[useI18n] Locale "${l}" doesn't exist`);
       }
     }
-    Vue.delete(localeMessages.value, l as string);
-    // delete localeMessages.value[l];
+    // Vue.delete(localeMessages.value, l as string);
+    delete localeMessages.value[l];
     delete cache[l as string];
   };
 

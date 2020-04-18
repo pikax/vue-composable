@@ -1,11 +1,10 @@
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 import { isClient, NO_OP } from "@vue-composable/core";
 
 export function useWebSocket(url: string, protocols?: string | string[]) {
   const supported = isClient && "WebSocket" in window;
-
   let ws: WebSocket | null = null;
-  const messageEvent = ref<MessageEvent>(null);
+  const messageEvent = ref<MessageEvent>();
   const errorEvent = ref<Event>();
   const data = ref<any>(null);
 

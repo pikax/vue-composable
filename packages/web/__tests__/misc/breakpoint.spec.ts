@@ -1,4 +1,4 @@
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { useBreakpoint } from "../../src";
 import { promisedTimeout } from "@vue-composable/core";
 
@@ -46,7 +46,7 @@ describe("breakpoint", () => {
   }
 
   it("should addEventListener to the window", () => {
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return useBreakpoint({ L: 100 });
@@ -55,7 +55,7 @@ describe("breakpoint", () => {
     expect(addEventListenerMock).not.toHaveBeenCalled();
     expect(removeEventListenerMock).not.toHaveBeenCalled();
 
-    vm.$mount();
+    mount();
     expect(addEventListenerMock).toHaveBeenCalledWith(
       "resize",
       expect.anything(),
@@ -65,7 +65,7 @@ describe("breakpoint", () => {
     );
     expect(removeEventListenerMock).not.toHaveBeenCalled();
 
-    vm.$destroy();
+    destroy();
     expect(removeEventListenerMock).toHaveBeenCalledWith(
       "resize",
       expect.anything()
@@ -79,14 +79,14 @@ describe("breakpoint", () => {
       L: 80
     };
     let breakpoint: any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
       }
     });
 
-    vm.$mount();
+    mount();
     await setWindowInnerWidth(30);
     expect(breakpoint).toMatchObject({
       S: { value: true },
@@ -127,7 +127,7 @@ describe("breakpoint", () => {
       current: { value: "XL" }
     });
 
-    vm.$destroy();
+    destroy();
   });
 
   it("should useMatchMedia if string is passed", () => {
@@ -136,15 +136,15 @@ describe("breakpoint", () => {
     };
 
     let breakpoint: any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
       }
     });
 
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
 
     expect(matchMedia).toHaveBeenCalledWith(breakpoints.S);
 
@@ -160,15 +160,15 @@ describe("breakpoint", () => {
     };
 
     let breakpoint: any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
       }
     });
 
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
 
     expect(matchMedia).not.toHaveBeenCalled();
 
@@ -184,15 +184,15 @@ describe("breakpoint", () => {
     };
 
     let breakpoint: any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
       }
     });
 
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
 
     expect(matchMedia).not.toHaveBeenCalled();
 
@@ -207,15 +207,15 @@ describe("breakpoint", () => {
     };
 
     let breakpoint: any;
-    const vm = new Vue({
+    const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints as any));
       }
     });
 
-    vm.$mount();
-    vm.$destroy();
+    mount();
+    destroy();
 
     expect(matchMedia).toHaveBeenCalledWith(false);
 

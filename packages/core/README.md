@@ -2,23 +2,26 @@
 
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
-[![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore)
-[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core)](https://bundlephobia.com/result?p=@vue-composable/core)
+<!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Fcore.svg)](https://badge.fury.io/js/%40vue-composable%2Fcore) -->
+
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/core@next)](https://bundlephobia.com/result?p=@vue-composable/core@next)
 
 This package contains core functionality for [vue-composable][vue-composable]
 
-# vue-next
+# Vue 3
 
-> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/core/v/next)
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
 
 ## Installing
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api @vue-composable/core
+yarn add vue@next @vue-composable/core@next
 
 # install with npm
-npm install @vue/composition-api @vue-composable/core
+npm install vue@next @vue-composable/core@next
 ```
 
 ## Documentation

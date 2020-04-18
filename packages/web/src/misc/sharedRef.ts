@@ -1,11 +1,10 @@
 import {
   ref,
-  Ref,
   watch,
   onUnmounted,
   computed,
   getCurrentInstance
-} from "@vue/composition-api";
+} from "@vue/runtime-core";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "@vue-composable/core";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
 
@@ -84,7 +83,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
   // who's listening to this broadcast
   const targets = ref<number[]>([]);
-  const data: Ref<T> = ref(defaultValue);
+  const data = ref<T>(defaultValue!);
 
   // if the state was updated by an event it sets to true
   let updateState = false;
@@ -133,7 +132,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       case RefSharedMessageType.INIT: {
         send({
           type: RefSharedMessageType.UPDATE,
-          value: data.value,
+          value: data.value as T,
           mind: mind.value
         });
         break;
@@ -208,7 +207,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
       });
       updateState = false;
     },
-    { deep: true, lazy: true }
+    { deep: true, immediate: false }
   );
 
   if (isClient) {
@@ -245,7 +244,14 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
-  const name = id ? id : vm.$vnode.tag!;
+  const name = id ? id : vm.vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
+
+  if (!name) {
+    if (__DEV__) {
+      console.warn("[refShared] please assign an id, returning `ref`");
+    }
+    return ref(defaultValue);
+  }
 
   /* istanbul ignore else  */
   if (__DEV__) {

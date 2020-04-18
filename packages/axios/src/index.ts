@@ -1,4 +1,4 @@
-import { computed, Ref, ref } from "@vue/composition-api";
+import { computed, Ref, ComputedRef, ref } from "@vue/runtime-core";
 import axios, {
   AxiosRequestConfig,
   AxiosResponse,
@@ -19,7 +19,7 @@ interface AxiosReturn<TData>
     [AxiosRequestConfig | string]
   > {
   readonly client: Ref<Readonly<AxiosInstance>>;
-  readonly data: Ref<TData | null>;
+  readonly data: ComputedRef<TData | null>;
   readonly status: Ref<number | null>;
   readonly statusText: Ref<string | null>;
 

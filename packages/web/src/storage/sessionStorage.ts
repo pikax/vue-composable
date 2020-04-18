@@ -1,5 +1,5 @@
 import { RefTyped, NO_OP, FALSE_OP } from "@vue-composable/core";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 import { useWebStorage } from "./webStorage";
 import { LocalStorageTyped, LocalStorageReturn } from "./localStorage";
 

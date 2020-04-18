@@ -1,5 +1,5 @@
 import { useFormat, unwrap } from "../../src";
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/runtime-core";
 import { nextTick } from "../utils";
 
 describe("format", () => {
