@@ -36,26 +36,21 @@ const configs = {
     format: `iife`,
     globals: {
       "@vue/composition-api": "vueCompositionApi",
-      axios: "axios",
       "@vue/runtime-core": "VueRuntimeCore",
-      vue3: "vue"
+      axios: "axios",
+      vue: "Vue"
     }
   },
   esm: {
     file: resolve(`dist/${name}.esm.js`),
-    format: `es`
+    format: `es`,
+    external: ["vue", "@vue/composition-api", "axios"]
   }
 };
 
 const setup = {
   global: {
-    external: [
-      "vue",
-      "@vue/composition-api",
-      "axios",
-      "@vue/runtime-core",
-      "@vue/reactivity"
-    ],
+    external: ["vue", "@vue/composition-api", "axios", "@vue/runtime-core"],
     plugins: [
       resolvePlugin({
         // mainFields: [

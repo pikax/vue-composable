@@ -16,7 +16,6 @@ export {
 
 import { Ref, watch as vueWatch, isRef, set } from "@vue/composition-api";
 import Vue from "vue";
-import { isBoolean } from "./utils";
 
 interface WatcherOption {
   immediate: boolean;
@@ -80,6 +79,7 @@ export function watch<T extends WatcherSource<unknown>[]>(
 export function watch(source: any, cb: any, options?: any): any {
   vueWatch(source, cb, {
     ...options,
-    lazy: isBoolean(options.immediate) ? !options.immediate : undefined
+    lazy:
+      typeof options.immediate === "boolean" ? !options.immediate : undefined
   });
 }

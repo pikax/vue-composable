@@ -233,7 +233,7 @@ const buildValidation = <T>(
       );
 
       let $anyDirty: Ref<boolean> | undefined = undefined;
-      let $errors: Ref<Array<any>>;
+      let $errors: Readonly<Ref<Readonly<Array<any>>>>;
       let $anyInvalid: Ref<boolean>;
 
       if (isValidation(validation)) {

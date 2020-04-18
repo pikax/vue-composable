@@ -17,7 +17,9 @@ export {
 } from "@vue/runtime-core";
 
 // istanbul ignore next
-export declare function vueDelete(o: object, p: string): void;
+const NO_OP = () => {};
 
 // istanbul ignore next
-export declare function vueSet(o: object, p: string, v: any): void;
+export const vueDelete: (o: object, p: string) => void = NO_OP;
+// istanbul ignore next
+export const vueSet: (o: object, p: string, v: any) => void = NO_OP;

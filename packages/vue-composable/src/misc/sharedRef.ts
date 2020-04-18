@@ -1,6 +1,7 @@
 import { ref, watch, onUnmounted, computed, getCurrentInstance } from "../api";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "../utils";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
+import { Ref } from "vue3";
 
 export const enum RefSharedMessageType {
   INIT,
@@ -77,7 +78,7 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
   // who's listening to this broadcast
   const targets = ref<number[]>([]);
-  const data = ref<T>(defaultValue!);
+  const data: Ref<T> = ref(defaultValue!) as any;
 
   // if the state was updated by an event it sets to true
   let updateState = false;
@@ -238,7 +239,11 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
   const vm = getCurrentInstance()!;
-  const name = id ? id : vm.vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
+  const name = id
+    ? id
+    : __VUE_2__
+    ? (vm as any).$vnode.tag
+    : (vm as any).vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
 
   if (!name) {
     if (__DEV__) {

@@ -216,12 +216,12 @@ export function buildI18n<
       return cache[locale];
     }
 
-    const l = messages.value[locale];
+    const l = messages.value[(locale as any) as keyof TMessage];
     if (!l) {
       return ref({});
     }
 
-    let m = isFunction(l) ? l() : l;
+    let m = isFunction(l) ? (l as Function)() : l;
     if (isPromise(m)) {
       return m.then(x => (cache[locale] = wrap<i18n>(x)));
     }
@@ -231,7 +231,9 @@ export function buildI18n<
       return wrap(m);
     }
 
-    return (cache[locale] = computed(() => messages.value[locale]));
+    return (cache[locale] = computed(
+      () => (messages.value as any)[locale as any]
+    ) as any);
   };
 
   const shouldFallback = definition.fallback
@@ -321,18 +323,11 @@ export function buildI18n<
     }
     delete cache[l];
 
-    // localeMessages.value = {
-    //   ...localeMessages.value,
-    //   [l]: m,
-    // };
-    // istanbul ignore else
     if (__VUE_2__) {
       vueSet(localeMessages.value, l, m);
     } else {
-      localeMessages.value[l] = m;
+      (localeMessages.value as any)[l] = m;
     }
-    // Vue.set(localeMessages.value, l, m);
-    // (localeMessages.value as Record<string, i18n>)[l] = m;
   };
 
   const removeLocale = (l: keyof TMessage) => {
