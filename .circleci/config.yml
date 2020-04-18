@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build2:
-    branches:
-      ignore:
-        - gh-pages
     docker:
       - image: node:lts
 
@@ -41,9 +38,6 @@ jobs:
           path: dist
 
   build:
-    branches:
-      ignore:
-        - gh-pages
     docker:
       - image: node:lts
 
@@ -91,6 +85,9 @@ jobs:
           path: dist
 workflows:
   version: 2
+  branches:
+    ignore:
+      - gh-pages
   build_and_test:
     jobs:
       - build
