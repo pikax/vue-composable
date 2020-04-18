@@ -159,6 +159,8 @@ function checkAllSizes(targets) {
   console.log();
 }
 
+const resolvePkgDir = target => path.resolve(`packages/${target}`);
+
 function checkSize(target) {
   const pkgDir = path.resolve(`packages/${target}`);
   const esmProdBuild = `${pkgDir}/dist/${target}.global.prod.js`;
@@ -182,10 +184,16 @@ async function apiRename(target, targetVersion) {
 
   const pkgDir = path.resolve(`packages/${target}`);
   await fs.rename(`${pkgDir}/src/api.ts`, `${pkgDir}/src/api.N.ts`);
-  await fs.rename(`${pkgDir}/src/api.${version}.ts`, `${pkgDir}/src/api.ts`);
+  await fs.rename(
+    `${pkgDir}/src/api.${targetVersion}.ts`,
+    `${pkgDir}/src/api.ts`
+  );
 
   const restore = async () => {
-    await fs.rename(`${pkgDir}/src/api.ts`, `${pkgDir}/src/api.${version}.ts`);
+    await fs.rename(
+      `${pkgDir}/src/api.ts`,
+      `${pkgDir}/src/api.${targetVersion}.ts`
+    );
     await fs.rename(`${pkgDir}/src/api.N.ts`, `${pkgDir}/src/api.ts`);
   };
 
@@ -195,5 +203,7 @@ async function apiRename(target, targetVersion) {
 exports.buildTargets = buildTargets;
 exports.buildAll = buildAll;
 exports.run = run;
+exports.build = build;
+exports.resolvePkgDir = resolvePkgDir;
 
 if (require.main === module) run();
