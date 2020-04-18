@@ -7,7 +7,7 @@ const injectSpy = jest.fn();
 jest.mock("../../src/api", () => ({
   ...(__VUE_2__
     ? jest.requireActual("../../src/api.2")
-    : jest.requireActual("../../src/api")),
+    : jest.requireActual("../../src/api.3")),
   provide: provideSpy,
   inject: injectSpy
 }));

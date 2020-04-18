@@ -6,8 +6,9 @@
 import { AxiosInstance } from "axios";
 import { AxiosRequestConfig } from "axios";
 import { AxiosResponse } from "axios";
+import { ComputedRef } from "@vue/runtime-core";
 import { PromiseResultFactory } from "vue-composable";
-import { Ref } from "@vue/composition-api";
+import { Ref } from "@vue/runtime-core";
 
 // Warning: (ae-forgotten-export) The symbol "AxiosReturn" needs to be exported by the entry point index.d.ts
 //

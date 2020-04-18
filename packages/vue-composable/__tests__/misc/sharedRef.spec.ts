@@ -493,12 +493,12 @@ describe("sharedRef", () => {
         setup(props: any, ctx: any) {
           const vm = getCurrentInstance()!;
 
-          // istanbul ignore else
+          // istanbul ignore if
           if (__VUE_2__) {
-            (vm.vnode as any) = {};
+            (vm as any).$vnode.tag.scopeId = "vue-test-vm";
+          } else {
+            (vm as any).vnode = { scopeId: "vue-test-vm" };
           }
-          vm.vnode.scopeId = "vue-test-vm";
-
           const r = refShared();
           expect(r.value).toBeUndefined();
 
@@ -541,12 +541,13 @@ describe("sharedRef", () => {
       createVue({
         template: "<div ref='el'></div>",
         setup(_: any, ctx: any) {
-          const vm = getCurrentInstance()!;
-          // istanbul ignore else
+          const vm = getCurrentInstance()! as any;
+          // istanbul ignore if
           if (__VUE_2__) {
-            (vm.vnode as any) = {};
+            (vm as any).$vnode.tag.scopeId = "vue-test-vm";
+          } else {
+            (vm as any).vnode = { scopeId: "vue-test-vm" };
           }
-          vm.vnode.scopeId = "vue-test-vm";
 
           const r = refShared();
           const r2 = refShared();

@@ -323,6 +323,7 @@ export function buildI18n<
     }
     delete cache[l];
 
+    // istanbul ignore if
     if (__VUE_2__) {
       vueSet(localeMessages.value, l, m);
     } else {
