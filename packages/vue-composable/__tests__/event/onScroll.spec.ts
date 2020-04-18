@@ -1,6 +1,6 @@
 import { createVue, nextTick } from "../utils";
 import { useOnScroll, ScrollResult } from "../../src/event/onScroll";
-import { promisedTimeout } from "packages/vue-composable/src";
+import { promisedTimeout } from "../../src/utils";
 
 describe("onScroll", () => {
   it("should add the correct event", async () => {

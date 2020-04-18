@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export {
   ref,
   isRef,
@@ -12,8 +14,8 @@ export {
   getCurrentInstance
 } from "@vue/composition-api";
 
-import { Ref, watch as vueWatch, isRef } from "@vue/composition-api";
-
+import { Ref, watch as vueWatch, isRef, set } from "@vue/composition-api";
+import Vue from "vue";
 import { isBoolean } from "./utils";
 
 export const watch = (source: any, cb: any, options: any) =>
@@ -24,6 +26,9 @@ export const watch = (source: any, cb: any, options: any) =>
 export function unref<T>(ref: T): T extends Ref<infer V> ? V : T {
   return isRef(ref) ? (ref.value as any) : ref;
 }
+
+export const vueDelete = (x: any, o: string) => Vue.delete(x, o);
+export const vueSet = set;
 
 export type ComputedRef<T> = Readonly<Ref<Readonly<T>>>;
 export type UnwrapRef<T> = T extends Ref<infer R> ? R : T;

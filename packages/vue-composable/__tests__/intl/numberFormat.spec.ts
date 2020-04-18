@@ -1,5 +1,5 @@
 import { useIntlNumberFormat } from "../../src";
-import { ref } from "@vue/runtime-core";
+import { ref } from "../../src/api";
 import { nextTick } from "../utils";
 
 describe("intl numberFormat", () => {

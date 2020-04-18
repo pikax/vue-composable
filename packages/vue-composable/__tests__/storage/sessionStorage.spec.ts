@@ -1,6 +1,6 @@
 import { useSessionStorage, useWebStorage } from "../../src";
 import { nextTick } from "../utils";
-import { promisedTimeout } from "@vue-composable/core";
+import { promisedTimeout } from "../../src/utils";
 
 describe("sessionStorage", () => {
   const setItemSpy = jest.spyOn(Storage.prototype, "setItem");

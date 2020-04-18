@@ -1,7 +1,9 @@
 const onUnmountedSpy = jest.fn();
 
-jest.mock("@vue/runtime-core", () => ({
-  ...jest.requireActual("@vue/runtime-core"),
+jest.mock("../../src/api", () => ({
+  ...(__VUE_2__
+    ? jest.requireActual("../../src/api.2")
+    : jest.requireActual("../../src/api")),
   onUnmounted: onUnmountedSpy
 }));
 

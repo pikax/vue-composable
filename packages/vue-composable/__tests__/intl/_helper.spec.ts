@@ -1,5 +1,5 @@
-import { intlDateFormatExtractArguments } from "../..//src/intl/_helper";
-import { Ref, ref } from "@vue/runtime-core";
+import { intlDateFormatExtractArguments } from "../../src/intl/_helper";
+import { Ref, ref } from "../../src/api";
 
 describe("intl_helper", () => {
   describe("intlDateFormatExtractArguments", () => {

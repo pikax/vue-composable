@@ -1,4 +1,4 @@
-import { Ref, ref } from "@vue/runtime-core";
+import { Ref, ref } from "../../src/api";
 import { createVue, nextTick } from "../utils";
 import { useEvent, NO_OP } from "../../src";
 

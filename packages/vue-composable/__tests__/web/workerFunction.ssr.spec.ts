@@ -1,10 +1,13 @@
-jest.mock("@vue-composable/core", () => ({
-  ...jest.requireActual("@vue-composable/core"),
-  isClient: false,
+jest.mock("../../src/utils", () => ({
+  ...jest.requireActual("../../src/utils"),
+  isClient: false
+}));
+
+jest.mock("../../src/promise/cancellablePromise", () => ({
   useCancellablePromise: jest.fn()
 }));
 import { useWorkerFunction } from "../../src/web/workerFunction";
-import { useCancellablePromise } from "@vue-composable/core";
+import { useCancellablePromise } from "../../src/promise/cancellablePromise";
 
 describe("worker function SSR", () => {
   it("should return cancelablePromise", () => {

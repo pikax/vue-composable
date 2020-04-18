@@ -1,5 +1,5 @@
 import { useRetry, exponentialDelay } from "../../src/promise/retry";
-import { promisedTimeout } from "@vue-composable/core";
+import { promisedTimeout } from "../../src/utils";
 import { nextTick } from "../utils";
 
 describe("retry", () => {

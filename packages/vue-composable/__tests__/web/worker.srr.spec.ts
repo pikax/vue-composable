@@ -1,5 +1,5 @@
-jest.mock("@vue-composable/core", () => ({
-  ...jest.requireActual("@vue-composable/core"),
+jest.mock("../../src/utils", () => ({
+  ...jest.requireActual("../../src/utils"),
   isClient: false
 }));
 import { useWorker } from "../../src/web/worker";

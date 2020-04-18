@@ -5,7 +5,9 @@ import {
   watch,
   inject,
   provide,
-  computed
+  computed,
+  vueSet,
+  vueDelete
 } from "../api";
 import {
   RefTyped,
@@ -319,10 +321,16 @@ export function buildI18n<
     }
     delete cache[l];
 
-    localeMessages.value = {
-      ...localeMessages.value,
-      [l]: m
-    };
+    // localeMessages.value = {
+    //   ...localeMessages.value,
+    //   [l]: m,
+    // };
+    // istanbul ignore else
+    if (__VUE_2__) {
+      vueSet(localeMessages.value, l, m);
+    } else {
+      localeMessages.value[l] = m;
+    }
     // Vue.set(localeMessages.value, l, m);
     // (localeMessages.value as Record<string, i18n>)[l] = m;
   };
@@ -366,8 +374,12 @@ export function buildI18n<
         console.warn(`[useI18n] Locale "${l}" doesn't exist`);
       }
     }
-    // Vue.delete(localeMessages.value, l as string);
-    delete localeMessages.value[l];
+    // istanbul ignore else
+    if (__VUE_2__) {
+      vueDelete(localeMessages.value, l as string);
+    } else {
+      delete localeMessages.value[l];
+    }
     delete cache[l as string];
   };
 

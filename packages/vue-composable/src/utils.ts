@@ -1,4 +1,4 @@
-import { ref, Ref, isRef, unref } from "./api";
+import { ref, Ref, isRef } from "./api";
 
 export type RefTyped<T> = T | Ref<T>;
 export type RefElement = Element | Ref<Element | undefined>;
@@ -7,7 +7,8 @@ export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
 
 export function unwrap<T>(o: RefTyped<T>): T;
 export function unwrap<T>(o: RefTyped<T>): T {
-  return unref(o) as T;
+  return isRef(o) ? o.value : o;
+  // return unref(o) as T;
 }
 
 export function wrap(o: RefElement): Ref<Element>;

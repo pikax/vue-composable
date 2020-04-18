@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from "../../src";
 import { createVue } from "../utils";
-import { PASSIVE_EV } from "@vue-composable/core";
+import { PASSIVE_EV } from "../../src/utils";
 
 describe("broadcastChannel", () => {
   const _broadcastChannel = window.BroadcastChannel;

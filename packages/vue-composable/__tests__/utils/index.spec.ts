@@ -12,7 +12,7 @@ import {
   promisedTimeout,
   minMax
 } from "../../src";
-import { ref } from "@vue/runtime-core";
+import { ref } from "../../src/api";
 import { isFunction } from "util";
 
 describe("utils", () => {

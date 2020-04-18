@@ -7,9 +7,9 @@ import {
   refShared
 } from "../../src";
 import { createVue, nextTick } from "../utils";
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance } from "../../src/api";
 
-// import * as compositionApi from '@vue/runtime-core';
+// import * as compositionApi from '../../src/api';
 // import { PASSIVE_EV } from '@vue-composable/core';
 
 describe("sharedRef", () => {
@@ -492,6 +492,11 @@ describe("sharedRef", () => {
         template: "<div ref='el'></div>",
         setup(props: any, ctx: any) {
           const vm = getCurrentInstance()!;
+
+          // istanbul ignore else
+          if (__VUE_2__) {
+            (vm.vnode as any) = {};
+          }
           vm.vnode.scopeId = "vue-test-vm";
 
           const r = refShared();
@@ -537,6 +542,10 @@ describe("sharedRef", () => {
         template: "<div ref='el'></div>",
         setup(_: any, ctx: any) {
           const vm = getCurrentInstance()!;
+          // istanbul ignore else
+          if (__VUE_2__) {
+            (vm.vnode as any) = {};
+          }
           vm.vnode.scopeId = "vue-test-vm";
 
           const r = refShared();

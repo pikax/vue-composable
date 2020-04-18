@@ -1,8 +1,11 @@
-jest.mock("@vue/runtime-core", () => ({
-  ...jest.requireActual("@vue/runtime-core"),
+jest.mock("../../src/api", () => ({
+  ...(__VUE_2__
+    ? jest.requireActual("../../src/api.2")
+    : jest.requireActual("../../src/api")),
   provide: jest.fn(),
   inject: jest.fn()
 }));
+
 jest.mock("../../src/breakpoint/breakpoint");
 
 import {
@@ -16,7 +19,7 @@ import {
 } from "../../src/breakpoint/breakpointTailwind";
 
 import { useBreakpoint } from "../../src/breakpoint/breakpoint";
-import { provide, inject } from "@vue/runtime-core";
+import { provide, inject } from "../../src/api";
 
 describe("breakpointTailwindcss", () => {
   describe("setBreakpoint", () => {

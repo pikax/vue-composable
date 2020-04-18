@@ -1,6 +1,6 @@
 import { createVue, nextTick } from "../utils";
 import { useBreakpoint } from "../../src";
-import { promisedTimeout } from "@vue-composable/core";
+import { promisedTimeout } from "../../src/utils";
 
 describe("breakpoint", () => {
   let matchMediaSpy: jest.SpyInstance = undefined as any;

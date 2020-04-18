@@ -4,7 +4,7 @@ jest.mock("../../src/intl/numberFormat", () => ({
 
 import { useIntlNumberFormat } from "../../src/intl/numberFormat";
 import { useCurrencyFormat, IntlNumberFormatOptions } from "../../src";
-import { computed } from "@vue/runtime-core";
+import { computed } from "../../src/api";
 
 describe("currencyFormat", () => {
   const mock: jest.Mock<any, any> = useIntlNumberFormat as any;

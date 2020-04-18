@@ -1,5 +1,5 @@
 import { RefTyped, unwrap, isObject, NO_OP } from "../utils";
-import { computed, Ref } from "@vue/runtime-core";
+import { computed, Ref } from "../../src/api";
 
 export type UsePathNotFoundReturn<TSource> = (
   /**

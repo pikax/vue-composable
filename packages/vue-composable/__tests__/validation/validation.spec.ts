@@ -1,5 +1,5 @@
 import { useValidation, NO_OP } from "../../src";
-import { ref } from "@vue/runtime-core";
+import { ref } from "../../src/api";
 import { nextTick, createVue } from "../utils";
 
 describe("validation", () => {
@@ -206,6 +206,7 @@ describe("validation", () => {
 
       const { mount } = createVue({
         template: `
+        <div>
           <input name="firstName" v-model="form.firstName.$value" placeholder="firstName" />
 
           <p id="form-anyInvalid" v-if="form.$anyInvalid">Invalid</p>
@@ -216,6 +217,7 @@ describe("validation", () => {
           <p id="firstname-error" v-if="form.firstName.$dirty && form.firstName.otherRequired.$invalid">
             {{ form.firstName.otherRequired.$message }}
           </p>
+        </div>
         `,
         setup() {
           return {
@@ -224,7 +226,7 @@ describe("validation", () => {
         }
       });
 
-      mount();
+      const vm = mount();
       await nextTick();
 
       const input = document.getElementsByName("firstName")[0];
@@ -234,6 +236,8 @@ describe("validation", () => {
       const nameRequired = () =>
         document.getElementById("firstname-error-required");
       const otherRequired = () => document.getElementById("firstname-error");
+
+      vm.$el;
 
       expect(anyInvalid()).not.toBeNull();
       expect(dirtyInvalid()).toBeNull();

@@ -1,6 +1,6 @@
 import { useArrayPagination } from "../../src";
 import { nextTick } from "../utils";
-import { ref } from "@vue/runtime-core";
+import { ref } from "../../src/api";
 
 describe("arrayPagination", () => {
   it("should get correct array slice", async () => {

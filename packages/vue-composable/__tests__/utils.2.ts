@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const Vue: any = require("vue/dist/vue.common");
 import { Component, ComponentPublicInstance } from "@vue/runtime-dom";
 
@@ -29,9 +31,11 @@ export const createVue = <
   props?: TProps
 ) => {
   const vm = new Vue(component);
-  const el = vm.$el;
+  const el = document.createElement("div");
 
-  const mount = (): ComponentPublicInstance<TProps> => vm.$mount() as any;
+  document.body.appendChild(el);
+
+  const mount = (): ComponentPublicInstance<TProps> => vm.$mount(el) as any;
 
   const destroy = () => vm.$destroy();
 

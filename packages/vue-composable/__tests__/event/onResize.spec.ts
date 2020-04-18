@@ -1,6 +1,6 @@
 import { createVue, nextTick } from "../utils";
 import { useOnResize, ResizeResult } from "../../src/event/onResize";
-import { promisedTimeout } from "packages/vue-composable/src";
+import { promisedTimeout } from "../../src/utils";
 
 describe("onResize", () => {
   const windowEventSpy = jest.fn();

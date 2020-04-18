@@ -1,15 +1,13 @@
 const provideSpy = jest.fn();
 const injectSpy = jest.fn();
-const buildI18nSpy = jest
-  .fn()
-  .mockImplementation(jest.requireActual("../../src").buildI18n);
+// const buildI18nSpy = jest
+//   .fn()
+//   .mockImplementation(jest.requireActual("../../src").buildI18n);
 
-const actual = __VUE2__
-  ? jest.requireMock("@vue/runtime-core")
-  : jest.requireActual("@vue/runtime-core");
-
-jest.mock("@vue/runtime-core", () => ({
-  ...actual,
+jest.mock("../../src/api", () => ({
+  ...(__VUE_2__
+    ? jest.requireActual("../../src/api.2")
+    : jest.requireActual("../../src/api")),
   provide: provideSpy,
   inject: injectSpy
 }));
@@ -17,7 +15,7 @@ jest.mock("@vue/runtime-core", () => ({
 // import Vue from "vue";
 import { buildI18n, promisedTimeout, setI18n, useI18n } from "../../src";
 import { nextTick } from "../utils";
-import { ref } from "@vue/runtime-core";
+import { ref } from "../../src/api";
 
 describe("i18n", () => {
   const warnSpy = jest.spyOn(console, "warn");
@@ -362,7 +360,6 @@ describe("i18n", () => {
 
   describe("injection", () => {
     beforeEach(() => {
-      buildI18nSpy.mockClear();
       provideSpy.mockClear();
       injectSpy.mockClear();
     });

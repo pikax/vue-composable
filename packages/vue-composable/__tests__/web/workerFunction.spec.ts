@@ -1,5 +1,4 @@
-jest.mock("@vue-composable/core", () => ({
-  ...jest.requireActual("@vue-composable/core"),
+jest.mock("../../src/promise/cancellablePromise", () => ({
   useCancellablePromise: jest.fn()
 }));
 
@@ -8,9 +7,10 @@ import {
   createBlobUrl,
   inlineWorkExecution
 } from "../../src/web/workerFunction";
-import { NO_OP, useCancellablePromise } from "@vue-composable/core";
-import { ref } from "@vue/runtime-core";
+import { NO_OP } from "../../src";
+import { ref } from "../../src/api";
 import { nextTick } from "../utils";
+import { useCancellablePromise } from "../../src/promise/cancellablePromise";
 
 const mockBlob = (fn: jest.Mock<any, any>) => {
   class BlobMocked {
@@ -110,10 +110,6 @@ describe("worker function", () => {
     .spyOn(window, "postMessage")
     .mockImplementation(x => x);
 
-  const cancellablePromiseFn = (useCancellablePromise as jest.Mock).mockImplementation(
-    p => ({ exec: p })
-  );
-
   const blobConstructorFn = mockBlob(
     jest.fn()
   ).mockImplementation((script, type) => [script, type]);
@@ -125,6 +121,8 @@ describe("worker function", () => {
 
   const workerMock = mockWorker();
 
+  const cancellablePromiseFn = useCancellablePromise as jest.Mock;
+
   beforeEach(() => {
     postMessageFn.mockClear();
     createObjectUrlSpy.mockClear();
@@ -132,6 +130,7 @@ describe("worker function", () => {
 
     workerMock.mockClear();
     cancellablePromiseFn.mockClear();
+    cancellablePromiseFn.mockImplementation(p => ({ exec: p }));
   });
 
   describe("inlineWorkExecution", () => {
