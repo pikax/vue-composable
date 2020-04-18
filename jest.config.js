@@ -9,7 +9,8 @@ module.exports = {
   },
   setupFiles: [
     "<rootDir>/__tests__/setupTest.js",
-    "<rootDir>/packages/vue-composable/__tests__/setupTest.js"
+    "<rootDir>/packages/vue-composable/__tests__/setupTest.js",
+    "<rootDir>/packages/axios/__tests__/setupTest.js"
   ],
   coverageDirectory: "coverage",
   coverageReporters: ["html", "lcov", "text"],
@@ -17,6 +18,6 @@ module.exports = {
   watchPathIgnorePatterns: ["/node_modules/"],
   moduleFileExtensions: ["ts", "tsx", "js", "json"],
   rootDir: __dirname,
-  // testMatch: ["<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)"],
-  testMatch: ["<rootDir>/packages/vue-composable/__tests__/**/*spec.[jt]s?(x)"]
+  testMatch: ["<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)"]
+  // testMatch: ["<rootDir>/packages/vue-composable/__tests__/**/*spec.[jt]s?(x)"]
 };

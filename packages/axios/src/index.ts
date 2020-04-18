@@ -1,4 +1,4 @@
-import { computed, Ref, ComputedRef, ref } from "@vue/runtime-core";
+import { computed, Ref, ComputedRef, ref } from "./api";
 import axios, {
   AxiosRequestConfig,
   AxiosResponse,
@@ -11,7 +11,7 @@ import {
   isString,
   isBoolean,
   isObject
-} from "@vue-composable/core";
+} from "vue-composable";
 
 interface AxiosReturn<TData>
   extends PromiseResultFactory<
