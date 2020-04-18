@@ -32,6 +32,10 @@ jobs:
           command: yarn build
 
       - run:
+          name: "Vue2"
+          command: yarn test:vue2
+
+      - run:
           name: "Run Jest and Collect Coverage Reports"
           command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit
 
