@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-v2:
+  build2:
     branches:
       ignore:
         - gh-pages
@@ -94,4 +94,4 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - build-v2
+      - build2
