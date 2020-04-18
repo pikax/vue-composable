@@ -1,4 +1,11 @@
-import { isObject, isPromise, isBoolean, RefTyped, wrap } from "../utils";
+import {
+  isObject,
+  isPromise,
+  isBoolean,
+  RefTyped,
+  wrap,
+  unwrap
+} from "../utils";
 import {
   ref,
   Ref,
@@ -131,7 +138,7 @@ const buildValidationFunction = (
       }
     };
     $promise.value = p().catch(x => {
-      $error.value = x;
+      $error.value = unwrap(x);
       $invalid.value = true;
       return x;
     });
@@ -150,7 +157,7 @@ const buildValidationFunction = (
         return r.value;
       },
       onChange,
-      { deep: true }
+      { deep: true, immediate: true }
     );
   });
 
@@ -242,27 +249,43 @@ const buildValidation = <T>(
           .map(x => (validation[x] as any) as ValidatorResult);
 
         $errors = computed(() =>
-          validations.map(x => x.$error).filter(Boolean)
+          validations
+            .map(x => x.$error)
+            .filter(Boolean)
+            .map(x => unwrap(x))
         );
         // $anyDirty = computed(() => validations.some(x => !!x));
-        $anyInvalid = computed(() => validations.some(x => !!x.$invalid));
+        $anyInvalid = computed(() =>
+          validations.some(x => {
+            return !!unwrap(x.$invalid);
+          })
+        );
       } else {
         const validations = Object.keys(validation).map(
           x => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
           return validations
-            .map(x => x.$errors)
+            .map(x => unwrap(x.$errors))
             .filter(Boolean)
-            .filter(x => x.some(Boolean));
+            .filter(x => {
+              return x.some(Boolean);
+            });
         });
-        $anyDirty = computed(() =>
-          validations.some(
-            x =>
-              x.$anyDirty || (isBoolean((x as any).$dirty) && (x as any).$dirty)
-          )
+        $anyDirty = computed(() => {
+          return validations.some(x => {
+            return (
+              x.$anyDirty ||
+              (isBoolean(unwrap((x as any).$dirty)) &&
+                unwrap((x as any).$dirty))
+            );
+          });
+        });
+        $anyInvalid = computed(() =>
+          validations.some(x => {
+            return !!unwrap(x.$anyInvalid);
+          })
         );
-        $anyInvalid = computed(() => validations.some(x => !!x.$anyInvalid));
       }
 
       r[k] = {

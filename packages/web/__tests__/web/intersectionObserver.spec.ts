@@ -1,6 +1,6 @@
 import { ref } from "@vue/runtime-core";
 
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import {
   useIntersectionObserver,
   IntersectionObserverOptions
@@ -173,7 +173,7 @@ describe("IntersectionObserver", () => {
 
   describe("hooks onMounted/onUnmounted", () => {
     it("should hook", () => {
-      const vm = new Vue({
+      const vm = createVue({
         template: "<div ref='el'></div>",
         setup() {
           const el = ref<Element>();
@@ -183,35 +183,35 @@ describe("IntersectionObserver", () => {
           };
         }
       });
-      vm.$mount();
+      vm.mount();
 
       expect(observeFn).toHaveBeenCalledTimes(1);
       expect(disconnectFn).toHaveBeenCalledTimes(0);
 
-      vm.$destroy();
+      vm.destroy();
       expect(observeFn).toHaveBeenCalledTimes(1);
       expect(disconnectFn).toHaveBeenCalledTimes(1);
     });
 
     it("should call observer on custom element", () => {
-      const vm = new Vue({
+      const vm = createVue({
         template: "<div></div>",
         setup() {
           return useIntersectionObserver(document.createElement("div"));
         }
       });
-      vm.$mount();
+      vm.mount();
 
       expect(observeFn).toHaveBeenCalledTimes(1);
       expect(disconnectFn).toHaveBeenCalledTimes(0);
 
-      vm.$destroy();
+      vm.destroy();
       expect(observeFn).toHaveBeenCalledTimes(1);
       expect(disconnectFn).toHaveBeenCalledTimes(1);
     });
 
     it("should not call observer", () => {
-      const vm = new Vue({
+      const vm = createVue({
         template: "<div></div>",
         setup() {
           const el = ref<Element>();
@@ -221,12 +221,12 @@ describe("IntersectionObserver", () => {
           };
         }
       });
-      vm.$mount();
+      vm.mount();
 
       expect(observeFn).not.toHaveBeenCalled();
       expect(disconnectFn).not.toHaveBeenCalled();
 
-      vm.$destroy();
+      vm.destroy();
       expect(observeFn).not.toHaveBeenCalled();
       expect(disconnectFn).toHaveBeenCalled();
     });

@@ -1,5 +1,5 @@
 import { useGeolocation } from "../../src";
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 
 describe("geolocation", () => {
   const __geolocation = navigator.geolocation;
@@ -34,7 +34,7 @@ describe("geolocation", () => {
 
   it("should pass the arguments to the watch", () => {
     let promise: Promise<void> = Promise.resolve();
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const opts: PositionOptions = {
@@ -60,12 +60,12 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
     return promise;
   });
 
   it("refresh should call getCurrentPosition", () => {
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const geo = useGeolocation();
@@ -79,12 +79,12 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
   });
 
   it("should be lazy `immediate` = false", () => {
     let promise: Promise<void> = Promise.resolve();
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const geo = useGeolocation({ immediate: false });
@@ -106,13 +106,13 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
     return promise;
   });
 
   it("should watchPosition", async () => {
     let promise: Promise<void> = Promise.resolve();
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const geo = useGeolocation();
@@ -127,16 +127,16 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
     await promise;
-    vm.$destroy();
+    vm.destroy();
     expect(clearWatchFn).toHaveBeenCalled();
     expect(watchPositionFn).toHaveBeenCalledTimes(1);
   });
 
   it("should update the watchPosition if highAccuracy changes", async () => {
     let promise: Promise<void> = Promise.resolve();
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const geo = useGeolocation();
@@ -163,15 +163,15 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
     await promise;
-    vm.$destroy();
+    vm.destroy();
     expect(clearWatchFn).toHaveBeenCalled();
   });
 
   it("should set the correct values", async () => {
     let promise: Promise<void> = Promise.resolve();
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div ref='el'></div>",
       setup() {
         const geo = useGeolocation();
@@ -248,9 +248,9 @@ describe("geolocation", () => {
         };
       }
     });
-    vm.$mount();
+    vm.mount();
     await promise;
-    vm.$destroy();
+    vm.destroy();
     expect(clearWatchFn).toHaveBeenCalled();
     expect(watchPositionFn).toHaveBeenCalledTimes(1);
   });

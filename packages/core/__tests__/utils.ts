@@ -1,13 +1,24 @@
 export { nextTick } from "@vue/runtime-core";
-import { Component } from "vue";
+import { Component, ComponentPublicInstance } from "vue";
 import { createApp } from "vue";
 
-export const createVue = (component: Component, props?: any) => {
+export const createVue = <
+  T extends Component,
+  TProps extends Record<string, unknown>
+>(
+  component: T,
+  props?: TProps
+) => {
   const app = createApp(component, props);
 
   const el = document.createElement("div");
+  // Reset the document.body
+  // document.getElementsByTagName('html')[0].innerHTML = ''
+  // const el = document.createElement('div')
+  // el.id = MOUNT_ELEMENT_ID
+  document.body.appendChild(el);
 
-  const mount = () => app.mount(el);
+  const mount = (): ComponentPublicInstance<TProps> => app.mount(el) as any;
 
   const destroy = () => app.unmount(el);
 

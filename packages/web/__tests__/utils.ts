@@ -11,9 +11,9 @@ export const createVue = (component: Component, props?: any) => {
 
   const destroy = () => app.unmount(el);
 
-  app.config.errorHandler = (err: any) => {
-    throw err;
-  };
+  // app.config.errorHandler = (err: any) => {
+  //   throw err;
+  // };
 
   return {
     el,

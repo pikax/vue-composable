@@ -1,7 +1,7 @@
 import { useWebSocket } from "../../src";
 import { WS } from "jest-websocket-mock";
 import { watch } from "@vue/runtime-core";
-import { nextTick } from "../utils";
+import { nextTick, createVue } from "../utils";
 
 describe("WebSocket", () => {
   const FAKE_URL = `ws://localhost:42`;
@@ -37,7 +37,7 @@ describe("WebSocket", () => {
     const { messageEvent } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    expect(messageEvent.value).toBeNull();
+    expect(messageEvent.value).toBeUndefined();
 
     server.send("test");
     expect(messageEvent.value).not.toBeNull();

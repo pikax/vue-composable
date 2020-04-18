@@ -1,4 +1,4 @@
-import { Vue, nextTick } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { NetworkInformation, useNetworkInformation } from "../../src";
 import { reactive } from "@vue/runtime-core";
 
@@ -33,7 +33,7 @@ describe("network information", () => {
     const conn = navigator.connection;
     navigator.mozConnection = navigator.webkitConnection = navigator.connection = null as any;
     let networkInformation = useNetworkInformation();
-    new Vue({
+    createVue({
       template: `<div></div>`,
       setup() {
         navigator.connection = conn;
@@ -44,7 +44,7 @@ describe("network information", () => {
         }
         return networkInformation;
       }
-    }).$mount();
+    }).mount();
     return networkInformation;
   };
 
@@ -138,7 +138,7 @@ describe("network information", () => {
   });
 
   it("should call removeListener on unmount", () => {
-    const vm = new Vue({
+    const vm = createVue({
       template: "<div></div>",
       setup() {
         return useNetworkInformation();
@@ -146,9 +146,9 @@ describe("network information", () => {
     });
 
     expect(connectionMock.removeEventListener).not.toHaveBeenCalled();
-    vm.$mount();
+    vm.mount();
     expect(connectionMock.removeEventListener).not.toHaveBeenCalled();
-    vm.$destroy();
+    vm.destroy();
     expect(connectionMock.removeEventListener).toHaveBeenCalled();
   });
 });
