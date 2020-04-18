@@ -28,7 +28,7 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
-          name: Run build --version=2
+          name: Run build v2
           command: yarn build
 
       - run:
@@ -89,3 +89,9 @@ jobs:
 
       - store_artifacts:
           path: dist
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - build-v2
