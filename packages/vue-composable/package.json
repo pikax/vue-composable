@@ -11,7 +11,7 @@
   ],
   "types": "dist/vue-composable.d.ts",
   "buildOptions": {
-    "priority": 100,
+    "priority": 1,
     "name": "vueComposable",
     "formats": [
       "esm-bundler",

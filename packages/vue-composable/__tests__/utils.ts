@@ -1,4 +1,4 @@
-export { nextTick } from "@vue/runtime-core";
+export { nextTick } from "vue3";
 // import { Component, ComponentPublicInstance } from "vue";
 import {
   createApp,

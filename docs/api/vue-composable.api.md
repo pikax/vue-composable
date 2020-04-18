@@ -1429,7 +1429,7 @@ export function useCurrencyFormat(
 export function useDateNow(
   options?: NowOptions
 ): {
-  now: import("@vue/reactivity").Ref<number>;
+  now: import("vue3").Ref<number>;
   remove: () => void;
 };
 
@@ -1779,7 +1779,7 @@ export type UsePathNotFoundReturn<TSource> = (
 export function usePerformanceNow(
   options?: NowOptions
 ): {
-  now: import("@vue/reactivity").Ref<number>;
+  now: import("vue3").Ref<number>;
   remove: () => void;
 };
 

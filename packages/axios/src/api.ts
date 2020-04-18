@@ -14,7 +14,7 @@ export {
   getCurrentInstance,
   ComputedRef,
   UnwrapRef
-} from "vue3";
+} from "@vue/runtime-core";
 
 // istanbul ignore next
 const NO_OP = () => {};

@@ -37,7 +37,8 @@ const configs = {
     globals: {
       "@vue/composition-api": "vueCompositionApi",
       axios: "axios",
-      "@vue/runtime-core": "VueRuntimeCore"
+      "@vue/runtime-core": "VueRuntimeCore",
+      vue3: "vue"
     }
   },
   esm: {
