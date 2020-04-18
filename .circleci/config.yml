@@ -30,10 +30,11 @@ jobs:
       - run:
           name: Run build
           command: yarn build
-
       - run:
-          name: "Vue2"
-          command: yarn test:vue2
+          name: "Vue2 tests"
+          command: yarn jest
+          environment:
+            - VUE: 2
 
       - run:
           name: "Run Jest and Collect Coverage Reports"
