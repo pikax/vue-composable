@@ -1,6 +1,9 @@
 version: 2
 jobs:
-  build2:
+  build:
+    branches:
+      ignore:
+        - gh-pages
     docker:
       - image: node:lts
 
@@ -26,50 +29,17 @@ jobs:
 
       - run:
           name: Run build v2
-          command: yarn build
+          command: yarn build --version=2
 
       - run:
           name: "Vue2 tests"
-          command: yarn jest
+          command: yarn test --ci --runInBand
           environment:
-            VUE: 2
-
-      - store_artifacts:
-          path: dist
-
-  build:
-    docker:
-      - image: node:lts
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-
-      - save_cache:
-          paths:
-            - node_modules
-            - ~/.cache/yarn
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - VUE: 2
 
       - run:
           name: Run build
           command: yarn build
-      - run:
-          name: "Vue2 tests"
-          command: yarn jest
-          environment:
-            - VUE: 2
-
       - run:
           name: "Run Jest and Collect Coverage Reports"
           command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit
@@ -83,12 +53,3 @@ jobs:
 
       - store_artifacts:
           path: dist
-workflows:
-  version: 2
-  branches:
-    ignore:
-      - gh-pages
-  build_and_test:
-    jobs:
-      - build
-      - build2
