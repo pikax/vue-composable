@@ -20,15 +20,10 @@ const buildTypes = args.t || args.types || isRelease || true;
 const buildAllMatching = args.all || args.a;
 const lean = args.lean || args.l;
 const commit = execa.sync("git", ["rev-parse", "HEAD"]).stdout.slice(0, 7);
-
-run();
+const buildTargets = targets.length > 0 ? targets : allTargets;
 
 function run() {
-  if (!targets.length) {
-    return buildAll(allTargets);
-  } else {
-    return buildAll(targets);
-  }
+  return buildAll(buildTargets);
 }
 
 async function buildAll(targets) {
@@ -154,3 +149,7 @@ function checkSize(target) {
     );
   }
 }
+
+exports.buildTargets = buildTargets;
+exports.buildAll = buildAll;
+exports.run = run;

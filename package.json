@@ -25,6 +25,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
+    "build2": "node scripts/build-2.js",
+    "build3": "node scripts/build-3.js",
     "release": "node scripts/release.js",
     "old:build": "rollup -c rollup.config.js",
     "old:start": "rollup -c rollup.config.js -w",
