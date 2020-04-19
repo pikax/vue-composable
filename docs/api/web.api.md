@@ -5,7 +5,7 @@
 ```ts
 import { CancellablePromiseResult } from "@vue-composable/core";
 import { PromiseResultFactory } from "@vue-composable/core";
-import { Ref } from "@vue/composition-api";
+import { Ref } from "@vue/runtime-core";
 import { RefElement } from "@vue-composable/core";
 import { RefTyped } from "@vue-composable/core";
 
@@ -420,7 +420,12 @@ export interface NumberFormatReturn {
 export function refShared<T = any>(
   defaultValue?: RefTyped<T>,
   id?: string
-): Ref<RefTyped<T>>;
+):
+  | import("@vue/reactivity").Ref<undefined>
+  | import("@vue/reactivity").Ref<T>
+  | (T extends import("@vue/reactivity").Ref<any>
+      ? T
+      : import("@vue/reactivity").Ref<import("@vue/reactivity").UnwrapRef<T>>);
 
 // @public (undocumented)
 export type RefSharedMessage<T = any> =
@@ -600,11 +605,411 @@ export function useBroadcastChannel<T = any>(
   onBeforeClose?: Function
 ): {
   supported: boolean;
-  data: import("@vue/composition-api").Ref<T | null>;
-  messageEvent: import("@vue/composition-api").Ref<MessageEvent | null>;
-  errorEvent: import("@vue/composition-api").Ref<MessageEvent | null>;
-  errored: import("@vue/composition-api").Ref<boolean>;
-  isClosed: import("@vue/composition-api").Ref<boolean>;
+  data:
+    | import("@vue/reactivity").Ref<null>
+    | (T extends import("@vue/reactivity").Ref<any>
+        ? T
+        : import("@vue/reactivity").Ref<
+            import("@vue/reactivity").UnwrapRef<T>
+          >);
+  messageEvent:
+    | import("@vue/reactivity").Ref<null>
+    | import("@vue/reactivity").Ref<{
+        readonly data: any;
+        readonly lastEventId: string;
+        readonly origin: string;
+        readonly ports: readonly {
+          onmessage: ((this: MessagePort, ev: MessageEvent) => any) | null;
+          onmessageerror: ((this: MessagePort, ev: MessageEvent) => any) | null;
+          close: () => void;
+          postMessage: {
+            (message: any, transfer: Transferable[]): void;
+            (message: any, options?: PostMessageOptions | undefined): void;
+          };
+          start: () => void;
+          addEventListener: {
+            <K extends "messageerror" | "message">(
+              type: K,
+              listener: (this: MessagePort, ev: MessagePortEventMap[K]) => any,
+              options?: boolean | AddEventListenerOptions | undefined
+            ): void;
+            (
+              type: string,
+              listener: EventListenerOrEventListenerObject,
+              options?: boolean | AddEventListenerOptions | undefined
+            ): void;
+          };
+          removeEventListener: {
+            <K_1 extends "messageerror" | "message">(
+              type: K_1,
+              listener: (
+                this: MessagePort,
+                ev: MessagePortEventMap[K_1]
+              ) => any,
+              options?: boolean | EventListenerOptions | undefined
+            ): void;
+            (
+              type: string,
+              listener: EventListenerOrEventListenerObject,
+              options?: boolean | EventListenerOptions | undefined
+            ): void;
+          };
+          dispatchEvent: (event: Event) => boolean;
+        }[] & {
+          [Symbol.iterator]: () => IterableIterator<MessagePort>;
+        };
+        readonly source:
+          | Window
+          | {
+              onmessage: ((this: MessagePort, ev: MessageEvent) => any) | null;
+              onmessageerror:
+                | ((this: MessagePort, ev: MessageEvent) => any)
+                | null;
+              close: () => void;
+              postMessage: {
+                (message: any, transfer: Transferable[]): void;
+                (message: any, options?: PostMessageOptions | undefined): void;
+              };
+              start: () => void;
+              addEventListener: {
+                <K extends "messageerror" | "message">(
+                  type: K,
+                  listener: (
+                    this: MessagePort,
+                    ev: MessagePortEventMap[K]
+                  ) => any,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+              };
+              removeEventListener: {
+                <K_1 extends "messageerror" | "message">(
+                  type: K_1,
+                  listener: (
+                    this: MessagePort,
+                    ev: MessagePortEventMap[K_1]
+                  ) => any,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+              };
+              dispatchEvent: (event: Event) => boolean;
+            }
+          | {
+              onstatechange: ((this: ServiceWorker, ev: Event) => any) | null;
+              readonly scriptURL: string;
+              readonly state: ServiceWorkerState;
+              postMessage: {
+                (message: any, transfer: Transferable[]): void;
+                (message: any, options?: PostMessageOptions | undefined): void;
+              };
+              addEventListener: {
+                <K_2 extends "statechange" | "error">(
+                  type: K_2,
+                  listener: (
+                    this: ServiceWorker,
+                    ev: ServiceWorkerEventMap[K_2]
+                  ) => any,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+              };
+              removeEventListener: {
+                <K_3 extends "statechange" | "error">(
+                  type: K_3,
+                  listener: (
+                    this: ServiceWorker,
+                    ev: ServiceWorkerEventMap[K_3]
+                  ) => any,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+              };
+              dispatchEvent: (event: Event) => boolean;
+              onerror: ((this: AbstractWorker, ev: ErrorEvent) => any) | null;
+            }
+          | null;
+        readonly bubbles: boolean;
+        cancelBubble: boolean;
+        readonly cancelable: boolean;
+        readonly composed: boolean;
+        readonly currentTarget: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly defaultPrevented: boolean;
+        readonly eventPhase: number;
+        readonly isTrusted: boolean;
+        returnValue: boolean;
+        readonly srcElement: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly target: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly timeStamp: number;
+        readonly type: string;
+        composedPath: () => EventTarget[];
+        initEvent: (
+          type: string,
+          bubbles?: boolean | undefined,
+          cancelable?: boolean | undefined
+        ) => void;
+        preventDefault: () => void;
+        stopImmediatePropagation: () => void;
+        stopPropagation: () => void;
+        readonly AT_TARGET: number;
+        readonly BUBBLING_PHASE: number;
+        readonly CAPTURING_PHASE: number;
+        readonly NONE: number;
+      }>;
+  errorEvent:
+    | import("@vue/reactivity").Ref<null>
+    | import("@vue/reactivity").Ref<{
+        readonly data: any;
+        readonly lastEventId: string;
+        readonly origin: string;
+        readonly ports: readonly {
+          onmessage: ((this: MessagePort, ev: MessageEvent) => any) | null;
+          onmessageerror: ((this: MessagePort, ev: MessageEvent) => any) | null;
+          close: () => void;
+          postMessage: {
+            (message: any, transfer: Transferable[]): void;
+            (message: any, options?: PostMessageOptions | undefined): void;
+          };
+          start: () => void;
+          addEventListener: {
+            <K extends "messageerror" | "message">(
+              type: K,
+              listener: (this: MessagePort, ev: MessagePortEventMap[K]) => any,
+              options?: boolean | AddEventListenerOptions | undefined
+            ): void;
+            (
+              type: string,
+              listener: EventListenerOrEventListenerObject,
+              options?: boolean | AddEventListenerOptions | undefined
+            ): void;
+          };
+          removeEventListener: {
+            <K_1 extends "messageerror" | "message">(
+              type: K_1,
+              listener: (
+                this: MessagePort,
+                ev: MessagePortEventMap[K_1]
+              ) => any,
+              options?: boolean | EventListenerOptions | undefined
+            ): void;
+            (
+              type: string,
+              listener: EventListenerOrEventListenerObject,
+              options?: boolean | EventListenerOptions | undefined
+            ): void;
+          };
+          dispatchEvent: (event: Event) => boolean;
+        }[] & {
+          [Symbol.iterator]: () => IterableIterator<MessagePort>;
+        };
+        readonly source:
+          | Window
+          | {
+              onmessage: ((this: MessagePort, ev: MessageEvent) => any) | null;
+              onmessageerror:
+                | ((this: MessagePort, ev: MessageEvent) => any)
+                | null;
+              close: () => void;
+              postMessage: {
+                (message: any, transfer: Transferable[]): void;
+                (message: any, options?: PostMessageOptions | undefined): void;
+              };
+              start: () => void;
+              addEventListener: {
+                <K extends "messageerror" | "message">(
+                  type: K,
+                  listener: (
+                    this: MessagePort,
+                    ev: MessagePortEventMap[K]
+                  ) => any,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+              };
+              removeEventListener: {
+                <K_1 extends "messageerror" | "message">(
+                  type: K_1,
+                  listener: (
+                    this: MessagePort,
+                    ev: MessagePortEventMap[K_1]
+                  ) => any,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+              };
+              dispatchEvent: (event: Event) => boolean;
+            }
+          | {
+              onstatechange: ((this: ServiceWorker, ev: Event) => any) | null;
+              readonly scriptURL: string;
+              readonly state: ServiceWorkerState;
+              postMessage: {
+                (message: any, transfer: Transferable[]): void;
+                (message: any, options?: PostMessageOptions | undefined): void;
+              };
+              addEventListener: {
+                <K_2 extends "statechange" | "error">(
+                  type: K_2,
+                  listener: (
+                    this: ServiceWorker,
+                    ev: ServiceWorkerEventMap[K_2]
+                  ) => any,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | AddEventListenerOptions | undefined
+                ): void;
+              };
+              removeEventListener: {
+                <K_3 extends "statechange" | "error">(
+                  type: K_3,
+                  listener: (
+                    this: ServiceWorker,
+                    ev: ServiceWorkerEventMap[K_3]
+                  ) => any,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+                (
+                  type: string,
+                  listener: EventListenerOrEventListenerObject,
+                  options?: boolean | EventListenerOptions | undefined
+                ): void;
+              };
+              dispatchEvent: (event: Event) => boolean;
+              onerror: ((this: AbstractWorker, ev: ErrorEvent) => any) | null;
+            }
+          | null;
+        readonly bubbles: boolean;
+        cancelBubble: boolean;
+        readonly cancelable: boolean;
+        readonly composed: boolean;
+        readonly currentTarget: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly defaultPrevented: boolean;
+        readonly eventPhase: number;
+        readonly isTrusted: boolean;
+        returnValue: boolean;
+        readonly srcElement: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly target: {
+          addEventListener: (
+            type: string,
+            listener: EventListener | EventListenerObject | null,
+            options?: boolean | AddEventListenerOptions | undefined
+          ) => void;
+          dispatchEvent: (event: Event) => boolean;
+          removeEventListener: (
+            type: string,
+            callback: EventListener | EventListenerObject | null,
+            options?: boolean | EventListenerOptions | undefined
+          ) => void;
+        } | null;
+        readonly timeStamp: number;
+        readonly type: string;
+        composedPath: () => EventTarget[];
+        initEvent: (
+          type: string,
+          bubbles?: boolean | undefined,
+          cancelable?: boolean | undefined
+        ) => void;
+        preventDefault: () => void;
+        stopImmediatePropagation: () => void;
+        stopPropagation: () => void;
+        readonly AT_TARGET: number;
+        readonly BUBBLING_PHASE: number;
+        readonly CAPTURING_PHASE: number;
+        readonly NONE: number;
+      }>;
+  errored:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
+  isClosed:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
   send: (data: T) => void;
   close: Function;
   addListener: (
@@ -756,10 +1161,28 @@ export function useGeolocation(
 ): {
   supported: boolean;
   refresh: () => void;
-  error: import("@vue/composition-api").Ref<PositionError | null>;
-  timestamp: import("@vue/composition-api").Ref<number | null>;
-  coords: import("@vue/composition-api").Ref<Coordinates | null>;
-  highAccuracy: import("@vue/composition-api").Ref<boolean>;
+  error:
+    | Ref<null>
+    | Ref<{
+        readonly code: number;
+        readonly message: string;
+        readonly PERMISSION_DENIED: number;
+        readonly POSITION_UNAVAILABLE: number;
+        readonly TIMEOUT: number;
+      }>;
+  timestamp: Ref<null> | Ref<number>;
+  coords:
+    | Ref<null>
+    | Ref<{
+        readonly accuracy: number;
+        readonly altitude: number | null;
+        readonly altitudeAccuracy: number | null;
+        readonly heading: number | null;
+        readonly latitude: number;
+        readonly longitude: number;
+        readonly speed: number | null;
+      }>;
+  highAccuracy: Ref<false> | Ref<true> | Ref<null>;
 };
 
 // @public (undocumented)
@@ -946,11 +1369,21 @@ export function useSharedRef<T = any>(
 ): {
   supported: boolean;
   id: number;
-  data: Ref<T>;
-  master: Ref<boolean>;
-  mind: Ref<SharedRefMind>;
-  editable: Readonly<Ref<boolean>>;
-  targets: Ref<number[]>;
+  data:
+    | import("@vue/reactivity").Ref<undefined>
+    | (T extends import("@vue/reactivity").Ref<any>
+        ? T
+        : import("@vue/reactivity").Ref<
+            import("@vue/reactivity").UnwrapRef<T>
+          >);
+  master:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
+  mind:
+    | import("@vue/reactivity").Ref<SharedRefMind.HIVE>
+    | import("@vue/reactivity").Ref<SharedRefMind.MASTER>;
+  editable: import("@vue/reactivity").ComputedRef<boolean>;
+  targets: import("@vue/reactivity").Ref<number[]>;
   ping: () => void;
   setMind: (t: SharedRefMind) => void;
   addListener: (
@@ -984,12 +1417,18 @@ export function useWebSocket(
     data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView
   ) => void;
   close: (code?: number | undefined, reason?: string | undefined) => void;
-  messageEvent: import("@vue/composition-api").Ref<MessageEvent | null>;
-  errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
-  data: import("@vue/composition-api").Ref<any>;
-  isOpen: import("@vue/composition-api").Ref<boolean>;
-  isClosed: import("@vue/composition-api").Ref<boolean>;
-  errored: import("@vue/composition-api").Ref<boolean>;
+  messageEvent: import("@vue/reactivity").Ref<MessageEvent | undefined>;
+  errorEvent: import("@vue/reactivity").Ref<Event | undefined>;
+  data: any;
+  isOpen:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
+  isClosed:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
+  errored:
+    | import("@vue/reactivity").Ref<false>
+    | import("@vue/reactivity").Ref<true>;
 };
 
 // Warning: (ae-forgotten-export) The symbol "WebStorageType" needs to be exported by the entry point index.d.ts
@@ -1014,21 +1453,29 @@ export function useWorker<TData = any, TArgs = any | any[]>(
 ):
   | {
       worker: undefined;
-      data: import("@vue/composition-api").Ref<TData | undefined>;
+      data: import("@vue/reactivity").Ref<TData | undefined>;
       postMessage: () => void;
       terminate: () => void;
-      errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
-      errored: import("@vue/composition-api").Ref<boolean>;
-      terminated: import("@vue/composition-api").Ref<boolean>;
+      errorEvent: import("@vue/reactivity").Ref<Event | undefined>;
+      errored:
+        | import("@vue/reactivity").Ref<false>
+        | import("@vue/reactivity").Ref<true>;
+      terminated:
+        | import("@vue/reactivity").Ref<false>
+        | import("@vue/reactivity").Ref<true>;
     }
   | {
       worker: Worker;
-      data: import("@vue/composition-api").Ref<TData | undefined>;
+      data: import("@vue/reactivity").Ref<TData | undefined>;
       postMessage: (data: TArgs) => void;
       terminate: () => void;
-      errorEvent: import("@vue/composition-api").Ref<Event | undefined>;
-      errored: import("@vue/composition-api").Ref<boolean>;
-      terminated: import("@vue/composition-api").Ref<boolean>;
+      errorEvent: import("@vue/reactivity").Ref<Event | undefined>;
+      errored:
+        | import("@vue/reactivity").Ref<false>
+        | import("@vue/reactivity").Ref<true>;
+      terminated:
+        | import("@vue/reactivity").Ref<false>
+        | import("@vue/reactivity").Ref<true>;
     };
 
 // @public (undocumented)

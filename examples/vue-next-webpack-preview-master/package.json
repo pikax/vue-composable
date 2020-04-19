@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "vue-next-webpack-sample",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack --env.prod"
+  },
+  "dependencies": {
+    "@vue-composable/axios": "^1.0.0-dev.22",
+    "vue": "^3.0.0-beta.2",
+    "vue-composable": "^1.0.0-dev.22"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-beta.2",
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "url-loader": "^4.1.0",
+    "vue-loader": "16.0.0-alpha.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}

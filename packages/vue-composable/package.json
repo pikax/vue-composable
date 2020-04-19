@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-dev.21",
+  "version": "1.0.0-dev.22",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
@@ -11,7 +11,7 @@
   ],
   "types": "dist/vue-composable.d.ts",
   "buildOptions": {
-    "priority": 100,
+    "priority": 1,
     "name": "vueComposable",
     "formats": [
       "esm-bundler",
@@ -34,17 +34,16 @@
   "bugs": {
     "url": "https://github.com/pikax/vue-composable/issues"
   },
-  "homepage": "https://github.com/pikax/vue-composable",
+  "homepage": "https://pikax.me/vue-composable/composable",
   "sideEffects": false,
   "peerDependencies": {
+    "@vue/runtime-core": "^3.0.0-beta.1"
+  },
+  "peerDependencies3": {
+    "@vue/runtime-core": "^3.0.0-beta.1"
+  },
+  "peerDependencies2": {
     "@vue/composition-api": "^0.5.0",
     "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "vue": "^2.6.10"
-  },
-  "dependencies": {
-    "@vue-composable/core": "1.0.0-dev.21",
-    "@vue-composable/web": "1.0.0-dev.21"
   }
 }

@@ -2,12 +2,15 @@
 
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
-[![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
-[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios)](https://bundlephobia.com/result?p=@vue-composable/axios)
+<!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios) -->
 
-# vue-next
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios@next)](https://bundlephobia.com/result?p=@vue-composable/axios@next)
 
-> For [vue-next](https://github.com/vuejs/vue-next) support please check [@next](https://www.npmjs.com/package/@vue-composable/axios/v/next)
+# Vue 3
+
+This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
+
+> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
 
 ## Introduction
 
@@ -17,10 +20,10 @@ Use Axios library with the [composition-api](https://github.com/vuejs/compositio
 
 ```bash
 # install with yarn
-yarn add @vue/composition-api vue-composable @vue-composable/axios
+yarn add vue@next vue-composable@next @vue-composable/axios@next
 
 # install with npm
-npm install @vue/composition-api vue-composable @vue-composable/axios
+npm install vue@next vue-composable@next @vue-composable/axios@next
 ```
 
 ## Documentation
@@ -44,7 +47,7 @@ Check our [documentation](https://pikax.me/vue-composable/composable/external/ax
 </template>
 
 <script>
-import { ref, watch } from "@vue/composition-api";
+import { ref, watch } from "@vue/runtime-core";
 import { useAxios } from "@vue-composable/axios";
 
 export default {

@@ -28,9 +28,18 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
+          name: Run build v2
+          command: yarn build --version=2
+
+      - run:
+          name: "Vue2 tests"
+          command: yarn test --ci --runInBand
+          environment:
+            - VUE: 2
+
+      - run:
           name: Run build
           command: yarn build
-
       - run:
           name: "Run Jest and Collect Coverage Reports"
           command: yarn test --coverage --ci --runInBand --reporters=default --reporters=jest-junit

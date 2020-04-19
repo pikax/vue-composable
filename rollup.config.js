@@ -36,6 +36,7 @@ const configs = {
     format: `iife`,
     globals: {
       "@vue/composition-api": "vueCompositionApi",
+      "@vue/runtime-core": "VueRuntimeCore",
       axios: "axios",
       vue: "Vue"
     }
@@ -49,7 +50,7 @@ const configs = {
 
 const setup = {
   global: {
-    external: ["vue", "@vue/composition-api", "axios"],
+    external: ["vue", "@vue/composition-api", "axios", "@vue/runtime-core"],
     plugins: [
       resolvePlugin({
         // mainFields: [

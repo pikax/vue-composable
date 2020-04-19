@@ -60,7 +60,7 @@ export default defineComponent({
 
     return {
       onSubmit,
-      form: ref(form)
+      form
     };
   }
 });
