@@ -1,4 +1,9 @@
+const webpack = require("webpack");
+
 module.exports = {
+  define: {
+    __VUE_2__: true
+  },
   title: "vue-composable",
   description:
     "Vue composition-api composable components. i18n, validation, pagination, fetch, etc. +30 variable composable functions",
@@ -218,4 +223,23 @@ module.exports = {
       }
     }
   }
+
+  // chainWebpack: (config, isServer) => {
+  //   // config is an instance of ChainableConfig
+
+  //   config.plugin("define").tap((definitions) => {
+  //     definitions[0] = Object.assign(definitions[0], {
+  //       __VUE_2__: true,
+  //     });
+  //     return definitions;
+  //   });
+  // },
+
+  // chainWebpack(config) {
+  //   config.plugin("injections").tap(([options]) => [
+  //     Object.assign(options, {
+  //       __VUE_2__: true,
+  //     }),
+  //   ]);
+  // },
 };
