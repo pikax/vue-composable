@@ -49,8 +49,21 @@ async function publish(package, targetVersion) {
       cwd: pkgDir
     });
   } catch (e) {
+    console.error(e);
     return process.exit(1);
   }
 }
 
-publish("vue-composable", 3);
+async function run() {
+  const versions = [2, 3];
+
+  for (const version of versions) {
+    for (const target of buildTargets) {
+      await publish(target, version);
+    }
+  }
+}
+
+// publish("vue-composable", 3);
+
+run();

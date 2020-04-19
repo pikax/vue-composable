@@ -7,9 +7,9 @@
     "build": "webpack --env.prod"
   },
   "dependencies": {
-    "@vue-composable/axios": "^1.0.0-alpha.8",
+    "@vue-composable/axios": "^1.0.0-dev.22",
     "vue": "^3.0.0-beta.2",
-    "vue-composable": "^1.0.0-alpha.8"
+    "vue-composable": "^1.0.0-dev.22"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.0-beta.2",
