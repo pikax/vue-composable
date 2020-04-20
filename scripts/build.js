@@ -43,8 +43,6 @@ async function build(target, targetVersion) {
 
   const pkgDir = path.resolve(`packages/${target}`);
   const pkg = require(`${pkgDir}/package.json`);
-  const restorePkg = () =>
-    fs.writeFile(`${pkgDir}/package.json`, JSON.stringify(pkg, null, 2));
   const renameRestore = await apiRename(target, targetVersion);
   try {
     // only build published packages for release
@@ -156,7 +154,7 @@ async function build(target, targetVersion) {
       await fs.remove(`${pkgDir}/dist/packages`);
     }
   } finally {
-    await restorePkg();
+    // await restorePkg();
     await renameRestore();
   }
 }

@@ -19,7 +19,7 @@ async function publish(package, targetVersion) {
 
   const pkgDir = resolvePkgDir(package);
   await build(package, targetVersion);
-  const pkg = require(`${pkgDir}/package.json`);
+  const pkg = JSON.parse(fs.readFileSync(`${pkgDir}/package.json`)); // require(`${pkgDir}/package.json`);
 
   const currentMinor = +mainPkg.version.split(".").slice(-1);
   const majorVersion = mainPkg.version.split("-")[0];
