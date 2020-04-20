@@ -39,6 +39,8 @@ async function buildAll(targets, targetVersion = version) {
 async function build(target, targetVersion) {
   assert([2, 3].includes(targetVersion));
 
+  const version = require(path.resolve("package.json")).version;
+
   const pkgDir = path.resolve(`packages/${target}`);
   const pkg = require(`${pkgDir}/package.json`);
   const restorePkg = () =>
@@ -53,8 +55,19 @@ async function build(target, targetVersion) {
     const peerDependencies =
       targetVersion === 2 ? pkg.peerDependencies2 : pkg.peerDependencies3;
 
+    const dependencies =
+      pkg.dependencies && pkg.dependencies["vue-composable"]
+        ? {
+            ...pkg.dependencies,
+            "vue-composable": `^${version}`
+          }
+        : pkg.dependencies;
+
+    pkg.dependencies = dependencies;
+
     const newPkg = {
       ...pkg,
+      dependencies,
       peerDependencies
     };
 
