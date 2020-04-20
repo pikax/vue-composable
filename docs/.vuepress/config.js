@@ -207,7 +207,10 @@ module.exports = {
           title: "External",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/external/axios", "axios"]]
+          children: [
+            ["composable/external/axios", "axios"],
+            ["composable/external/makeAxios", "makeAxios"]
+          ]
         }
       ]
     },
