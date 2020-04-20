@@ -4,7 +4,6 @@
 
 ```ts
 import { Ref } from "@vue/composition-api";
-import { Ref as Ref_2 } from "vue3";
 
 // @public (undocumented)
 export interface ArrayPaginationResult<T extends Array<any>>
@@ -642,16 +641,14 @@ export function refShared<T = any>(
   defaultValue?: RefTyped<T>,
   id?: string
 ):
-  | import("@vue/composition-api/dist/reactivity/ref").Ref<
+  | Ref<
       | T
-      | (T extends import("@vue/composition-api/dist/reactivity/ref").Ref<
-          infer V
-        >
+      | (T extends Ref<infer V>
           ? V
           : import("@vue/composition-api/dist/reactivity").UnwrapRef<T>)
       | undefined
     >
-  | Ref_2<RefTyped<T>>;
+  | Ref<RefTyped<T>>;
 
 // @public (undocumented)
 export type RefSharedMessage<T = any> =
@@ -1522,13 +1519,11 @@ export function useSharedRef<T = any>(
 ): {
   supported: boolean;
   id: number;
-  data: Ref_2<T>;
-  master: import("@vue/composition-api/dist/reactivity/ref").Ref<boolean>;
-  mind: import("@vue/composition-api/dist/reactivity/ref").Ref<SharedRefMind>;
-  editable: Readonly<
-    import("@vue/composition-api/dist/reactivity/ref").Ref<boolean>
-  >;
-  targets: import("@vue/composition-api/dist/reactivity/ref").Ref<number[]>;
+  data: Ref<T>;
+  master: Ref<boolean>;
+  mind: Ref<SharedRefMind>;
+  editable: Readonly<Ref<boolean>>;
+  targets: Ref<number[]>;
   ping: () => void;
   setMind: (t: SharedRefMind) => void;
   addListener: (

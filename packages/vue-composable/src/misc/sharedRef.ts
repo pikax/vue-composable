@@ -1,7 +1,13 @@
-import { ref, watch, onUnmounted, computed, getCurrentInstance } from "../api";
+import {
+  ref,
+  Ref,
+  watch,
+  onUnmounted,
+  computed,
+  getCurrentInstance
+} from "../api";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "../utils";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
-import { Ref } from "vue3";
 
 export const enum RefSharedMessageType {
   INIT,

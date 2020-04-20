@@ -15,12 +15,14 @@ const buildTargets = targets.length > 0 ? targets : allTargets;
 async function publish(package, targetVersion) {
   assert([2, 3].includes(targetVersion));
 
+  const mainPkg = require(path.resolve("package.json"));
+
   const pkgDir = resolvePkgDir(package);
   await build(package, targetVersion);
   const pkg = require(`${pkgDir}/package.json`);
 
-  const currentMinor = +pkg.version.split(".").slice(-1);
-  const majorVersion = pkg.version.split("-")[0];
+  const currentMinor = +mainPkg.version.split(".").slice(-1);
+  const majorVersion = mainPkg.version.split("-")[0];
 
   const tag = targetVersion === 3 ? "next" : false;
   const tempVersion = targetVersion === 3 ? "alpha" : "dev";
@@ -33,18 +35,20 @@ async function publish(package, targetVersion) {
   try {
     const args = ["publish", "--access public"];
     if (tag) {
-      args.push(`--tag ${next}`);
+      args.push(`--tag ${tag}`);
     }
+
+    console.log("publishing for ", package, version, tag || "");
 
     const otp = await prompt({
       type: "input",
       name: "otp",
-      message: "OTP"
+      message: "Enter OTP"
     });
 
     args.push(`--otp`, otp.otp);
 
-    await execa("npm", ["publish", "--access public", tag && `--tag ${next}`], {
+    await execa("yarn", args, {
       stdio: "inherit",
       cwd: pkgDir
     });
