@@ -34,11 +34,12 @@ async function publish(package, targetVersion) {
 
   try {
     const args = ["publish", "--access public"];
+    args.push(`--new-version`, version);
     if (tag) {
-      args.push(`--tag ${tag}`);
+      args.push("--tag", tag);
     }
 
-    console.log("publishing for ", package, version, tag || "");
+    console.log("publishing for ", package, version, tag || "", args);
 
     const otp = await prompt({
       type: "input",
@@ -67,7 +68,5 @@ async function run() {
     }
   }
 }
-
-// publish("vue-composable", 3);
 
 run();

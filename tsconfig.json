@@ -21,8 +21,7 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "@vue-composable/axios": ["packages/axios/src"],
-      "@vue-composable/core": ["packages/core/src"],
-      "@vue-composable/web": ["packages/web/src"]
+      "vue-composable": ["packages/vue-composable/src"]
     }
   },
   "include": ["packages/global.d.ts", "packages/*/src", "packages/*/__tests__"]
