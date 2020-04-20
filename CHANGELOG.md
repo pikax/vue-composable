@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.28
+
+_2020-04-13_
+
+## Breaking change
+
+- [vue-composable/web](https://www.npmjs.com/package/@vue-composable/web) and [vue-composable/core](https://www.npmjs.com/package/@vue-composable/core) are deprecated
+
+## Vue3
+
+- Developing for vue-next first, with the same code base
+
 ## 1.0.0-dev.21
 
 _2020-04-13_

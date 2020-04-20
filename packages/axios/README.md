@@ -2,28 +2,37 @@
 
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
-<!-- [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios) -->
+[![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
 
 [![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios@next)](https://bundlephobia.com/result?p=@vue-composable/axios@next)
-
-# Vue 3
-
-This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
-
-> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
 
 ## Introduction
 
 Use Axios library with the [composition-api](https://github.com/vuejs/composition-api)
 
+# Vue 3
+
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
+
 ## Installing
 
 ```bash
+# @vue/composition-api
+
 # install with yarn
-yarn add vue@next vue-composable@next @vue-composable/axios@next
+yarn add @vue/composition-api @vue-composable/axios
 
 # install with npm
-npm install vue@next vue-composable@next @vue-composable/axios@next
+npm install @vue/composition-api @vue-composable/axios
+
+
+# vue-next / vue@3.0.0-beta
+
+# install with yarn
+yarn add @vue-composable/axios@next
+
+# install with npm
+npm install @vue-composable/axios@next
 ```
 
 ## Documentation
@@ -75,6 +84,29 @@ export default {
 ```
 
 ## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b feat/new-composable`
+3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+4. Push to the branch: `git push origin feat/new-composable`
+5. Submit a pull request
+
+## Build
+
+```bash
+# install packages
+yarn
+
+# build and test for v2
+yarn build --version=2
+yarn test:vue2
+
+# build and test for v3
+yarn build
+yarn test
+```
+
+### New composable
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`
