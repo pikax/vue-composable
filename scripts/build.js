@@ -39,7 +39,7 @@ async function buildAll(targets, targetVersion = version) {
 async function build(target, targetVersion) {
   assert([2, 3].includes(targetVersion));
 
-  const version = require(path.resolve("package.json")).version;
+  const mainPkg = require(path.resolve("package.json"));
 
   const pkgDir = path.resolve(`packages/${target}`);
   const pkg = require(`${pkgDir}/package.json`);
@@ -49,6 +49,12 @@ async function build(target, targetVersion) {
     if (isRelease && pkg.private) {
       return;
     }
+
+    const currentMinor = +mainPkg.version.split(".").slice(-1);
+    const majorVersion = mainPkg.version.split("-")[0];
+
+    const tempVersion = targetVersion === 3 ? "alpha" : "dev";
+    const version = `${majorVersion}-${tempVersion}.${currentMinor}`;
 
     const peerDependencies =
       targetVersion === 2 ? pkg.peerDependencies2 : pkg.peerDependencies3;
