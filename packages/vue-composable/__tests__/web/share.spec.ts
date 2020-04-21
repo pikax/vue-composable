@@ -80,7 +80,7 @@ describe("share", () => {
 
   it("should set cancelled", async () => {
     let rejCb: Function = {} as any;
-    shareSpy.mockReturnValue(new Promise((_, rej) => (rejCb = rej)));
+    shareSpy.mockImplementation(() => new Promise((_, rej) => (rejCb = rej)));
 
     const { share, shared, cancelled } = useShare();
 
@@ -91,8 +91,7 @@ describe("share", () => {
     expect(shared.value).toBe(false);
 
     rejCb({ a: 1 });
-    expect(p).rejects.toBe(false);
-    await p;
+    await expect(p).resolves.toBe(false);
     await nextTick();
     expect(shared.value).toBe(false);
     expect(cancelled.value).toBe(true);

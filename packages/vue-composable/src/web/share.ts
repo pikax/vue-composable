@@ -64,7 +64,7 @@ export function useShare(data?: Partial<NavigatorShareData>): ShareReturn {
           shared.value = true;
           return x;
         })
-        .catch(() => {
+        .catch(e => {
           shared.value = false;
           cancelled.value = true;
           return false;
