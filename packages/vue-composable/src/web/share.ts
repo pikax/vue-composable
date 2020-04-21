@@ -1,5 +1,5 @@
 import { ref, Ref } from "../api";
-import { FALSE_OP } from "../utils";
+import { FALSE_OP, isClient } from "../utils";
 
 declare global {
   interface NavigatorShareData {
@@ -47,7 +47,7 @@ interface ShareReturn {
  * @param data - if provided it will automatically try to share it
  */
 export function useShare(data?: Partial<NavigatorShareData>): ShareReturn {
-  const supported = "share" in navigator;
+  const supported = isClient && "share" in navigator;
 
   let share: Navigator["share"] = () => Promise.resolve(false);
   let canShare: Navigator["canShare"] = FALSE_OP;
