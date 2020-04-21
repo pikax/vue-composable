@@ -2,45 +2,44 @@
 
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
-<!-- [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable) -->
-
-[![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=vue3)](https://coveralls.io/github/pikax/vue-composable?branch=vue3)
-
-<!-- [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable) -->
-
-[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable@next)](https://bundlephobia.com/result?p=vue-composable@next)
-
-# Vue 3
-
-This version is `alpha` with support for the vue3 ([vue-next](https://github.com/vuejs/vue-next))
-
-> Check webpack [vue3 example](https://github.com/pikax/vue-composable/tree/vue3/examples/vue-next-webpack-preview-master) or [CodeSandbox](https://codesandbox.io/s/vue-composable-next-6m5et)
+[![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
+[![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
+[![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
+[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable@next)
 
 ## Introduction
 
-`vue-composable` is out-of-box ready to use the brand new [Vue 3](https://github.com/vuejs/vue-next) [composition-api](https://vue-composition-api-rfc.netlify.com/) generic components.
+`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.
 
 100% typescript based composable components and full type support out-of-box.
 
+Built for [vue-next](https://github.com/vuejs/vue-next) and [composition-api](https://github.com/vuejs/composition-api)
+
 This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code.
-
-[vue-composable](https://www.npmjs.com/package/vue-composable) is composed by two package [@vue-composable/core](./packages/core) and [@vue-composable/web](./packages/web).
-
-- [@vue-composable/core](./packages/core): contains helpers composables, such as Promise and Pagination.
-- [@vue-composable/web](./packages/web): contains [Web API](https://developer.mozilla.org/en-US/docs/Web/API) implementations
 
 # Vue 3
 
-> ## Support for `vue@next` on [vue3 branch](https://github.com/pikax/vue-composable/tree/vue3)
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
 
 ## Installing
 
 ```bash
+# @vue/composition-api
+
 # install with yarn
-yarn add vue@next vue-composable@next
+yarn add @vue/composition-api vue-composable
 
 # install with npm
-npm install vue@next vue-composable@next
+npm install @vue/composition-api vue-composable
+
+
+# vue-next / vue@3.0.0-beta
+
+# install with yarn
+yarn add vue-composable@next
+
+# install with npm
+npm install vue-composable@next
 ```
 
 ## Documentation
@@ -130,10 +129,11 @@ Check our [documentation](https://pikax.me/vue-composable/)
 > New packages needed
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/makeAxios](https://www.npmjs.com/package/@vue-composable/makeAxios) wrap your `axios` instance
 
 ## Information
 
-This is a monorepo project, please check [packages](packages/) or check [vue-composable](packages/vue-composable)
+This is a monorepo project, please check [packages](packages/)
 
 ## Contributing
 
@@ -143,7 +143,24 @@ Tests and Documentation are the most important things for me, because good docum
 
 I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
 
-> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax`
+> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax
+
+Twitter: [@pikax_dev](https://twitter.com/pikax_dev)
+
+## Build
+
+```bash
+# install packages
+yarn
+
+# build and test for v2
+yarn build --version=2
+yarn test:vue2
+
+# build and test for v3
+yarn build
+yarn test
+```
 
 ### New composable
 
