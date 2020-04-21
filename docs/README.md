@@ -47,80 +47,87 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Event
 
-- [Event](composable/event/event) - Attach event listener to a DOM element
-- [Mouse Move](composable/event/onMoveMove) - Attach `mousemove` listener to a DOM element
-- [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
-- [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
+- [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event listener to a DOM element
+- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
+- [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
+- [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 
 ### Date
 
-- [useNow](composable/date/now) - Return reactive custom timer with specified refresh rate
-- [useDateNow](composable/date/dateNow) - Returns reactive `Date.now()` with custom refresh rate
-- [usePerformanceNow](composable/date/performanceNow) - Returns reactive `performance.now()` with custom refresh rate
+- [useNow](https://pikax.me/vue-composable/composable/date/now) : Return reactive custom timer with specified refresh rate
+- [useDateNow](https://pikax.me/vue-composable/composable/date/dateNow) : Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow](https://pikax.me/vue-composable/composable/date/performanceNow) : Returns reactive `performance.now()` with custom refresh rate
 
 ### Format
 
-- [format](composable/format/format) - Reactive string format
-- [path](composable/format/path) - Retrieve object value based on string path
+- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
 
 ### Breakpoint
 
-- [MatchMedia](composable/breakpoint/matchMedia) - reactive `MatchMedia`
-- [Breakpoint](composable/breakpoint/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
-- [Chrome](composable/breakpoint/breakpointChrome) - reactive chrome breakpoints
-- [TailwindCSS](composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
+- [MatchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) - reactive `MatchMedia`
+- [Breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
+- [Chrome](https://pikax.me/vue-composable/composable/breakpoint/breakpointChrome) - reactive chrome breakpoints
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
 
 ### MISC
 
-- [sharedRef](composable/misc/sharedRef) - cross-tab reactive `ref`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 
 ### Storage
 
-- [WebStorage](composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
-- [storage](composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
-- [localStorage](composable/storage/localStorage) - Reactive access to a `localStorage`
-- [sessionStorage](composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
+- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Reactive access to a `localStorage`
+- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
 
 ### Pagination
 
-- [Pagination](composable/pagination/pagination) - Generic reactive pagination controls
-- [Array Pagination](composable/pagination/arrayPagination) - Array pagination
-
-### Promise
-
-- [Promise](composable/promise/promise) - `Promise` reactive resolve and reject
-- [promiseLazy](composable/promise/promiseLazy) - Sugar for [usePromise](composable/promise/promise) `lazy:true`
-- [Cancellable Promise](composable/promise/cancellablePromise) - Allow to cancel promises
-- [Retry](composable/promise/retry) - Provides functionality to retry `promise`
-
-### Web
-
-- [Fetch](composable/web/fetch) - reactive `fetch` wrapper
-- [WebSocket](composable/web/webSocket) - reactive `WebSocket` wrapper
-- [IntersectionObserver](composable/web/intersectionObserver) - reactive `IntersectionObserver`
-- [NetworkInformation](composable/web/networkInformation) - reactive `NetworkInformation` wrapper
-- [Online](composable/web/online) - reactive `navigator.onLine` wrapper
-- [PageVisibility](composable/web/pageVisibility) - reactive `Page Visibility API`
-- [Language](composable/web/language) - reactive `NavigatorLanguage`
-- [BroadcastChannel](composable/web/broadcastChannel) - reactive `BroadcastChannel API`
-- [Geolocation](composable/web/geolocation) - reactive `Geolocation API`
-- [CSS variables](composable/web/cssVariables) - reactive `CSS variables`
-- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web worker API`
-- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+- [Pagination](https://pikax.me/vue-composable/composable/pagination/pagination) - Generic reactive pagination controls
+- [Array Pagination](https://pikax.me/vue-composable/composable/pagination/arrayPagination) - Array pagination
 
 ### Validation
 
-- [Validation](composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### i18n
 
-- [i18n](composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+
+### Intl
+
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+
+### Promise
+
+- [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
+- [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
+- [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
+
+### Web
+
+- [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
+- [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
+- [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) - reactive `IntersectionObserver`
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
+- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
+- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+- [share](https://pikax.me/vue-composable/composable/web/share) - WebShare API
 
 ### External
 
 > New packages needed
 
-- [Axios](composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
+- [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/makeAxios](https://www.npmjs.com/package/@vue-composable/makeAxios) wrap your `axios` instance
 
 ## Usage
 
