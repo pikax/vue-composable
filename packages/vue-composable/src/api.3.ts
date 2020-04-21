@@ -5,8 +5,6 @@ export {
   isRef,
   unref,
   Ref,
-  onMounted,
-  onUnmounted,
   inject,
   InjectionKey,
   provide,
@@ -15,7 +13,12 @@ export {
   computed,
   getCurrentInstance,
   ComputedRef,
-  UnwrapRef
+  UnwrapRef,
+  onMounted,
+  onUnmounted,
+  onActivated,
+  onBeforeMount,
+  onDeactivated
 } from "@vue/runtime-core";
 
 // istanbul ignore next

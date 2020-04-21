@@ -4,14 +4,17 @@ export {
   ref,
   isRef,
   Ref,
-  onMounted,
-  onUnmounted,
   inject,
   InjectionKey,
   provide,
   reactive,
   computed,
-  getCurrentInstance
+  getCurrentInstance,
+  onMounted,
+  onUnmounted,
+  onActivated,
+  onBeforeMount,
+  onDeactivated
 } from "@vue/composition-api";
 
 import { Ref, watch as vueWatch, isRef, set } from "@vue/composition-api";
