@@ -1543,10 +1543,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node@*", "@types/node@^13.13.0":
-  version "13.13.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.0.tgz#30d2d09f623fe32cde9cb582c7a6eda2788ce4a8"
-  integrity sha512-WE4IOAC6r/yBZss1oQGM5zs2D7RuKR6Q+w+X2SouPofnWn+LbCqClRyhO3ZE7Ix8nmFgo/oVuuE01cJT2XB13A==
+"@types/node@*", "@types/node@^13.13.1":
+  version "13.13.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.1.tgz#1ba94c5a177a1692518bfc7b41aec0aa1a14354e"
+  integrity sha512-uysqysLJ+As9jqI5yqjwP3QJrhOcUwBjHUlUxPxjbplwKoILvXVsmYWEhfmAQlrPfbRZmhJB007o4L9sKqtHqQ==
 
 "@types/node@10.17.13":
   version "10.17.13"
@@ -1603,6 +1603,13 @@
   integrity sha512-9T1auFmbPZoxHz0enUFlUuKRy3it01R+hlggyVUMtnCTQRunsQYifnSGb8hET4Xo8yiC0o0r1paW3ud5+rbURg==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@vue-composable/axios@^1.0.0-dev.22":
+  version "1.0.0-dev.28"
+  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-dev.28.tgz#acf234a04498c9b9478bbab46f25e341f7ba6938"
+  integrity sha512-yhuvpmJRRB2f8/Ovl4LZYaF4g33QGFi7Uaq4goomEzsONCI2jaX8wN5QkSfqyR4V/Yq8A8X/KRBwZ/lgy9IA/w==
+  dependencies:
+    vue-composable "^1.0.0-dev.28"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
@@ -11990,6 +11997,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-composable@^1.0.0-dev.22, vue-composable@^1.0.0-dev.28:
+  version "1.0.0-dev.28"
+  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-dev.28.tgz#d60aabf6444edf496f44e3d79c7b7af87395c1cb"
+  integrity sha512-HqIPnZcfS1LxKMouQIJ768SAUo7YYCNnD5Nqq2jDV+eosXlDX0Y3XPHWuoxH9KlaVPPOjM177+PDks5GdDqRUg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
