@@ -25,11 +25,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
-    "build2": "node scripts/build-2.js",
-    "build3": "node scripts/build-3.js",
+    "build:vue2": "yarn build --version=2",
     "release": "node scripts/publish.js",
-    "old:build": "rollup -c rollup.config.js",
-    "old:start": "rollup -c rollup.config.js -w",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
