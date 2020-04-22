@@ -57,7 +57,7 @@ async function build(target, targetVersion) {
     const majorVersion = mainPkg.version.split("-")[0];
 
     const tempVersion = targetVersion === 3 ? "alpha" : "dev";
-    const version = `${majorVersion}-${tempVersion}.${currentMinor}`;
+    const pkgVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
 
     const peerDependencies =
       targetVersion === 2 ? pkg.peerDependencies2 : pkg.peerDependencies3;
@@ -66,7 +66,7 @@ async function build(target, targetVersion) {
       pkg.dependencies && pkg.dependencies["vue-composable"]
         ? {
             ...pkg.dependencies,
-            "vue-composable": `^${version}`
+            "vue-composable": `^${pkgVersion}`
           }
         : pkg.dependencies;
 
@@ -102,7 +102,9 @@ async function build(target, targetVersion) {
             `TARGET:${target}`,
             formats ? `FORMATS:${formats}` : ``,
             buildTypes ? `TYPES:true` : ``,
-            prodOnly ? `PROD_ONLY:true` : ``
+            prodOnly ? `PROD_ONLY:true` : ``,
+            `VERSION:${pkgVersion}`,
+            `VUE_VERSION:${version}`
           ]
             .filter(Boolean)
             .join(",")

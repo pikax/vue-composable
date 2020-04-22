@@ -3,9 +3,17 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## [Unreleased]
+## [Unreleased]
 
---- -->
+---
+
+## Fixes
+
+- Build wrongly outputting `__VUE_2__` env variable instead of replacing
+
+## Added
+
+- Export `COMMIT`, `VERSION` and `VUE_VERSION` in the `index.ts`
 
 ## 1.0.0-dev.29
 

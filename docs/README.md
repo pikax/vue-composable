@@ -127,7 +127,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 > New packages needed
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
-- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/makeAxios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
 
 ## Usage
 
