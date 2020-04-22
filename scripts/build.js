@@ -104,7 +104,7 @@ async function build(target, targetVersion) {
             buildTypes ? `TYPES:true` : ``,
             prodOnly ? `PROD_ONLY:true` : ``,
             `VERSION:${pkgVersion}`,
-            `VUE_VERSION:${version}`
+            `VUE_VERSION:${targetVersion}`
           ]
             .filter(Boolean)
             .join(",")
