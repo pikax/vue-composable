@@ -8,9 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@vue-composable/axios": "^1.0.0-alpha.4",
+    "@vue-composable/axios": "^1.0.0-dev.29",
     "vue": "^2.6.11",
-    "vue-composable": "^1.0.0-dev.22"
+    "vue-composable": "^1.0.0-dev.29"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.3.1",
