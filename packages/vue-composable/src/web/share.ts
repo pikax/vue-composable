@@ -1,17 +1,19 @@
 import { ref, Ref } from "../api";
 import { FALSE_OP, isClient } from "../utils";
 
-declare global {
-  interface NavigatorShareData {
-    url: string;
-    text: string;
-    title: string;
-  }
+interface NavigatorShareData {
+  url: string;
+  text: string;
+  title: string;
+}
 
-  interface Navigator {
-    share: (data: Partial<NavigatorShareData>) => Promise<any>;
-    canShare: (data: Partial<NavigatorShareData>) => boolean;
-  }
+interface NavigatorShareDefinition {
+  share: (data: Partial<NavigatorShareData>) => Promise<any>;
+  canShare: (data: Partial<NavigatorShareData>) => boolean;
+}
+
+declare global {
+  interface Navigator extends NavigatorShareDefinition {}
 }
 
 interface ShareReturn {
@@ -34,11 +36,11 @@ interface ShareReturn {
   /**
    * Share information with user
    */
-  share: Navigator["share"];
+  share: NavigatorShareDefinition["share"];
   /**
    * Check if you can share with user
    */
-  canShare: Navigator["canShare"];
+  canShare: NavigatorShareDefinition["canShare"];
 }
 
 /**
@@ -49,8 +51,8 @@ interface ShareReturn {
 export function useShare(data?: Partial<NavigatorShareData>): ShareReturn {
   const supported = isClient && "share" in navigator;
 
-  let share: Navigator["share"] = () => Promise.resolve(false);
-  let canShare: Navigator["canShare"] = FALSE_OP;
+  let share: NavigatorShareDefinition["share"] = () => Promise.resolve(false);
+  let canShare: NavigatorShareDefinition["canShare"] = FALSE_OP;
   let shared = ref(false);
   let cancelled = ref(false);
 
