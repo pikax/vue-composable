@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/axios",
-  "version": "1.0.0-dev.30",
+  "version": "1.0.0-alpha.31",
   "description": "@vue-composable/axios",
   "main": "index.js",
   "module": "dist/axios.esm-bundler.js",
