@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 _2020-04-22_
 
+## Fix
+
+- Valid typescript output definition file
+
+## 1.0.0-dev.31
+
+_2020-04-22_
+
 ## Fixes
 
 - Build wrongly outputting `__VUE_2__` env variable instead of replacing

@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-alpha.31",
+  "version": "1.0.0-alpha.32",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
