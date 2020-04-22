@@ -49,7 +49,7 @@
     "axios": "^0.19.2"
   },
   "peerDependencies3": {
-    "@vue/runtime-core": "^3.0.0-beta.1",
+    "@vue/runtime-core": "^3.0.0-beta.3",
     "axios": "^0.19.2"
   },
   "devDependencies": {

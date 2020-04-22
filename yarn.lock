@@ -1604,6 +1604,13 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@vue-composable/axios@^1.0.0-dev.32":
+  version "1.0.0-dev.32"
+  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-dev.32.tgz#db90a5e525c97d17461940352885b1e81a23a1b4"
+  integrity sha512-sCflRfOhfQ9j0SIHfwABq2451nEE+eAR90eBEWpbJbV0B2aK8v7F7zC9glBZruCuoLh8b5qIPosYVtPsiRelww==
+  dependencies:
+    vue-composable "^1.0.0-alpha.28"
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -11767,6 +11774,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-composable@^1.0.0-dev.32:
+  version "1.0.0-dev.32"
+  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-dev.32.tgz#5e1b98b9c1fe7aeb161e5212c62783b265c1e258"
+  integrity sha512-pqxbEZuxp1MlYH7XuyPhQa9uNbEcKo9GFiLtUVSJ1njgHx5tJFdBwbV/MUVEwaDL+scvHc4kd8Fyaq1+a5ziBQ==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
