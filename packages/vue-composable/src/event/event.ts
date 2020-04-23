@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, watch, Ref } from "../api";
+import { watch, Ref } from "../api";
 import { RefTyped, NO_OP, wrap } from "../utils";
 
 export type RemoveEventFunction = () => void;
@@ -63,26 +63,21 @@ export function useEvent(
     const addEventListener = (e: Element) =>
       e.addEventListener(name, listener, options);
 
-    let removeWatch = NO_OP;
+    const removeWatch = watch(
+      element,
+      (n, _, cleanUp) => {
+        if (n) {
+          addEventListener(n);
+          cleanUp(() => removeEventListener(n));
+        }
+      },
+      { immediate: true }
+    );
+
     remove = () => {
       removeEventListener(element.value);
       removeWatch();
     };
-    onUnmounted(remove);
-    onMounted(() => {
-      watch(
-        element,
-        (n, o) => {
-          if (o) {
-            removeEventListener(o);
-          }
-          if (n) {
-            addEventListener(n);
-          }
-        },
-        { immediate: true }
-      );
-    });
   }
 
   return remove;
