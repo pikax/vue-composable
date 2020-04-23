@@ -19,7 +19,6 @@ export const createVue = <
   document.body.appendChild(el);
 
   const mount = (): ComponentPublicInstance<TProps> => {
-    debugger;
     return app.mount(el as any) as any;
   };
 
