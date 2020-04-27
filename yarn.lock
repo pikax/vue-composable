@@ -1926,6 +1926,13 @@
   dependencies:
     "@vue/shared" "3.0.0-beta.3"
 
+"@vue/reactivity@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.4.tgz#c9b6d8442f6197d9e6ab2e6d87872dc56cadd092"
+  integrity sha512-1AU80//po4tUXf71xQR1XC9ldFiKx1fM/uNQcUtlhgctgRy2avqQZKbWSnY0XgbK8dQWtMpkEZoOFT+I1+IURQ==
+  dependencies:
+    "@vue/shared" "3.0.0-beta.4"
+
 "@vue/runtime-core@3.0.0-beta.2":
   version "3.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.2.tgz#0413292d8746c532527dbcdbfcbc56be312f05ad"
@@ -1934,13 +1941,21 @@
     "@vue/reactivity" "3.0.0-beta.2"
     "@vue/shared" "3.0.0-beta.2"
 
-"@vue/runtime-core@3.0.0-beta.3", "@vue/runtime-core@^3.0.0-beta.3":
+"@vue/runtime-core@3.0.0-beta.3":
   version "3.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.3.tgz#8e665381ca517a721198bc189b2db3deab5050e5"
   integrity sha512-GHIlKNlJW0sdlro6ouu7Sy34M4I8FAfn6V02RdUwbPwJJc1VICoejnSS1i88i6riGMgNtRhmxW1NDNPCTY1/vQ==
   dependencies:
     "@vue/reactivity" "3.0.0-beta.3"
     "@vue/shared" "3.0.0-beta.3"
+
+"@vue/runtime-core@^3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.4.tgz#13b043b6704666d902344a7a6ce0c2770c7308d9"
+  integrity sha512-g/WYLmsWrEkgHDIpW3Zt7e1+duxcoqi5uh4isNlpHPhhwBFfTi+ghAqf3TO7G1VOhZY6qMqgMDM/g155ibkeHw==
+  dependencies:
+    "@vue/reactivity" "3.0.0-beta.4"
+    "@vue/shared" "3.0.0-beta.4"
 
 "@vue/runtime-dom@3.0.0-beta.2":
   version "3.0.0-beta.2"
