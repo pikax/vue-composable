@@ -1926,6 +1926,13 @@
   dependencies:
     "@vue/shared" "3.0.0-beta.3"
 
+"@vue/reactivity@3.0.0-beta.5":
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.5.tgz#f1edfacf1c90ebc2ef2e0d4c5b6af1fdaa86fa5d"
+  integrity sha512-6tvll/4F/guShcYK7cktbboHwyNLMfp/gyIUraLYutIRBTDh+OR1J1G2vC53xR22InCjPls5/tbA3eMPHkYv1Q==
+  dependencies:
+    "@vue/shared" "3.0.0-beta.5"
+
 "@vue/runtime-core@3.0.0-beta.2":
   version "3.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.2.tgz#0413292d8746c532527dbcdbfcbc56be312f05ad"
@@ -1934,13 +1941,21 @@
     "@vue/reactivity" "3.0.0-beta.2"
     "@vue/shared" "3.0.0-beta.2"
 
-"@vue/runtime-core@3.0.0-beta.3", "@vue/runtime-core@^3.0.0-beta.3":
+"@vue/runtime-core@3.0.0-beta.3":
   version "3.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.3.tgz#8e665381ca517a721198bc189b2db3deab5050e5"
   integrity sha512-GHIlKNlJW0sdlro6ouu7Sy34M4I8FAfn6V02RdUwbPwJJc1VICoejnSS1i88i6riGMgNtRhmxW1NDNPCTY1/vQ==
   dependencies:
     "@vue/reactivity" "3.0.0-beta.3"
     "@vue/shared" "3.0.0-beta.3"
+
+"@vue/runtime-core@^3.0.0-beta.5":
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.5.tgz#9e5cf5671d74c2f48c2fabcca6b6a00bf2d7e4cf"
+  integrity sha512-AewCm2zfiY3TAKZhRO619TmebXuSohW8FdDtPgiKw7Dl/DrNt3s09L8g8JPNln4Y2VelfF7gtg/Y9nG98cFrGg==
+  dependencies:
+    "@vue/reactivity" "3.0.0-beta.5"
+    "@vue/shared" "3.0.0-beta.5"
 
 "@vue/runtime-dom@3.0.0-beta.2":
   version "3.0.0-beta.2"
@@ -1974,6 +1989,11 @@
   version "3.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.4.tgz#2c1f18896d598549a9241641b406f0886a710494"
   integrity sha512-itHxDgTzurGLiwkWc9IMPNhac0hv4mkoszGsRQclCKYmJ+Fao913i7pN3Smnl8xUYtv9Bo7EWyxmT60irN0+gg==
+
+"@vue/shared@3.0.0-beta.5":
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.5.tgz#44114e58b54162bdb5673049bf17adcadbad1dc3"
+  integrity sha512-RKMeR+yuS2HokYtkFb72YZ6EnxDiIjEXLTflLkHBp2fdEj4liHSJ3cESVtcfNOGr5sWd8w4dG2t4xloTDx24Fg==
 
 "@vue/web-component-wrapper@^1.2.0":
   version "1.2.0"
