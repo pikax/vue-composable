@@ -83,7 +83,7 @@
     "execa": "^4.0.0",
     "fs-extra": "^9.0.0",
     "husky": "^4.2.5",
-    "jest": "^25.4.0",
+    "jest": "^25.5.4",
     "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.2",
     "lint-staged": "^10.2.2",
