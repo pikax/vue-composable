@@ -69,7 +69,7 @@
     "@rollup/plugin-replace": "^2.3.2",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.2",
-    "@vue/compiler-sfc": "^3.0.0-beta.4",
+    "@vue/compiler-sfc": "3.0.0-beta.3",
     "@vue/composition-api": "^0.5.0",
     "@vue/runtime-core": "^3.0.0-beta.3",
     "@vuepress/plugin-back-to-top": "^1.4.1",

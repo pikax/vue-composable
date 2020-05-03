@@ -1859,6 +1859,23 @@
     "@vue/compiler-core" "3.0.0-beta.4"
     "@vue/shared" "3.0.0-beta.4"
 
+"@vue/compiler-sfc@3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.0.0-beta.3.tgz#c3d2d0a7fa606b246bb875a5fa6f7b19a03d0b09"
+  integrity sha512-R8gfZX5fm43dig/cKf0jOKOIhKXIZibf4ycF+yjbNGzHfA2lgVbBGOp/4dYxe9l7ajCBqGTgHkAHwXTeorKKYA==
+  dependencies:
+    "@vue/compiler-core" "3.0.0-beta.3"
+    "@vue/compiler-dom" "3.0.0-beta.3"
+    "@vue/compiler-ssr" "3.0.0-beta.3"
+    "@vue/shared" "3.0.0-beta.3"
+    consolidate "^0.15.1"
+    hash-sum "^2.0.0"
+    lru-cache "^5.1.1"
+    merge-source-map "^1.1.0"
+    postcss "^7.0.21"
+    postcss-selector-parser "^6.0.2"
+    source-map "^0.6.1"
+
 "@vue/compiler-sfc@^3.0.0-beta.4":
   version "3.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.0.0-beta.4.tgz#057e7269effd390959b20190d30b39f3adab90e7"
@@ -1876,6 +1893,14 @@
     postcss-modules "^2.0.0"
     postcss-selector-parser "^6.0.2"
     source-map "^0.6.1"
+
+"@vue/compiler-ssr@3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.0.0-beta.3.tgz#b9e0be53bf302640bf0edc6faea7f94ac96c503a"
+  integrity sha512-X2Rh+y9pZPIM9WnzlOxyuLhQPvk5VmGjrwKG/YPDvS0F1cCLN8jANercm3IIQvR6NZ6aMjUwytohaTeUCzFoEw==
+  dependencies:
+    "@vue/compiler-dom" "3.0.0-beta.3"
+    "@vue/shared" "3.0.0-beta.3"
 
 "@vue/compiler-ssr@3.0.0-beta.4":
   version "3.0.0-beta.4"
@@ -9524,6 +9549,15 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.2
   version "7.0.27"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.27.tgz#cc67cdc6b0daa375105b7c424a85567345fc54d9"
   integrity sha512-WuQETPMcW9Uf1/22HWUWP9lgsIC+KEHg2kozMflKjbeUtw9ujvFX6QmIfozaErDkmLWS9WEnEdEe6Uo9/BNTdQ==
+  dependencies:
+    chalk "^2.4.2"
+    source-map "^0.6.1"
+    supports-color "^6.1.0"
+
+postcss@^7.0.21:
+  version "7.0.28"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.28.tgz#d349ced7743475717ba91f6810efb58c51fb5dbb"
+  integrity sha512-YU6nVhyWIsVtlNlnAj1fHTsUKW5qxm3KEgzq2Jj6KTEFOTK8QWR12eIDvrlWhiSTK8WIBFTBhOJV4DY6dUuEbw==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"

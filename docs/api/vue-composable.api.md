@@ -1928,6 +1928,7 @@ export function useSessionStorage<T extends object = object>(
   sync?: boolean
 ): LocalStorageReturn<T>;
 
+// Warning: (ae-forgotten-export) The symbol "NavigatorShareData" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ShareReturn" needs to be exported by the entry point index.d.ts
 //
 // @public
