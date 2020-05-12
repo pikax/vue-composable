@@ -99,7 +99,7 @@
     "typescript": "^3.8.3",
     "vue": "^2.6.11",
     "vue3": "npm:vue@3.0.0-beta.3",
-    "vuepress": "^1.4.1",
+    "vuepress": "^1.5.0",
     "zlib": "^1.0.5"
   }
 }
