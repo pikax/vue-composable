@@ -71,7 +71,7 @@
     "@types/node": "^13.13.5",
     "@vue/compiler-sfc": "3.0.0-beta.9",
     "@vue/composition-api": "^0.5.0",
-    "@vue/runtime-core": "^3.0.0-beta.3",
+    "@vue/runtime-core": "^3.0.0-beta.13",
     "@vuepress/plugin-back-to-top": "^1.4.1",
     "@vuepress/plugin-pwa": "^1.4.1",
     "axios": "^0.19.2",
