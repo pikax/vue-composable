@@ -1939,6 +1939,13 @@
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.1.1.tgz#18723530d304f443021da2292d6ec9502826104a"
   integrity sha512-8VCoJeeH8tCkzhkpfOkt+abALQkS11OIHhte5MBzYaKMTqK0A3ZAKEUVAffsOklhEv7t0yrQt696Opnu9oAx+w==
 
+"@vue/reactivity@3.0.0-beta.14":
+  version "3.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.14.tgz#a041ec24ce2e545583a6a1a42774311c16870a91"
+  integrity sha512-csqLljnM+8OBBAyzeUXGIYJhhph0DLOsHQwJGmz7uc342taW6XSi4MXaLk5MRiigunfmXxEswJGziwsh+4YP3g==
+  dependencies:
+    "@vue/shared" "3.0.0-beta.14"
+
 "@vue/reactivity@3.0.0-beta.2":
   version "3.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.2.tgz#216922e264dc447a508f756374c09fb26a7cbe1c"
@@ -1961,13 +1968,21 @@
     "@vue/reactivity" "3.0.0-beta.2"
     "@vue/shared" "3.0.0-beta.2"
 
-"@vue/runtime-core@3.0.0-beta.3", "@vue/runtime-core@^3.0.0-beta.3":
+"@vue/runtime-core@3.0.0-beta.3":
   version "3.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.3.tgz#8e665381ca517a721198bc189b2db3deab5050e5"
   integrity sha512-GHIlKNlJW0sdlro6ouu7Sy34M4I8FAfn6V02RdUwbPwJJc1VICoejnSS1i88i6riGMgNtRhmxW1NDNPCTY1/vQ==
   dependencies:
     "@vue/reactivity" "3.0.0-beta.3"
     "@vue/shared" "3.0.0-beta.3"
+
+"@vue/runtime-core@^3.0.0-beta.14":
+  version "3.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.14.tgz#4f8162befd6ad1ac55cc6c142edc8301b090658a"
+  integrity sha512-5WKNMd7lX0vdSMeNd1cF0VhM+N+kXicSXKKZtTfQLUfZt1gLuE3nlBhv1PqjGf79zXw5lQLzz6XoUY1i52rEkA==
+  dependencies:
+    "@vue/reactivity" "3.0.0-beta.14"
+    "@vue/shared" "3.0.0-beta.14"
 
 "@vue/runtime-dom@3.0.0-beta.2":
   version "3.0.0-beta.2"
@@ -1986,6 +2001,11 @@
     "@vue/runtime-core" "3.0.0-beta.3"
     "@vue/shared" "3.0.0-beta.3"
     csstype "^2.6.8"
+
+"@vue/shared@3.0.0-beta.14":
+  version "3.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.14.tgz#886afe5c233a5b255c186142324c40f114958af5"
+  integrity sha512-mnK5teJMLzsBE56Kys+uiyR/jAl1kbokHZ++MnlP7ls9icPqZ/QQE/VTDl3QJ7IHteS2VR6ytAz/Aa/4Dpv/ew==
 
 "@vue/shared@3.0.0-beta.2":
   version "3.0.0-beta.2"
