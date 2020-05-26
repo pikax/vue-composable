@@ -6,39 +6,17 @@
 import { AxiosInstance } from "axios";
 import { AxiosRequestConfig } from "axios";
 import { AxiosResponse } from "axios";
+import { ComputedRef } from "@vue/runtime-core";
 import { PromiseResultFactory } from "vue-composable";
-import { Ref } from "@vue/composition-api";
+import { Ref } from "@vue/runtime-core";
 
+// Warning: (ae-forgotten-export) The symbol "MakeAxiosReturn" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export function makeAxios(
+export function makeAxios<T>(
   client: AxiosInstance,
   throwException?: boolean
-): {
-  client: AxiosInstance;
-  data: Readonly<
-    import("@vue/composition-api/dist/reactivity/ref").Ref<Readonly<any>>
-  >;
-  status: Readonly<
-    import("@vue/composition-api/dist/reactivity/ref").Ref<number>
-  >;
-  statusText: Readonly<
-    import("@vue/composition-api/dist/reactivity/ref").Ref<string>
-  >;
-  cancel: (message?: string | undefined) => void;
-  isCancelled: import("@vue/composition-api/dist/reactivity/ref").Ref<boolean>;
-  cancelledMessage: import("@vue/composition-api/dist/reactivity/ref").Ref<
-    string | null | undefined
-  >;
-  exec: (
-    request: string | AxiosRequestConfig
-  ) => Promise<AxiosResponse<any> | undefined>;
-  promise: import("@vue/reactivity").Ref<
-    Promise<AxiosResponse<any>> | undefined
-  >;
-  result: import("@vue/reactivity").Ref<AxiosResponse<any> | null>;
-  loading: import("@vue/reactivity").Ref<boolean>;
-  error: import("@vue/reactivity").Ref<any>;
-};
+): MakeAxiosReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "AxiosReturn" needs to be exported by the entry point index.d.ts
 //

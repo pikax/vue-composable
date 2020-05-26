@@ -32,9 +32,7 @@ describe("axios", () => {
 
     await exec(request);
 
-    expect(client.value.request).toBeCalledWith(
-      expect.objectContaining(request)
-    );
+    expect(client.request).toBeCalledWith(expect.objectContaining(request));
   });
 
   it("should call axios using string and options", async () => {
@@ -46,7 +44,7 @@ describe("axios", () => {
 
     await exec(url);
 
-    expect(client.value.request).toBeCalledWith(
+    expect(client.request).toBeCalledWith(
       expect.objectContaining({ url, ...request })
     );
   });
@@ -57,9 +55,7 @@ describe("axios", () => {
 
     await exec(url);
 
-    expect(client.value.request).toBeCalledWith(
-      expect.objectContaining({ url })
-    );
+    expect(client.request).toBeCalledWith(expect.objectContaining({ url }));
   });
 
   it("should set response", async () => {
@@ -79,7 +75,7 @@ describe("axios", () => {
       config: {}
     };
 
-    (client.value.request as jest.Mock).mockImplementationOnce(() => response);
+    (client.request as jest.Mock).mockImplementationOnce(() => response);
 
     const r = await exec(request);
 
@@ -107,7 +103,7 @@ describe("axios", () => {
       config: {}
     };
 
-    (client.value.request as jest.Mock).mockImplementationOnce(() => {
+    (client.request as jest.Mock).mockImplementationOnce(() => {
       throw {
         response
       };
@@ -128,7 +124,7 @@ describe("axios", () => {
       url: "./api/1"
     };
 
-    (client.value.request as jest.Mock).mockImplementationOnce(() => {
+    (client.request as jest.Mock).mockImplementationOnce(() => {
       throw new Error("invalid");
     });
 
@@ -158,7 +154,7 @@ describe("axios", () => {
     } = useAxios();
 
     const message = "cancelled ";
-    (client.value.request as jest.Mock).mockImplementationOnce(
+    (client.request as jest.Mock).mockImplementationOnce(
       async (x: AxiosRequestConfig) => {
         expect(x).toBeDefined();
         expect(x.cancelToken).toBeDefined();

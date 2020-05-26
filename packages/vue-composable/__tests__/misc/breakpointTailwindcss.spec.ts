@@ -1,4 +1,5 @@
 jest.mock("../../src/api", () => ({
+  //@ts-ignore
   ...(__VUE_2__
     ? jest.requireActual("../../src/api.2")
     : jest.requireActual("../../src/api.3")),

@@ -24,7 +24,7 @@ export function useWebSocket(
 ): WebSocketReturn {
   const supported = isClient && "WebSocket" in window;
   let ws: WebSocket | null = null;
-  const messageEvent = ref<MessageEvent | null>(null);
+  const messageEvent = ref(null) as Ref<MessageEvent | null>;
   const errorEvent = ref<Event | null>(null);
   const data = ref<any>(null);
 

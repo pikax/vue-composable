@@ -30,8 +30,10 @@ export function useBroadcastChannel<T = any>(
   const supported = isClient && "BroadcastChannel" in self;
   const data = ref<T | null>(null) as Ref<T | null>;
 
-  const messageEvent = ref<MessageEvent | null>(null);
-  const errorEvent = ref<MessageEvent | null>(null);
+  const messageEvent = ref<MessageEvent | null>(
+    null
+  ) as Ref<MessageEvent | null>;
+  const errorEvent = ref<MessageEvent | null>(null) as Ref<MessageEvent | null>;
   const errored = ref(false);
   const isClosed = ref(false);
 
