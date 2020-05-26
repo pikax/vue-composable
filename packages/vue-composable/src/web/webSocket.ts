@@ -1,11 +1,31 @@
-import { ref } from "../api";
+import { ref, Ref } from "../api";
 import { isClient, NO_OP } from "../utils";
 
-export function useWebSocket(url: string, protocols?: string | string[]) {
+export interface WebSocketReturn {
+  supported: boolean;
+
+  data: Ref<any | null>;
+
+  messageEvent: Ref<MessageEvent | null>;
+  errorEvent: Ref<Event | null>;
+  errored: Ref<boolean>;
+  isClosed: Ref<boolean>;
+  isOpen: Ref<boolean>;
+
+  send: (data: string | ArrayBufferLike | Blob | ArrayBufferView) => void;
+  close: Function;
+
+  ws: WebSocket | null;
+}
+
+export function useWebSocket(
+  url: string,
+  protocols?: string | string[]
+): WebSocketReturn {
   const supported = isClient && "WebSocket" in window;
   let ws: WebSocket | null = null;
-  const messageEvent = ref<MessageEvent>();
-  const errorEvent = ref<Event>();
+  const messageEvent = ref<MessageEvent | null>(null);
+  const errorEvent = ref<Event | null>(null);
   const data = ref<any>(null);
 
   const isOpen = ref(false);
@@ -33,7 +53,7 @@ export function useWebSocket(url: string, protocols?: string | string[]) {
           console.warn(
             '[useWebSocket] message rate is too high, if you are using "data" or "messageEvent"' +
               " you might not get updated of all the messages." +
-              ' Use "ws..addEventListener("message", handler)" instead'
+              ' Use "ws.addEventListener("message", handler)" instead'
           );
         }
         lastMessage = Date.now();

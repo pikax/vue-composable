@@ -6,9 +6,8 @@
 import { AxiosInstance } from "axios";
 import { AxiosRequestConfig } from "axios";
 import { AxiosResponse } from "axios";
-import { ComputedRef } from "@vue/runtime-core";
 import { PromiseResultFactory } from "vue-composable";
-import { Ref } from "@vue/runtime-core";
+import { Ref } from "@vue/composition-api";
 
 // @public (undocumented)
 export function makeAxios(
@@ -16,17 +15,20 @@ export function makeAxios(
   throwException?: boolean
 ): {
   client: AxiosInstance;
-  data: import("@vue/reactivity").ComputedRef<any>;
-  status: import("@vue/reactivity").ComputedRef<number>;
-  statusText: import("@vue/reactivity").ComputedRef<string>;
+  data: Readonly<
+    import("@vue/composition-api/dist/reactivity/ref").Ref<Readonly<any>>
+  >;
+  status: Readonly<
+    import("@vue/composition-api/dist/reactivity/ref").Ref<number>
+  >;
+  statusText: Readonly<
+    import("@vue/composition-api/dist/reactivity/ref").Ref<string>
+  >;
   cancel: (message?: string | undefined) => void;
-  isCancelled:
-    | import("@vue/reactivity").Ref<false>
-    | import("@vue/reactivity").Ref<true>;
-  cancelledMessage:
-    | import("@vue/reactivity").Ref<undefined>
-    | import("@vue/reactivity").Ref<null>
-    | import("@vue/reactivity").Ref<string>;
+  isCancelled: import("@vue/composition-api/dist/reactivity/ref").Ref<boolean>;
+  cancelledMessage: import("@vue/composition-api/dist/reactivity/ref").Ref<
+    string | null | undefined
+  >;
   exec: (
     request: string | AxiosRequestConfig
   ) => Promise<AxiosResponse<any> | undefined>;
