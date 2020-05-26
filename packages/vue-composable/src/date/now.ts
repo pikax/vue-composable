@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "../api";
+import { ref, onUnmounted, Ref } from "../api";
 import { isFunction, isClient, NO_OP, isBoolean } from "../utils";
 
 export interface NowOptions {
@@ -26,6 +26,17 @@ export interface UseNowOptions {
    * ```
    */
   timeFn?: () => number;
+}
+
+export interface NowReturn {
+  /**
+   * Now
+   */
+  now: Ref<number>;
+  /**
+   * Stop updating now
+   */
+  remove: () => void;
 }
 
 /**

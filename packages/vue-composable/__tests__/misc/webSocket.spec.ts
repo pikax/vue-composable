@@ -37,7 +37,7 @@ describe("WebSocket", () => {
     const { messageEvent } = useWebSocket(FAKE_URL);
     await server.connected;
 
-    expect(messageEvent.value).toBeUndefined();
+    expect(messageEvent.value).toBeNull();
 
     server.send("test");
     expect(messageEvent.value).not.toBeNull();

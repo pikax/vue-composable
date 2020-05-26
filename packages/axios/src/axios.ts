@@ -1,28 +1,8 @@
-import { computed, Ref, ComputedRef } from "./api";
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from "axios";
-import {
-  PromiseResultFactory,
-  isString,
-  isBoolean,
-  isObject
-} from "vue-composable";
-import { makeAxios } from "./makeAxios";
+import axios, { AxiosRequestConfig } from "axios";
+import { isString, isBoolean, isObject } from "vue-composable";
+import { makeAxios, MakeAxiosReturn } from "./makeAxios";
 
-interface AxiosReturn<TData>
-  extends PromiseResultFactory<
-    Promise<AxiosResponse<TData>>,
-    [AxiosRequestConfig | string]
-  > {
-  readonly client: Ref<Readonly<AxiosInstance>>;
-  readonly data: ComputedRef<TData | null>;
-  readonly status: Ref<number | null>;
-  readonly statusText: Ref<string | null>;
-
-  cancel: (message?: string) => void;
-  readonly isCancelled: Ref<boolean>;
-  readonly cancelledMessage: Ref<string | null | undefined>;
-  // readonly
-}
+export interface AxiosReturn<TData> extends MakeAxiosReturn<TData> {}
 
 export function useAxios<TData = any>(
   throwException?: boolean
@@ -61,9 +41,8 @@ export function useAxios<TData = any>(
     : throwException;
 
   const axiosClient = axios.create(config);
-  const client = computed(() => axiosClient);
 
-  const use = makeAxios(axiosClient, throwException);
+  const use = makeAxios<TData>(axiosClient, throwException);
 
   // if url provided in the config, execute it straight away
   // NOTE: `false` is passed to the `exec` to prevent the exception to be thrown
@@ -73,8 +52,5 @@ export function useAxios<TData = any>(
     (use.exec as any)(config, false);
   }
 
-  return {
-    ...use,
-    client
-  };
+  return use;
 }

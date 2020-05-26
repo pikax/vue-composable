@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from "../api";
+import { ref, onUnmounted, Ref } from "../api";
 import { PASSIVE_EV, isClient, NO_OP, isArray } from "../utils";
 
 // from https://github.com/dai-shi/react-hooks-worker/blob/1e842ad15c558fc04dd7339a62aaa43f46d1c7cd/src/exposeWorker.js
@@ -29,11 +29,21 @@ export function exposeWorker(this: Worker, func: (...args: any[]) => any) {
   };
 }
 
+export interface WorkerReturn<TData = any, TArgs = any | any[]> {
+  worker: Worker | undefined;
+  data: Ref<TData | undefined>;
+  postMessage: (data: TArgs) => void;
+  terminate: () => void;
+  errorEvent: Ref<Event | undefined>;
+  errored: Ref<boolean>;
+  terminated: Ref<boolean>;
+}
+
 export function useWorker<TData = any, TArgs = any | any[]>(
   stringUrl: string | URL,
   args?: TArgs,
   options?: WorkerOptions
-) {
+): WorkerReturn<TData, TArgs> {
   const supported = isClient && "Worker" in self;
   const errorEvent = ref<Event>();
   const data = ref<TData>();
