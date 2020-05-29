@@ -26,6 +26,7 @@
     "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
     "build:vue2": "yarn build --version=2",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
     "release": "node scripts/publish.js",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
