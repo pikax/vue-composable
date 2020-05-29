@@ -84,6 +84,9 @@ export interface CancellablePromiseResult<TCancel = any> {
 // @public (undocumented)
 export const COMMIT: string;
 
+// @public (undocumented)
+export function createSSRTitle(defaultTitle?: string): Ref<string>;
+
 // @public
 export type CssVarDef = CssVarDefinition | string;
 
@@ -1257,8 +1260,8 @@ export function useIntlNumberFormat(
 
 // @public (undocumented)
 export function useLanguage(): {
-  language: Ref<String>;
-  languages: Ref<readonly String[]>;
+  language: Ref<string>;
+  languages: Ref<readonly string[]>;
 };
 
 // @public (undocumented)
@@ -1569,6 +1572,11 @@ export function useSharedRef<T = any>(
 ): SharedRefReturn<T>;
 
 // @public (undocumented)
+export function useSSRTitle(
+  defaultTitle?: RefTyped<string>
+): string | Ref<string | undefined> | undefined;
+
+// @public (undocumented)
 export function useStorage(
   key: string,
   defaultValue?: RefTyped<string>,
@@ -1581,6 +1589,11 @@ export function useStorage<T extends object = any>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useTitle(
+  overrideTitle?: string
+): string | Ref<string | undefined> | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts
