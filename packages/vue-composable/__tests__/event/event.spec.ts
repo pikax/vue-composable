@@ -3,7 +3,7 @@ import { createVue, nextTick } from "../utils";
 import { useEvent, NO_OP } from "../../src";
 
 describe("event", () => {
-  it("should add event on lifecycle", () => {
+  it("should add event listener", () => {
     const element: Element = {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn()
@@ -17,15 +17,23 @@ describe("event", () => {
         useEvent(element, "load", mockHandler, options);
       }
     });
-    expect(element.addEventListener).not.toHaveBeenCalled();
+    if (__VUE_2__) {
+      // vue 2 calls setup before mount
+      expect(element.addEventListener).toHaveBeenCalled();
+    } else {
+      expect(element.addEventListener).not.toHaveBeenCalled();
+    }
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     mount();
+
     expect(element.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
       options
     );
+
+    expect(element.addEventListener).toHaveBeenCalledTimes(1);
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     destroy();
@@ -50,7 +58,11 @@ describe("event", () => {
         useEvent(element, "load", mockHandler, options);
       }
     });
-    expect(element.addEventListener).not.toHaveBeenCalled();
+    if (__VUE_2__) {
+      expect(element.addEventListener).toHaveBeenCalled();
+    } else {
+      expect(element.addEventListener).not.toHaveBeenCalled();
+    }
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     mount();
@@ -82,7 +94,11 @@ describe("event", () => {
         useEvent(element, "load", mockHandler, options);
       }
     });
-    expect(element.value.addEventListener).not.toHaveBeenCalled();
+    if (__VUE_2__) {
+      expect(element.value.addEventListener).toHaveBeenCalled();
+    } else {
+      expect(element.value.addEventListener).not.toHaveBeenCalled();
+    }
     expect(element.value.removeEventListener).not.toHaveBeenCalled();
 
     mount();

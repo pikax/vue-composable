@@ -1,5 +1,3 @@
-const webpack = require("webpack");
-
 module.exports = {
   define: {
     __VUE_2__: true
@@ -188,7 +186,8 @@ module.exports = {
             ["composable/web/geolocation", "Geolocation API"],
             ["composable/web/cssVariables", "CSS variables"],
             ["composable/web/worker", "WebWorker API"],
-            ["composable/web/workerFunction", "WebWorker Function"]
+            ["composable/web/workerFunction", "WebWorker Function"],
+            ["composable/web/share", "WebShare API"]
           ]
         },
         {
@@ -226,23 +225,4 @@ module.exports = {
       }
     }
   }
-
-  // chainWebpack: (config, isServer) => {
-  //   // config is an instance of ChainableConfig
-
-  //   config.plugin("define").tap((definitions) => {
-  //     definitions[0] = Object.assign(definitions[0], {
-  //       __VUE_2__: true,
-  //     });
-  //     return definitions;
-  //   });
-  // },
-
-  // chainWebpack(config) {
-  //   config.plugin("injections").tap(([options]) => [
-  //     Object.assign(options, {
-  //       __VUE_2__: true,
-  //     }),
-  //   ]);
-  // },
 };

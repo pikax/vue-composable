@@ -17,7 +17,14 @@ export {
   onDeactivated
 } from "@vue/composition-api";
 
-import { Ref, watch as vueWatch, isRef, set } from "@vue/composition-api";
+import {
+  Ref,
+  watch as vueWatch,
+  isRef,
+  set,
+  getCurrentInstance,
+  onUnmounted
+} from "@vue/composition-api";
 import Vue from "vue";
 
 interface WatcherOption {
@@ -36,7 +43,6 @@ export type ComputedRef<T> = Readonly<Ref<Readonly<T>>>;
 export type UnwrapRef<T> = T extends Ref<infer R> ? R : T;
 
 // vue watch
-
 declare type CleanupRegistrator = (invalidate: () => void) => void;
 declare type SimpleEffect = (onCleanup: CleanupRegistrator) => void;
 declare type StopHandle = () => void;
@@ -80,9 +86,15 @@ export function watch<T extends WatcherSource<unknown>[]>(
   options?: Partial<WatcherOption>
 ): StopHandle;
 export function watch(source: any, cb: any, options?: any): any {
-  return vueWatch(source, cb, {
+  const w = vueWatch(source, cb, {
     ...options,
     lazy:
       typeof options.immediate === "boolean" ? !options.immediate : undefined
   });
+
+  const vm = getCurrentInstance();
+  if (vm) {
+    onUnmounted(w);
+  }
+  return w;
 }

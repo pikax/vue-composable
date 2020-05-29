@@ -1,13 +1,32 @@
-import { computed, ref } from "./api";
+import { computed, ref, ComputedRef, Ref } from "./api";
 import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosInstance,
   CancelTokenSource
 } from "axios";
-import { usePromise, isString } from "vue-composable";
+import { usePromise, isString, PromiseResultFactory } from "vue-composable";
 
-export function makeAxios(client: AxiosInstance, throwException = false) {
+export interface MakeAxiosReturn<TData>
+  extends PromiseResultFactory<
+    Promise<AxiosResponse<TData>>,
+    [AxiosRequestConfig | string]
+  > {
+  readonly client: AxiosInstance;
+  readonly data: ComputedRef<TData | null>;
+  readonly status: Ref<number | null>;
+  readonly statusText: Ref<string | null>;
+
+  cancel: (message?: string) => void;
+  readonly isCancelled: Ref<boolean>;
+  readonly cancelledMessage: Ref<string | null | undefined>;
+  // readonly
+}
+
+export function makeAxios<T>(
+  client: AxiosInstance,
+  throwException = false
+): MakeAxiosReturn<T> {
   const isCancelled = ref(false);
   const cancelledMessage = ref<string | undefined | null>(null);
 

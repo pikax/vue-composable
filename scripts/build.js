@@ -44,6 +44,9 @@ async function build(target, targetVersion) {
   const pkgDir = path.resolve(`packages/${target}`);
   const pkg = require(`${pkgDir}/package.json`);
   const renameRestore = await apiRename(target, targetVersion);
+  let packageRestore = () =>
+    fs.writeJSON(`${pkgDir}/package.json`, pkg, { spaces: 2 });
+
   try {
     // only build published packages for release
     if (isRelease && pkg.private) {
@@ -54,7 +57,7 @@ async function build(target, targetVersion) {
     const majorVersion = mainPkg.version.split("-")[0];
 
     const tempVersion = targetVersion === 3 ? "alpha" : "dev";
-    const version = `${majorVersion}-${tempVersion}.${currentMinor}`;
+    const pkgVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
 
     const peerDependencies =
       targetVersion === 2 ? pkg.peerDependencies2 : pkg.peerDependencies3;
@@ -63,11 +66,9 @@ async function build(target, targetVersion) {
       pkg.dependencies && pkg.dependencies["vue-composable"]
         ? {
             ...pkg.dependencies,
-            "vue-composable": `^${version}`
+            "vue-composable": `^${pkgVersion}`
           }
         : pkg.dependencies;
-
-    pkg.dependencies = dependencies;
 
     const newPkg = {
       ...pkg,
@@ -102,7 +103,8 @@ async function build(target, targetVersion) {
             formats ? `FORMATS:${formats}` : ``,
             buildTypes ? `TYPES:true` : ``,
             prodOnly ? `PROD_ONLY:true` : ``,
-            lean ? `LEAN:true` : ``
+            `VERSION:${pkgVersion}`,
+            `VUE_VERSION:${targetVersion}`
           ]
             .filter(Boolean)
             .join(",")
@@ -110,6 +112,9 @@ async function build(target, targetVersion) {
         { stdio: "inherit" }
       );
     } catch (e) {
+      await renameRestore();
+      await packageRestore();
+
       return process.exit(1);
     }
 
@@ -154,6 +159,8 @@ async function build(target, targetVersion) {
           `API Extractor completed with ${extractorResult.errorCount} errors` +
             ` and ${extractorResult.warningCount} warnings`
         );
+        await renameRestore();
+        await packageRestore();
         process.exitCode = 1;
       }
 
@@ -162,6 +169,7 @@ async function build(target, targetVersion) {
   } finally {
     // await restorePkg();
     await renameRestore();
+    await packageRestore();
   }
 }
 
@@ -200,18 +208,18 @@ async function apiRename(target, targetVersion) {
   assert([2, 3].includes(targetVersion));
 
   const pkgDir = path.resolve(`packages/${target}`);
-  await fs.rename(`${pkgDir}/src/api.ts`, `${pkgDir}/src/api.N.ts`);
-  await fs.rename(
+  // await fs.rename(`${pkgDir}/src/api.ts`, `${pkgDir}/src/api.N.ts`);
+  await fs.copy(
     `${pkgDir}/src/api.${targetVersion}.ts`,
-    `${pkgDir}/src/api.ts`
+    `${pkgDir}/src/api.ts`,
+    { overwrite: true }
   );
 
   const restore = async () => {
-    await fs.rename(
-      `${pkgDir}/src/api.ts`,
-      `${pkgDir}/src/api.${targetVersion}.ts`
-    );
-    await fs.rename(`${pkgDir}/src/api.N.ts`, `${pkgDir}/src/api.ts`);
+    await fs.copy(`${pkgDir}/src/api.3.ts`, `${pkgDir}/src/api.ts`, {
+      overwrite: true
+    });
+    // await fs.rename(`${pkgDir}/src/api.N.ts`, `${pkgDir}/src/api.ts`);
   };
 
   return restore;

@@ -1,19 +1,39 @@
-import { ref, onUnmounted } from "../api";
+import { ref, onUnmounted, Ref } from "../api";
 import { PASSIVE_EV, NO_OP, isClient } from "../utils";
 
 export interface BroadcastMessageEvent<T> extends MessageEvent {
   readonly data: T;
 }
 
+export interface BroadCastChannelReturn<T> {
+  supported: boolean;
+
+  data: Ref<T | null>;
+
+  messageEvent: Ref<MessageEvent | null>;
+  errorEvent: Ref<MessageEvent | null>;
+  errored: Ref<boolean>;
+  isClosed: Ref<boolean>;
+
+  send: (data: T) => void;
+  close: Function;
+  addListener: (
+    cb: (ev: BroadcastMessageEvent<T>) => void,
+    options?: boolean | AddEventListenerOptions
+  ) => void;
+}
+
 export function useBroadcastChannel<T = any>(
   name: string,
   onBeforeClose?: Function
-) {
+): BroadCastChannelReturn<T> {
   const supported = isClient && "BroadcastChannel" in self;
-  const data = ref<T | null>(null);
+  const data = ref<T | null>(null) as Ref<T | null>;
 
-  const messageEvent = ref<MessageEvent | null>(null);
-  const errorEvent = ref<MessageEvent | null>(null);
+  const messageEvent = ref<MessageEvent | null>(
+    null
+  ) as Ref<MessageEvent | null>;
+  const errorEvent = ref<MessageEvent | null>(null) as Ref<MessageEvent | null>;
   const errored = ref(false);
   const isClosed = ref(false);
 

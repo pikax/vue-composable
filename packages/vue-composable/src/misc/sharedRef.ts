@@ -4,7 +4,8 @@ import {
   watch,
   onUnmounted,
   computed,
-  getCurrentInstance
+  getCurrentInstance,
+  ComputedRef
 } from "../api";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "../utils";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
@@ -70,7 +71,26 @@ export type RefSharedMessage<T = any> =
   | RefSharedMessagePing
   | RefSharedMessagePong;
 
-export function useSharedRef<T = any>(name: string, defaultValue?: T) {
+export interface SharedRefReturn<T = any> {
+  supported: boolean;
+  id: number;
+  data: Ref<T>;
+  master: Ref<false> | Ref<true>;
+  mind: Ref<SharedRefMind.HIVE> | Ref<SharedRefMind.MASTER>;
+  editable: ComputedRef<boolean>;
+  targets: Ref<number[]>;
+  ping: () => void;
+  setMind: (t: SharedRefMind) => void;
+  addListener: (
+    cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void,
+    options?: boolean | AddEventListenerOptions | undefined
+  ) => void;
+}
+
+export function useSharedRef<T = any>(
+  name: string,
+  defaultValue?: T
+): SharedRefReturn<T> {
   const { addListener, send, close, supported } = useBroadcastChannel<
     RefSharedMessage<T>
   >(name, () => disconnect());
@@ -243,7 +263,10 @@ export function useSharedRef<T = any>(name: string, defaultValue?: T) {
 
 let shared: Set<string> | undefined = undefined;
 
-export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
+export function refShared<T = any>(
+  defaultValue?: RefTyped<T>,
+  id?: string
+): Ref<RefTyped<T>> {
   const vm = getCurrentInstance()!;
   const name = id
     ? id
@@ -255,7 +278,7 @@ export function refShared<T = any>(defaultValue?: RefTyped<T>, id?: string) {
     if (__DEV__) {
       console.warn("[refShared] please assign an id, returning `ref`");
     }
-    return ref(defaultValue);
+    return ref(defaultValue) as Ref<T>;
   }
 
   /* istanbul ignore else  */

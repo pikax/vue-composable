@@ -9,7 +9,6 @@ if (!process.env.TARGET) {
   throw new Error("TARGET package must be specified via --environment flag.");
 }
 
-const masterVersion = require("./package.json").version;
 const packagesDir = path.resolve(__dirname, "packages");
 const packageDir = path.resolve(packagesDir, process.env.TARGET);
 const name = path.basename(packageDir);
@@ -168,7 +167,7 @@ function createReplacePlugin(
 ) {
   return replace({
     __COMMIT__: `"${process.env.COMMIT}"`,
-    __VERSION__: `"${masterVersion}"`,
+    __VERSION__: `"${process.env.VERSION}"`,
     __DEV__: isBundlerESMBuild
       ? // preserve to be handled by bundlers
         `(process.env.NODE_ENV !== 'production')`
@@ -184,7 +183,9 @@ function createReplacePlugin(
     // the lean build drops options related code with buildOptions.lean: true
     "process.env.NODE_ENV": isBundlerESMBuild
       ? `process.env.NODE_ENV`
-      : "'production'"
+      : "'production'",
+
+    __VUE_2__: process.env.VUE_VERSION === "2"
   });
 }
 

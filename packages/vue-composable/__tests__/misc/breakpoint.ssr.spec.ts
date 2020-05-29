@@ -1,4 +1,5 @@
 jest.mock("../../src/utils", () => ({
+  //@ts-ignore
   ...jest.requireActual("../../src/utils"),
   isClient: false
 }));

@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 --- -->
 
+## 1.0.0-dev.31
+
+_2020-04-22_
+
+## Fix
+
+- Valid typescript output definition file
+
+## 1.0.0-dev.31
+
+_2020-04-22_
+
+## Fixes
+
+- Build wrongly outputting `__VUE_2__` env variable instead of replacing
+
+## Added
+
+- Export `COMMIT`, `VERSION` and `VUE_VERSION` in the `index.ts`
+
+## 1.0.0-dev.29
+
+_2020-04-21_
+
+## Added
+
+- [share](https://pikax.me/vue-composable/composable/web/share) - WebShare API
+
 ## 1.0.0-dev.28
 
 _2020-04-13_

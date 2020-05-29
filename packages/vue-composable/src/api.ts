@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export {
   ref,
   isRef,
