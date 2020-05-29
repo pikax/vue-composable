@@ -18,8 +18,9 @@
     <fetch v-else-if="selected === 3" />
     <hello-world v-else-if="selected === 4" />
     <swapi v-else-if="selected === 5" />
-    <todo-list v-else-if="selected === 6" />
-    <validation v-else-if="selected === 7" />
+    <scroll-lock v-else-if="selected === 6" />
+    <todo-list v-else-if="selected === 7" />
+    <validation v-else-if="selected === 8" />
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import Fetch from "./components/Fetch.vue";
 import HelloWorld from "./components/HelloWorld.vue";
 import Swapi from "./components/SWAPI.vue";
 import TodoList from "./components/TodoList.vue";
+import ScrollLock from "./components/ScrollLock.vue";
 import { ref } from "vue";
 
 export default {
@@ -44,7 +46,8 @@ export default {
     HelloWorld,
     Swapi,
     TodoList,
-    Validation
+    Validation,
+    ScrollLock
   },
 
   setup(props, ctx) {

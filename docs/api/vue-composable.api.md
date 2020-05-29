@@ -1257,8 +1257,8 @@ export function useIntlNumberFormat(
 
 // @public (undocumented)
 export function useLanguage(): {
-  language: Ref<String>;
-  languages: Ref<readonly String[]>;
+  language: Ref<string>;
+  languages: Ref<readonly string[]>;
 };
 
 // @public (undocumented)
@@ -1274,6 +1274,45 @@ export function useLocalStorage<T extends object = any>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// Warning: (ae-forgotten-export) The symbol "ScrollLockOptions" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ScrollLockReturn" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<Element[]>,
+  options?: ScrollLockOptions
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<Element[]>,
+  lockedClass: string
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element>,
+  options?: ScrollLockOptions
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element>,
+  lockedClass: string
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  options?: ScrollLockOptions
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  lockedClass: string
+): ScrollLockReturn;
 
 // @public (undocumented)
 export function useMatchMedia(

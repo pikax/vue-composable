@@ -1,3 +1,3 @@
 export * from "./matchMedia";
 export * from "./sharedRef";
-export * from "./scrollLock";
+export * from "./lockScroll";
