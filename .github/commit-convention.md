@@ -68,7 +68,7 @@ Other prefixes are up to your discretion. Suggested prefixes are `docs`, `chore`
 
 ### Scope
 
-The scope could be anything specifying the place of the commit change. For example `core`, `compiler`, `ssr`, `v-model`, `transition` etc...
+The scope could be anything specifying the place of the commit change. Recommended using the composable name For example `usePromise`, `usePath`, `useI18n`, etc...
 
 ### Subject
 
