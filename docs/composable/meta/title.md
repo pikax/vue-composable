@@ -78,8 +78,6 @@ const title = provideSSRTitle(app, "Awesome app");
 // setup stuff
 const appContent = await renderToString(app);
 
-// title will
-
 return `
 <html>
   <head>
