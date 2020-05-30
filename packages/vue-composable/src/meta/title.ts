@@ -17,7 +17,7 @@ export function provideSSRTitle(
   app: { provide: typeof provide },
   title?: RefTyped<string>
 ) {
-  const r = ref(title ?? "");
+  const r = ref(title === undefined ? "" : title);
   app.provide(SSR_TITLE_KEY, r);
   return r;
 }
