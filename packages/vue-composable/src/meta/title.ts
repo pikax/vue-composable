@@ -7,46 +7,57 @@ import {
   onUnmounted,
   watch
 } from "../api";
-import { RefTyped, isClient, isString, unwrap } from "../utils";
+import { RefTyped, isClient, isString } from "../utils";
 
 const SSR_TITLE_KEY: InjectionKey<Ref<string>> = /*#__PURE__*/ Symbol(
+  /* istanbul ignore else */
   (__DEV__ && "SSR_TITLE_KEY") || ``
 );
 
 export function provideSSRTitle(
   app: { provide: typeof provide },
   title?: RefTyped<string>
-) {
+): Ref<string> {
   const r = ref(title === undefined ? "" : title);
   app.provide(SSR_TITLE_KEY, r);
   return r;
 }
 
-export function useSSRTitle(defaultTitle?: RefTyped<string> | null) {
+export function useSSRTitle(defaultTitle?: string | null): Ref<string | null> {
   const s = Symbol();
   const title = inject<Ref<string>>(SSR_TITLE_KEY, s as any);
   // @ts-ignore check if it exists
   if (title === s) {
+    /* istanbul ignore else */
     if (__DEV__) {
       console.warn(
-        "[useSSRTitle] can't find SSRTitle have you forgotten calling `createSSRTitle`?"
+        "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?"
       );
     }
-    return defaultTitle;
+    /* istanbul ignore else */
+    return ref(isString(defaultTitle) ? defaultTitle : "") as Ref<string>;
   }
-  const unwrappedTitle = unwrap(defaultTitle);
-  if (isString(unwrappedTitle)) {
-    title.value = unwrappedTitle;
+  if (title === undefined) {
+    // probably not in `setup()`
+    /* istanbul ignore else */
+    return ref(isString(defaultTitle) ? defaultTitle : "") as Ref<string>;
   }
-  return inject(SSR_TITLE_KEY, ref(defaultTitle));
+  if (isString(defaultTitle)) {
+    title.value = defaultTitle;
+  }
+  return title;
 }
 
-export function useTitle(overrideTitle: string | null = null) {
+export function useTitle(
+  overrideTitle: string | null = null
+): Ref<string | null> {
   if (!isClient) {
     return useSSRTitle(overrideTitle);
   }
 
-  const title = ref(overrideTitle);
+  const title = ref<string | null>(
+    isString(overrideTitle) ? overrideTitle : document.title
+  );
   const observer = new MutationObserver(m => {
     title.value = m[0].target.textContent;
   });
@@ -59,20 +70,12 @@ export function useTitle(overrideTitle: string | null = null) {
       }
     },
     {
-      immediate: true
+      immediate: true,
+      flush: "sync"
     }
   );
 
-  let titleElement = document.querySelector("title");
-  // if it doesn't exist create a new one
-  if (!titleElement) {
-    if (__DEV__) {
-      console.warn("[useTitle] title element not found, creating a new one");
-    }
-    titleElement = document.createElement("title");
-    document.head.append(titleElement);
-  }
-
+  const titleElement = document.querySelector("title")!;
   observer.observe(titleElement, { childList: true });
   onUnmounted(() => observer.disconnect());
 
