@@ -13,29 +13,32 @@ const SSR_TITLE_KEY: InjectionKey<Ref<string>> = /*#__PURE__*/ Symbol(
   (__DEV__ && "SSR_TITLE_KEY") || ``
 );
 
-let currentSSRTitle: Ref<string | undefined> | undefined = undefined;
-
-export function startSSRTitle(defaultTitle?: RefTyped<string>) {
-  currentSSRTitle = ref(defaultTitle);
+export function provideSSRTitle(
+  app: { provide: typeof provide },
+  title?: RefTyped<string>
+) {
+  const r = ref(title ?? "");
+  app.provide(SSR_TITLE_KEY, r);
+  return r;
 }
-export function stopSSRTitle() {
-  currentSSRTitle = undefined;
-}
 
-export function useSSRTitle(overrideTitle?: RefTyped<string> | null) {
-  if (currentSSRTitle === undefined) {
+export function useSSRTitle(defaultTitle?: RefTyped<string> | null) {
+  const s = Symbol();
+  const title = inject<Ref<string>>(SSR_TITLE_KEY, s as any);
+  // @ts-ignore check if it exists
+  if (title === s) {
     if (__DEV__) {
       console.warn(
-        "[useSSRTitle] can't find SSRTitle have you forgotten to `startSSR()`?"
+        "[useSSRTitle] can't find SSRTitle have you forgotten calling `createSSRTitle`?"
       );
     }
-    return overrideTitle;
+    return defaultTitle;
   }
-  const unwrapped = unwrap(overrideTitle);
-  if (isString(unwrapped)) {
-    currentSSRTitle.value = unwrapped;
+  const unwrappedTitle = unwrap(defaultTitle);
+  if (isString(unwrappedTitle)) {
+    title.value = unwrappedTitle;
   }
-  return currentSSRTitle;
+  return inject(SSR_TITLE_KEY, ref(defaultTitle));
 }
 
 export function useTitle(overrideTitle: string | null = null) {
