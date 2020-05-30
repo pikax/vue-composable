@@ -9,8 +9,8 @@ import {
 } from "../api";
 import { RefTyped, isClient, isString } from "../utils";
 
+// istanbul ignore next
 const SSR_TITLE_KEY: InjectionKey<Ref<string>> = /*#__PURE__*/ Symbol(
-  /* istanbul ignore else */
   (__DEV__ && "SSR_TITLE_KEY") || ``
 );
 
@@ -34,12 +34,12 @@ export function useSSRTitle(defaultTitle?: string | null): Ref<string | null> {
         "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?"
       );
     }
-    /* istanbul ignore else */
+    // istanbul ignore next
     return ref(isString(defaultTitle) ? defaultTitle : "") as Ref<string>;
   }
   if (title === undefined) {
     // probably not in `setup()`
-    /* istanbul ignore else */
+    // istanbul ignore next
     return ref(isString(defaultTitle) ? defaultTitle : "") as Ref<string>;
   }
   if (isString(defaultTitle)) {
