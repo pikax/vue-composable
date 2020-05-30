@@ -28,9 +28,14 @@ describe("worker function SSR", () => {
         // faking app
         provideSSRTitle({ provide });
 
-        onUnmounted(() => {
+        if (__VUE_2__) {
+          // TODO wait until  https://github.com/vuejs/composition-api/pull/311  is merged
           lastTitle = useSSRTitle();
-        });
+        } else {
+          onUnmounted(() => {
+            lastTitle = useSSRTitle();
+          });
+        }
       }
     });
 
@@ -46,9 +51,13 @@ describe("worker function SSR", () => {
   });
 
   it("should return default if not called in a setup", () => {
-    const title = useTitle("ssr");
+    if (__VUE_2__) {
+      expect(() => useTitle("ssr")).toThrow();
+    } else {
+      const title = useTitle("ssr");
 
-    expect(title.value).toBe("ssr");
+      expect(title.value).toBe("ssr");
+    }
   });
 
   it("should return default if `provideSSRTitle` not called", () => {
@@ -71,7 +80,7 @@ describe("worker function SSR", () => {
   it("should return the same ref", () => {
     const titleRef = ref("hello");
 
-    let comp1TitleRef;
+    let comp1TitleRef: Ref<string | null> = {} as any;
 
     const comp1 = {
       template: "<p></p>",
@@ -94,8 +103,4 @@ describe("worker function SSR", () => {
     app.mount();
     expect(comp1TitleRef).toBe(titleRef);
   });
-
-  // if (!__VUE_2__) {
-  //   it.todo("should inject to vue3 ssr app", () => {});
-  // }
 });

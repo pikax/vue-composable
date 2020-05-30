@@ -7,7 +7,7 @@ import {
   onUnmounted,
   watch
 } from "../api";
-import { RefTyped, isClient, isString } from "../utils";
+import { RefTyped, isClient, isString, wrap } from "../utils";
 
 // istanbul ignore next
 const SSR_TITLE_KEY: InjectionKey<Ref<string>> = /*#__PURE__*/ Symbol(
@@ -18,7 +18,7 @@ export function provideSSRTitle(
   app: { provide: typeof provide },
   title?: RefTyped<string>
 ): Ref<string> {
-  const r = ref(title === undefined ? "" : title);
+  const r = wrap(title === undefined ? "" : title);
   app.provide(SSR_TITLE_KEY, r);
   return r;
 }
@@ -51,7 +51,7 @@ export function useSSRTitle(defaultTitle?: string | null): Ref<string | null> {
 export function useTitle(
   overrideTitle: string | null = null
 ): Ref<string | null> {
-  if (!isClient) {
+  if (__SSR__ && !isClient) {
     return useSSRTitle(overrideTitle);
   }
 

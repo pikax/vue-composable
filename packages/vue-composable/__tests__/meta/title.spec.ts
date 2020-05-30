@@ -1,5 +1,6 @@
 import { useTitle } from "../../src";
 import { nextTick, createVue } from "../utils";
+import { Ref } from "../../src/api";
 
 describe("title", () => {
   const _mutationObserver = window.MutationObserver;
@@ -44,7 +45,13 @@ describe("title", () => {
   });
 
   it("should set title", () => {
-    const title = useTitle("test");
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle("test");
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
   });
@@ -56,7 +63,13 @@ describe("title", () => {
       expect(document.head.querySelector("title")).toBeNull();
     }
 
-    const title = useTitle("test");
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle("test");
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
 
@@ -70,7 +83,13 @@ describe("title", () => {
       expect(document.head.querySelector("title")).toBeNull();
     }
 
-    const title = useTitle();
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle();
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
 
@@ -78,7 +97,13 @@ describe("title", () => {
   });
 
   it("should update title if changed", async () => {
-    const title = useTitle("test");
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle("test");
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
 
@@ -88,7 +113,13 @@ describe("title", () => {
   });
 
   it("should be updated if the document.title changes", async () => {
-    const title = useTitle("test");
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle("test");
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
 
@@ -98,7 +129,13 @@ describe("title", () => {
   });
 
   it("should only update on string", async () => {
-    const title = useTitle("test");
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle("test");
+      }
+    }).mount();
 
     expect(document.title).toBe(title.value);
 
@@ -111,7 +148,13 @@ describe("title", () => {
   it("should not override title", () => {
     document.title = "test";
 
-    const title = useTitle();
+    let title: Ref<string | null> = undefined as any;
+    createVue({
+      template: `<p></p>`,
+      setup() {
+        title = useTitle();
+      }
+    }).mount();
 
     expect(title.value).toBe("test");
   });
@@ -125,7 +168,6 @@ describe("title", () => {
       }
     });
 
-    expect(constructorFn).not.toHaveBeenCalled();
     mount();
     expect(constructorFn).toHaveBeenCalled();
     expect(disconnectFn).not.toHaveBeenCalled();

@@ -4,6 +4,7 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
 import { UnwrapRef } from "@vue/runtime-core";
 
@@ -83,9 +84,6 @@ export interface CancellablePromiseResult<TCancel = any> {
 
 // @public (undocumented)
 export const COMMIT: string;
-
-// @public (undocumented)
-export function createSSRTitle(defaultTitle?: string): Ref<string>;
 
 // @public
 export type CssVarDef = CssVarDefinition | string;
@@ -500,6 +498,9 @@ export const isObject: (val: unknown) => val is Record<any, any>;
 export function isPromise<T = any>(val: unknown): val is Promise<T>;
 
 // @public (undocumented)
+export const isSSR: boolean;
+
+// @public (undocumented)
 export const isString: (val: unknown) => val is string;
 
 // @public (undocumented)
@@ -669,6 +670,14 @@ export interface PromiseResultFactory<
   // (undocumented)
   exec: (...args: TArgs) => Promise<PromiseType<T> | undefined>;
 }
+
+// @public (undocumented)
+export function provideSSRTitle(
+  app: {
+    provide: typeof provide;
+  },
+  title?: RefTyped<string>
+): Ref<string>;
 
 // @public (undocumented)
 export type RefElement = Element | Ref<Element | undefined>;
@@ -1572,9 +1581,7 @@ export function useSharedRef<T = any>(
 ): SharedRefReturn<T>;
 
 // @public (undocumented)
-export function useSSRTitle(
-  defaultTitle?: RefTyped<string>
-): string | Ref<string | undefined> | undefined;
+export function useSSRTitle(defaultTitle?: string | null): Ref<string | null>;
 
 // @public (undocumented)
 export function useStorage(
@@ -1591,9 +1598,7 @@ export function useStorage<T extends object = any>(
 ): LocalStorageReturn<T>;
 
 // @public (undocumented)
-export function useTitle(
-  overrideTitle?: string
-): string | Ref<string | undefined> | undefined;
+export function useTitle(overrideTitle?: string | null): Ref<string | null>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts
