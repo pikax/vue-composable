@@ -64,6 +64,10 @@ export default defineComponent({
 
 When in `SSR` it **won't** try to change the `document.title` instead it will use a single `ref` across the render process.
 
+::: warning
+To use SSR you need to define `process.env.SSR:'true'`
+:::
+
 ### example
 
 ```ts
