@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-dev.32",
+  "version": "1.0.0-dev.33",
   "name": "vue-composable-monorepo",
   "workspaces": [
     "packages/*",

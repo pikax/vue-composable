@@ -1,3 +1,11 @@
+# [1.0.0-dev.33](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.32...v1.0.0-dev.33) (2020-05-31)
+
+### Features
+
+- **useTitle:** useTitle composable ([#331](https://github.com/pikax/vue-composable/issues/331)) ([42670d3](https://github.com/pikax/vue-composable/commit/42670d3d1ec416f1a36e418789428817b36d4070))
+- add `__SSR__` from `process.env.SSR === 'true'` ([ebe2f43](https://github.com/pikax/vue-composable/commit/ebe2f4365fd63b0b555a01cb75ddd00180cbffac))
+- improve return types and update deps, fixing outstanding PRs ([#316](https://github.com/pikax/vue-composable/issues/316)) ([c2e0afc](https://github.com/pikax/vue-composable/commit/c2e0afc016e983e4b88b1799ee399cd7de58ef80))
+
 # [1.0.0-dev.32](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.29...v1.0.0-dev.32) (2020-04-22)
 
 ### Bug Fixes
