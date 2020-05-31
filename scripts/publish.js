@@ -69,31 +69,29 @@ async function run() {
   const targetVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
 
   // generate changelog
-  await run(`yarn`, ["changelog"]);
+  await execa(`yarn`, ["changelog"]);
+
+  // publish packages
+  console.log("\nPublishing packages...");
+  const versions = [2, 3];
+
+  for (const version of versions) {
+    for (const target of buildTargets) {
+      await publish(target, version);
+    }
+  }
 
   const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
   if (stdout) {
-    step("\nCommitting changes...");
+    console.log("\nCommitting changes...");
     await execa("git", ["add", "-A"]);
     await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
   } else {
     console.log("No changes to commit.");
   }
 
-  // publish packages
-  step("\nPublishing packages...");
-  for (const pkg of packages) {
-    const versions = [2, 3];
-
-    for (const version of versions) {
-      for (const target of buildTargets) {
-        await publish(target, version);
-      }
-    }
-  }
-
   // push to GitHub
-  step("\nPushing to GitHub...");
+  console.log("\nPushing to GitHub...");
   await execa("git", ["tag", `v${targetVersion}`]);
   await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
   await execa("git", ["push"]);
