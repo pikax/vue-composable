@@ -9,7 +9,13 @@ export const createVue = <
   component: T,
   props?: TProps
 ) => {
-  const app = createApp(component, props);
+  const app = createApp(
+    {
+      template: `<div></div>`,
+      ...component
+    },
+    props
+  );
 
   const el = document.createElement("div");
   // Reset the document.body
