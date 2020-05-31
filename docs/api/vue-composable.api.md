@@ -4,6 +4,7 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
 import { UnwrapRef } from "@vue/runtime-core";
@@ -350,6 +351,9 @@ export function getCssVariableFor(
   element: HTMLElement,
   name: string
 ): CssVariable;
+
+// @public (undocumented)
+export const hydrationPlugin: Plugin_2;
 
 // @public
 export interface i18n extends Record<string, i18nMessageValue> {}
@@ -1213,6 +1217,9 @@ export function useGeolocation(
   } | null>;
   highAccuracy: Ref<boolean | null>;
 };
+
+// @public (undocumented)
+export function useHydration(): Readonly<Ref<boolean>>;
 
 // @public
 export function useI18n<
