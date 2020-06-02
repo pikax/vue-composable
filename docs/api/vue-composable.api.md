@@ -1614,6 +1614,12 @@ export function useValidation<T extends UseValidation<E>, E = any>(
 ): ValidationOutput<E> & ValidationGroupResult;
 
 // @public (undocumented)
+export function useVModel<TProps, PropName extends keyof TProps>(
+  props: TProps,
+  name: PropName
+): Ref<TProps[PropName]>;
+
+// @public (undocumented)
 export function useWebSocket(
   url: string,
   protocols?: string | string[]

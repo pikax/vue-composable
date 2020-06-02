@@ -73,6 +73,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
+- [VModel](https://pikax.me/vue-composable/composable/misc/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 
 ### Storage
 

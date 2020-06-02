@@ -76,6 +76,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
+- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 
 ### Storage
 
