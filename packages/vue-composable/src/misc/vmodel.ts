@@ -3,7 +3,8 @@ import { ref, Ref, computed, getCurrentInstance } from "../api";
 export function useVModel<TProps, PropName extends keyof TProps>(
   props: TProps,
   name: PropName
-): Ref<TProps[PropName]> {
+): Ref<TProps[PropName]>;
+export function useVModel(props: Record<string, any>, name: string): Ref<any> {
   /* istanbul ignore if */
   if (__VUE_2__) {
     console.warn("[useVModel] is not supported on @vue/composition-api.");
@@ -19,6 +20,7 @@ export function useVModel<TProps, PropName extends keyof TProps>(
       return props[name];
     },
     set(v) {
+      // @ts-ignore when building v2 the instance doesn't have `emit`
       instance.emit(`update:${name}`, v);
     }
   });
