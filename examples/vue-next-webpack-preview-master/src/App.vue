@@ -2,6 +2,8 @@
   <img src="./logo.png" />
   <h1>Hello Vue 3!</h1>
 
+  <p>hydrating: {{ hydrating }}</p>
+
   <ul>
     <li
       v-for="({ name, use }, i) in components"
@@ -34,6 +36,8 @@ import HelloWorld from "./components/HelloWorld.vue";
 import Swapi from "./components/SWAPI.vue";
 import TodoList from "./components/TodoList.vue";
 import { ref } from "vue";
+import { useHydration } from "vue-composable";
+import { onMounted } from "vue";
 
 export default {
   components: {
@@ -48,6 +52,13 @@ export default {
   },
 
   setup(props, ctx) {
+    const hydrating = useHydration();
+
+    console.log("setup hydrating", hydrating.value);
+    onMounted(() => {
+      console.log("mounted hydrating", hydrating.value);
+    });
+
     const selected = ref(0);
     const components = require
       .context("./components", true, /\.(vue)$/)
@@ -62,7 +73,8 @@ export default {
 
     return {
       components,
-      selected
+      selected,
+      hydrating
     };
   }
 };

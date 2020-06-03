@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/axios",
-  "version": "1.0.0-alpha.32",
+  "version": "1.0.0-alpha.33",
   "description": "@vue-composable/axios",
   "main": "index.js",
   "module": "dist/axios.esm-bundler.js",
@@ -38,7 +38,7 @@
   "homepage": "https://pikax.me/vue-composable/composable/external/axios.html",
   "sideEffects": false,
   "dependencies": {
-    "vue-composable": "^1.0.0-alpha.28"
+    "vue-composable": "^1.0.0-alpha.32"
   },
   "peerDependencies": {
     "@vue/runtime-core": "^3.0.0-beta.14",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "@types/node": "^14.0.5",
+    "@types/node": "^14.0.9",
     "@vue/runtime-core": "^3.0.0-beta.14",
     "typescript": "^3.8.3"
   }

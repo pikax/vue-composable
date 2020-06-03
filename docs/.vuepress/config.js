@@ -1,6 +1,7 @@
 module.exports = {
   define: {
-    __VUE_2__: true
+    __VUE_2__: true,
+    "process.env.SSR": true
   },
   title: "vue-composable",
   description:
@@ -201,6 +202,12 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [["composable/i18n/i18n", "i18n"]]
+        },
+        {
+          title: "meta",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/meta/title", "Title"]]
         },
         {
           title: "External",

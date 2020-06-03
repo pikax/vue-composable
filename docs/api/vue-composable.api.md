@@ -4,6 +4,8 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { Plugin as Plugin_2 } from "@vue/runtime-core";
+import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
 import { UnwrapRef } from "@vue/runtime-core";
 
@@ -350,6 +352,9 @@ export function getCssVariableFor(
   name: string
 ): CssVariable;
 
+// @public (undocumented)
+export const hydrationPlugin: Plugin_2;
+
 // @public
 export interface i18n extends Record<string, i18nMessageValue> {}
 
@@ -666,6 +671,14 @@ export interface PromiseResultFactory<
   // (undocumented)
   exec: (...args: TArgs) => Promise<PromiseType<T> | undefined>;
 }
+
+// @public (undocumented)
+export function provideSSRTitle(
+  app: {
+    provide: typeof provide;
+  },
+  title?: RefTyped<string>
+): Ref<string>;
 
 // @public (undocumented)
 export type RefElement = Element | Ref<Element | undefined>;
@@ -1205,6 +1218,9 @@ export function useGeolocation(
   highAccuracy: Ref<boolean | null>;
 };
 
+// @public (undocumented)
+export function useHydration(): Readonly<Ref<boolean>>;
+
 // @public
 export function useI18n<
   T extends i18nDefinition<TMessage>,
@@ -1257,8 +1273,8 @@ export function useIntlNumberFormat(
 
 // @public (undocumented)
 export function useLanguage(): {
-  language: Ref<String>;
-  languages: Ref<readonly String[]>;
+  language: Ref<string>;
+  languages: Ref<readonly string[]>;
 };
 
 // @public (undocumented)
@@ -1569,6 +1585,9 @@ export function useSharedRef<T = any>(
 ): SharedRefReturn<T>;
 
 // @public (undocumented)
+export function useSSRTitle(defaultTitle?: string | null): Ref<string | null>;
+
+// @public (undocumented)
 export function useStorage(
   key: string,
   defaultValue?: RefTyped<string>,
@@ -1581,6 +1600,9 @@ export function useStorage<T extends object = any>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useTitle(overrideTitle?: string | null): Ref<string | null>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts

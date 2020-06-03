@@ -1,8 +1,8 @@
 import { ref, Ref } from "../api";
 import { isClient, PASSIVE_EV } from "../utils";
 
-let language: Ref<String> | undefined = undefined;
-let languages: Ref<readonly String[]> | undefined = undefined;
+let language: Ref<string> | undefined = undefined;
+let languages: Ref<readonly string[]> | undefined = undefined;
 
 export function useLanguage() {
   if (!language) {

@@ -106,6 +106,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
 
+### Meta
+
+- [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive `document.title`
+
 ### Web
 
 - [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper

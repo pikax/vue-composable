@@ -13,6 +13,7 @@ export {
   computed,
   getCurrentInstance
 } from "@vue/composition-api";
+export { VueConstructor as App } from "vue";
 
 import {
   Ref,
@@ -20,9 +21,12 @@ import {
   isRef,
   set,
   getCurrentInstance,
-  onUnmounted
+  onUnmounted,
+  computed
 } from "@vue/composition-api";
-import Vue from "vue";
+import Vue, { PluginFunction } from "vue";
+
+export type Plugin = PluginFunction<any>;
 
 interface WatcherOption {
   immediate: boolean;
@@ -94,4 +98,9 @@ export function watch(source: any, cb: any, options?: any): any {
     onUnmounted(w);
   }
   return w;
+}
+
+// FAKE readonly
+export function readonly<T extends object>(target: T): Readonly<UnwrapRef<T>> {
+  return computed(() => target) as any;
 }
