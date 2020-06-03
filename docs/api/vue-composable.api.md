@@ -4,6 +4,7 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { InjectionKey } from "@vue/runtime-core";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
@@ -408,6 +409,18 @@ export interface i18nResult<TLocales, TMessages extends any = i18n> {
   locales: Readonly<Ref<Readonly<Array<TLocales>>>>;
   removeLocale(locale: TLocales): void;
 }
+
+// @public (undocumented)
+export function injectFactory<T>(
+  key: InjectionKey<T> | string,
+  defaultValueFactory: () => Promise<T>
+): Promise<T>;
+
+// @public (undocumented)
+export function injectFactory<T>(
+  key: InjectionKey<T> | string,
+  defaultValueFactory: () => T
+): T;
 
 // @public (undocumented)
 export interface IntersectionObserverOptions {

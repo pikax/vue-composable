@@ -129,7 +129,10 @@ module.exports = {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/misc/sharedRef", "SharedRef"]]
+          children: [
+            ["composable/misc/sharedRef", "SharedRef"],
+            ["composable/misc/injectFactory", "injectFactory"]
+          ]
         },
         {
           title: "Storage",

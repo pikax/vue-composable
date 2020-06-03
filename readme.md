@@ -76,6 +76,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
+- [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 
 ### Storage
 
