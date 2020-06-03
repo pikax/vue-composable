@@ -131,7 +131,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
-            ["composable/misc/vmodel", "vModel"]
+            ["composable/misc/vmodel", "vModel"],
+            ["composable/misc/injectFactory", "injectFactory"]
           ]
         },
         {
