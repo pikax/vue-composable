@@ -1,3 +1,12 @@
+# [1.0.0-dev.34](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.33...v1.0.0-dev.34) (2020-06-03)
+
+### Features
+
+- **useBreakpointTailwind:** use injectFactory instead of inject ([e8d0e9c](https://github.com/pikax/vue-composable/commit/e8d0e9c338a46ec940ef5b3a2c9d2251ff38a3a4))
+- **vmodel:** add useVModel composable ([#337](https://github.com/pikax/vue-composable/issues/337)) ([f703908](https://github.com/pikax/vue-composable/commit/f703908731c0925cb16e89f24df533e1b9ddfa21))
+- add `injectFactory` composable ([#324](https://github.com/pikax/vue-composable/issues/324)) ([f571463](https://github.com/pikax/vue-composable/commit/f5714633553d7b5fe39b2c910bad504d292ee874))
+- **useHydration:** add useHydration composable ([5af0bc7](https://github.com/pikax/vue-composable/commit/5af0bc759dd582ab9a480cba3c96da8625481acb))
+
 # [1.0.0-dev.33](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.32...v1.0.0-dev.33) (2020-05-31)
 
 ### Features
