@@ -76,6 +76,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
+- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 
 ### Storage
