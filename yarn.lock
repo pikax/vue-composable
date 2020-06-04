@@ -10327,10 +10327,10 @@ rollup-plugin-typescript2@^0.27.0:
     resolve "1.15.1"
     tslib "1.11.2"
 
-rollup@^2.12.1:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.12.1.tgz#f4e248552d0055ecbd6d0e888b7e316e172d5f96"
-  integrity sha512-qNl9jiVC4/jqTaGUTP0sUnKKCdnebAKYY/8hTy/NnNaeVfjHOW9aIwRT8XHV/zrcpRgJn1g/mjAorMcD38Dlhg==
+rollup@^2.13.1:
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.13.1.tgz#06ac5be4f85df0b79f23cdfa90de63e78095a984"
+  integrity sha512-EiICynxIO1DTFmFn+/98gfaqCToK2nbjPjHJLuNvpcwc+P035VrXmJxi3JsOhqkdty+0cOEhJ26ceGTY3UPMPQ==
   optionalDependencies:
     fsevents "~2.1.2"
 
@@ -12121,6 +12121,7 @@ vue-template-es2015-compiler@^1.9.0:
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
 "vue3@npm:vue@^3.0.0-beta.14", vue@^3.0.0-beta.2:
+  name vue3
   version "3.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.0.0-beta.14.tgz#d2c8739e00c4a4a06b519c14c57d204c350c980c"
   integrity sha512-0MH1g5O3zX8ijvZuiQTYFq3UwHxtj512I/wrMPQLVXwjqb+ILA+fooSpdz4xgUBBl5zN/K9xJIwbl23sv+Sn7A==
