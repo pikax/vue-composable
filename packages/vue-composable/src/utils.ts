@@ -55,6 +55,8 @@ export function promisedTimeout(timeout: number): Promise<void> {
   });
 }
 
+export const MAX_ARRAY_SIZE = 2 ** 32 - 2;
+
 export function minMax(val: number, min: number, max: number) {
   if (val < min) return min;
   if (val > max) return max;
