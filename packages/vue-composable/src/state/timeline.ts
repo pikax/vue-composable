@@ -1,4 +1,4 @@
-import { ref, watch, Ref } from "../api";
+import { ref, watch, Ref, readonly } from "../api";
 
 export interface TimelineEntry<T> {
   item: T;
@@ -38,5 +38,5 @@ export function useTimeline<T>(
     }
   );
 
-  return timeline;
+  return readonly(timeline);
 }
