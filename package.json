@@ -86,7 +86,7 @@
     "jest": "^26.0.1",
     "jest-junit": "^10.0.0",
     "jest-websocket-mock": "^2.0.2",
-    "lint-staged": "^10.2.7",
+    "lint-staged": "^10.2.9",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.5",
     "mock-socket": "^9.0.3",
