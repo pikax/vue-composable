@@ -70,7 +70,7 @@ export function useLockScroll(
   const locked = ref(false);
 
   const remove = watch(
-    [locked, elements] as [Ref<boolean>, Ref<Element[]>],
+    [locked, elements] as const,
     ([l, els]) => {
       for (const el of els.map(unwrap)) {
         if (options.lockedClass) {
