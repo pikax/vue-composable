@@ -1,4 +1,4 @@
-import { ref, computed, watch } from "../api";
+import { ref, computed, watch, Ref, ComputedRef } from "../api";
 import { RefTyped, MAX_ARRAY_SIZE, wrap } from "../utils";
 
 export interface UndoOptions<T> {
@@ -9,11 +9,35 @@ export interface UndoOptions<T> {
   clone: (entry: T) => T;
 }
 
+export interface UndoOperation {
+  (step: number): void;
+  (): void;
+}
+
+export interface UndoReturn<T> {
+  value: Ref<T>;
+
+  undo: UndoOperation;
+  redo: UndoOperation;
+
+  jump: (delta: number) => void;
+
+  prev: ComputedRef<T[]>;
+  next: ComputedRef<T[]>;
+}
+
+export function useUndo<T = any>(): UndoReturn<T | undefined>;
+
 export function useUndo<T>(
   defaultValue: RefTyped<T>,
   options?: Partial<UndoOptions<T>>
-) {
-  const current = wrap(defaultValue);
+): UndoReturn<T>;
+
+export function useUndo<T>(
+  defaultValue?: RefTyped<T>,
+  options?: Partial<UndoOptions<T>>
+): UndoReturn<T> {
+  const current = wrap(defaultValue!);
 
   const timeline = ref<T[]>([]);
   const position = ref(0);
@@ -37,10 +61,11 @@ export function useUndo<T>(
         position.value = 0;
       }
 
-      timeline.value.unshift(clone(c));
-      if (timeline.value.length >= maxLen) {
+      if (timeline.value.length > maxLen) {
         timeline.value.pop();
       }
+
+      timeline.value.unshift(clone(c));
     },
     {
       ...options,
@@ -49,16 +74,8 @@ export function useUndo<T>(
     }
   );
 
-  // const undo = () => {
-  //   position.value = Math.min(timeline.value.length, position.value + 1);
-  //   current.value = timeline.value[position.value];
-  // };
-  // const redo = () => {
-  //   position.value = Math.max(0, position.value - 1);
-  //   current.value = timeline.value[position.value];
-  // };
-  const undo = () => jump(1);
-  const redo = () => jump(-1);
+  const undo = (step = 1) => jump(step);
+  const redo = (step = 1) => jump(-step);
 
   const jump = (delta: number) => {
     const s =
@@ -83,7 +100,6 @@ export function useUndo<T>(
 
   return {
     value: current,
-    timeline,
 
     undo,
     redo,
