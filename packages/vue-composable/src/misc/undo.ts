@@ -31,12 +31,12 @@ export function useUndo<T>(
 
       // new value added
       if (position.value > 0) {
-        timeline.value.splice(position.value);
+        const pos = position.value;
+        timeline.value.splice(0, pos);
         // reset position
         position.value = 0;
       }
 
-      // timeline.value.unshift(clone(p));
       timeline.value.unshift(clone(c));
       if (timeline.value.length >= maxLen) {
         timeline.value.pop();
@@ -49,15 +49,26 @@ export function useUndo<T>(
     }
   );
 
-  const undo = () => {
-    position.value = Math.min(timeline.value.length, position.value + 1);
+  // const undo = () => {
+  //   position.value = Math.min(timeline.value.length, position.value + 1);
+  //   current.value = timeline.value[position.value];
+  // };
+  // const redo = () => {
+  //   position.value = Math.max(0, position.value - 1);
+  //   current.value = timeline.value[position.value];
+  // };
+  const undo = () => jump(1);
+  const redo = () => jump(-1);
+
+  const jump = (delta: number) => {
+    const s =
+      Math.sign(delta) <= 0
+        ? Math.max(delta, -next.value.length)
+        : Math.min(delta, prev.value.length);
+
+    position.value += s;
     current.value = timeline.value[position.value];
   };
-  const redo = () => {
-    position.value = Math.max(0, position.value - 1);
-    current.value = timeline.value[position.value];
-  };
-  const jump = (pos: number) => (position.value = pos);
 
   const prev = computed(() => {
     // hide current
