@@ -2,27 +2,78 @@ import { ref, computed, watch, Ref, ComputedRef } from "../api";
 import { RefTyped, MAX_ARRAY_SIZE, wrap } from "../utils";
 
 export interface UndoOptions<T> {
+  /**
+   * Watch `deep` option for changes
+   */
   deep: boolean;
 
+  /**
+   * Max history change
+   * @default MAX_ARRAY_SIZE
+   *
+   */
   maxLength: number;
 
+  /**
+   * Clone strategy
+   * @default (x)=>x
+   */
   clone: (entry: T) => T;
 }
 
 export interface UndoOperation {
+  /**
+   * Move state
+   * @param step - Positive position
+   */
   (step: number): void;
+  /**
+   * Move 1 step in history
+   */
   (): void;
 }
 
 export interface UndoReturn<T> {
+  /**
+   * Current value
+   */
   value: Ref<T>;
 
-  undo: UndoOperation;
-  redo: UndoOperation;
+  /**
+   * Undo state to the previous
+   */
+  undo(): void;
 
-  jump: (delta: number) => void;
+  /**
+   * Undo state
+   * @param step - Positive position
+   */
+  undo(step: number): void;
 
+  /**
+   * Redo state to the previous
+   */
+  redo(): void;
+  /**
+   * Redo state
+   * @param step - Positive position
+   */
+  redo(step: number): void;
+
+  /**
+   * Moves the cursor to delta
+   * @param delta - If positive it will `undo` the state, if negative it will `redo`
+   */
+  jump(delta: number): void;
+
+  /**
+   * List of previous states
+   */
   prev: ComputedRef<T[]>;
+  /**
+   * List of next states
+   * This is only populated if you `undo` or `jump`
+   */
   next: ComputedRef<T[]>;
 }
 

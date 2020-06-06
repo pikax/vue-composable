@@ -132,6 +132,7 @@ module.exports = {
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
+            ["composable/misc/undo", "Undo"],
             ["composable/misc/injectFactory", "injectFactory"]
           ]
         },

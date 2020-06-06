@@ -535,6 +535,9 @@ export interface LocalStorageReturn<T> {
 export type LocalStorageTyped<T extends object> = string;
 
 // @public (undocumented)
+export const MAX_ARRAY_SIZE: number;
+
+// @public (undocumented)
 export function minMax(val: number, min: number, max: number): number;
 
 // @public (undocumented)
@@ -894,6 +897,31 @@ export interface StorageSerializer<T = any> {
   parse(data: string): T;
   // (undocumented)
   stringify(item: T): string;
+}
+
+// @public (undocumented)
+export interface UndoOperation {
+  (step: number): void;
+  (): void;
+}
+
+// @public (undocumented)
+export interface UndoOptions<T> {
+  clone: (entry: T) => T;
+  deep: boolean;
+  maxLength: number;
+}
+
+// @public (undocumented)
+export interface UndoReturn<T> {
+  jump(delta: number): void;
+  next: ComputedRef<T[]>;
+  prev: ComputedRef<T[]>;
+  redo(): void;
+  redo(step: number): void;
+  undo(): void;
+  undo(step: number): void;
+  value: Ref<T>;
 }
 
 // @public (undocumented)
@@ -1616,6 +1644,15 @@ export function useStorage<T extends object = any>(
 
 // @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;
+
+// @public (undocumented)
+export function useUndo<T = any>(): UndoReturn<T | undefined>;
+
+// @public (undocumented)
+export function useUndo<T>(
+  defaultValue: RefTyped<T>,
+  options?: Partial<UndoOptions<T>>
+): UndoReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts

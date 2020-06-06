@@ -55,6 +55,7 @@ export function promisedTimeout(timeout: number): Promise<void> {
   });
 }
 
+// https://v8.dev/blog/react-cliff
 export const MAX_ARRAY_SIZE = 2 ** 32 - 2;
 
 export function minMax(val: number, min: number, max: number) {
