@@ -14,6 +14,7 @@ export * from "./validation";
 export * from "./i18n";
 export * from "./meta";
 export * from "./ssr";
+export * from "./state";
 
 export const VERSION = __VERSION__;
 export const VUE_VERSION: "2" | "3" = __VUE_2__ ? "2" : "3";

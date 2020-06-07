@@ -1615,6 +1615,18 @@ export function useStorage<T extends object = any>(
 ): LocalStorageReturn<T>;
 
 // @public (undocumented)
+export function useSync<T>(
+  main: RefTyped<T>,
+  ...args: RefTyped<T>[]
+): Ref<Ref<T>[]>;
+
+// @public (undocumented)
+export function useSync<T>(
+  main: RefTyped<T>,
+  list: Ref<RefTyped<T>[]>
+): Ref<Ref<T>[]>;
+
+// @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
