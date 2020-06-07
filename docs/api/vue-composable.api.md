@@ -1623,7 +1623,7 @@ export function useSync<T>(
 // @public (undocumented)
 export function useSync<T>(
   main: RefTyped<T>,
-  list: Ref<RefTyped<T>[]>
+  list: Ref<Ref<T>[]>
 ): Ref<Ref<T>[]>;
 
 // @public (undocumented)

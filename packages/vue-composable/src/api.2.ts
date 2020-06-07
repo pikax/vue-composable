@@ -28,11 +28,6 @@ import Vue, { PluginFunction } from "vue";
 
 export type Plugin = PluginFunction<any>;
 
-interface WatcherOption {
-  immediate: boolean;
-  deep: boolean;
-  flush: FlushMode;
-}
 export function unref<T>(ref: T): T extends Ref<infer V> ? V : T {
   return isRef(ref) ? (ref.value as any) : ref;
 }
@@ -40,57 +35,108 @@ export function unref<T>(ref: T): T extends Ref<infer V> ? V : T {
 export const vueDelete = (x: any, o: string) => Vue.delete(x, o);
 export const vueSet = set;
 
-export type ComputedRef<T> = Readonly<Ref<Readonly<T>>>;
+export interface ComputedRef<T = any> extends WritableComputedRef<T> {
+  readonly value: T;
+}
+
+export interface WritableComputedRef<T> extends Ref<T> {}
 export type UnwrapRef<T> = T extends Ref<infer R> ? R : T;
 
 // vue watch
-declare type CleanupRegistrator = (invalidate: () => void) => void;
-declare type SimpleEffect = (onCleanup: CleanupRegistrator) => void;
-declare type StopHandle = () => void;
-declare type WatcherCallBack<T> = (
-  newVal: T,
-  oldVal: T,
-  onCleanup: CleanupRegistrator
-) => void;
-declare type WatcherSource<T> = Ref<T> | (() => T);
-declare type MapSources<T> = {
-  [K in keyof T]: T[K] extends WatcherSource<infer V> ? V : never;
+
+export type WatchEffect = (onInvalidate: InvalidateCbRegistrator) => void;
+
+export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T);
+
+export type WatchCallback<V = any, OV = any> = (
+  value: V,
+  oldValue: OV,
+  onInvalidate: InvalidateCbRegistrator
+) => any;
+
+type MapSources<T> = {
+  [K in keyof T]: T[K] extends WatchSource<infer V> ? V : never;
 };
-declare type FlushMode = "pre" | "post" | "sync";
-interface WatcherOption {
-  immediate: boolean;
-  deep: boolean;
-  flush: FlushMode;
+
+type MapOldSources<T, Immediate> = {
+  [K in keyof T]: T[K] extends WatchSource<infer V>
+    ? Immediate extends true
+      ? V | undefined
+      : V
+    : never;
+};
+
+export interface WatchOptionsBase {
+  flush?: FlushMode;
+  // onTrack?: ReactiveEffectOptions['onTrack'];
+  // onTrigger?: ReactiveEffectOptions['onTrigger'];
 }
+
+type InvalidateCbRegistrator = (cb: () => void) => void;
+
+export type FlushMode = "pre" | "post" | "sync";
+
+export interface WatchOptions<Immediate = boolean> extends WatchOptionsBase {
+  immediate?: Immediate;
+  deep?: boolean;
+}
+
 export interface VueWatcher {
   lazy: boolean;
   get(): any;
   teardown(): void;
 }
 
-// export function watch<T = any>(
-//   source: SimpleEffect,
-//   options?: Omit<Partial<WatcherOption>, "lazy">
-// ): StopHandle;
-export function watch<T = any>(
-  source: WatcherSource<T>,
-  cb: WatcherCallBack<T>,
-  options?: Partial<WatcherOption>
-): StopHandle;
-export function watch<T extends WatcherSource<unknown>[]>(
+export type WatchStopHandle = () => void;
+
+export interface VueWatcher {
+  lazy: boolean;
+  get(): any;
+  teardown(): void;
+}
+
+// overload #1: array of multiple sources + cb
+// Readonly constraint helps the callback to correctly infer value types based
+// on position in the source array. Otherwise the values will get a union type
+// of all possible value types.
+export function watch<
+  T extends Readonly<WatchSource<unknown>[]>,
+  Immediate extends Readonly<boolean> = false
+>(
   sources: T,
-  cb: (
-    newValues: MapSources<T>,
-    oldValues: MapSources<T>,
-    onCleanup: CleanupRegistrator
-  ) => any,
-  options?: Partial<WatcherOption>
-): StopHandle;
-export function watch(source: any, cb: any, options?: any): any {
-  const w = vueWatch(source, cb, {
+  cb: WatchCallback<MapSources<T>, MapOldSources<T, Immediate>>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+
+// overload #2: single source + cb
+export function watch<T, Immediate extends Readonly<boolean> = false>(
+  source: WatchSource<T>,
+  cb: WatchCallback<T, Immediate extends true ? T | undefined : T>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+
+// overload #3: watching reactive object w/ cb
+export function watch<
+  T extends object,
+  Immediate extends Readonly<boolean> = false
+>(
+  source: T,
+  cb: WatchCallback<T, Immediate extends true ? T | undefined : T>,
+  options?: WatchOptions<Immediate>
+): WatchStopHandle;
+
+// implementation
+export function watch<T = any>(
+  source: WatchSource<T> | WatchSource<T>[],
+  cb: WatchCallback<T>,
+  options?: WatchOptions
+): WatchStopHandle {
+  const w = vueWatch(source as any, cb, {
     ...options,
     lazy:
-      typeof options.immediate === "boolean" ? !options.immediate : undefined
+      options && typeof options.immediate === "boolean"
+        ? !options.immediate
+        : undefined
   });
 
   const vm = getCurrentInstance();

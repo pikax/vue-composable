@@ -1,5 +1,6 @@
-import { Ref, computed, watch, isRef } from "../api";
-import { RefTyped, wrap, unwrap, isArray } from "../utils";
+import { Ref, watch, isRef, ref } from "../api";
+import { RefTyped, wrap, isArray } from "../utils";
+import {} from "vue3";
 
 export function useSync<T>(
   main: RefTyped<T>,
@@ -7,7 +8,7 @@ export function useSync<T>(
 ): Ref<Ref<T>[]>;
 export function useSync<T>(
   main: RefTyped<T>,
-  list: Ref<RefTyped<T>[]>
+  list: Ref<Ref<T>[]>
 ): Ref<Ref<T>[]>;
 
 export function useSync<T>(
@@ -16,15 +17,20 @@ export function useSync<T>(
 ): Ref<Ref<T>[]> {
   const master = wrap(main);
 
-  const l: RefTyped<T>[] | Ref<RefTyped<T>[]> =
+  const list: Ref<Ref<T>[]> =
     arguments.length === 2
       ? isRef(arguments[1]) && isArray(arguments[1].value)
-        ? ((arguments[1] as unknown) as RefTyped<T>[])
-        : [arguments[1]]
-      : Array.from(arguments).slice(1);
+        ? ((arguments[1] as unknown) as Ref<Ref<T>[]>)
+        : ref([wrap(arguments[1])])
+      : ref(
+          Array.from(arguments)
+            .slice(1)
+            .map(x => wrap(x))
+        );
 
-  const list = computed(() => unwrap(l).map(x => wrap(x)));
-  list.value.forEach(x => (x.value = master.value));
+  list.value.forEach(x => {
+    x.value = master.value;
+  });
 
   let lastLen = list.value.length;
 
