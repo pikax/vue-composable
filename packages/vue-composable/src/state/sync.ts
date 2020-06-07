@@ -45,8 +45,7 @@ export function useSync<T>(
       }
     },
     {
-      deep: true,
-      flush: "sync"
+      deep: true
     }
   );
 
