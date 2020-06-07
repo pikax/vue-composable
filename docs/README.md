@@ -74,7 +74,6 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
 - [VModel](https://pikax.me/vue-composable/composable/misc/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
-- [Undo](https://pikax.me/vue-composable/composable/meta/undo) - Tracks variable history, to allow `undo` and `redo`
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 
 ### Storage
@@ -112,6 +111,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 ### Meta
 
 - [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive `document.title`
+
+### State
+
+- [Undo](https://pikax.me/vue-composable/composable/meta/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
 

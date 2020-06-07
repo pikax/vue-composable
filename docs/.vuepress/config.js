@@ -132,7 +132,6 @@ module.exports = {
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
-            ["composable/misc/undo", "Undo"],
             ["composable/misc/injectFactory", "injectFactory"]
           ]
         },
@@ -213,6 +212,12 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [["composable/meta/title", "Title"]]
+        },
+        {
+          title: "state",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/misc/undo", "Undo"]]
         },
         {
           title: "External",
