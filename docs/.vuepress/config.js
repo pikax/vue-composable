@@ -1,6 +1,7 @@
 module.exports = {
   define: {
     __VUE_2__: true,
+    __DEV__: true,
     "process.env.SSR": true
   },
   title: "vue-composable",
