@@ -1232,7 +1232,7 @@ export function useGeolocation(
 };
 
 // @public (undocumented)
-export function useHydration(): Readonly<Ref<boolean>>;
+export function useHydration(): Ref<Boolean>;
 
 // @public
 export function useI18n<

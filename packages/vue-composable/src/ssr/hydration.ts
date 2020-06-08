@@ -40,7 +40,7 @@ export const hydrationPlugin: Plugin = {
   }
 };
 
-export function useHydration() {
+export function useHydration(): Ref<Boolean> {
   if (__DEV__) {
     const s = Symbol();
     const r = inject(HYDRATION_KEY, s as any);
