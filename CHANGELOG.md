@@ -1,3 +1,11 @@
+# [1.0.0-dev.35](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.34...v1.0.0-dev.35) (2020-06-13)
+
+### Features
+
+- **@vue/composition-api:** update to 0.6.2 ([0a24556](https://github.com/pikax/vue-composable/commit/0a24556c5234cce57a12751210eedf0c0b9961d5))
+- **@vue/composition-api:** updated to 0.6.0 ([c554c55](https://github.com/pikax/vue-composable/commit/c554c55942a8730a9ff1b764c610e7589c419db9))
+- **useUndo:** add `useUndo` composable ([#347](https://github.com/pikax/vue-composable/issues/347)) ([63aa3f0](https://github.com/pikax/vue-composable/commit/63aa3f0bf4a7ba2f76c13df876ff0c02cc599eda))
+
 # [1.0.0-dev.34](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.33...v1.0.0-dev.34) (2020-06-03)
 
 ### Features
