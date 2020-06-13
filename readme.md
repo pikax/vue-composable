@@ -117,7 +117,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### State
 
-- [Undo](https://pikax.me/vue-composable/composable/meta/undo) - Tracks variable history, to allow `undo` and `redo`
+- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
 

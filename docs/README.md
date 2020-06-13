@@ -114,7 +114,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### State
 
-- [Undo](https://pikax.me/vue-composable/composable/meta/undo) - Tracks variable history, to allow `undo` and `redo`
+- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
 
