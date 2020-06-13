@@ -214,6 +214,12 @@ module.exports = {
           children: [["composable/meta/title", "Title"]]
         },
         {
+          title: "state",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/state/undo", "Undo"]]
+        },
+        {
           title: "External",
           sidebarDepth: 1,
           collapsable: false,
