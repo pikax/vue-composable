@@ -1,4 +1,4 @@
-import { Ref, ref } from "../api";
+import { Ref, ref, isRef, onMounted } from "../api";
 import {
   RefElement,
   wrap,
@@ -29,6 +29,18 @@ export function useOnResize(
   options?: boolean | AddEventListenerOptions,
   wait?: number
 ): ResizeResult;
+
+export function useOnResize<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ResizeResult;
+
+export function useOnResize<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): ResizeResult;
+
 export function useOnResize(
   el: any,
   options?: number | boolean | AddEventListenerOptions,
@@ -56,6 +68,10 @@ export function useOnResize(
   const remove = isClient
     ? useEvent(window, "resize", handler, eventOptions || PASSIVE_EV)
     : /* istanbul ignore next */ NO_OP;
+
+  if (isRef(el) && !el.value) {
+    onMounted(handler);
+  }
 
   return {
     height,
