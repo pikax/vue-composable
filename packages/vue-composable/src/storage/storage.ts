@@ -14,7 +14,7 @@ export function useStorage(
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
-export function useStorage<T extends object = any>(
+export function useStorage<T>(
   key: LocalStorageTyped<T> | string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
