@@ -1,3 +1,9 @@
+# [1.0.0-dev.36](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.35...v1.0.0-dev.36) (2020-06-14)
+
+### Bug Fixes
+
+- **useOnResize:** allow to retrieve the size on mount if ref is passed ([e52dadb](https://github.com/pikax/vue-composable/commit/e52dadbb28293b1ae4e9c2e93c528afaa923535a)), closes [#364](https://github.com/pikax/vue-composable/issues/364)
+
 # [1.0.0-dev.35](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.34...v1.0.0-dev.35) (2020-06-13)
 
 ### Features
