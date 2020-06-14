@@ -154,8 +154,6 @@ Tests and Documentation are the most important things for me, because good docum
 
 I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
 
-> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax
-
 Twitter: [@pikax_dev](https://twitter.com/pikax_dev)
 
 ## Build
