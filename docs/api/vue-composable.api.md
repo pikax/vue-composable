@@ -532,9 +532,6 @@ export interface LocalStorageReturn<T> {
 }
 
 // @public (undocumented)
-export type LocalStorageTyped<T extends object> = string;
-
-// @public (undocumented)
 export const MAX_ARRAY_SIZE: number;
 
 // @public (undocumented)
@@ -1326,8 +1323,8 @@ export function useLocalStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useLocalStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useLocalStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1383,6 +1380,19 @@ export function useOnMouseMove(
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
 
 // @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): MouseMoveResult;
+
+// @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): MouseMoveResult;
+
+// @public (undocumented)
 export function useOnMouseMove(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
@@ -1407,6 +1417,19 @@ export function useOnResize(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ResizeResult;
 
 // @public (undocumented)
@@ -1439,6 +1462,19 @@ export function useOnScroll(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ScrollResult;
 
 // @public (undocumented)
@@ -1607,8 +1643,8 @@ export function useSessionStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useSessionStorage<T extends object = object>(
-  key: LocalStorageTyped<T> | string,
+export function useSessionStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1636,8 +1672,8 @@ export function useStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
