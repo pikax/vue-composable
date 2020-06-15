@@ -37,10 +37,11 @@
   "homepage": "https://pikax.me/vue-composable/composable",
   "sideEffects": false,
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-beta.14"
+    "@vue/composition-api": "^0.6.2",
+    "vue": "^2.6.10"
   },
   "peerDependencies3": {
-    "@vue/runtime-core": "^3.0.0-beta.14"
+    "@vue/runtime-core": "^3.0.0-beta.15"
   },
   "peerDependencies2": {
     "@vue/composition-api": "^0.6.2",

@@ -71,7 +71,7 @@
     "@types/node": "^14.0.13",
     "@vue/compiler-sfc": "^3.0.0-beta.15",
     "@vue/composition-api": "^0.6.3",
-    "@vue/runtime-core": "^3.0.0-beta.14",
+    "@vue/runtime-core": "^3.0.0-beta.15",
     "@vuepress/plugin-back-to-top": "^1.5.2",
     "@vuepress/plugin-pwa": "^1.5.2",
     "axios": "^0.19.2",
@@ -98,7 +98,7 @@
     "tsd": "^0.11.0",
     "typescript": "^3.9.5",
     "vue": "^2.6.11",
-    "vue3": "npm:vue@^3.0.0-beta.14",
+    "vue3": "npm:vue@^3.0.0-beta.15",
     "vuepress": "^1.5.2",
     "yorkie": "^2.0.0",
     "zlib": "^1.0.5"
