@@ -84,7 +84,7 @@
     "execa": "^4.0.0",
     "fs-extra": "^9.0.1",
     "jest": "^26.0.1",
-    "jest-junit": "^11.0.0",
+    "jest-junit": "^11.0.1",
     "jest-websocket-mock": "^2.0.2",
     "lint-staged": "^10.2.11",
     "lodash.camelcase": "^4.3.0",
