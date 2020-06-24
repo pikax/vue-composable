@@ -11966,10 +11966,10 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
-vue-loader@16.0.0-beta.3:
-  version "16.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-beta.3.tgz#2374094399fed98a8a5750912f3caaaefa814553"
-  integrity sha512-B1jRmai+/sr5PDkRqZe6KllBGMJb4+AsjA44yg1dAod8W+tIdvKTffVEl+5lcXSZy5NsjEx3KqpvV6qq8l/ggA==
+vue-loader@16.0.0-beta.4:
+  version "16.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-beta.4.tgz#1d9d7894f430992096727c4414bcf3b1ae8c1be9"
+  integrity sha512-uh/+SIwoN+hny0+GqxdkTuEmt1NV4wb8etF5cKkB1YVMv29ck0byrmkt8IIYadQ3r/fiYsr2brGJqP+hytQwuw==
   dependencies:
     "@types/mini-css-extract-plugin" "^0.9.1"
     chalk "^3.0.0"
