@@ -96,7 +96,7 @@
     "rollup-plugin-typescript2": "^0.27.0",
     "ts-jest": "^26.1.1",
     "tsd": "^0.12.0",
-    "typescript": "^3.9.5",
+    "typescript": "^3.9.6",
     "vue": "^2.6.11",
     "vue3": "npm:vue@^3.0.0-beta.15",
     "vuepress": "^1.5.2",
