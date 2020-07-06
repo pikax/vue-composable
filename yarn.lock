@@ -11309,10 +11309,10 @@ ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-tsd@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/tsd/-/tsd-0.12.0.tgz#f98452b73f6cb5103fdc3eb41a3ec1d958a802e8"
-  integrity sha512-znJArzfaB/fHHr+Xa5lI91YTAEaWp3JDPXCCGauXvbWhf8gJhNa2MXAP3kQtn+zjdN/cYNQXZzR4yl8DzA381g==
+tsd@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/tsd/-/tsd-0.13.1.tgz#d2a8baa80b8319dafea37fbeb29fef3cec86e92b"
+  integrity sha512-+UYM8LRG/M4H8ISTg2ow8SWi65PS7Os+4DUnyiQLbJysXBp2DEmws9SMgBH+m8zHcJZqUJQ+mtDWJXP1IAvB2A==
   dependencies:
     eslint-formatter-pretty "^4.0.0"
     globby "^11.0.1"
