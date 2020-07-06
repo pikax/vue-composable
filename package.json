@@ -80,7 +80,7 @@
     "conventional-changelog-cli": "^2.0.34",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
-    "enquirer": "^2.3.5",
+    "enquirer": "^2.3.6",
     "execa": "^4.0.0",
     "fs-extra": "^9.0.1",
     "jest": "^26.1.0",
