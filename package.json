@@ -68,7 +68,7 @@
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-replace": "^2.3.3",
     "@types/jest": "^26.0.3",
-    "@types/node": "^14.0.14",
+    "@types/node": "^14.0.18",
     "@vue/compiler-sfc": "^3.0.0-beta.18",
     "@vue/composition-api": "^0.6.7",
     "@vue/runtime-core": "^3.0.0-beta.18",
