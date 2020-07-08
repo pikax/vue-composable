@@ -1775,6 +1775,13 @@
   dependencies:
     "@vue/shared" "3.0.0-beta.18"
 
+"@vue/reactivity@3.0.0-beta.19":
+  version "3.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.19.tgz#f1de27b59f22db593d87fcd015c55317502e5d02"
+  integrity sha512-wmETY5JisjnML08W5Kgu1ABoREJT5lbvIDJ+88O/imBIqErQTe4lGvfm2v10XXY/Kon96z/XORUoDUqFW7juCA==
+  dependencies:
+    "@vue/shared" "3.0.0-beta.19"
+
 "@vue/runtime-core@3.0.0-beta.14":
   version "3.0.0-beta.14"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.14.tgz#4f8162befd6ad1ac55cc6c142edc8301b090658a"
@@ -1783,13 +1790,21 @@
     "@vue/reactivity" "3.0.0-beta.14"
     "@vue/shared" "3.0.0-beta.14"
 
-"@vue/runtime-core@3.0.0-beta.18", "@vue/runtime-core@^3.0.0-beta.18":
+"@vue/runtime-core@3.0.0-beta.18":
   version "3.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.18.tgz#373ccec46e37826b9976f21039287bfa69f4ee16"
   integrity sha512-ZgIxCSuR1luq3pmWQbsYkn6ybUK/BKAWRQwAxUCP9BjFHnvN0W4BSLwy6VuH2l2ToKGni+xPxpDZhQQQsVAfng==
   dependencies:
     "@vue/reactivity" "3.0.0-beta.18"
     "@vue/shared" "3.0.0-beta.18"
+
+"@vue/runtime-core@^3.0.0-beta.19":
+  version "3.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.0-beta.19.tgz#57ce345eb4cdcf8b7dc5356fe7c7dce4a8b1345b"
+  integrity sha512-m7ggf7QBwExfXl7JMfg++J9VBVkLNxsor0L67KNH4D/15r8aQFWvZ7QNXvSQb5v8Q18P5/+j0w+CWT/K3/jFVA==
+  dependencies:
+    "@vue/reactivity" "3.0.0-beta.19"
+    "@vue/shared" "3.0.0-beta.19"
 
 "@vue/runtime-dom@3.0.0-beta.14":
   version "3.0.0-beta.14"
@@ -1818,6 +1833,11 @@
   version "3.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.18.tgz#1326efa98fe49b9ef3effbec88189b88ed7544a7"
   integrity sha512-wRvQaTHeCt3xxqj3UpMR2JxkkU7ul/9RMqSxGJhOd4Bsp72Md4H83XkijHy8LkPKZWszmxjEpfCYuw9MU0a4kg==
+
+"@vue/shared@3.0.0-beta.19":
+  version "3.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.19.tgz#41e596eb831e0fd3d537b68c24fdafacc7a74033"
+  integrity sha512-LDW+oDcVFoFHCR8V2vkOz+s/GZUtu9Wi3W5IwsFgTaV62YfCBF1gT57Ee1PAawDnMvzg86UhMkBaLIUly9waRw==
 
 "@vue/web-component-wrapper@^1.2.0":
   version "1.2.0"
