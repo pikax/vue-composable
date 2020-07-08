@@ -81,7 +81,7 @@
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "enquirer": "^2.3.6",
-    "execa": "^4.0.0",
+    "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "jest": "^26.1.0",
     "jest-junit": "^11.0.1",
