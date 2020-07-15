@@ -1763,12 +1763,19 @@
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.1.1.tgz#18723530d304f443021da2292d6ec9502826104a"
   integrity sha512-8VCoJeeH8tCkzhkpfOkt+abALQkS11OIHhte5MBzYaKMTqK0A3ZAKEUVAffsOklhEv7t0yrQt696Opnu9oAx+w==
 
-"@vue/reactivity@3.0.0-beta.20", "@vue/reactivity@^3.0.0-beta.20":
+"@vue/reactivity@3.0.0-beta.20":
   version "3.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.20.tgz#8a16f089394a29a8509e4c8e515f5ec84b26cc13"
   integrity sha512-X59+ZENE1sFRW56vcyb3eTGwqGwRpBJIkau0/NMv86hBbtWUigG4+r4thoCNKQAX3iyMQBlk5dQvxUxopjn5pg==
   dependencies:
     "@vue/shared" "3.0.0-beta.20"
+
+"@vue/reactivity@^3.0.0-beta.21":
+  version "3.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.21.tgz#b974040b50799f36c5b75941e7b13dc074db1827"
+  integrity sha512-G43QUrs2TkIMeBnOfewot/k9C4K116BluoQTYGnukninESb+Th2psijDPsqAu9W8Ja+XAE7zQpawIkwwY0hYfQ==
+  dependencies:
+    "@vue/shared" "3.0.0-beta.21"
 
 "@vue/runtime-core@3.0.0-beta.20", "@vue/runtime-core@^3.0.0-beta.20":
   version "3.0.0-beta.20"
