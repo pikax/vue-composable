@@ -1175,10 +1175,10 @@
     lodash.kebabcase "^4.1.1"
     svg-tags "^1.0.0"
 
-"@vue/babel-preset-app@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-4.4.1.tgz#97c6796183cd0abf96a17297dc335c4c702fd8c4"
-  integrity sha512-VHVROEBBiW0dnuNuzlFElkncXo+zxh5Px0MZ51Th5da8UPbQodf43mnpotMnFtmCPTXAFL58tzDttu1FgrgfpQ==
+"@vue/babel-preset-app@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-4.4.6.tgz#92aef916e83f1abe0a2ed1e9e2cef5b332f958c4"
+  integrity sha512-urIa6Qk3lKacLvscrzxMNyYlTqKFcPAUo5MohOjv1ISZ9PssHw693WTOrqSC0XksdMLtp/rnLvc6l5G8Muk0lw==
   dependencies:
     "@babel/core" "^7.9.6"
     "@babel/helper-compilation-targets" "^7.9.6"
@@ -1243,48 +1243,48 @@
     "@vue/babel-plugin-transform-vue-jsx" "^1.1.2"
     camelcase "^5.0.0"
 
-"@vue/cli-overlay@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-4.4.1.tgz#f1f51f31f7a00d371e9a5b5a941525184475bf8b"
-  integrity sha512-EQqAVy7O/qqGOfSYIGL073FWlr/s6QFA0wA1wY8pHnTS5WPwAiHT+D+xe+fgXKZ3KeL7v7u/le7YFIEVXFVXOg==
+"@vue/cli-overlay@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-4.4.6.tgz#58f996066d8c0a0a45ad4b5c6f3f213f9945a9ba"
+  integrity sha512-fzjg2gWQt+jw5fyLsD9HZNxGNQgZjLDI2s9bLWJwRucdfmncSi9neqA0TZyszGrgcJA4Qu4V5KgV0qwVSBYCaw==
 
-"@vue/cli-plugin-babel@4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-4.4.1.tgz#2c6e969fe51f1b4b211bea84afb7cad18240f70f"
-  integrity sha512-dmhymfm2UnZDw13k/zKT6YIj7je53mE37Y+jEJxpRUlCKFmZUDuYkJ8i5HmO0SnaCnEGqNELaBkoIFnY3aE2Gw==
+"@vue/cli-plugin-babel@4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-4.4.6.tgz#d5d750d4f74900c00836e19c164193650df26f3b"
+  integrity sha512-9cX9mN+4DIbcqw3rV6UBOA0t5zikIkrBLQloUzsOBOu5Xb7/UoD7inInFj7bnyHUflr5LqbdWJ+etCQcWAIIXA==
   dependencies:
     "@babel/core" "^7.9.6"
-    "@vue/babel-preset-app" "^4.4.1"
-    "@vue/cli-shared-utils" "^4.4.1"
+    "@vue/babel-preset-app" "^4.4.6"
+    "@vue/cli-shared-utils" "^4.4.6"
     babel-loader "^8.1.0"
     cache-loader "^4.1.0"
     thread-loader "^2.1.3"
     webpack "^4.0.0"
 
-"@vue/cli-plugin-router@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-4.4.1.tgz#07d09df0f4bea816e637da814f578b808f1f93b2"
-  integrity sha512-kCSsJG7pjDvCJDjGtcCI5l0UjmqwNigOR41RkeGSjSUvzV4ArSniXjFqrOmtpMp36S5xCtwtt9MFm/K4fCubkQ==
+"@vue/cli-plugin-router@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-4.4.6.tgz#db5bb1c92afd2046376e4faa90270d6363d4b9b8"
+  integrity sha512-TkLdn0ZYo3zgn78Rk8doPlR+4UkGjGW2R1eGEaZEkue/mw2VhUWtTk9cKLZaYrw0eY8Ro/j+OV6mD+scyrairg==
   dependencies:
-    "@vue/cli-shared-utils" "^4.4.1"
+    "@vue/cli-shared-utils" "^4.4.6"
 
-"@vue/cli-plugin-vuex@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.4.1.tgz#98d18fc5d36fa6e0d1fc2ecaeea37aa965564f19"
-  integrity sha512-FtOFsDP0qznwVaCz0BZmTzUm5vhHSJzX2/XD3L5dLTkrNxyDEbZmbKoX0n1OzBcQwZC7dkJZP2tdoCQx0mX//g==
+"@vue/cli-plugin-vuex@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.4.6.tgz#44b596f0d5236e0a2ce1aa4757bda5207c230be0"
+  integrity sha512-Ho0YzUivn8BLPqFoFypntR8CMTEXYYHVr0GdnZW99XL+DbGw75f+tJfnrV9UFHDTfvZt7uewKiXDMlrzQ0l3Ug==
 
-"@vue/cli-service@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-4.4.1.tgz#b26a435d8c953bc7efaf7b784c9835c1415bcf1c"
-  integrity sha512-DVV0zr5Sw7pzdm3z3PRrfqihLgoJP/d9AgNFcSSQF/J9Gtvjf1t0PTJJFeLANHSL3kDWte+3kjc22sXayu0BJQ==
+"@vue/cli-service@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-4.4.6.tgz#83ca058d081eb145bbc1ae2fe8069d2d9ddf7e18"
+  integrity sha512-k5OFGh2NnvRymCyq9DfBiNJvECUuun3pl5KMm3557IZyA5E5csv+RHoSW3dX8HHe0zXq18g52VswP1llvR9POw==
   dependencies:
     "@intervolga/optimize-cssnano-plugin" "^1.0.5"
     "@soda/friendly-errors-webpack-plugin" "^1.7.1"
     "@soda/get-current-script" "^1.0.0"
-    "@vue/cli-overlay" "^4.4.1"
-    "@vue/cli-plugin-router" "^4.4.1"
-    "@vue/cli-plugin-vuex" "^4.4.1"
-    "@vue/cli-shared-utils" "^4.4.1"
+    "@vue/cli-overlay" "^4.4.6"
+    "@vue/cli-plugin-router" "^4.4.6"
+    "@vue/cli-plugin-vuex" "^4.4.6"
+    "@vue/cli-shared-utils" "^4.4.6"
     "@vue/component-compiler-utils" "^3.1.2"
     "@vue/preload-webpack-plugin" "^1.1.0"
     "@vue/web-component-wrapper" "^1.2.0"
@@ -1331,10 +1331,10 @@
     webpack-dev-server "^3.11.0"
     webpack-merge "^4.2.2"
 
-"@vue/cli-shared-utils@^4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.4.1.tgz#930304ade5a9f9bf0d2fd67d9305cad83d04aae1"
-  integrity sha512-teevHgI7XUsKVMOncx3M+6iLjO28woGfRwgUG4hR83moVBHQe5x2OCr2i5t/58bwpv269RD5RYXBQCGtIXuxZw==
+"@vue/cli-shared-utils@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.4.6.tgz#0ec59880920736c6dd79079ac0b5ceac29fa55e1"
+  integrity sha512-ba+FZZCjiTSu2otnLjY4qXqASe7ZIQ/QBljk5oRPgqrR0p1NUkDPUcZhqa041aOaSW1yAfSfhOD7Q84nMnWhzQ==
   dependencies:
     "@hapi/joi" "^15.0.1"
     chalk "^2.4.2"
@@ -1346,7 +1346,6 @@
     ora "^3.4.0"
     read-pkg "^5.1.1"
     request "^2.88.2"
-    request-promise-native "^1.0.8"
     semver "^6.1.0"
     strip-ansi "^6.0.0"
 
@@ -4918,9 +4917,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -6701,22 +6700,6 @@ repeat-string@^1.6.1:
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha1-jcrkcOHIirwtYA//Sndihtp15jc=
 
-request-promise-core@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.3.tgz#e9a3c081b51380dfea677336061fea879a829ee9"
-  integrity sha512-QIs2+ArIGQVp5ZYbWD5ZLCY29D5CfWizP8eWnm8FoGD1TX61veauETVQbrV60662V0oFBkrDOuaBI8XgtuyYAQ==
-  dependencies:
-    lodash "^4.17.15"
-
-request-promise-native@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/request-promise-native/-/request-promise-native-1.0.8.tgz#a455b960b826e44e2bf8999af64dff2bfe58cb36"
-  integrity sha512-dapwLGqkHtwL5AEbfenuzjTYg35Jd6KPytsC2/TLkVMz8rm+tNt72MGUWT1RP/aYawMpN6HqbNGBQaRcBtjQMQ==
-  dependencies:
-    request-promise-core "1.1.3"
-    stealthy-require "^1.1.1"
-    tough-cookie "^2.3.3"
-
 request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
@@ -7266,11 +7249,6 @@ static-extend@^0.1.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-stealthy-require@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
-  integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
-
 stream-browserify@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-2.0.2.tgz#87521d38a44aa7ee91ce1cd2a47df0cb49dd660b"
@@ -7634,7 +7612,7 @@ toposort@^1.0.0:
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
   integrity sha1-LmhELZ9k7HILjMieZEOsbKqVACk=
 
-tough-cookie@^2.3.3, tough-cookie@~2.5.0:
+tough-cookie@~2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.5.0.tgz#cd9fb2a0aa1d5a12b473bd9fb96fa3dcff65ade2"
   integrity sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==
