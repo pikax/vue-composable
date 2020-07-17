@@ -41,7 +41,7 @@
     "vue": "^2.6.10"
   },
   "peerDependencies3": {
-    "@vue/runtime-core": "^3.0.0-beta.22"
+    "@vue/runtime-core": "^3.0.0-beta.24"
   },
   "peerDependencies2": {
     "@vue/composition-api": "^1.0.0-beta.2",
