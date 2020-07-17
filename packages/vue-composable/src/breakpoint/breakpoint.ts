@@ -30,7 +30,7 @@ export type BreakpointReturn<T> = Record<keyof T, Ref<boolean>> &
   BreakpointReturnObject<T>;
 
 export function useBreakpoint<T extends BreakpointObject>(
-  breakpoints: Record<keyof T, number | string>
+  breakpoints: T
 ): BreakpointReturn<T> {
   const result: Record<keyof T, Ref<boolean>> = {} as any;
   const map = new Map<
