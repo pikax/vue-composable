@@ -1,3 +1,9 @@
+# [1.0.0-beta.1](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.37...v1.0.0-beta.1) (2020-07-18)
+
+### Features
+
+- single package v2 and v3 ([#456](https://github.com/pikax/vue-composable/issues/456)) ([bb7eaff](https://github.com/pikax/vue-composable/commit/bb7eaff8be43ddf1a9d2b37f9b3fcbf3bc003922))
+
 # [1.0.0-dev.37](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.36...v1.0.0-dev.37) (2020-07-18)
 
 ### Bug Fixes
