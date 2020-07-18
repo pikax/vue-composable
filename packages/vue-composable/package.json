@@ -1,13 +1,14 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-alpha.37",
+  "version": "1.0.0-dev.37",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
   "unpkg": "dist/vue-composable.global.js",
   "files": [
     "index.js",
-    "dist"
+    "dist",
+    "scripts"
   ],
   "types": "dist/vue-composable.d.ts",
   "buildOptions": {
@@ -36,9 +37,11 @@
   },
   "homepage": "https://pikax.me/vue-composable/composable",
   "sideEffects": false,
-  "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-beta.2",
-    "vue": "^2.6.10"
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "bin": {
+    "vue-composable-fix": "./scripts/postinstall.js"
   },
   "peerDependencies3": {
     "@vue/runtime-core": "^3.0.0-beta.24"

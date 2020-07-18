@@ -6,7 +6,6 @@
     "examples/*"
   ],
   "description": "Vue composition-api composable components",
-  "main": "index.js",
   "author": {
     "name": "pikax",
     "email": "carlos@hypermob.co.uk"
@@ -16,14 +15,8 @@
     "type": "git",
     "url": "git+https://github.com/pikax/vue-composable.git"
   },
-  "module": "dist/vue-composable.es.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "private": true,
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "node scripts/build.js",
     "build:vue2": "yarn build --version=2",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",

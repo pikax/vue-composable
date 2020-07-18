@@ -12,7 +12,7 @@ Use Axios library with the [composition-api](https://github.com/vuejs/compositio
 
 # Vue 3
 
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported
 
 ## Installing
 
@@ -29,10 +29,10 @@ npm install @vue/composition-api @vue-composable/axios
 # vue-next / vue@3.0.0-beta
 
 # install with yarn
-yarn add @vue-composable/axios@next
+yarn add @vue-composable/axios
 
 # install with npm
-npm install @vue-composable/axios@next
+npm install @vue-composable/axios
 ```
 
 ## Documentation
