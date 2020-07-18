@@ -52,13 +52,6 @@ async function build(target, targetVersion) {
     if (isRelease && pkg.private) {
       return;
     }
-
-    const currentMinor = +mainPkg.version.split(".").slice(-1);
-    const majorVersion = mainPkg.version.split("-")[0];
-
-    const tempVersion = targetVersion === 3 ? "alpha" : "dev";
-    const pkgVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
-
     const peerDependencies =
       targetVersion === 2 ? pkg.peerDependencies2 : pkg.peerDependencies3;
 
@@ -66,20 +59,14 @@ async function build(target, targetVersion) {
       pkg.dependencies && pkg.dependencies["vue-composable"]
         ? {
             ...pkg.dependencies,
-            "vue-composable": `^${pkgVersion}`
+            "vue-composable": `^${mainPkg.version}`
           }
         : pkg.dependencies;
 
-    const newPkg = {
-      ...pkg,
-      dependencies,
-      peerDependencies
-    };
+    pkg.peerDependencies = peerDependencies;
+    pkg.dependencies = dependencies;
 
-    await fs.writeFile(
-      `${pkgDir}/package.json`,
-      JSON.stringify(newPkg, null, 2)
-    );
+    await fs.writeFile(`${pkgDir}/package.json`, JSON.stringify(pkg, null, 2));
 
     // if building a specific format, do not remove dist.
     if (!formats) {
@@ -103,7 +90,7 @@ async function build(target, targetVersion) {
             formats ? `FORMATS:${formats}` : ``,
             buildTypes ? `TYPES:true` : ``,
             prodOnly ? `PROD_ONLY:true` : ``,
-            `VERSION:${pkgVersion}`,
+            `VERSION:${mainPkg.version}`,
             `VUE_VERSION:${targetVersion}`
           ]
             .filter(Boolean)
@@ -114,6 +101,8 @@ async function build(target, targetVersion) {
     } catch (e) {
       await renameRestore();
       await packageRestore();
+
+      console.error("error", e);
 
       return process.exit(1);
     }

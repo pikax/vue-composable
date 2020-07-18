@@ -7,31 +7,15 @@ const { prompt } = require("enquirer");
 
 const { targets: allTargets } = require("./utils");
 
-const { build, resolvePkgDir, buildAll, removeFiles } = require("./build");
+const { build, removeFiles } = require("./build");
 
 const targets = args._;
 const buildTargets = targets.length > 0 ? targets : allTargets;
 
-async function publish(package, targetVersion) {
-  assert([2, 3].includes(targetVersion));
-
+async function publish(package) {
   const mainPkg = require(path.resolve("package.json"));
-
-  const pkgDir = resolvePkgDir(package);
-  await build(package, targetVersion);
-  const pkg = JSON.parse(fs.readFileSync(`${pkgDir}/package.json`)); // require(`${pkgDir}/package.json`);
-
-  const currentMinor = +mainPkg.version.split(".").slice(-1);
-  const majorVersion = mainPkg.version.split("-")[0];
-
-  const tag = targetVersion === 3 ? "next" : false;
-  const tempVersion = targetVersion === 3 ? "alpha" : "dev";
-
-  const version = `${majorVersion}-${tempVersion}.${currentMinor}`;
-
-  pkg.version = version;
-  await fs.writeFile(`${pkgDir}/package.json`, JSON.stringify(pkg, null, 2));
-
+  const version = mainPkg.version;
+  const tag = args.tag;
   try {
     const args = ["publish", "--access public"];
     args.push(`--new-version`, version);
@@ -41,18 +25,18 @@ async function publish(package, targetVersion) {
 
     console.log("publishing for ", package, version, tag || "", args);
 
-    const otp = await prompt({
-      type: "input",
-      name: "otp",
-      message: "Enter OTP"
-    });
+    // const otp = await prompt({
+    //   type: "input",
+    //   name: "otp",
+    //   message: "Enter OTP",
+    // });
 
-    args.push(`--otp`, otp.otp);
+    // args.push(`--otp`, otp.otp);
 
-    await execa("yarn", args, {
-      stdio: "inherit",
-      cwd: pkgDir
-    });
+    // await execa("yarn", args, {
+    //   stdio: "inherit",
+    //   cwd: pkgDir,
+    // });
   } catch (e) {
     console.error(e);
     return process.exit(1);
@@ -60,16 +44,8 @@ async function publish(package, targetVersion) {
 }
 
 async function run() {
-  const pkg = require("../package.json"); // require(`${pkgDir}/package.json`);
-
-  const currentMinor = +pkg.version.split(".").slice(-1);
-  const majorVersion = pkg.version.split("-")[0];
-  const tempVersion = "dev";
-
-  const targetVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
-
   // generate changelog
-  await execa(`yarn`, ["changelog"]);
+  // await execa(`yarn`, ["changelog"]);
 
   // publish packages
   console.log("\nPublishing packages...");
@@ -81,9 +57,19 @@ async function run() {
     }
   }
 
-  // remove files from 'dist' folder, this folder will be fixed by the `postinstall`
+  const mainPkg = require(path.resolve("package.json"));
+
+  // remove files from 'dist' folder and `peerDependencies`, this folder will be fixed by the `postinstall`
   for (const target of buildTargets) {
+    const pkgDir = path.resolve(`packages/${target}`);
+    const pkg = require(`${pkgDir}/package.json`);
+    delete pkg.peerDependencies;
+    pkg.version = mainPkg.version;
+    await fs.writeFile(`${pkgDir}/package.json`, JSON.stringify(pkg, null, 2));
+
     await removeFiles(path.resolve(`packages/${target}/dist`));
+
+    await publish(target);
   }
 
   // const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
