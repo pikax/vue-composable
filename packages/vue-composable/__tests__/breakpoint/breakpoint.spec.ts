@@ -223,4 +223,23 @@ describe("breakpoint", () => {
       S: { value: true }
     });
   });
+
+  it("should check the type of the current breakpoint", () => {
+    createVue({
+      template: "<div></div>",
+      setup() {
+        const breakpoint = useBreakpoint({
+          xs: "0px",
+          sm: 600,
+          md: 960
+        });
+
+        // @ts-expect-error it should warn if the breakpoint doesn't exist
+        breakpoint.current.value === "test";
+
+        breakpoint.current.value === "xs";
+        breakpoint.current.value === "sm";
+      }
+    });
+  });
 });
