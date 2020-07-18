@@ -101,6 +101,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### Intl
 
+- [dateTimeFormat](https://pikax.me/vue-composable/composable/Intl/dateTimeFormat) - Intl.DateTimeFormat
 - [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
 - [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
 

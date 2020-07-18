@@ -98,6 +98,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### Intl
 
+- [dateTimeFormat](https://pikax.me/vue-composable/composable/Intl/dateTimeFormat) - Intl.DateTimeFormat
 - [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
 - [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
 
