@@ -40,7 +40,7 @@ describe("breakpointTailwindcss", () => {
         })
       ).toBe(bk);
 
-      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "min-width: 123" });
+      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "(min-width: 123px)" });
       expect(provide).toHaveBeenCalled();
     });
 
@@ -91,7 +91,7 @@ describe("breakpointTailwindcss", () => {
         })
       ).toBe(bk);
 
-      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "min-width: 123" });
+      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "(min-width: 123px)" });
       expect(provide).toHaveBeenCalled();
     });
   });
@@ -156,7 +156,7 @@ describe("breakpointTailwindcss", () => {
 
       expect(screenRangeToBreakpoint({ xx: "" } as any)).toBe("");
 
-      expect(screenRangeToBreakpoint({ max: 12 })).toBe("(max-width: 12)");
+      expect(screenRangeToBreakpoint({ max: 12 })).toBe("(max-width: 12px)");
       expect(screenRangeToBreakpoint({ max: "12em" })).toBe(
         "(max-width: 12em)"
       );
@@ -198,6 +198,8 @@ describe("breakpointTailwindcss", () => {
       expect(screenToBreakpoint(opts[3])).toMatchObject([
         "(max-width: 12px and min-width: 9em)"
       ]);
+
+      expect(screenToBreakpoint(42)).toMatchObject(["(min-width: 42px)"]);
     });
   });
 });
