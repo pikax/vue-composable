@@ -1019,7 +1019,7 @@ export function useArrayPagination<T extends Array<TR>, TR>(
 
 // @public (undocumented)
 export function useBreakpoint<T extends BreakpointObject>(
-  breakpoints: Record<keyof T, number | string>
+  breakpoints: T
 ): BreakpointReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "ChromeBreakpoint" needs to be exported by the entry point index.d.ts
