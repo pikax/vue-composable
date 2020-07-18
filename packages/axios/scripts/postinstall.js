@@ -44,6 +44,11 @@ function switchPeerdependencies(version) {
 function switchVersion(version) {
   const dist = path.join(dir, "dist");
   const versionPath = path.join(dist, `v${version}`);
+
+  // local dev
+  if (!fs.existsSync(versionPath)) {
+    return;
+  }
   const files = fs.readdirSync(versionPath);
 
   files.forEach(f => {
@@ -57,7 +62,7 @@ const Vue = loadModule("vue");
 
 if (!Vue || typeof Vue.version !== "string") {
   console.warn(
-    "[vue-composable-axios] Vue is not detected in the dependencies. Please install Vue first."
+    "[vue-composable] Vue is not detected in the dependencies. Please install Vue first."
   );
 } else if (Vue.version.startsWith("2.")) {
   const VCA = loadModule("@vue/composition-api");
@@ -69,6 +74,6 @@ if (!Vue || typeof Vue.version !== "string") {
   switchVersion(3);
 } else {
   console.warn(
-    `[vue-composable-axios] Vue version v${Vue.version} is not suppported.`
+    `[vue-composable] Vue version v${Vue.version} is not suppported.`
   );
 }

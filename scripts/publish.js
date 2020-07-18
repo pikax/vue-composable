@@ -54,6 +54,12 @@ async function run() {
   for (const version of versions) {
     for (const target of buildTargets) {
       await build(target, version);
+
+      // fs.remove(path.resolve(`packages/${target}/scripts/postinstall.js`));
+      await fs.copyFile(
+        "./scripts/postinstall.js",
+        path.resolve(`packages/${target}/scripts/postinstall.js`)
+      );
     }
   }
 

@@ -32,14 +32,30 @@ function installModules(names) {
   });
 }
 
+function switchPeerdependencies(version) {
+  const pkg = require(`${dir}/package.json`);
+  pkg.peerDependencies = pkg["peerDependencies" + version];
+  return fs.writeFileSync(
+    `${dir}/package.json`,
+    JSON.stringify(pkg, undefined, 2)
+  );
+}
+
 function switchVersion(version) {
   const dist = path.join(dir, "dist");
   const versionPath = path.join(dist, `v${version}`);
+
+  // local dev
+  if (!fs.existsSync(versionPath)) {
+    return;
+  }
   const files = fs.readdirSync(versionPath);
 
   files.forEach(f => {
-    fs.copyFile(path.join(versionPath, f), path.join(dist, f));
+    fs.copyFileSync(path.join(versionPath, f), path.join(dist, f));
   });
+
+  switchPeerdependencies(version);
 }
 
 const Vue = loadModule("vue");

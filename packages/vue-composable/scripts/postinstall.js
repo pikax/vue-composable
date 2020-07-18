@@ -44,6 +44,11 @@ function switchPeerdependencies(version) {
 function switchVersion(version) {
   const dist = path.join(dir, "dist");
   const versionPath = path.join(dist, `v${version}`);
+
+  // local dev
+  if (!fs.existsSync(versionPath)) {
+    return;
+  }
   const files = fs.readdirSync(versionPath);
 
   files.forEach(f => {
