@@ -40,6 +40,9 @@
   "scripts": {
     "postinstall": "node ./scripts/postinstall.js"
   },
+  "bin": {
+    "vue-composable-fix": "./scripts/postinstall.js"
+  },
   "peerDependencies3": {
     "@vue/runtime-core": "^3.0.0-beta.24"
   },

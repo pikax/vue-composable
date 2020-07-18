@@ -37,6 +37,12 @@
   },
   "homepage": "https://pikax.me/vue-composable/composable/external/axios.html",
   "sideEffects": false,
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "bin": {
+    "vue-composable-axios-fix": "./scripts/postinstall.js"
+  },
   "dependencies": {
     "vue-composable": "^1.0.0"
   },
