@@ -57,7 +57,7 @@ const { format, formatString } = useIntlDateTimeFormat();
     <ul>
       <li>
         <label for="value">value</label>
-        <input name="value" v-model.number="value" type="number" />
+        <input name="value" v-model="value" type="date" />
       </li>
 
       <li>
@@ -68,26 +68,12 @@ const { format, formatString } = useIntlDateTimeFormat();
       </li>
 
       <li>
-        <label for="style">options.style</label>
-        <select name="style" v-model="options.style">
-          <option value="decimal">decimal</option>
-          <option value="percent">percent</option>
-          <option value="currency">currency</option>
+        <label for="style">options.year</label>
+        <select name="style" v-model="options.year">
+          <option value="numeric">numeric</option>
+          <option value="2-digit">2-digit</option>
         </select>
       </li>
-      <template v-if="options.style === 'currency'">
-        <li>
-          <label for="currency">options.currency</label>
-          <input name="currency" v-model="options.currency" />
-        </li>
-        <li>
-          <label for="currencyDisplay">options.currencyDisplay</label>
-          <select name="currencyDisplay" v-model="options.currencyDisplay">
-            <option value="symbol">symbol</option>
-            <option value="code">code</option>
-          </select>
-        </li>
-      </template>
     </ul>
 
     <p>
@@ -107,7 +93,7 @@ import { defineComponent, ref } from "@vue/composition-api";
 import { useIntlDateTimeFormat, useLanguage } from "vue-composable";
 
 export default defineComponent({
-  name: "intl-number-format-example",
+  name: "intl-date-time-format-example",
 
   setup() {
     const { languages, language } = useLanguage();
@@ -116,9 +102,9 @@ export default defineComponent({
     const selectedLocale = ref(language.value || "en");
 
     const options = ref({
-      style: "currency",
-      currency: "USD",
-      currencyDisplay: "symbol"
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
     });
 
     const { formatString, format } = useIntlDateTimeFormat(
@@ -126,7 +112,7 @@ export default defineComponent({
       options
     );
 
-    const value = ref(400);
+    const value = ref("2020-01-01");
 
     const formattedValue = format(value);
 
