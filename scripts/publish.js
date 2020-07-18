@@ -17,6 +17,7 @@ async function publish(package) {
   const mainPkg = require(path.resolve("package.json"));
   const version = mainPkg.version;
   const tag = args.tag;
+  const pkgDir = path.resolve(`packages/${package}`);
   try {
     const args = ["publish", "--access public"];
     args.push(`--new-version`, version);
