@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-dev.37",
+  "version": "1.0.0",
   "name": "vue-composable-monorepo",
   "workspaces": [
     "packages/*",
@@ -16,14 +16,11 @@
     "type": "git",
     "url": "git+https://github.com/pikax/vue-composable.git"
   },
-  "module": "dist/vue-composable.es.js",
+  "module": "dist/vue-composable.esm-bundler.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "private": true,
   "scripts": {
-    "prebuild": "rimraf dist",
+    "postinstall": "node ./scripts/postinstall.js",
     "build": "node scripts/build.js",
     "build:vue2": "yarn build --version=2",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",

@@ -83,7 +83,7 @@ async function build(target, targetVersion) {
 
     // if building a specific format, do not remove dist.
     if (!formats) {
-      await fs.remove(`${pkgDir}/dist`);
+      await fs.remove(`${pkgDir}/dist/v${version}`);
     }
 
     const env =
@@ -130,7 +130,10 @@ async function build(target, targetVersion) {
         ExtractorConfig
       } = require("@microsoft/api-extractor");
 
-      const extractorConfigPath = path.resolve(pkgDir, `api-extractor.json`);
+      const extractorConfigPath = path.resolve(
+        pkgDir,
+        `api-extractor.v${targetVersion}.json`
+      );
       const extractorConfig = ExtractorConfig.loadFileAndPrepare(
         extractorConfigPath
       );
@@ -164,8 +167,13 @@ async function build(target, targetVersion) {
         process.exitCode = 1;
       }
 
-      await fs.remove(`${pkgDir}/dist/packages`);
+      await fs.remove(`${pkgDir}/dist/v${targetVersion}/packages`);
     }
+
+    // clean files
+    await removeFiles(`${pkgDir}/dist`);
+    // copy the folder files
+    await copyFolder(`${pkgDir}/dist/v${targetVersion}`, `${pkgDir}/dist`);
   } finally {
     // await restorePkg();
     await renameRestore();
@@ -225,10 +233,44 @@ async function apiRename(target, targetVersion) {
   return restore;
 }
 
+async function removeFiles(from) {
+  const stat = await fs.lstat(from);
+  if (!stat.isDirectory()) {
+    return;
+  }
+  const files = await fs.readdir(from);
+  await Promise.all(
+    files.map(async x => {
+      const fp = path.join(from, x);
+      const s = await fs.lstat(fp);
+      if (!s.isFile()) return Promise.resolve();
+      fs.remove(fp);
+    })
+  );
+}
+
+async function copyFolder(from, to) {
+  const stat = await fs.lstat(from);
+  if (!stat.isDirectory()) {
+    return;
+  }
+  const files = await fs.readdir(from);
+  await Promise.all(
+    files.map(async x => {
+      const fp = path.join(from, x);
+      const s = await fs.lstat(fp);
+      if (!s.isFile()) return Promise.resolve();
+      fs.copyFile(path.join(from, x), path.join(to, x));
+    })
+  );
+}
+
 exports.buildTargets = buildTargets;
 exports.buildAll = buildAll;
 exports.run = run;
 exports.build = build;
 exports.resolvePkgDir = resolvePkgDir;
+exports.removeFiles = removeFiles;
+exports.copyFolder = copyFolder;
 
 if (require.main === module) run();

@@ -15,6 +15,7 @@ const name = path.basename(packageDir);
 const resolve = p => path.resolve(packageDir, p);
 const pkg = require(resolve(`package.json`));
 const packageOptions = pkg.buildOptions || {};
+const vueVersion = process.env.VUE_VERSION;
 
 const knownExternals = fs.readdirSync(packagesDir);
 
@@ -23,15 +24,15 @@ let hasTSChecked = false;
 
 const configs = {
   "esm-bundler": {
-    file: resolve(`dist/${name}.esm-bundler.js`),
+    file: resolve(`dist/v${vueVersion}/${name}.esm-bundler.js`),
     format: `es`
   },
   cjs: {
-    file: resolve(`dist/${name}.cjs.js`),
+    file: resolve(`dist/v${vueVersion}/${name}.cjs.js`),
     format: `cjs`
   },
   global: {
-    file: resolve(`dist/${name}.global.js`),
+    file: resolve(`dist/v${vueVersion}/${name}.global.js`),
     format: `iife`,
     globals: {
       "@vue/composition-api": "vueCompositionApi",
@@ -41,7 +42,7 @@ const configs = {
     }
   },
   esm: {
-    file: resolve(`dist/${name}.esm.js`),
+    file: resolve(`dist/v${vueVersion}/${name}.esm.js`),
     format: `es`,
     external: ["vue", "@vue/composition-api", "axios"]
   }
@@ -197,7 +198,7 @@ function createReplacePlugin(
 function createProductionConfig(format) {
   return createConfig(
     {
-      file: resolve(`dist/${name}.${format}.prod.js`),
+      file: resolve(`dist/v${vueVersion}/${name}.${format}.prod.js`),
       format: configs[format].format
     },
     configs[format].plugins || [],
@@ -210,7 +211,7 @@ function createMinifiedConfig(format) {
   return createConfig(
     {
       ...configs[format],
-      file: resolve(`dist/${name}.${format}.prod.js`),
+      file: resolve(`dist/v${vueVersion}/${name}.${format}.prod.js`),
       format: configs[format].format
     },
     [

@@ -7,7 +7,8 @@
   "unpkg": "dist/vue-composable.global.js",
   "files": [
     "index.js",
-    "dist"
+    "dist",
+    "scripts"
   ],
   "types": "dist/vue-composable.d.ts",
   "buildOptions": {
@@ -36,6 +37,9 @@
   },
   "homepage": "https://pikax.me/vue-composable/composable",
   "sideEffects": false,
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
+  },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-beta.2",
     "vue": "^2.6.10"

@@ -38,10 +38,10 @@
   "homepage": "https://pikax.me/vue-composable/composable/external/axios.html",
   "sideEffects": false,
   "dependencies": {
-    "vue-composable": "^1.0.0-alpha.32"
+    "vue-composable": "^1.0.0-dev.37"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-beta.24",
+    "@vue/composition-api": "^1.0.0-beta.2",
     "axios": "^0.19.2"
   },
   "peerDependencies2": {

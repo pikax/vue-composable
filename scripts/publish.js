@@ -7,7 +7,7 @@ const { prompt } = require("enquirer");
 
 const { targets: allTargets } = require("./utils");
 
-const { build, resolvePkgDir } = require("./build");
+const { build, resolvePkgDir, buildAll, removeFiles } = require("./build");
 
 const targets = args._;
 const buildTargets = targets.length > 0 ? targets : allTargets;
@@ -77,24 +77,29 @@ async function run() {
 
   for (const version of versions) {
     for (const target of buildTargets) {
-      await publish(target, version);
+      await build(target, version);
     }
   }
 
-  const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
-  if (stdout) {
-    console.log("\nCommitting changes...");
-    await execa("git", ["add", "-A"]);
-    await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
-  } else {
-    console.log("No changes to commit.");
+  // remove files from 'dist' folder, this folder will be fixed by the `postinstall`
+  for (const target of buildTargets) {
+    await removeFiles(path.resolve(`packages/${target}/dist`));
   }
 
-  // push to GitHub
-  console.log("\nPushing to GitHub...");
-  await execa("git", ["tag", `v${targetVersion}`]);
-  await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
-  await execa("git", ["push"]);
+  // const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
+  // if (stdout) {
+  //   console.log("\nCommitting changes...");
+  //   await execa("git", ["add", "-A"]);
+  //   await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
+  // } else {
+  //   console.log("No changes to commit.");
+  // }
+
+  // // push to GitHub
+  // console.log("\nPushing to GitHub...");
+  // await execa("git", ["tag", `v${targetVersion}`]);
+  // await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
+  // await execa("git", ["push"]);
 }
 
 run();
