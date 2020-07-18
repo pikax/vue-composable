@@ -1,7 +1,7 @@
-import { computed, Ref } from '../api';
-import { intlDateFormatExtractArguments } from './_helper';
-import { RefTyped, unwrap } from '../utils';
-// import { DateTimeFormatOptions } from "./types";
+import { computed, Ref } from "../api";
+import { intlDateFormatExtractArguments } from "./_helper";
+import { RefTyped, unwrap } from "../utils";
+import { IntlDateTimeFormatOptions } from "./types";
 
 export type DateTimeFormatLocales =
   | RefTyped<string>
@@ -10,7 +10,9 @@ export type DateTimeFormatLocales =
 
 export type DateTimeFormatterFormat<T> = (
   value: Readonly<RefTyped<Readonly<number | Date>>>,
-  overrideOpts?: RefTyped<Intl.DateTimeFormatOptions>,
+  overrideOpts?: RefTyped<
+    Intl.DateTimeFormatOptions | IntlDateTimeFormatOptions
+  >,
   overrideLocale?: RefTyped<DateTimeFormatLocales>
 ) => T;
 
@@ -27,18 +29,18 @@ export function useIntlDateTimeFormat(
   locales: DateTimeFormatLocales
 ): DateTimeFormatReturn;
 
-// export function useIntlDateTimeFormat(
-//   options: RefTyped<DateTimeFormatOptions>
-// ): DateTimeFormatReturn;
+export function useIntlDateTimeFormat(
+  options: RefTyped<IntlDateTimeFormatOptions>
+): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
   options: RefTyped<Intl.DateTimeFormatOptions>
 ): DateTimeFormatReturn;
 
-// export function useIntlDateTimeFormat(
-//   locales: DateTimeFormatLocales,
-//   options?: RefTyped<DateTimeFormatOptions | undefined>
-// ): DateTimeFormatReturn;
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales,
+  options?: RefTyped<IntlDateTimeFormatOptions | undefined>
+): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
   locales: DateTimeFormatLocales,
@@ -48,7 +50,7 @@ export function useIntlDateTimeFormat(
 export function useIntlDateTimeFormat(
   localesOptions?:
     | DateTimeFormatLocales
-    // | RefTyped<DateTimeFormatOptions>
+    | RefTyped<IntlDateTimeFormatOptions>
     | RefTyped<Intl.DateTimeFormatOptions>,
   opts?: any
 ) {
@@ -91,6 +93,6 @@ export function useIntlDateTimeFormat(
     format,
     formatString,
 
-    formatter,
+    formatter
   };
 }
