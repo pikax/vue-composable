@@ -71,6 +71,7 @@ async function run() {
   }
 
   const mainPkg = require(path.resolve("package.json"));
+  const targetVersion = mainPkg.version;
 
   // remove files from 'dist' folder and `peerDependencies`, this folder will be fixed by the `postinstall`
   for (const target of buildTargets) {
