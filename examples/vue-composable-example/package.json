@@ -13,8 +13,8 @@
     "vue-composable": "^1.0.0-dev.32"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.4.1",
-    "@vue/cli-service": "^4.4.1",
+    "@vue/cli-plugin-babel": "4.4.6",
+    "@vue/cli-service": "^4.4.6",
     "vue-template-compiler": "^2.6.11"
   },
   "postcss": {

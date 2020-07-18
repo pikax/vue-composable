@@ -1,10 +1,11 @@
-import { inject, InjectionKey, provide } from "../api";
+import { InjectionKey, provide } from "../api";
 import {
   BreakpointReturn,
   BreakpointObject,
   useBreakpoint
 } from "./breakpoint";
 import { isArray, isString, isObject, isNumber } from "../utils";
+import { injectFactory } from "../misc";
 
 // istanbul ignore next
 const BREAKPOINT_TAILWIND_KEY: InjectionKey<any> = /*#__PURE__*/ Symbol(
@@ -161,9 +162,7 @@ export function useBreakpointTailwindCSS<
   T extends BreakpointObject
 >(): BreakpointReturn<T>;
 export function useBreakpointTailwindCSS(config?: any): any {
-  const b = inject(BREAKPOINT_TAILWIND_KEY);
-  if (b) {
-    return b;
-  }
-  return setBreakpointTailwindCSS(config || defaultTailwindBreakpoint);
+  return injectFactory(BREAKPOINT_TAILWIND_KEY, () =>
+    setBreakpointTailwindCSS(config || defaultTailwindBreakpoint)
+  );
 }

@@ -1,6 +1,7 @@
 import { createVue, nextTick } from "../utils";
 import { useOnResize, ResizeResult } from "../../src/event/onResize";
 import { promisedTimeout } from "../../src/utils";
+import { ref } from "../../src/api";
 
 describe("onResize", () => {
   const windowEventSpy = jest.fn();
@@ -194,6 +195,34 @@ describe("onResize", () => {
     expect(use).toMatchObject({
       height: { value: 19 },
       width: { value: 19 }
+    });
+  });
+
+  // #364
+  it("should set value on mount", () => {
+    let resize: any;
+
+    const { mount } = createVue({
+      template: `<div ref="el"></div>`,
+      setup() {
+        const el = ref<HTMLElement | null>(null);
+        resize = useOnResize(el);
+
+        return {
+          el
+        };
+      }
+    });
+
+    mount();
+
+    expect(resize).toMatchObject({
+      height: {
+        value: 0
+      },
+      width: {
+        value: 0
+      }
     });
   });
 });

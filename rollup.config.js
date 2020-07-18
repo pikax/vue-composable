@@ -173,6 +173,11 @@ function createReplacePlugin(
         `(process.env.NODE_ENV !== 'production')`
       : // hard coded dev/prod builds
         !isProduction,
+    __SSR__: isBrowserBuild
+      ? false
+      : isBundlerESMBuild
+      ? `(process.env.SSR === 'true')`
+      : true,
     // this is only used during tests
     __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
     // If the build is expected to run directly in the browser (global / esm builds)

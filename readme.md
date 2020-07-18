@@ -76,6 +76,8 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
+- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
+- [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 
 ### Storage
 
@@ -108,6 +110,14 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
 - [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
 - [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
+
+### Meta
+
+- [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive `document.title`
+
+### State
+
+- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
 
@@ -143,8 +153,6 @@ You can contribute raising issues and by helping out with code.
 Tests and Documentation are the most important things for me, because good documentation is really useful!
 
 I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
-
-> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax
 
 Twitter: [@pikax_dev](https://twitter.com/pikax_dev)
 

@@ -15,7 +15,10 @@ export {
   computed,
   getCurrentInstance,
   ComputedRef,
-  UnwrapRef
+  UnwrapRef,
+  Plugin,
+  App,
+  readonly
 } from "@vue/runtime-core";
 
 // istanbul ignore next

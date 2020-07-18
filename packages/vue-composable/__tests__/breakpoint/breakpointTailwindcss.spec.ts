@@ -4,7 +4,7 @@ jest.mock("../../src/api", () => ({
     ? jest.requireActual("../../src/api.2")
     : jest.requireActual("../../src/api.3")),
   provide: jest.fn(),
-  inject: jest.fn()
+  inject: jest.fn().mockImplementation((k, defaultValue) => defaultValue)
 }));
 
 jest.mock("../../src/breakpoint/breakpoint");

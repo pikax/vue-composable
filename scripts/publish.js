@@ -60,6 +60,19 @@ async function publish(package, targetVersion) {
 }
 
 async function run() {
+  const pkg = require("../package.json"); // require(`${pkgDir}/package.json`);
+
+  const currentMinor = +pkg.version.split(".").slice(-1);
+  const majorVersion = pkg.version.split("-")[0];
+  const tempVersion = "dev";
+
+  const targetVersion = `${majorVersion}-${tempVersion}.${currentMinor}`;
+
+  // generate changelog
+  await execa(`yarn`, ["changelog"]);
+
+  // publish packages
+  console.log("\nPublishing packages...");
   const versions = [2, 3];
 
   for (const version of versions) {
@@ -67,6 +80,21 @@ async function run() {
       await publish(target, version);
     }
   }
+
+  const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
+  if (stdout) {
+    console.log("\nCommitting changes...");
+    await execa("git", ["add", "-A"]);
+    await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
+  } else {
+    console.log("No changes to commit.");
+  }
+
+  // push to GitHub
+  console.log("\nPushing to GitHub...");
+  await execa("git", ["tag", `v${targetVersion}`]);
+  await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
+  await execa("git", ["push"]);
 }
 
 run();

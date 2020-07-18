@@ -2,8 +2,6 @@ import { Ref, ref } from "../api";
 import { RefTyped, NO_OP } from "../utils";
 import { useWebStorage } from "./webStorage";
 
-export type LocalStorageTyped<T extends object> = string;
-
 export interface LocalStorageReturn<T> {
   supported: boolean;
 
@@ -30,8 +28,8 @@ export function useLocalStorage(
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
-export function useLocalStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useLocalStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
