@@ -107,4 +107,10 @@ describe("intl dateTimeFormat", () => {
       value: "test"
     });
   });
+
+  it("should format strings", () => {
+    const { formatString } = useIntlDateTimeFormat();
+    formatString("2020-01-01");
+    expect(formatSpy).toHaveBeenLastCalledWith(new Date("2020-01-01"));
+  });
 });
