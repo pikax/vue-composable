@@ -10,6 +10,7 @@ const { targets: allTargets } = require("./utils");
 const { build, removeFiles } = require("./build");
 
 const targets = args._;
+const dry = args.dry;
 const buildTargets = targets.length > 0 ? targets : allTargets;
 
 async function publish(package) {
@@ -24,6 +25,10 @@ async function publish(package) {
     }
 
     console.log("publishing for ", package, version, tag || "", args);
+    if (dry) {
+      console.log("`dry` flag - skipping");
+      return;
+    }
 
     // const otp = await prompt({
     //   type: "input",
@@ -44,8 +49,10 @@ async function publish(package) {
 }
 
 async function run() {
-  // generate changelog
-  // await execa(`yarn`, ["changelog"]);
+  if (!dry) {
+    // generate changelog
+    await execa(`yarn`, ["changelog"]);
+  }
 
   // publish packages
   console.log("\nPublishing packages...");
@@ -77,21 +84,24 @@ async function run() {
 
     await publish(target);
   }
+  if (dry) {
+    return;
+  }
 
-  // const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
-  // if (stdout) {
-  //   console.log("\nCommitting changes...");
-  //   await execa("git", ["add", "-A"]);
-  //   await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
-  // } else {
-  //   console.log("No changes to commit.");
-  // }
+  const { stdout } = await execa("git", ["diff"], { stdio: "pipe" });
+  if (stdout) {
+    console.log("\nCommitting changes...");
+    await execa("git", ["add", "-A"]);
+    await execa("git", ["commit", "-m", `release: v${targetVersion}`]);
+  } else {
+    console.log("No changes to commit.");
+  }
 
-  // // push to GitHub
-  // console.log("\nPushing to GitHub...");
-  // await execa("git", ["tag", `v${targetVersion}`]);
-  // await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
-  // await execa("git", ["push"]);
+  // push to GitHub
+  console.log("\nPushing to GitHub...");
+  await execa("git", ["tag", `v${targetVersion}`]);
+  await execa("git", ["push", "origin", `refs/tags/v${targetVersion}`]);
+  await execa("git", ["push"]);
 }
 
 run();

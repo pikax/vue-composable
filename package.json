@@ -1,12 +1,11 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-dev.37",
   "name": "vue-composable-monorepo",
   "workspaces": [
     "packages/*",
     "examples/*"
   ],
   "description": "Vue composition-api composable components",
-  "main": "index.js",
   "author": {
     "name": "pikax",
     "email": "carlos@hypermob.co.uk"
@@ -16,8 +15,6 @@
     "type": "git",
     "url": "git+https://github.com/pikax/vue-composable.git"
   },
-  "module": "dist/vue-composable.esm-bundler.js",
-  "typings": "dist/index.d.ts",
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",
