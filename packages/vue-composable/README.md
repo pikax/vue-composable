@@ -19,7 +19,7 @@ This library aim is to be one stop shop for many real-world composable functions
 
 # Vue 3
 
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported.
 
 ## Installing
 
@@ -32,14 +32,13 @@ yarn add @vue/composition-api vue-composable
 # install with npm
 npm install @vue/composition-api vue-composable
 
-
-# vue-next / vue@3.0.0-beta
+# vue 3
 
 # install with yarn
-yarn add vue-composable@next
+yarn add vue-composable
 
 # install with npm
-npm install vue-composable@next
+npm install vue-composable
 ```
 
 ## Documentation
@@ -141,7 +140,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 > New packages needed
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
-- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/makeAxios](https://www.npmjs.com/package/@vue-composable/makeAxios) wrap your `axios` instance
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
 
 ## Information
 
