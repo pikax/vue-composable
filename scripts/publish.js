@@ -30,18 +30,18 @@ async function publish(package) {
       return;
     }
 
-    // const otp = await prompt({
-    //   type: "input",
-    //   name: "otp",
-    //   message: "Enter OTP",
-    // });
+    const otp = await prompt({
+      type: "input",
+      name: "otp",
+      message: "Enter OTP"
+    });
 
-    // args.push(`--otp`, otp.otp);
+    args.push(`--otp`, otp.otp);
 
-    // await execa("yarn", args, {
-    //   stdio: "inherit",
-    //   cwd: pkgDir,
-    // });
+    await execa("yarn", args, {
+      stdio: "inherit",
+      cwd: pkgDir
+    });
   } catch (e) {
     console.error(e);
     return process.exit(1);
