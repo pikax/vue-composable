@@ -1,5 +1,12 @@
 export type IntlDateTimeFormatOptions = Intl.DateTimeFormatOptions & {
-  // taken from: https://devhints.io/wip/intl-datetime
+  // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+  dateStyle: "full" | "long" | "medium" | "short";
+  timeStyle: "full" | "long" | "medium" | "short";
+
+  calendar: IntlDateTimeCalendarType;
+  dayPeriod: "narrow" | "short" | "long";
+
+  numberingSystem: IntlDateTimeNumberingSystem;
 
   weekday: "narrow" | "short" | "long";
   era: "narrow" | "short" | "long";
@@ -20,3 +27,42 @@ export type IntlDateTimeFormatOptions = Intl.DateTimeFormatOptions & {
   hourCycle: "h11" | "h12" | "h23" | "h24";
   formatMatcher: "basic" | "best fit";
 };
+
+export type IntlDateTimeCalendarType =
+  | "buddhist"
+  | "chinese"
+  | "coptic"
+  | "ethiopia"
+  | "ethiopic"
+  | "gregory"
+  | "hebrew"
+  | "indian"
+  | "islamic"
+  | "iso8601"
+  | "japanese"
+  | "persian"
+  | "roc";
+
+export type IntlDateTimeNumberingSystem =
+  | "arab"
+  | "arabext"
+  | "bali"
+  | "beng"
+  | "deva"
+  | "fullwide"
+  | "gujr"
+  | "guru"
+  | "hanidec"
+  | "khmr"
+  | "knda"
+  | "laoo"
+  | "latn"
+  | "limb"
+  | "mlym"
+  | "mong"
+  | "mymr"
+  | "orya"
+  | "tamldec"
+  | "telu"
+  | "thai"
+  | "tibt";
