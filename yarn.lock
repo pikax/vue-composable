@@ -1469,6 +1469,13 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@vue-composable/axios@^1.0.0-dev.32":
+  version "1.0.0-dev.37"
+  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-dev.37.tgz#effac8c9fe3df8d165a2a1c7ae5c1972e71b1037"
+  integrity sha512-wxhZEBiEkUnLuP899V4c4gggm2Soy73ef57hHhLivcAj7WqorPKgxocyce9Y8+TbpRVMDMswBPc1B5D0wEu5qw==
+  dependencies:
+    vue-composable "^1.0.0-alpha.32"
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -10067,10 +10074,10 @@ rollup-plugin-typescript2@^0.27.0:
     resolve "1.15.1"
     tslib "1.11.2"
 
-rollup@^2.21.0:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.21.0.tgz#d2e114533812043d5c9b7b0a83f1b2a242e4e1d6"
-  integrity sha512-BEGgy+wSzux7Ycq58pRiWEOBZaXRXTuvzl1gsm7gqmsAHxkWf9nyA5V2LN9fGSHhhDQd0/C13iRzSh4bbIpWZQ==
+rollup@^2.22.1:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.22.1.tgz#8700522aa5feb12c6bd51810df8a276699d136b1"
+  integrity sha512-K9AUQUCJkVqC+A7uUDacfhmpEeAjc2uOmSpvGI5xaYsm8pXgy4ZWEM8wHPfKj11xvCwFZppkRDo8a0RESJXCnw==
   optionalDependencies:
     fsevents "~2.1.2"
 
@@ -11706,6 +11713,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-composable@^1.0.0-dev.32:
+  version "1.0.0-dev.37"
+  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-dev.37.tgz#7120819eef2d2eeb9fed307218e968a1744b8796"
+  integrity sha512-JxCr1FNXbQgQdwqL+yi8cPOP8aN4L19D6UohDAQzKhqo9XQS/Aqn8e59wW+pdKBK5lHJLgN3wtjU1NI5N5SgUw==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
