@@ -1770,12 +1770,19 @@
   dependencies:
     "@vue/shared" "3.0.0-beta.20"
 
-"@vue/reactivity@3.0.0-beta.24", "@vue/reactivity@^3.0.0-beta.24":
+"@vue/reactivity@3.0.0-beta.24":
   version "3.0.0-beta.24"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-beta.24.tgz#99bd7684c3be4396c0a4c41bf33aae6baaed3ac7"
   integrity sha512-C9L75E9LOgTiHEUp3pU258nrdeH2PcUkr/0pehJKcUuoVwCkwxoiIQjvyAQOrq7i77N6f9dvEkFWN9C5iIKExw==
   dependencies:
     "@vue/shared" "3.0.0-beta.24"
+
+"@vue/reactivity@^3.0.0-rc.2":
+  version "3.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-rc.2.tgz#c019c996a9b8f9cdf7424934773b1e0ca96a91a9"
+  integrity sha512-kgnBKzX74sV/Zc2iS5Zp+QwlctMBplsw7LAogGr2K2BrkfjqXSBr4yag/m8poGmceVMNm6/wFsWrOEnbL0hyZQ==
+  dependencies:
+    "@vue/shared" "3.0.0-rc.2"
 
 "@vue/runtime-core@3.0.0-beta.20":
   version "3.0.0-beta.20"
@@ -1820,6 +1827,11 @@
   version "3.0.0-beta.24"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.24.tgz#ca09ebd324ce30cc2ef8b729fe2cead5602f9c54"
   integrity sha512-E41lsRKH9KnMuqkpJTSGZSqWDxy77/j2VXXo5BDFjU8h1sEiVAb/nQ4c3nXe3JmksFLlwQMXAT4+MxUhw8D+vA==
+
+"@vue/shared@3.0.0-rc.2":
+  version "3.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-rc.2.tgz#bffe0a53eb2f6ce50def4613a6963e948c29ed83"
+  integrity sha512-lJ1jb5PEDoSTosKdOyFh9/GpSFY/d9HXkG126aJXM4WgvJaf+OVKUWKZSgqolKLLIOJHG9ZcQt4OQyoktMenBg==
 
 "@vue/web-component-wrapper@^1.2.0":
   version "1.2.0"
