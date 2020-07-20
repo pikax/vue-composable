@@ -26,7 +26,7 @@ yarn add @vue/composition-api @vue-composable/axios
 npm install @vue/composition-api @vue-composable/axios
 
 
-# vue-next / vue@3.0.0-beta
+# vue-next / vue@3.0.0
 
 # install with yarn
 yarn add @vue-composable/axios

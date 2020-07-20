@@ -1,7 +1,7 @@
 import { useUndo } from "../../src";
 import { ref } from "../../src/api";
 describe("undo", () => {
-  it("should work", () => {
+  it("should work", async () => {
     const v = ref(0);
 
     const undo = useUndo(v);
