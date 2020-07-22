@@ -57,11 +57,11 @@
   "devDependencies": {
     "@types/jest": "^26.0.5",
     "@types/node": "^14.0.24",
-    "@vue/runtime-core": "^3.0.0-rc.2",
+    "@vue/runtime-core": "^3.0.0-rc.4",
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-rc.2",
+    "@vue/runtime-core": "^3.0.0-rc.4",
     "axios": "^0.19.2"
   }
 }
