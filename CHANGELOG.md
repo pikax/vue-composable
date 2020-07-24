@@ -1,3 +1,9 @@
+# [1.0.0-beta.2](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-07-24)
+
+### Features
+
+- add `current` when tailwindcss config contains only number bp ([#475](https://github.com/pikax/vue-composable/issues/475)) ([202f53a](https://github.com/pikax/vue-composable/commit/202f53a7d738c541b6678e3781fc72bb9455021b))
+
 # [1.0.0-beta.1](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.37...v1.0.0-beta.1) (2020-07-18)
 
 ### Features
