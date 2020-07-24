@@ -147,7 +147,15 @@ export function setBreakpointTailwindCSS<T extends BreakpointObject>(
     for (const k in bk) {
       // istanbul ignore else
       if (bk.hasOwnProperty(k)) {
-        bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+        const v = bk[k];
+
+        if (isObject(v)) {
+          bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+        } else if (isString(v)) {
+          if (!v.endsWith("px")) {
+            bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+          }
+        }
       }
     }
   }
