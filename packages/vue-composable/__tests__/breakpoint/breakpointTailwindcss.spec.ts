@@ -40,7 +40,7 @@ describe("breakpointTailwindcss", () => {
         })
       ).toBe(bk);
 
-      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "(min-width: 123px)" });
+      expect(useBreakpoint).toHaveBeenCalledWith({ sm: 123 });
       expect(provide).toHaveBeenCalled();
     });
 
@@ -91,7 +91,7 @@ describe("breakpointTailwindcss", () => {
         })
       ).toBe(bk);
 
-      expect(useBreakpoint).toHaveBeenCalledWith({ sm: "(min-width: 123px)" });
+      expect(useBreakpoint).toHaveBeenCalledWith({ sm: 123 });
       expect(provide).toHaveBeenCalled();
     });
   });
