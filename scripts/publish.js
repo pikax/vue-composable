@@ -82,7 +82,7 @@ async function run() {
     pkg.version = mainPkg.version;
     await fs.writeFile(`${pkgDir}/package.json`, JSON.stringify(pkg, null, 2));
 
-    await removeFiles(path.resolve(`packages/${target}/dist`));
+    // await removeFiles(path.resolve(`packages/${target}/dist`));
 
     await publish(target);
   }
