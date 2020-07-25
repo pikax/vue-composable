@@ -31,3 +31,6 @@ export const vueSet = set;
 export function readonly<T extends object>(target: T): Readonly<Ref<T>> {
   return computed(() => target) as any;
 }
+
+// FAKE DeepReadonly
+export type DeepReadonly<T> = Readonly<T>;

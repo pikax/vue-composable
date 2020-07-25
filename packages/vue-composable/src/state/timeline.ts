@@ -1,4 +1,5 @@
-import { ref, watch, Ref, readonly } from "../api";
+import { ref, watch, Ref, readonly, DeepReadonly } from "../api";
+import { MAX_ARRAY_SIZE } from "../utils";
 
 export interface TimelineEntry<T> {
   item: T;
@@ -16,10 +17,10 @@ export interface TimelineOptions<T> {
 export function useTimeline<T>(
   value: Ref<T>,
   options?: Partial<TimelineOptions<T>>
-) {
-  const timeline = ref<TimelineEntry<T>[]>([]);
+): DeepReadonly<Ref<TimelineEntry<T>[]>> {
+  const timeline = ref([]) as Ref<TimelineEntry<T>[]>;
   const clone = options && options.clone ? options.clone : (x: any) => x;
-  const maxLength = (options && options.maxLength) || 0;
+  const maxLength = (options && options.maxLength) || MAX_ARRAY_SIZE;
   watch(
     value,
     (_, o) => {
@@ -28,13 +29,15 @@ export function useTimeline<T>(
         date: new Date()
       });
 
-      if (maxLength >= timeline.value.length) {
+      if (timeline.value.length > maxLength) {
         timeline.value.pop();
       }
     },
     {
-      ...options,
-      immediate: false
+      immediate: false,
+      flush: "sync",
+      // allow options to override defaults
+      ...options
     }
   );
 
