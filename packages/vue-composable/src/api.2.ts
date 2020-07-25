@@ -16,6 +16,7 @@ export {
   onUnmounted,
   onActivated,
   onBeforeMount,
+  onBeforeUnmount,
   onDeactivated,
   ComputedRef,
   UnwrapRef // Plugin,

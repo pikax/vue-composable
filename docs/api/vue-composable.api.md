@@ -891,6 +891,27 @@ export interface RetryReturnNoFactory extends RetryReturn {
 }
 
 // @public (undocumented)
+export const SCROLL_LOCK_CLASS = "no-scroll";
+
+// @public (undocumented)
+export interface ScrollLockOptions {
+  // (undocumented)
+  auto?: boolean;
+  // (undocumented)
+  lockedClass?: string;
+  // (undocumented)
+  onChange?(el: Element, lock: boolean): void;
+}
+
+// @public (undocumented)
+export interface ScrollLockReturn {
+  // (undocumented)
+  locked: Ref<boolean>;
+  // (undocumented)
+  remove: () => void;
+}
+
+// @public (undocumented)
 export interface ScrollResult {
   // (undocumented)
   remove: RemoveEventFunction;
@@ -1446,9 +1467,6 @@ export function useLocalStorage<T>(
   sync?: boolean
 ): LocalStorageReturn<T>;
 
-// Warning: (ae-forgotten-export) The symbol "ScrollLockOptions" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ScrollLockReturn" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function useLockScroll(
   elements: RefTyped<Element[]>,
@@ -1463,13 +1481,13 @@ export function useLockScroll(
 
 // @public (undocumented)
 export function useLockScroll(
-  element: RefTyped<Element>,
+  element: RefTyped<Element | undefined>,
   options?: ScrollLockOptions
 ): ScrollLockReturn;
 
 // @public (undocumented)
 export function useLockScroll(
-  element: RefTyped<Element>,
+  element: RefTyped<Element | undefined>,
   lockedClass: string
 ): ScrollLockReturn;
 

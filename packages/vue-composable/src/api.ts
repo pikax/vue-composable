@@ -18,6 +18,7 @@ export {
   onUnmounted,
   onActivated,
   onBeforeMount,
+  onBeforeUnmount,
   onDeactivated,
   Plugin,
   App,
