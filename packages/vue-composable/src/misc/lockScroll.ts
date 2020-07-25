@@ -54,11 +54,11 @@ export function useLockScroll(
   selectorElements: RefTyped<Element> | RefTyped<Element[]> | string,
   classOptions?: string | Partial<ScrollLockOptions>
 ): ScrollLockReturn {
-  const elements = isString(selectorElements)
+  const elements = (isString(selectorElements)
     ? ref(Array.from(document.querySelectorAll(selectorElements)))
     : isArray(unref(selectorElements))
-    ? wrap(selectorElements as Element[])
-    : wrap([selectorElements as Element]);
+    ? wrap(selectorElements)
+    : wrap([selectorElements])) as Ref<Element[]>;
 
   const options = isString(classOptions)
     ? { lockedClass: classOptions, auto: true }

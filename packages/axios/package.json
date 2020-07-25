@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/axios",
-  "version": "1.0.0-alpha.32",
+  "version": "1.0.0-beta.2",
   "description": "@vue-composable/axios",
   "main": "index.js",
   "module": "dist/axios.esm-bundler.js",
@@ -37,25 +37,31 @@
   },
   "homepage": "https://pikax.me/vue-composable/composable/external/axios.html",
   "sideEffects": false,
-  "dependencies": {
-    "vue-composable": "^1.0.0-alpha.28"
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
   },
-  "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-beta.14",
-    "axios": "^0.19.2"
+  "bin": {
+    "vue-composable-axios-fix": "./scripts/postinstall.js"
+  },
+  "dependencies": {
+    "vue-composable": "^1.0.0-beta.2"
   },
   "peerDependencies2": {
-    "@vue/composition-api": "^0.5.0",
+    "@vue/composition-api": "^1.0.0-beta.2",
     "axios": "^0.19.2"
   },
   "peerDependencies3": {
-    "@vue/runtime-core": "^3.0.0-beta.14",
+    "@vue/runtime-core": "^3.0.0-rc.2",
     "axios": "^0.19.2"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
-    "@types/node": "^14.0.5",
-    "@vue/runtime-core": "^3.0.0-beta.14",
-    "typescript": "^3.8.3"
+    "@types/jest": "^26.0.7",
+    "@types/node": "^14.0.25",
+    "@vue/runtime-core": "^3.0.0-rc.4",
+    "typescript": "^3.9.7"
+  },
+  "peerDependencies": {
+    "@vue/runtime-core": "^3.0.0-rc.2",
+    "axios": "^0.19.2"
   }
 }

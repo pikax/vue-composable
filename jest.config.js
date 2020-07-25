@@ -4,6 +4,7 @@ module.exports = {
   preset: "ts-jest",
   globals: {
     __DEV__: true,
+    __SSR__: true,
     __VERSION__: pkg.version,
     __VUE_2__: process.env.VUE === "2",
     __COMMIT__: "none"

@@ -1,6 +1,7 @@
 module.exports = {
   define: {
-    __VUE_2__: true
+    __VUE_2__: true,
+    "process.env.SSR": true
   },
   title: "vue-composable",
   description:
@@ -128,7 +129,11 @@ module.exports = {
           title: "Misc",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/misc/sharedRef", "SharedRef"]]
+          children: [
+            ["composable/misc/sharedRef", "SharedRef"],
+            ["composable/misc/vmodel", "vModel"],
+            ["composable/misc/injectFactory", "injectFactory"]
+          ]
         },
         {
           title: "Storage",
@@ -166,6 +171,7 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
+            ["composable/Intl/dateTimeFormat", "dateTimeFormat"],
             ["composable/Intl/numberFormat", "numberFormat"],
             ["composable/Intl/currencyFormat", "currencyFormat"]
           ]
@@ -201,6 +207,18 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [["composable/i18n/i18n", "i18n"]]
+        },
+        {
+          title: "meta",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/meta/title", "Title"]]
+        },
+        {
+          title: "state",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/state/undo", "Undo"]]
         },
         {
           title: "External",

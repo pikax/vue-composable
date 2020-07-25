@@ -4,6 +4,9 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { InjectionKey } from "@vue/runtime-core";
+import { Plugin as Plugin_2 } from "@vue/runtime-core";
+import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
 import { UnwrapRef } from "@vue/runtime-core";
 
@@ -304,6 +307,31 @@ export interface CurrencyFormatReturn {
 }
 
 // @public (undocumented)
+export type DateTimeFormatLocales =
+  | RefTyped<string>
+  | RefTyped<string[]>
+  | undefined;
+
+// @public (undocumented)
+export interface DateTimeFormatReturn {
+  // (undocumented)
+  format: DateTimeFormatterFormat<Ref<Readonly<string>>>;
+  // (undocumented)
+  formatString: DateTimeFormatterFormat<string>;
+  // (undocumented)
+  formatter: Ref<Readonly<Intl.DateTimeFormat>>;
+}
+
+// @public (undocumented)
+export type DateTimeFormatterFormat<T> = (
+  value: Readonly<RefTyped<Readonly<number | Date | string>>>,
+  overrideOpts?: RefTyped<
+    Intl.DateTimeFormatOptions | IntlDateTimeFormatOptions
+  >,
+  overrideLocale?: RefTyped<DateTimeFormatLocales>
+) => T;
+
+// @public (undocumented)
 export function debounce<F extends Procedure>(
   func: F,
   waitMilliseconds?: number,
@@ -349,6 +377,9 @@ export function getCssVariableFor(
   element: HTMLElement,
   name: string
 ): CssVariable;
+
+// @public (undocumented)
+export const hydrationPlugin: Plugin_2;
 
 // @public
 export interface i18n extends Record<string, i18nMessageValue> {}
@@ -405,6 +436,18 @@ export interface i18nResult<TLocales, TMessages extends any = i18n> {
 }
 
 // @public (undocumented)
+export function injectFactory<T>(
+  key: InjectionKey<T> | string,
+  defaultValueFactory: () => Promise<T>
+): Promise<T>;
+
+// @public (undocumented)
+export function injectFactory<T>(
+  key: InjectionKey<T> | string,
+  defaultValueFactory: () => T
+): T;
+
+// @public (undocumented)
 export interface IntersectionObserverOptions {
   // (undocumented)
   root?: RefTyped<Element> | null;
@@ -429,6 +472,68 @@ export interface IntersectionObserverResult {
   // (undocumented)
   unobserve: (el: RefTyped<Element>) => void;
 }
+
+// @public (undocumented)
+export type IntlDateTimeCalendarType =
+  | "buddhist"
+  | "chinese"
+  | "coptic"
+  | "ethiopia"
+  | "ethiopic"
+  | "gregory"
+  | "hebrew"
+  | "indian"
+  | "islamic"
+  | "iso8601"
+  | "japanese"
+  | "persian"
+  | "roc";
+
+// @public (undocumented)
+export type IntlDateTimeFormatOptions = Intl.DateTimeFormatOptions & {
+  dateStyle: "full" | "long" | "medium" | "short";
+  timeStyle: "full" | "long" | "medium" | "short";
+  calendar: IntlDateTimeCalendarType;
+  dayPeriod: "narrow" | "short" | "long";
+  numberingSystem: IntlDateTimeNumberingSystem;
+  weekday: "narrow" | "short" | "long";
+  era: "narrow" | "short" | "long";
+  year: "numeric" | "2-digit";
+  month: "numeric" | "2-digit" | "narrow" | "short" | "long";
+  day: "numeric" | "2-digit";
+  hour: "numeric" | "2-digit";
+  minute: "numeric" | "2-digit";
+  second: "numeric" | "2-digit";
+  timeZoneName: "short" | "long";
+  hour12: true | false;
+  hourCycle: "h11" | "h12" | "h23" | "h24";
+  formatMatcher: "basic" | "best fit";
+};
+
+// @public (undocumented)
+export type IntlDateTimeNumberingSystem =
+  | "arab"
+  | "arabext"
+  | "bali"
+  | "beng"
+  | "deva"
+  | "fullwide"
+  | "gujr"
+  | "guru"
+  | "hanidec"
+  | "khmr"
+  | "knda"
+  | "laoo"
+  | "latn"
+  | "limb"
+  | "mlym"
+  | "mong"
+  | "mymr"
+  | "orya"
+  | "tamldec"
+  | "telu"
+  | "thai"
+  | "tibt";
 
 // @public (undocumented)
 export type IntlNumberFormatLocales =
@@ -514,7 +619,7 @@ export interface LocalStorageReturn<T> {
 }
 
 // @public (undocumented)
-export type LocalStorageTyped<T extends object> = string;
+export const MAX_ARRAY_SIZE: number;
 
 // @public (undocumented)
 export function minMax(val: number, min: number, max: number): number;
@@ -666,6 +771,14 @@ export interface PromiseResultFactory<
   // (undocumented)
   exec: (...args: TArgs) => Promise<PromiseType<T> | undefined>;
 }
+
+// @public (undocumented)
+export function provideSSRTitle(
+  app: {
+    provide: typeof provide;
+  },
+  title?: RefTyped<string>
+): Ref<string>;
 
 // @public (undocumented)
 export type RefElement = Element | Ref<Element | undefined>;
@@ -871,6 +984,31 @@ export interface StorageSerializer<T = any> {
 }
 
 // @public (undocumented)
+export interface UndoOperation {
+  (step: number): void;
+  (): void;
+}
+
+// @public (undocumented)
+export interface UndoOptions<T> {
+  clone: (entry: T) => T;
+  deep: boolean;
+  maxLength: number;
+}
+
+// @public (undocumented)
+export interface UndoReturn<T> {
+  jump(delta: number): void;
+  next: ComputedRef<T[]>;
+  prev: ComputedRef<T[]>;
+  redo(): void;
+  redo(step: number): void;
+  undo(): void;
+  undo(step: number): void;
+  value: Ref<T>;
+}
+
+// @public (undocumented)
 export function unwrap<T>(o: RefTyped<T>): T;
 
 // @public (undocumented)
@@ -881,7 +1019,7 @@ export function useArrayPagination<T extends Array<TR>, TR>(
 
 // @public (undocumented)
 export function useBreakpoint<T extends BreakpointObject>(
-  breakpoints: Record<keyof T, number | string>
+  breakpoints: T
 ): BreakpointReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "ChromeBreakpoint" needs to be exported by the entry point index.d.ts
@@ -1205,6 +1343,9 @@ export function useGeolocation(
   highAccuracy: Ref<boolean | null>;
 };
 
+// @public (undocumented)
+export function useHydration(): Ref<Boolean>;
+
 // @public
 export function useI18n<
   T extends i18nDefinition<TMessage>,
@@ -1224,6 +1365,36 @@ export function useIntersectionObserver(
 export function useIntersectionObserver(
   options: RefTyped<IntersectionObserverOptions>
 ): IntersectionObserverResult;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  options: RefTyped<IntlDateTimeFormatOptions>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  options: RefTyped<Intl.DateTimeFormatOptions>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales,
+  options?: RefTyped<IntlDateTimeFormatOptions | undefined>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales,
+  options: RefTyped<Intl.DateTimeFormatOptions | undefined>
+): DateTimeFormatReturn;
 
 // @public (undocumented)
 export function useIntlNumberFormat(): NumberFormatReturn;
@@ -1269,8 +1440,8 @@ export function useLocalStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useLocalStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useLocalStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1365,6 +1536,19 @@ export function useOnMouseMove(
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
 
 // @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): MouseMoveResult;
+
+// @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): MouseMoveResult;
+
+// @public (undocumented)
 export function useOnMouseMove(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
@@ -1389,6 +1573,19 @@ export function useOnResize(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ResizeResult;
 
 // @public (undocumented)
@@ -1421,6 +1618,19 @@ export function useOnScroll(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ScrollResult;
 
 // @public (undocumented)
@@ -1589,8 +1799,8 @@ export function useSessionStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useSessionStorage<T extends object = object>(
-  key: LocalStorageTyped<T> | string,
+export function useSessionStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1608,6 +1818,9 @@ export function useSharedRef<T = any>(
 ): SharedRefReturn<T>;
 
 // @public (undocumented)
+export function useSSRTitle(defaultTitle?: string | null): Ref<string | null>;
+
+// @public (undocumented)
 export function useStorage(
   key: string,
   defaultValue?: RefTyped<string>,
@@ -1615,11 +1828,23 @@ export function useStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useTitle(overrideTitle?: string | null): Ref<string | null>;
+
+// @public (undocumented)
+export function useUndo<T = any>(): UndoReturn<T | undefined>;
+
+// @public (undocumented)
+export function useUndo<T>(
+  defaultValue: RefTyped<T>,
+  options?: Partial<UndoOptions<T>>
+): UndoReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts
@@ -1629,6 +1854,12 @@ export function useStorage<T extends object = any>(
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
 ): ValidationOutput<E> & ValidationGroupResult;
+
+// @public (undocumented)
+export function useVModel<TProps, PropName extends keyof TProps>(
+  props: TProps,
+  name: PropName
+): Ref<TProps[PropName]>;
 
 // @public (undocumented)
 export function useWebSocket(

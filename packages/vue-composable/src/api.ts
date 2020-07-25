@@ -18,7 +18,10 @@ export {
   onUnmounted,
   onActivated,
   onBeforeMount,
-  onDeactivated
+  onDeactivated,
+  Plugin,
+  App,
+  readonly
 } from "@vue/runtime-core";
 
 // istanbul ignore next

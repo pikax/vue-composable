@@ -40,6 +40,18 @@ export function useOnScroll(
   options?: boolean | AddEventListenerOptions,
   wait?: number
 ): ScrollResult;
+
+export function useOnScroll<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ScrollResult;
+
+export function useOnScroll<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): ScrollResult;
+
 export function useOnScroll(
   el?: any,
   options?: number | boolean | AddEventListenerOptions,
