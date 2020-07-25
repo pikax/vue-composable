@@ -87,7 +87,9 @@ export function useLockScroll(
   const locked = ref(false);
 
   // NOTE issues on Vue3 because of the `watch.deep`, we wrap all elements
-  const tracked = computed(() => elements.value.map(x => ref(x)));
+  const tracked = computed(() => elements.value.map(x => ref(x))) as Readonly<
+    Ref<Ref<Element>[]>
+  >;
 
   const remove = watch(
     [locked, tracked] as const,
@@ -132,7 +134,6 @@ export function useLockScroll(
     onActivated(lock);
     onDeactivated(unlock);
     onBeforeUnmount(unlock);
-    // onUnmounted(unlock);
   }
 
   return {

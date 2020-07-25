@@ -906,9 +906,13 @@ export interface ScrollLockOptions {
 // @public (undocumented)
 export interface ScrollLockReturn {
   // (undocumented)
+  lock(): void;
+  // (undocumented)
   locked: Ref<boolean>;
   // (undocumented)
   remove: () => void;
+  // (undocumented)
+  unlock(): void;
 }
 
 // @public (undocumented)
@@ -1469,13 +1473,25 @@ export function useLocalStorage<T>(
 
 // @public (undocumented)
 export function useLockScroll(
-  elements: RefTyped<Element[]>,
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
   options?: ScrollLockOptions
 ): ScrollLockReturn;
 
 // @public (undocumented)
 export function useLockScroll(
-  elements: RefTyped<Element[]>,
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
+  lockedClass: string
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
+  options?: ScrollLockOptions
+): ScrollLockReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
   lockedClass: string
 ): ScrollLockReturn;
 
