@@ -21,6 +21,7 @@ export { VueConstructor as App } from "vue";
 
 import { Ref, set, computed } from "@vue/composition-api";
 import Vue, { PluginFunction } from "vue";
+import { unwrap } from "./utils";
 
 export type Plugin = PluginFunction<any>;
 
@@ -31,7 +32,7 @@ export const vueSet = set;
 export function readonly<T extends object>(
   target: T
 ): T extends Ref ? DeepReadonly<T> : DeepReadonly<Ref<T>> {
-  return computed(() => target) as any;
+  return computed(() => unwrap(target)) as any;
 }
 
 // FAKE DeepReadonly
