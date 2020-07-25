@@ -5,7 +5,7 @@
 [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
 [![Coverage Status](https://coveralls.io/repos/github/pikax/vue-composable/badge.svg?branch=master)](https://coveralls.io/github/pikax/vue-composable?branch=master)
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
-[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable@next)
+[![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
 ## Introduction
 
@@ -19,7 +19,7 @@ This library aim is to be one stop shop for many real-world composable functions
 
 # Vue 3
 
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported.
 
 ## Installing
 
@@ -32,14 +32,13 @@ yarn add @vue/composition-api vue-composable
 # install with npm
 npm install @vue/composition-api vue-composable
 
-
-# vue-next / vue@3.0.0-beta
+# vue 3
 
 # install with yarn
-yarn add vue-composable@next
+yarn add vue-composable
 
 # install with npm
-npm install vue-composable@next
+npm install vue-composable
 ```
 
 ## Documentation
@@ -101,6 +100,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### Intl
 
+- [dateTimeFormat](https://pikax.me/vue-composable/composable/Intl/dateTimeFormat) - Intl.DateTimeFormat
 - [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
 - [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
 
@@ -114,6 +114,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### Meta
 
 - [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive `document.title`
+
+### State
+
+- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
 
@@ -136,7 +140,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 > New packages needed
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
-- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/makeAxios](https://www.npmjs.com/package/@vue-composable/makeAxios) wrap your `axios` instance
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
 
 ## Information
 
@@ -149,8 +153,6 @@ You can contribute raising issues and by helping out with code.
 Tests and Documentation are the most important things for me, because good documentation is really useful!
 
 I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
-
-> I really need an logo for this project, if you have a good idea for a logo, please enter in contact with me, you can find me on the `Vue discord : @pikax
 
 Twitter: [@pikax_dev](https://twitter.com/pikax_dev)
 

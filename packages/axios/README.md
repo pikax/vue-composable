@@ -4,7 +4,7 @@
 
 [![npm version](https://badge.fury.io/js/%40vue-composable%2Faxios.svg)](https://badge.fury.io/js/%40vue-composable%2Faxios)
 
-[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios@next)](https://bundlephobia.com/result?p=@vue-composable/axios@next)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@vue-composable/axios)](https://bundlephobia.com/result?p=@vue-composable/axios)
 
 ## Introduction
 
@@ -12,7 +12,7 @@ Use Axios library with the [composition-api](https://github.com/vuejs/compositio
 
 # Vue 3
 
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is supported on the [@next](https://www.npmjs.com/package/vue-composable/v/next)
+[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported
 
 ## Installing
 
@@ -26,13 +26,13 @@ yarn add @vue/composition-api @vue-composable/axios
 npm install @vue/composition-api @vue-composable/axios
 
 
-# vue-next / vue@3.0.0-beta
+# vue-next / vue@3.0.0
 
 # install with yarn
-yarn add @vue-composable/axios@next
+yarn add @vue-composable/axios
 
 # install with npm
-npm install @vue-composable/axios@next
+npm install @vue-composable/axios
 ```
 
 ## Documentation

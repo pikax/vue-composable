@@ -1,3 +1,39 @@
+# [1.0.0-beta.2](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-07-24)
+
+### Features
+
+- add `current` when tailwindcss config contains only number bp ([#475](https://github.com/pikax/vue-composable/issues/475)) ([202f53a](https://github.com/pikax/vue-composable/commit/202f53a7d738c541b6678e3781fc72bb9455021b))
+
+# [1.0.0-beta.1](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.37...v1.0.0-beta.1) (2020-07-18)
+
+### Features
+
+- single package v2 and v3 ([#456](https://github.com/pikax/vue-composable/issues/456)) ([bb7eaff](https://github.com/pikax/vue-composable/commit/bb7eaff8be43ddf1a9d2b37f9b3fcbf3bc003922))
+
+# [1.0.0-dev.37](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.36...v1.0.0-dev.37) (2020-07-18)
+
+### Bug Fixes
+
+- **breakpointTailwindCSS:** generate correct matchMedia when using tailwindconfig ([#455](https://github.com/pikax/vue-composable/issues/455)) ([c2d3549](https://github.com/pikax/vue-composable/commit/c2d354965ac85d99d865c9b6f516c91df88f183d))
+
+### Features
+
+- **useIntlDateTimeFormat:** add useIntlDateTimeFormat composable ([#329](https://github.com/pikax/vue-composable/issues/329)) ([8ab953f](https://github.com/pikax/vue-composable/commit/8ab953fe9512515d7fa208ca954b1415de46c47a))
+
+# [1.0.0-dev.36](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.35...v1.0.0-dev.36) (2020-06-14)
+
+### Bug Fixes
+
+- **useOnResize:** allow to retrieve the size on mount if ref is passed ([e52dadb](https://github.com/pikax/vue-composable/commit/e52dadbb28293b1ae4e9c2e93c528afaa923535a)), closes [#364](https://github.com/pikax/vue-composable/issues/364)
+
+# [1.0.0-dev.35](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.34...v1.0.0-dev.35) (2020-06-13)
+
+### Features
+
+- **@vue/composition-api:** update to 0.6.2 ([0a24556](https://github.com/pikax/vue-composable/commit/0a24556c5234cce57a12751210eedf0c0b9961d5))
+- **@vue/composition-api:** updated to 0.6.0 ([c554c55](https://github.com/pikax/vue-composable/commit/c554c55942a8730a9ff1b764c610e7589c419db9))
+- **useUndo:** add `useUndo` composable ([#347](https://github.com/pikax/vue-composable/issues/347)) ([63aa3f0](https://github.com/pikax/vue-composable/commit/63aa3f0bf4a7ba2f76c13df876ff0c02cc599eda))
+
 # [1.0.0-dev.34](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.33...v1.0.0-dev.34) (2020-06-03)
 
 ### Features

@@ -1,8 +1,4 @@
-import {
-  LocalStorageTyped,
-  LocalStorageReturn,
-  useLocalStorage
-} from "./localStorage";
+import { LocalStorageReturn, useLocalStorage } from "./localStorage";
 import { RefTyped } from "../utils";
 import { useSessionStorage } from "./sessionStorage";
 import { useWebStorage } from "./webStorage";
@@ -14,8 +10,8 @@ export function useStorage(
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
-export function useStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
