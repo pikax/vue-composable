@@ -28,7 +28,9 @@ export const vueDelete = (x: any, o: string) => Vue.delete(x, o);
 export const vueSet = set;
 
 // FAKE readonly
-export function readonly<T extends object>(target: T): Readonly<Ref<T>> {
+export function readonly<T extends object>(
+  target: T
+): T extends Ref ? DeepReadonly<T> : DeepReadonly<Ref<T>> {
   return computed(() => target) as any;
 }
 
