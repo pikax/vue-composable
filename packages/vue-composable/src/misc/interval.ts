@@ -1,7 +1,7 @@
 import { onUnmounted } from "../api";
 import { isNumber } from "../utils";
 
-export interface UseIntervalReturn<TArgs extends Array<any>> {
+export interface UseIntervalReturn<TArgs extends Array<any> = []> {
   start(ms: number, ...args: TArgs): number;
 
   remove(): void;
@@ -41,12 +41,26 @@ export function useInterval<TArgs extends Array<any>>(
 ): UseIntervalReturn<TArgs> &
   UseIntervalReturnMs &
   UseIntervalReturnArgs<TArgs> {
-  let intervalId: number;
+  let intervalId: number | undefined = undefined;
 
-  const start = (_ms?: number, ..._args: any[]) =>
-    (intervalId = setInterval(callback, _ms || ms || 10, _args || args) as any);
+  const start = (_ms?: number, ..._args: any[]) => {
+    remove();
+    if (!_ms && !ms) {
+      return;
+    }
+    const m = (_ms || ms) as number;
+    return (intervalId = setInterval(
+      callback,
+      m,
+      ...(_args && _args.length ? _args : args)
+    ) as any);
+  };
 
-  const remove = () => clearInterval(intervalId);
+  const remove = () => {
+    if (!intervalId) return;
+    clearInterval(intervalId);
+    intervalId = undefined;
+  };
 
   if (isNumber(ms)) {
     start();
