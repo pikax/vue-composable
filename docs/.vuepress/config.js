@@ -171,6 +171,7 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
+            ["composable/Intl/dateTimeFormat", "dateTimeFormat"],
             ["composable/Intl/numberFormat", "numberFormat"],
             ["composable/Intl/currencyFormat", "currencyFormat"]
           ]
@@ -212,6 +213,12 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [["composable/meta/title", "Title"]]
+        },
+        {
+          title: "state",
+          sidebarDepth: 1,
+          collapsable: false,
+          children: [["composable/state/undo", "Undo"]]
         },
         {
           title: "External",
