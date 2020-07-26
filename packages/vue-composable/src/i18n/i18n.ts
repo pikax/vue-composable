@@ -196,9 +196,9 @@ export function buildI18n<
   keyof T["messages"],
   I18nExtractLocale<T["messages"][T["locale"]]>
 > {
-  const locales = ref<Array<keyof TMessage>>(
-    Object.keys(definition.messages) as any
-  );
+  const locales = ref(Object.keys(definition.messages)) as Ref<
+    Array<keyof TMessage>
+  >;
   const localeMessages = ref<
     Record<keyof TMessage, i18n | (() => Promise<any>)>
   >(definition.messages as any);

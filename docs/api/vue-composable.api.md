@@ -307,6 +307,31 @@ export interface CurrencyFormatReturn {
 }
 
 // @public (undocumented)
+export type DateTimeFormatLocales =
+  | RefTyped<string>
+  | RefTyped<string[]>
+  | undefined;
+
+// @public (undocumented)
+export interface DateTimeFormatReturn {
+  // (undocumented)
+  format: DateTimeFormatterFormat<Ref<Readonly<string>>>;
+  // (undocumented)
+  formatString: DateTimeFormatterFormat<string>;
+  // (undocumented)
+  formatter: Ref<Readonly<Intl.DateTimeFormat>>;
+}
+
+// @public (undocumented)
+export type DateTimeFormatterFormat<T> = (
+  value: Readonly<RefTyped<Readonly<number | Date | string>>>,
+  overrideOpts?: RefTyped<
+    Intl.DateTimeFormatOptions | IntlDateTimeFormatOptions
+  >,
+  overrideLocale?: RefTyped<DateTimeFormatLocales>
+) => T;
+
+// @public (undocumented)
 export function debounce<F extends Procedure>(
   func: F,
   waitMilliseconds?: number,
@@ -449,6 +474,68 @@ export interface IntersectionObserverResult {
 }
 
 // @public (undocumented)
+export type IntlDateTimeCalendarType =
+  | "buddhist"
+  | "chinese"
+  | "coptic"
+  | "ethiopia"
+  | "ethiopic"
+  | "gregory"
+  | "hebrew"
+  | "indian"
+  | "islamic"
+  | "iso8601"
+  | "japanese"
+  | "persian"
+  | "roc";
+
+// @public (undocumented)
+export type IntlDateTimeFormatOptions = Intl.DateTimeFormatOptions & {
+  dateStyle: "full" | "long" | "medium" | "short";
+  timeStyle: "full" | "long" | "medium" | "short";
+  calendar: IntlDateTimeCalendarType;
+  dayPeriod: "narrow" | "short" | "long";
+  numberingSystem: IntlDateTimeNumberingSystem;
+  weekday: "narrow" | "short" | "long";
+  era: "narrow" | "short" | "long";
+  year: "numeric" | "2-digit";
+  month: "numeric" | "2-digit" | "narrow" | "short" | "long";
+  day: "numeric" | "2-digit";
+  hour: "numeric" | "2-digit";
+  minute: "numeric" | "2-digit";
+  second: "numeric" | "2-digit";
+  timeZoneName: "short" | "long";
+  hour12: true | false;
+  hourCycle: "h11" | "h12" | "h23" | "h24";
+  formatMatcher: "basic" | "best fit";
+};
+
+// @public (undocumented)
+export type IntlDateTimeNumberingSystem =
+  | "arab"
+  | "arabext"
+  | "bali"
+  | "beng"
+  | "deva"
+  | "fullwide"
+  | "gujr"
+  | "guru"
+  | "hanidec"
+  | "khmr"
+  | "knda"
+  | "laoo"
+  | "latn"
+  | "limb"
+  | "mlym"
+  | "mong"
+  | "mymr"
+  | "orya"
+  | "tamldec"
+  | "telu"
+  | "thai"
+  | "tibt";
+
+// @public (undocumented)
 export type IntlNumberFormatLocales =
   | RefTyped<string>
   | RefTyped<string[]>
@@ -530,9 +617,6 @@ export interface LocalStorageReturn<T> {
   // (undocumented)
   supported: boolean;
 }
-
-// @public (undocumented)
-export type LocalStorageTyped<T extends object> = string;
 
 // @public (undocumented)
 export const MAX_ARRAY_SIZE: number;
@@ -935,7 +1019,7 @@ export function useArrayPagination<T extends Array<TR>, TR>(
 
 // @public (undocumented)
 export function useBreakpoint<T extends BreakpointObject>(
-  breakpoints: Record<keyof T, number | string>
+  breakpoints: T
 ): BreakpointReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "ChromeBreakpoint" needs to be exported by the entry point index.d.ts
@@ -1283,6 +1367,36 @@ export function useIntersectionObserver(
 ): IntersectionObserverResult;
 
 // @public (undocumented)
+export function useIntlDateTimeFormat(): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  options: RefTyped<IntlDateTimeFormatOptions>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  options: RefTyped<Intl.DateTimeFormatOptions>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales,
+  options?: RefTyped<IntlDateTimeFormatOptions | undefined>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
+export function useIntlDateTimeFormat(
+  locales: DateTimeFormatLocales,
+  options: RefTyped<Intl.DateTimeFormatOptions | undefined>
+): DateTimeFormatReturn;
+
+// @public (undocumented)
 export function useIntlNumberFormat(): NumberFormatReturn;
 
 // @public (undocumented)
@@ -1326,8 +1440,8 @@ export function useLocalStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useLocalStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useLocalStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1383,6 +1497,19 @@ export function useOnMouseMove(
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
 
 // @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): MouseMoveResult;
+
+// @public (undocumented)
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): MouseMoveResult;
+
+// @public (undocumented)
 export function useOnMouseMove(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
@@ -1407,6 +1534,19 @@ export function useOnResize(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ResizeResult;
+
+// @public (undocumented)
+export function useOnResize<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ResizeResult;
 
 // @public (undocumented)
@@ -1439,6 +1579,19 @@ export function useOnScroll(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
   wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): ScrollResult;
+
+// @public (undocumented)
+export function useOnScroll<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
 ): ScrollResult;
 
 // @public (undocumented)
@@ -1607,8 +1760,8 @@ export function useSessionStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useSessionStorage<T extends object = object>(
-  key: LocalStorageTyped<T> | string,
+export function useSessionStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -1636,8 +1789,8 @@ export function useStorage(
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
-export function useStorage<T extends object = any>(
-  key: LocalStorageTyped<T> | string,
+export function useStorage<T>(
+  key: string,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;

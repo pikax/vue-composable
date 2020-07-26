@@ -1,6 +1,5 @@
 import { Ref, watch, isRef, ref } from "../api";
 import { RefTyped, wrap, isArray } from "../utils";
-import {} from "vue3";
 
 export function useSync<T>(
   main: RefTyped<T>,

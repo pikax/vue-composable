@@ -19,6 +19,18 @@ export function useOnMouseMove(
   wait?: number
 ): MouseMoveResult;
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
+
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  options?: boolean | AddEventListenerOptions,
+  wait?: number
+): MouseMoveResult;
+
+export function useOnMouseMove<T extends Element>(
+  el: Ref<T | null>,
+  wait: number
+): MouseMoveResult;
+
 export function useOnMouseMove(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,

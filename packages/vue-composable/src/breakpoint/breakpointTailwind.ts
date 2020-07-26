@@ -78,6 +78,14 @@ export function isRangeScreen(t: any): t is TailwindScreenBreakpointRange {
   );
 }
 
+/**
+ * Sanitize width value, if number is passed it will append `px`
+ * @param s width value
+ */
+function sanitizeWidth(s: string | number) {
+  return isNumber(s) ? s + "px" : s;
+}
+
 export function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
   if (!isRangeScreen(s)) {
     // istanbul ignore else
@@ -89,8 +97,8 @@ export function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
     return "";
   }
   const condition = [
-    s.max && `max-width: ${s.max}`,
-    s.min && `min-width: ${s.min}`
+    s.max && `max-width: ${sanitizeWidth(s.max)}`,
+    s.min && `min-width: ${sanitizeWidth(s.min)}`
   ]
     .filter(Boolean)
     .join(" and ");
@@ -112,7 +120,7 @@ export function screenToBreakpoint(s: TailwindScreen): string[] {
   } else if (isRangeScreen(s)) {
     conditions.push(screenRangeToBreakpoint(s));
   } else if (isString(s) || isNumber(s)) {
-    conditions.push(`min-width: ${s}`);
+    conditions.push(`(min-width: ${sanitizeWidth(s)})`);
   } else {
     // istanbul ignore else
     if (__DEV__) {
@@ -139,7 +147,15 @@ export function setBreakpointTailwindCSS<T extends BreakpointObject>(
     for (const k in bk) {
       // istanbul ignore else
       if (bk.hasOwnProperty(k)) {
-        bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+        const v = bk[k];
+
+        if (isObject(v)) {
+          bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+        } else if (isString(v)) {
+          if (!v.endsWith("px")) {
+            bk[k] = screenToBreakpoint(bk[k]).join(" or ");
+          }
+        }
       }
     }
   }
