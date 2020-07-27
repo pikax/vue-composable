@@ -1,5 +1,5 @@
 import { ref } from "../../src/api";
-import { useSync, wrap } from "../../src";
+import { useValueSync, wrap } from "../../src";
 import { nextTick } from "../utils";
 
 describe("sync", () => {
@@ -8,7 +8,7 @@ describe("sync", () => {
 
     const others = [{ a: 2 }, { a: 10 }, { a: 1 }];
 
-    const list = useSync(main, ...others);
+    const list = useValueSync(main, ...others);
 
     expect(list.value).toMatchObject([
       { value: main.value },
@@ -66,7 +66,7 @@ describe("sync", () => {
 
     const others = [{ a: 2 }, { a: 10 }, { a: 1 }];
 
-    const list = useSync(main, ref(others.map(x => wrap(x))));
+    const list = useValueSync(main, ref(others.map(x => wrap(x))));
 
     expect(list.value).toMatchObject([
       { value: main.value },
@@ -80,7 +80,7 @@ describe("sync", () => {
 
     const other = { a: 2 };
 
-    const list = useSync(main, other);
+    const list = useValueSync(main, other);
 
     expect(list.value).toMatchObject([{ value: main.value }]);
   });

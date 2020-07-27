@@ -1,16 +1,16 @@
 import { Ref, watch, isRef, ref } from "../api";
 import { RefTyped, wrap, isArray } from "../utils";
 
-export function useSync<T>(
+export function useValueSync<T>(
   main: RefTyped<T>,
   ...args: RefTyped<T>[]
 ): Ref<Ref<T>[]>;
-export function useSync<T>(
+export function useValueSync<T>(
   main: RefTyped<T>,
   list: Ref<Ref<T>[]>
 ): Ref<Ref<T>[]>;
 
-export function useSync<T>(
+export function useValueSync<T>(
   main: RefTyped<T>,
   args: RefTyped<T>[] | Ref<RefTyped<T>[]>
 ): Ref<Ref<T>[]> {
