@@ -22,7 +22,8 @@ export {
   onDeactivated,
   Plugin,
   App,
-  readonly
+  readonly,
+  DeepReadonly
 } from "@vue/runtime-core";
 
 // istanbul ignore next

@@ -46,6 +46,19 @@ useUndo(defaultValue?, options?);
 | defaultValue | `Ref<T>|T`  | `false`  | `undefined`      | Default value         |
 | options      | `(x: T)=>T` | `false`  | `defaultOptions` | Configuration options |
 
+::: tip
+
+If tracking object please provide a `options.clone` function.
+
+```ts
+// example
+function clone(e) {
+  return JSON.parse(JSON.stringify(e));
+}
+```
+
+:::
+
 ## State
 
 The `useUndo` function exposes the following reactive state:

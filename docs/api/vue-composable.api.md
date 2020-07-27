@@ -4,6 +4,7 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { DeepReadonly } from "@vue/runtime-core";
 import { InjectionKey } from "@vue/runtime-core";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
@@ -1009,6 +1010,24 @@ export interface StorageSerializer<T = any> {
 }
 
 // @public (undocumented)
+export interface TimelineEntry<T> {
+  // (undocumented)
+  date: Date;
+  // (undocumented)
+  item: T;
+}
+
+// @public (undocumented)
+export interface TimelineOptions<T> {
+  // (undocumented)
+  clone: (entry: T) => T;
+  // (undocumented)
+  deep: boolean;
+  // (undocumented)
+  maxLength: number;
+}
+
+// @public (undocumented)
 export interface UndoOperation {
   (step: number): void;
   (): void;
@@ -1867,6 +1886,12 @@ export function useStorage<T>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useTimeline<T>(
+  value: Ref<T>,
+  options?: Partial<TimelineOptions<T>>
+): DeepReadonly<Ref<TimelineEntry<T>[]>>;
 
 // @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;

@@ -116,6 +116,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### State
 
+- [Timeline](composable/state/timeline) - Tracks variable history
 - [Undo](composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
