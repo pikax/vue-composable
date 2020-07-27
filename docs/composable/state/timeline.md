@@ -18,8 +18,8 @@ const timeline = useTimeline(value, options);
 
 | Parameters | Type                 | Required | Default                                                     | Description            |
 | ---------- | -------------------- | -------- | ----------------------------------------------------------- | ---------------------- |
-| `value`    | `Ref<T>`             | `true`   |                                                             | `ref` to track history |
-| `options`  | `TimelineOptions<T>` | `false`  | `{ deep: false, maxLength: MAX_ARRAY_SIZE, clone: (x)=>x }` | timeline options       |
+| value      | `Ref<T>`             | `true`   |                                                             | `ref` to track history |
+| options    | `TimelineOptions<T>` | `false`  | `{ deep: false, maxLength: MAX_ARRAY_SIZE, clone: (x)=>x }` | timeline options       |
 
 ::: tip
 
