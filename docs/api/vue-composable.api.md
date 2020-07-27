@@ -620,6 +620,28 @@ export interface LocalStorageReturn<T> {
 }
 
 // @public (undocumented)
+export interface LockScrollOptions {
+  // (undocumented)
+  auto?: boolean;
+  // (undocumented)
+  lockedClass?: string;
+  // (undocumented)
+  onChange?(el: Element, lock: boolean): void;
+}
+
+// @public (undocumented)
+export interface LockScrollReturn {
+  // (undocumented)
+  lock(): void;
+  // (undocumented)
+  locked: Ref<boolean>;
+  // (undocumented)
+  remove: () => void;
+  // (undocumented)
+  unlock(): void;
+}
+
+// @public (undocumented)
 export const MAX_ARRAY_SIZE: number;
 
 // @public (undocumented)
@@ -890,6 +912,9 @@ export interface RetryReturnFactory<T, TArgs extends Array<any>>
 export interface RetryReturnNoFactory extends RetryReturn {
   exec<T>(fn: () => T): T;
 }
+
+// @public (undocumented)
+export const SCROLL_LOCK_CLASS = "no-scroll";
 
 // @public (undocumented)
 export interface ScrollResult {
@@ -1464,6 +1489,54 @@ export function useLocalStorage<T>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element | undefined>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element | undefined>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  lockedClass: string
+): LockScrollReturn;
 
 // @public (undocumented)
 export function useMatchMedia(
