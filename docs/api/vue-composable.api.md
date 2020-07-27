@@ -1796,18 +1796,6 @@ export function useStorage<T>(
 ): LocalStorageReturn<T>;
 
 // @public (undocumented)
-export function useSync<T>(
-  main: RefTyped<T>,
-  ...args: RefTyped<T>[]
-): Ref<Ref<T>[]>;
-
-// @public (undocumented)
-export function useSync<T>(
-  main: RefTyped<T>,
-  list: Ref<Ref<T>[]>
-): Ref<Ref<T>[]>;
-
-// @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;
 
 // @public (undocumented)
@@ -1827,6 +1815,18 @@ export function useUndo<T>(
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
 ): ValidationOutput<E> & ValidationGroupResult;
+
+// @public (undocumented)
+export function useValueSync<T>(
+  main: RefTyped<T>,
+  ...args: RefTyped<T>[]
+): Ref<Ref<T>[]>;
+
+// @public (undocumented)
+export function useValueSync<T>(
+  main: RefTyped<T>,
+  list: Ref<Ref<T>[]>
+): Ref<Ref<T>[]>;
 
 // @public (undocumented)
 export function useVModel<TProps, PropName extends keyof TProps>(

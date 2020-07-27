@@ -218,7 +218,10 @@ module.exports = {
           title: "state",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/state/undo", "Undo"]]
+          children: [
+            ["composable/state/undo", "Undo"],
+            ["composable/state/valueSync", "ValueSync"]
+          ]
         },
         {
           title: "External",
