@@ -31,13 +31,13 @@ useLockScroll(elements, lockClass?);
 
 ```
 
-| Parameters  | Type                           | Required | Default     | Description                 |
-| ----------- | ------------------------------ | -------- | ----------- | --------------------------- |
-| `selector`  | `String`                       | `true`   |             | string selector             |
-| `element`   | `Ref<Element> | Element`       | `true`   |             | template element            |
-| `elements`  | `Ref<Elements[]> | Elements[]` | `true`   |             | list of elements            |
-| `options`   | `Options`                      | `false`  |             | Options for `useLockScroll` |
-| `lockClass` | `String`                       | `false`  | `no-scroll` | custom `lockClass`          |
+| Parameters | Type                           | Required | Default     | Description                 |
+| ---------- | ------------------------------ | -------- | ----------- | --------------------------- |
+| selector   | `String`                       | `true`   |             | string selector             |
+| element    | `Ref<Element> | Element`       | `true`   |             | template element            |
+| elements   | `Ref<Elements[]> | Elements[]` | `true`   |             | list of elements            |
+| options    | `Options`                      | `false`  |             | Options for `useLockScroll` |
+| lockClass  | `String`                       | `false`  | `no-scroll` | custom `lockClass`          |
 
 ## State
 
@@ -65,9 +65,9 @@ const { remove } = useLockScroll();
 
 | Signature | Description                        |
 | --------- | ---------------------------------- |
-| `lock`    | `lock` the current status          |
-| `unlock`  | `unlock` the current status        |
-| `remove`  | stops tracking `lock` and `unlock` |
+| lock      | `lock` the current status          |
+| unlock    | `unlock` the current status        |
+| remove    | stops tracking `lock` and `unlock` |
 
 ## Example
 
