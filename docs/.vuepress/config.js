@@ -91,7 +91,8 @@ module.exports = {
             ["composable/event/event", "event"],
             ["composable/event/onMouseMove", "onMouseMove"],
             ["composable/event/onResize", "onResize"],
-            ["composable/event/onScroll", "onScroll"]
+            ["composable/event/onScroll", "onScroll"],
+            ["composable/event/onOutsidePress", "onOutsidePress"]
           ]
         },
         {

@@ -1217,6 +1217,14 @@ export function useDebounce<T extends Procedure>(
 ): T;
 
 // @public (undocumented)
+export function useEvent<K extends keyof DocumentEventMap>(
+  el: RefTyped<Document>,
+  name: K,
+  listener: (this: Document, ev: DocumentEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): RemoveEventFunction;
+
+// @public (undocumented)
 export function useEvent<
   T extends {
     addEventListener: (
@@ -1515,6 +1523,36 @@ export function useOnMouseMove(
   options?: boolean | AddEventListenerOptions,
   wait?: number
 ): MouseMoveResult;
+
+// @public (undocumented)
+export function useOnOutsidePress(
+  el: RefTyped<Window>,
+  onOutsidePressCallback: (ev: MouseEvent) => void
+): RemoveEventFunction;
+
+// @public (undocumented)
+export function useOnOutsidePress(
+  el: RefElement,
+  onOutsidePressCallback: (ev: MouseEvent) => void
+): RemoveEventFunction;
+
+// @public (undocumented)
+export function useOnOutsidePress<T extends Element>(
+  el: Ref<T> | Ref<T | null>,
+  onOutsidePressCallback: (ev: MouseEvent) => void
+): RemoveEventFunction;
+
+// @public (undocumented)
+export function useOnOutsidePress<T extends Element>(
+  el: Ref<T | null>,
+  onOutsidePressCallback: (ev: MouseEvent) => void
+): RemoveEventFunction;
+
+// @public (undocumented)
+export function useOnOutsidePress(
+  el: RefElement,
+  onOutsidePressCallback: (ev: MouseEvent) => void
+): RemoveEventFunction;
 
 // @public (undocumented)
 export function useOnResize(el: RefTyped<Window>, wait: number): ResizeResult;
