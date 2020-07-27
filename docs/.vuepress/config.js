@@ -132,7 +132,8 @@ module.exports = {
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
-            ["composable/misc/injectFactory", "injectFactory"]
+            ["composable/misc/injectFactory", "injectFactory"],
+            ["composable/misc/lockScroll", "lockScroll"]
           ]
         },
         {
@@ -219,6 +220,7 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
+            ["composable/state/timeline", "Timeline"],
             ["composable/state/undo", "Undo"],
             ["composable/state/valueSync", "ValueSync"]
           ]

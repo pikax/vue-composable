@@ -4,6 +4,7 @@
 
 ```ts
 import { ComputedRef } from "@vue/runtime-core";
+import { DeepReadonly } from "@vue/runtime-core";
 import { InjectionKey } from "@vue/runtime-core";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
@@ -619,6 +620,28 @@ export interface LocalStorageReturn<T> {
 }
 
 // @public (undocumented)
+export interface LockScrollOptions {
+  // (undocumented)
+  auto?: boolean;
+  // (undocumented)
+  lockedClass?: string;
+  // (undocumented)
+  onChange?(el: Element, lock: boolean): void;
+}
+
+// @public (undocumented)
+export interface LockScrollReturn {
+  // (undocumented)
+  lock(): void;
+  // (undocumented)
+  locked: Ref<boolean>;
+  // (undocumented)
+  remove: () => void;
+  // (undocumented)
+  unlock(): void;
+}
+
+// @public (undocumented)
 export const MAX_ARRAY_SIZE: number;
 
 // @public (undocumented)
@@ -891,6 +914,9 @@ export interface RetryReturnNoFactory extends RetryReturn {
 }
 
 // @public (undocumented)
+export const SCROLL_LOCK_CLASS = "no-scroll";
+
+// @public (undocumented)
 export interface ScrollResult {
   // (undocumented)
   remove: RemoveEventFunction;
@@ -981,6 +1007,24 @@ export interface StorageSerializer<T = any> {
   parse(data: string): T;
   // (undocumented)
   stringify(item: T): string;
+}
+
+// @public (undocumented)
+export interface TimelineEntry<T> {
+  // (undocumented)
+  date: Date;
+  // (undocumented)
+  item: T;
+}
+
+// @public (undocumented)
+export interface TimelineOptions<T> {
+  // (undocumented)
+  clone: (entry: T) => T;
+  // (undocumented)
+  deep: boolean;
+  // (undocumented)
+  maxLength: number;
 }
 
 // @public (undocumented)
@@ -1447,6 +1491,54 @@ export function useLocalStorage<T>(
 ): LocalStorageReturn<T>;
 
 // @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element | undefined>,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  element: RefTyped<Element | undefined>,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  options?: LockScrollOptions
+): LockScrollReturn;
+
+// @public (undocumented)
+export function useLockScroll(
+  selector: string,
+  lockedClass: string
+): LockScrollReturn;
+
+// @public (undocumented)
 export function useMatchMedia(
   query: string
 ): {
@@ -1794,6 +1886,12 @@ export function useStorage<T>(
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
+
+// @public (undocumented)
+export function useTimeline<T>(
+  value: Ref<T>,
+  options?: Partial<TimelineOptions<T>>
+): DeepReadonly<Ref<TimelineEntry<T>[]>>;
 
 // @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;
