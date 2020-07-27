@@ -76,6 +76,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [VModel](composable/misc/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 - [injectFactory](composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 - [interval](composable/misc/interval) - self-remove `setInterval` on unmount
+- [lockScroll](composable/misc/lockScroll) - `lock-scroll` component
 
 ### Storage
 
@@ -116,6 +117,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 ### State
 
+- [Timeline](composable/state/timeline) - Tracks variable history
 - [Undo](composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web

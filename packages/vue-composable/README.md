@@ -78,6 +78,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 - [interval](https://pikax.me/vue-composable/composable/misc/interval) - self-remove `setInterval` on unmount
+- [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) - `lock-scroll` component
 
 ### Storage
 
@@ -118,6 +119,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### State
 
+- [Timeline](https://pikax.me/vue-composable/composable/state/timeline) - Tracks variable history
 - [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
