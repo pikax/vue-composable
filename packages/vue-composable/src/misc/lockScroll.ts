@@ -13,13 +13,13 @@ import { RefTyped, isString, isArray, wrap, unwrap } from "../utils";
 
 export const SCROLL_LOCK_CLASS = "no-scroll";
 
-export interface ScrollLockOptions {
+export interface LockScrollOptions {
   lockedClass?: string;
   auto?: boolean;
   onChange?(el: Element, lock: boolean): void;
 }
 
-export interface ScrollLockReturn {
+export interface LockScrollReturn {
   locked: Ref<boolean>;
 
   lock(): void;
@@ -29,48 +29,48 @@ export interface ScrollLockReturn {
 
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
-  options?: ScrollLockOptions
-): ScrollLockReturn;
+  options?: LockScrollOptions
+): LockScrollReturn;
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
   lockedClass: string
-): ScrollLockReturn;
+): LockScrollReturn;
 
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
-  options?: ScrollLockOptions
-): ScrollLockReturn;
+  options?: LockScrollOptions
+): LockScrollReturn;
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
   lockedClass: string
-): ScrollLockReturn;
+): LockScrollReturn;
 
 export function useLockScroll(
   element: RefTyped<Element | undefined>,
-  options?: ScrollLockOptions
-): ScrollLockReturn;
+  options?: LockScrollOptions
+): LockScrollReturn;
 
 export function useLockScroll(
   element: RefTyped<Element | undefined>,
   lockedClass: string
-): ScrollLockReturn;
+): LockScrollReturn;
 
 export function useLockScroll(
   selector: string,
-  options?: ScrollLockOptions
-): ScrollLockReturn;
+  options?: LockScrollOptions
+): LockScrollReturn;
 export function useLockScroll(
   selector: string,
   lockedClass: string
-): ScrollLockReturn;
+): LockScrollReturn;
 
 export function useLockScroll(
   selectorElements:
     | RefTyped<Element | undefined>
     | RefTyped<(Ref<Element | undefined | null> | Element)[] | undefined>
     | string,
-  classOptions?: string | Partial<ScrollLockOptions>
-): ScrollLockReturn {
+  classOptions?: string | Partial<LockScrollOptions>
+): LockScrollReturn {
   const elements = (isString(selectorElements)
     ? ref([]) // it will be resolved when mounted
     : isArray(unref(selectorElements))
