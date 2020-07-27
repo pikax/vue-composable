@@ -1,6 +1,6 @@
 import { Ref } from "../api";
 import { RemoveEventFunction, useEvent } from "./event";
-import { RefTyped, RefElement, wrap } from "../utils";
+import { RefTyped, RefElement, wrap, isClient } from "../utils";
 
 const events: Array<keyof DocumentEventMap> = ["mousedown", "touchstart"];
 
@@ -32,6 +32,9 @@ export function useOnOutsidePress(
   el: any,
   onOutsidePressCallback: (ev: MouseEvent) => void
 ): RemoveEventFunction {
+  if (!isClient) {
+    return () => {};
+  }
   const element: Ref<Element | null> = wrap(el);
   const handler = (e: MouseEvent) =>
     element.value &&
