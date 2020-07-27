@@ -12,9 +12,9 @@ useInterval(callback, ms?, ...args);
 
 | Parameters | Type                         | Required | Default     | Description                                                                  |
 | ---------- | ---------------------------- | -------- | ----------- | ---------------------------------------------------------------------------- |
-| `callback` | `(...args):void`             | `true`   |             | `setInterval` callback                                                       |
-| `ms`       | `number | false | undefined` | `false`  | `undefined` | callback interval `ms`, if `ms` provided it will `setInterval` automatically |
-| `...args`  | `any`                        | `false`  | `[]`        | callback args                                                                |
+| callback   | `(...args):void`             | `true`   |             | `setInterval` callback                                                       |
+| ms         | `number | false | undefined` | `false`  | `undefined` | callback interval `ms`, if `ms` provided it will `setInterval` automatically |
+| ...args    | `any`                        | `false`  | `[]`        | callback args                                                                |
 
 ## Methods
 
@@ -28,8 +28,8 @@ const { start, remove } = useInterval();
 
 | Signature | Description              |
 | --------- | ------------------------ |
-| `start`   | Start                    |
-| `remove`  | Manually `clearInterval` |
+| start     | Start                    |
+| remove    | Manually `clearInterval` |
 
 ### Code
 
