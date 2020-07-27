@@ -1419,6 +1419,48 @@ export function useIntersectionObserver(
 ): IntersectionObserverResult;
 
 // @public (undocumented)
+export function useInterval<TArgs extends Array<any>>(
+  callback: (...args: TArgs) => void,
+  ms?: false,
+  ...args: TArgs
+): UseIntervalReturn<TArgs>;
+
+// @public (undocumented)
+export function useInterval<TArgs extends Array<any>>(
+  callback: (...args: TArgs) => void,
+  ms?: false
+): UseIntervalReturn<TArgs>;
+
+// @public (undocumented)
+export function useInterval<TArgs extends Array<any>>(
+  callback: (...args: TArgs) => void,
+  ms: number,
+  ...args: TArgs
+): UseIntervalReturn<TArgs> &
+  UseIntervalReturnMs &
+  UseIntervalReturnArgs<TArgs>;
+
+// @public (undocumented)
+export interface UseIntervalReturn<TArgs extends Array<any> = []> {
+  // (undocumented)
+  remove(): void;
+  // (undocumented)
+  start(ms: number, ...args: TArgs): number;
+}
+
+// @public (undocumented)
+export interface UseIntervalReturnArgs<TArgs extends Array<any>> {
+  // (undocumented)
+  start(_: undefined, ...args: TArgs): number;
+}
+
+// @public (undocumented)
+export interface UseIntervalReturnMs {
+  // (undocumented)
+  start(): number;
+}
+
+// @public (undocumented)
 export function useIntlDateTimeFormat(): DateTimeFormatReturn;
 
 // @public (undocumented)

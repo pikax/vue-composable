@@ -1,3 +1,13 @@
+# [1.0.0-beta.3](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2020-07-27)
+
+### Features
+
+- **useInterval:** add `useInterval` composable ([#343](https://github.com/pikax/vue-composable/issues/343)) ([499908e](https://github.com/pikax/vue-composable/commit/499908eb053c78c1eabfc9856a977f43ae312c83))
+- **useOnOutsidePress:** add `useOnOutsidePress` composable ([#383](https://github.com/pikax/vue-composable/issues/383)) ([b8fa41f](https://github.com/pikax/vue-composable/commit/b8fa41f2ffaecd6133562aab77285d559830e032))
+- **useScrollLock:** add useScrollLock composable ([#330](https://github.com/pikax/vue-composable/issues/330)) ([0da2f44](https://github.com/pikax/vue-composable/commit/0da2f44adaaecedcc6336d08264d4984b5d23333))
+- **useTimeline:** add `useTimeline` composable ([#342](https://github.com/pikax/vue-composable/issues/342)) ([618842b](https://github.com/pikax/vue-composable/commit/618842be6aeb3d195dd57b31e1586f550655104b))
+- **useValueSync:** add `useValueSync` composable ([#348](https://github.com/pikax/vue-composable/issues/348)) ([04f4bbf](https://github.com/pikax/vue-composable/commit/04f4bbf5ea211419ed729a9cd506ed5ea553956d))
+
 # [1.0.0-beta.2](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-07-24)
 
 ### Features
