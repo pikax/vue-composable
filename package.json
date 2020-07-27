@@ -2,8 +2,7 @@
   "version": "1.0.0-beta.2",
   "name": "vue-composable-monorepo",
   "workspaces": [
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "description": "Vue composition-api composable components",
   "author": {
