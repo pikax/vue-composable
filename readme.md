@@ -117,6 +117,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### State
 
+- [Timeline](https://pikax.me/vue-composable/composable/state/timeline) - Tracks variable history
 - [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
 
 ### Web
