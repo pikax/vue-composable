@@ -53,6 +53,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
 - [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
+- [onOutsidePress](https://pikax.me/vue-composable/composable/event/onOutsidePress) - Execute callback when click is outside of element
 
 ### Date
 

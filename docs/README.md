@@ -51,6 +51,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Mouse Move](composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
 - [Resize](composable/event/onResize) - Attach `resize` listener to a DOM element
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
+- [onOutsidePress](composable/event/onOutsidePress) - Execute callback when click is outside of element
 
 ### Date
 

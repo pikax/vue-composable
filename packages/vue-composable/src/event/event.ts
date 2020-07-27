@@ -3,6 +3,13 @@ import { RefTyped, NO_OP, wrap } from "../utils";
 
 export type RemoveEventFunction = () => void;
 
+export function useEvent<K extends keyof DocumentEventMap>(
+  el: RefTyped<Document>,
+  name: K,
+  listener: (this: Document, ev: DocumentEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): RemoveEventFunction;
+
 export function useEvent<
   T extends {
     addEventListener: (
@@ -41,12 +48,14 @@ export function useEvent<K extends keyof WindowEventMap>(
   listener: (this: Document, ev: WindowEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
+
 export function useEvent<K extends keyof DocumentEventMap>(
   el: Element | Ref<Element | undefined>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
+
 export function useEvent(
   el: Element | Ref<Element | undefined> | RefTyped<Window> | RefTyped<any>,
   name: string,
