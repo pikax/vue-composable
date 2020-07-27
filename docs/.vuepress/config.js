@@ -221,7 +221,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/state/timeline", "Timeline"],
-            ["composable/state/undo", "Undo"]
+            ["composable/state/undo", "Undo"],
+            ["composable/state/valueSync", "ValueSync"]
           ]
         },
         {

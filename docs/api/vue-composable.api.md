@@ -1915,6 +1915,18 @@ export function useValidation<T extends UseValidation<E>, E = any>(
 ): ValidationOutput<E> & ValidationGroupResult;
 
 // @public (undocumented)
+export function useValueSync<T>(
+  main: RefTyped<T>,
+  ...args: RefTyped<T>[]
+): Ref<Ref<T>[]>;
+
+// @public (undocumented)
+export function useValueSync<T>(
+  main: RefTyped<T>,
+  list: Ref<Ref<T>[]>
+): Ref<Ref<T>[]>;
+
+// @public (undocumented)
 export function useVModel<TProps, PropName extends keyof TProps>(
   props: TProps,
   name: PropName

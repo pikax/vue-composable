@@ -119,6 +119,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [Timeline](composable/state/timeline) - Tracks variable history
 - [Undo](composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
+- [valueSync](composable/state/valueSync) - syncs variables value, across multiple `ref`s
 
 ### Web
 
