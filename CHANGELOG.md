@@ -1,3 +1,25 @@
+# [1.0.0-beta.2](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2020-07-24)
+
+### Features
+
+- add `current` when tailwindcss config contains only number bp ([#475](https://github.com/pikax/vue-composable/issues/475)) ([202f53a](https://github.com/pikax/vue-composable/commit/202f53a7d738c541b6678e3781fc72bb9455021b))
+
+# [1.0.0-beta.1](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.37...v1.0.0-beta.1) (2020-07-18)
+
+### Features
+
+- single package v2 and v3 ([#456](https://github.com/pikax/vue-composable/issues/456)) ([bb7eaff](https://github.com/pikax/vue-composable/commit/bb7eaff8be43ddf1a9d2b37f9b3fcbf3bc003922))
+
+# [1.0.0-dev.37](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.36...v1.0.0-dev.37) (2020-07-18)
+
+### Bug Fixes
+
+- **breakpointTailwindCSS:** generate correct matchMedia when using tailwindconfig ([#455](https://github.com/pikax/vue-composable/issues/455)) ([c2d3549](https://github.com/pikax/vue-composable/commit/c2d354965ac85d99d865c9b6f516c91df88f183d))
+
+### Features
+
+- **useIntlDateTimeFormat:** add useIntlDateTimeFormat composable ([#329](https://github.com/pikax/vue-composable/issues/329)) ([8ab953f](https://github.com/pikax/vue-composable/commit/8ab953fe9512515d7fa208ca954b1415de46c47a))
+
 # [1.0.0-dev.36](https://github.com/pikax/vue-composable/compare/v1.0.0-dev.35...v1.0.0-dev.36) (2020-06-14)
 
 ### Bug Fixes

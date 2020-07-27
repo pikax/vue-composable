@@ -171,6 +171,7 @@ module.exports = {
           sidebarDepth: 1,
           collapsable: false,
           children: [
+            ["composable/Intl/dateTimeFormat", "dateTimeFormat"],
             ["composable/Intl/numberFormat", "numberFormat"],
             ["composable/Intl/currencyFormat", "currencyFormat"]
           ]

@@ -90,7 +90,7 @@ export function useUndo<T>(
 ): UndoReturn<T> {
   const current = wrap(defaultValue!);
 
-  const timeline = ref<T[]>([]);
+  const timeline = ref([]) as Ref<T[]>;
   const position = ref(0);
 
   const maxLen = (options && options.maxLength) || MAX_ARRAY_SIZE;

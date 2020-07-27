@@ -54,8 +54,7 @@ export function useIntersectionObserver(
       : undefined
   );
 
-  const elements = ref<IntersectionObserverEntry[]>([]);
-  // element && element.value ? [element.value] : []
+  const elements = ref([]) as Ref<IntersectionObserverEntry[]>;
 
   const isIntersecting = computed(
     () =>
