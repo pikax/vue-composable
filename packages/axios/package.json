@@ -57,7 +57,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.7",
     "@types/node": "^14.0.27",
-    "@vue/runtime-core": "^3.0.0-rc.4",
+    "@vue/runtime-core": "^3.0.0-rc.5",
     "typescript": "^3.9.7"
   }
 }
