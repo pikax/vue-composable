@@ -1,9 +1,18 @@
-import { Ref, ref } from "../api";
+import { Ref, ref, getCurrentInstance, onUnmounted } from "../api";
 import { usePromise, PromiseResultFactory, PromiseOptions } from "./promise";
+import { isObject } from "../utils";
 
 export interface CancellablePromiseResult<TCancel = any> {
   cancel: (result?: TCancel) => void;
   cancelled: Ref<boolean>;
+}
+
+export interface CancellablePromiseOptions extends PromiseOptions {
+  /**
+   * @description cancel the promise on component unmount
+   * @default true
+   */
+  unmountCancel?: boolean;
 }
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
@@ -17,7 +26,7 @@ export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any>(
@@ -31,7 +40,7 @@ export function useCancellablePromise<T extends any>(
 
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<
@@ -57,7 +66,7 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T = any>(
@@ -71,7 +80,7 @@ export function useCancellablePromise<T = any>(
 
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends Promise<TR>, TR>(
@@ -84,7 +93,7 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  lazyOptions?: PromiseOptions | boolean
+  lazyOptions?: CancellablePromiseOptions | boolean
 ): PromiseResultFactory<Promise<TR>, TArgs> & CancellablePromiseResult<TR> {
   const cancelled = ref(false);
   let _cancel: ((result?: TR) => void) | undefined = undefined;
@@ -115,6 +124,13 @@ export function useCancellablePromise<
     (...args: TArgs) => promise(fn(...args)),
     lazyOptions as PromiseOptions
   );
+
+  if (
+    getCurrentInstance() &&
+    (!isObject(lazyOptions) || lazyOptions.unmountCancel !== false)
+  ) {
+    onUnmounted(() => _cancel && _cancel());
+  }
 
   return {
     ...use,
