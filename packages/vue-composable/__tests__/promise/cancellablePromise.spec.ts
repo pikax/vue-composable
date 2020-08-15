@@ -1,6 +1,7 @@
 import { useCancellablePromise } from "../../src/promise/cancellablePromise";
 import { promisedTimeout } from "../../src/utils";
-import { nextTick } from "../utils";
+import { nextTick, createVue } from "../utils";
+import { Ref } from "../../src/api";
 
 describe("cancellablePromise", () => {
   const consoleWarnSpy = jest.spyOn(console, "warn");
@@ -65,5 +66,42 @@ describe("cancellablePromise", () => {
     );
 
     expect(cancelled.value).toBe(false);
+  });
+
+  it("should cancel on unmount", () => {
+    let isCancelled: Ref<boolean> = undefined as any;
+
+    const { mount, destroy } = createVue({
+      template: `<div></div>`,
+      setup() {
+        isCancelled = useCancellablePromise(() => Promise.resolve(1)).cancelled;
+      }
+    });
+
+    mount();
+
+    expect(isCancelled.value).toBe(false);
+
+    destroy();
+    expect(isCancelled.value).toBe(true);
+  });
+
+  it("should not cancel on unmount if there's no promise", () => {
+    let isCancelled: Ref<boolean> = undefined as any;
+
+    const { mount, destroy } = createVue({
+      template: `<div></div>`,
+      setup() {
+        isCancelled = useCancellablePromise(() => Promise.resolve(1), true)
+          .cancelled;
+      }
+    });
+
+    mount();
+
+    expect(isCancelled.value).toBe(false);
+
+    destroy();
+    expect(isCancelled.value).toBe(false);
   });
 });

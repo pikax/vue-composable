@@ -13,13 +13,35 @@ Javascript doesn't provide a way to cancel promises, so this will execute the pr
 ```js
 import { useCancellablePromise } from "vue-composable";
 
-const cancellablePromise = useCancellablePromise(factory, throwException?);
+const cancellablePromise = useCancellablePromise(factory, lazy?);
+
+
+const options = {
+   /**
+   * if `true` allows to catch exception when `exec()`
+   * @default false
+   */
+  throwException?: boolean;
+
+  /**
+   * Only executes on `exec`
+   * @default false
+   */
+  lazy?: boolean;
+  /**
+   * @description cancel the promise on component unmount
+   * @default true
+   */
+  unmountCancel?: boolean;
+}
+
+const cancellablePromise = useCancellablePromise(factory, options?);
 ```
 
-| Parameters     | Type       | Required | Default | Description                                                                                                   |
-| -------------- | ---------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| factory        | `Function` | `true`   |         | Factory will be called every time the exec is called, the arguments will be passed to the factory. `Required` |
-| throwException | `Boolean`  | `false`  | `false` | Makes `exec` throw exceptions, when `false` the error will be handled only by the `usePromise`                |
+| Parameters | Type       | Required | Default | Description                                                                                                   |
+| ---------- | ---------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| factory    | `Function` | `true`   |         | Factory will be called every time the exec is called, the arguments will be passed to the factory. `Required` |
+| lazy       | `Boolean`  | `false`  | `false` |                                                                                                               |
 
 ## State
 

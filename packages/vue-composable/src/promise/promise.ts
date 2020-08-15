@@ -26,12 +26,14 @@ export interface PromiseResultFactory<
 
 export interface PromiseOptions {
   /**
-   * if `true` allows to catch exception when `exec()`
+   * @description if `true` allows to catch exception when `exec()`
+   * @default false
    */
   throwException?: boolean;
 
   /**
-   * Only executes on `exec`
+   * @description Only executes on `exec`
+   * @default false
    */
   lazy?: boolean;
 }
