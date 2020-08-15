@@ -14,6 +14,9 @@ Javascript doesn't provide a way to cancel promises, so this will execute the pr
 import { useCancellablePromise } from "vue-composable";
 
 const cancellablePromise = useCancellablePromise(factory, throwException?);
+
+
+const cancellablePromise = useCancellablePromise(factory, options?);
 ```
 
 | Parameters     | Type       | Required | Default | Description                                                                                                   |
