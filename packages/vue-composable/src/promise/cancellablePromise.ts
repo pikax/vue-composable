@@ -9,17 +9,6 @@ export interface CancellablePromiseResult<TCancel = any> {
 
 export interface CancellablePromiseOptions extends PromiseOptions {
   /**
-   * if `true` allows to catch exception when `exec()`
-   * @default false
-   */
-  throwException?: boolean;
-
-  /**
-   * Only executes on `exec`
-   * @default false
-   */
-  lazy?: boolean;
-  /**
    * @description cancel the promise on component unmount
    * @default true
    */
