@@ -1,6 +1,7 @@
 import { useFetch } from "../../src";
 import { promisedTimeout } from "../../src/utils";
-import { nextTick } from "../utils";
+import { nextTick, createVue } from "../utils";
+import { Ref } from "../../src/api";
 
 describe("fetch", () => {
   let fetchSpy: jest.SpyInstance = undefined as any;
@@ -342,5 +343,23 @@ describe("fetch", () => {
     expect(cancel).toThrowError(
       "Cannot cancel because no request has been made"
     );
+  });
+
+  it("should cancel on unmount", () => {
+    let isCancelled: Ref<boolean> = undefined as any;
+
+    const { mount, destroy } = createVue({
+      template: `<div></div>`,
+      setup() {
+        isCancelled = useFetch("./api").isCancelled;
+      }
+    });
+
+    mount();
+
+    expect(isCancelled.value).toBe(false);
+
+    destroy();
+    expect(isCancelled.value).toBe(true);
   });
 });

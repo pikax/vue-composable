@@ -1,5 +1,5 @@
 import { isBoolean, isString } from "../utils";
-import { ref, computed, Ref } from "../api";
+import { ref, computed, Ref, onUnmounted, getCurrentInstance } from "../api";
 import { PromiseResultFactory, usePromise } from "../promise";
 
 export interface UseFetchOptions {
@@ -13,6 +13,12 @@ export interface UseFetchOptions {
    * @default true
    */
   parseImmediate?: boolean;
+
+  /**
+   * @description cancels the request on component unmount
+   * @default true
+   */
+  unmountCancel?: boolean;
 }
 
 type ExtractArguments<T = any> = T extends (...args: infer TArgs) => void
@@ -38,7 +44,12 @@ interface FetchReturn<T>
 }
 
 function isFetchOptions(v: any): v is UseFetchOptions {
-  return v && (isBoolean(v.isJson) || isBoolean(v.parseImmediate));
+  return (
+    v &&
+    (isBoolean(v.isJson) ||
+      isBoolean(v.parseImmediate) ||
+      isBoolean(v.unmountCancel))
+  );
 }
 
 export function useFetch<T = any>(
@@ -58,14 +69,19 @@ export function useFetch<T = any>(
 
   const jsonError = ref<any | null>(null);
 
-  const [isJson, parseImmediate] = isFetchOptions(options)
-    ? [options.isJson !== false, options.parseImmediate !== false]
+  const [isJson, parseImmediate, unmountCancel] = isFetchOptions(options)
+    ? [
+        options.isJson !== false,
+        options.parseImmediate !== false,
+        options.unmountCancel !== false
+      ]
     : isFetchOptions(requestInitOptions)
     ? [
         requestInitOptions.isJson !== false,
-        requestInitOptions.parseImmediate !== false
+        requestInitOptions.parseImmediate !== false,
+        requestInitOptions.unmountCancel !== false
       ]
-    : [true, true];
+    : [true, true, true];
 
   const requestInit = options
     ? isString(options)
@@ -153,6 +169,10 @@ export function useFetch<T = any>(
     if (isString(options) || isString((options as Request).url)) {
       (use.exec as any)(options, undefined, false);
     }
+  }
+
+  if (unmountCancel && getCurrentInstance()) {
+    onUnmounted(() => cancel("unmounted"));
   }
 
   return {
