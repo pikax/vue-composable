@@ -22,6 +22,11 @@ interface UseFetchOptions {
    * @default true
    */
   parseImmediate?: boolean;
+  /**
+   * @description cancels the request on component unmount
+   * @default true
+   */
+  unmountCancel?: boolean;
 }
 
 ```

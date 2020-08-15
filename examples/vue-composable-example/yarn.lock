@@ -1151,12 +1151,12 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
-"@vue-composable/axios@^1.0.0-dev.32":
-  version "1.0.0-dev.34"
-  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-dev.34.tgz#55ab4b0d53b0e57c0601d4dfb9841f1d2e62ee85"
-  integrity sha512-dr3PnU+AMQsm8rJWM9tbHM0fVfE3bI282A1OjI3Nc5RGu/tu6vB5+Ygv+LOHjK6eT9SIP2UiCMR6VaWLOUyumg==
+"@vue-composable/axios@^1.0.0-beta.1":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-beta.3.tgz#5e50a1cf15a1efbb02339a659835eefb40546ccf"
+  integrity sha512-sPkivRnWvYd4TsDia3ivpqxiw4UKCac9t3SuarJHBGJbw1l2LG2G6XT9LNdkHCIDe4yxqh09OGXqyO3P6jNMYg==
   dependencies:
-    vue-composable "^1.0.0-alpha.32"
+    vue-composable "^1.0.0-beta.3"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
@@ -1935,9 +1935,9 @@ bluebird@^3.1.1, bluebird@^3.5.5:
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
-  version "4.11.8"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
-  integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
+  version "4.11.9"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
+  integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
 
 body-parser@1.19.0:
   version "1.19.0"
@@ -3252,9 +3252,9 @@ electron-to-chromium@^1.3.413:
   integrity sha512-eieqkoM2hCkZZRhETKyCouMziDV3l4XEKHRLuzcHG+HV+P7PeODU/z9HAmBgMQkzvHg2DoyQhfIDmmeguLZT/Q==
 
 elliptic@^6.0.0:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.2.tgz#05c5678d7173c049d8ca433552224a495d0e3762"
-  integrity sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
+  integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -7889,10 +7889,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-composable@^1.0.0-alpha.32, vue-composable@^1.0.0-dev.32:
-  version "1.0.0-dev.34"
-  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-dev.34.tgz#f1c2e17f560be1f9646c80075ee0cb94a5a04129"
-  integrity sha512-UR2CuB1CEgyEomL6rXPuNlgzg6zr3EYjd30DWog8ouiFJAKDFdWdu70gTOYRWk9FRdUjqHOdEzcpX13R2H8AVA==
+vue-composable@^1.0.0-beta.1, vue-composable@^1.0.0-beta.3:
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-beta.3.tgz#ba442d24768b8a452dc4b313f42840ef8ecd3d99"
+  integrity sha512-PZ19JR3/aZc/PPDZhJC9X4oytSo7eDpoKku6cHQX4OHAGRxg7Cqb/rDt7mbZk3zCIb3GD6jpR3Qm8HqliV745Q==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
