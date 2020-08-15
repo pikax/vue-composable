@@ -104,11 +104,12 @@ function isValidatorObject(v: any): v is ValidatorObject<any> {
 const buildValidationFunction = (
   r: Ref<any>,
   f: ValidatorFunc<any>,
+  m: Ref<string | undefined>,
   handlers: Array<Function>
 ) => {
   const $promise: Ref<Promise<boolean> | null> = ref(null);
   const $pending = ref(false);
-  const $error = ref<Error>();
+  const $error = ref<Error | string>();
   const $invalid = ref(false);
   let context: any = undefined;
 
@@ -123,6 +124,7 @@ const buildValidationFunction = (
         } else {
           $invalid.value = !result;
         }
+        $error.value = $invalid.value ? m.value : undefined;
       } catch (e) {
         $invalid.value = true;
         throw e;
@@ -169,11 +171,12 @@ const buildValidationValue = (
 ): ValidatorResult & ValidatorResultPromise & ValidatorResultMessage => {
   const { $message, $validator, ...$rest } = isValidatorObject(v)
     ? v
-    : { $validator: v, $message: "" };
+    : { $validator: v, $message: undefined };
 
   const { $pending, $promise, $invalid, $error } = buildValidationFunction(
     r,
     $validator,
+    ref($message),
     handlers
   );
 
@@ -244,8 +247,8 @@ const buildValidation = <T>(
         $errors = computed(() =>
           validations
             .map(x => x.$error)
-            .filter(Boolean)
             .map(x => unwrap(x))
+            .filter(Boolean)
         );
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() =>

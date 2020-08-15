@@ -190,6 +190,30 @@ describe("validation", () => {
     ]);
   });
 
+  it("should store $errors if $message is available", () => {
+    const $message = "Invalid value";
+    const v = useValidation({
+      input: {
+        $value: "",
+        required: {
+          $validator(x: string) {
+            return false;
+          },
+          $message
+        }
+      },
+      otherInput: {
+        $value: "",
+        required(x: string) {
+          return false;
+        }
+      }
+    });
+
+    expect(v.input.$errors).toMatchObject([$message]);
+    expect(v.otherInput.$errors).toMatchObject([]);
+  });
+
   describe("render", () => {
     it("should show error", async () => {
       const required = (x: any) => !!x;
