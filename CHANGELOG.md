@@ -1,3 +1,15 @@
+# [1.0.0-beta.4](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2020-08-15)
+
+### Features
+
+- **cancellablePromise:** automatically cancel promise on unmount ([#517](https://github.com/pikax/vue-composable/issues/517)) ([b18b21d](https://github.com/pikax/vue-composable/commit/b18b21da4741fc53a8755cf3a81bd3484bc93fca))
+- **fetch:** automatically cancel on going request on unmount ([#516](https://github.com/pikax/vue-composable/issues/516)) ([a030179](https://github.com/pikax/vue-composable/commit/a030179c472459f3d33e8f8adba3641009c8f223))
+- **validation:** add to $errors if the validator has $message ([#521](https://github.com/pikax/vue-composable/issues/521)) ([7e79920](https://github.com/pikax/vue-composable/commit/7e79920a9f09c5bba00a482340d0f47d665d05d8))
+
+### Reverts
+
+- build(deps-dev): bump @vue/\* ([6dc3650](https://github.com/pikax/vue-composable/commit/6dc3650003f5873bf316c39e4d4f6a892f09c09d))
+
 # [1.0.0-beta.3](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2020-07-27)
 
 ### Features

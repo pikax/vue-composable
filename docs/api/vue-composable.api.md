@@ -78,6 +78,11 @@ export function buildI18n<
 >;
 
 // @public (undocumented)
+export interface CancellablePromiseOptions extends PromiseOptions {
+  unmountCancel?: boolean;
+}
+
+// @public (undocumented)
 export interface CancellablePromiseResult<TCancel = any> {
   // (undocumented)
   cancel: (result?: TCancel) => void;
@@ -437,16 +442,28 @@ export interface i18nResult<TLocales, TMessages extends any = i18n> {
 }
 
 // @public (undocumented)
-export function injectFactory<T>(
-  key: InjectionKey<T> | string,
-  defaultValueFactory: () => Promise<T>
-): Promise<T>;
+export function injectFactory<T, K extends Symbol | string>(
+  key: K extends InjectionKey<any> ? never : K,
+  defaultValueFactory: () => Promise<K extends InjectionKey<infer IK> ? IK : T>
+): Promise<K extends InjectionKey<infer IK> ? IK : T>;
+
+// @public (undocumented)
+export function injectFactory<T, K extends Symbol | string>(
+  key: K,
+  defaultValueFactory: () => K extends InjectionKey<infer IK> ? IK : T
+): K extends InjectionKey<infer IK> ? IK : T;
 
 // @public (undocumented)
 export function injectFactory<T>(
-  key: InjectionKey<T> | string,
+  key: InjectionKey<T> | Symbol | string,
   defaultValueFactory: () => T
 ): T;
+
+// @public (undocumented)
+export function injectFactory<T>(
+  key: InjectionKey<T> | Symbol | string,
+  defaultValueFactory: () => Promise<T>
+): Promise<T>;
 
 // @public (undocumented)
 export interface IntersectionObserverOptions {
@@ -1113,7 +1130,7 @@ export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
 // @public (undocumented)
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -1130,7 +1147,7 @@ export function useCancellablePromise<T extends any>(
 // @public (undocumented)
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -1159,7 +1176,7 @@ export function useCancellablePromise<
   TArgs extends Array<any>
 >(
   fn: (...args: TArgs) => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -1176,7 +1193,7 @@ export function useCancellablePromise<T = any>(
 // @public (undocumented)
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  options: PromiseOptions
+  options: CancellablePromiseOptions
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 // @public (undocumented)
@@ -1337,6 +1354,7 @@ export function useFetch<T = any>(
 export interface UseFetchOptions {
   isJson?: boolean;
   parseImmediate?: boolean;
+  unmountCancel?: boolean;
 }
 
 // @public
