@@ -172,7 +172,11 @@ export function useFetch<T = any>(
   }
 
   if (unmountCancel && getCurrentInstance()) {
-    onUnmounted(() => cancel("unmounted"));
+    onUnmounted(() => {
+      if (abortController) {
+        cancel("unmounted");
+      }
+    });
   }
 
   return {

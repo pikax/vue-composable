@@ -362,4 +362,22 @@ describe("fetch", () => {
     destroy();
     expect(isCancelled.value).toBe(true);
   });
+
+  it("should not cancel on unmount if there's no promise", () => {
+    let isCancelled: Ref<boolean> = undefined as any;
+
+    const { mount, destroy } = createVue({
+      template: `<div></div>`,
+      setup() {
+        isCancelled = useFetch().isCancelled;
+      }
+    });
+
+    mount();
+
+    expect(isCancelled.value).toBe(false);
+
+    destroy();
+    expect(isCancelled.value).toBe(false);
+  });
 });
