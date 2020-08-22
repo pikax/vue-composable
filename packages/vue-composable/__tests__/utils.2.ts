@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-export const Vue: any = require("vue/dist/vue.common");
+export const Vue: any = require("vue2/dist/vue.common");
 import { Component, ComponentPublicInstance } from "@vue/runtime-dom";
 
 Vue.config.productionTip = false;

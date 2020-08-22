@@ -139,3 +139,4 @@ $RECYCLE.BIN/
 dist
 temp
 !docs/.vuepress/public/
+!docs/.vitepress/public/

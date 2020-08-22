@@ -1,5 +1,5 @@
 if (__VUE_2__) {
-  const Vue = require("vue/dist/vue.common");
+  const Vue = require("vue2/dist/vue.common");
 
   const plugin = require("@vue/composition-api").default;
 

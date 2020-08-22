@@ -21,10 +21,10 @@ export {
   ComputedRef,
   UnwrapRef // Plugin,
 } from "@vue/composition-api";
-export { VueConstructor as App } from "vue";
+export { VueConstructor as App } from "vue2";
 
 import { Ref, set, computed } from "@vue/composition-api";
-import Vue, { PluginFunction } from "vue";
+import Vue, { PluginFunction } from "vue2";
 import { unwrap } from "./utils";
 
 export type Plugin = PluginFunction<any>;
