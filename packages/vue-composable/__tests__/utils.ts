@@ -83,6 +83,10 @@ function compileToFunction(
   // In the global build we know `Vue` is available globally so we can avoid
   // the wildcard object.
   const render = new Function("Vue", code)(runtimeDom);
+
+  // mark the function as runtime compiled
+  (render as any)._rc = true;
+
   return (compileCache[key] = render);
 }
 
