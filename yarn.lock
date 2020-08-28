@@ -1588,12 +1588,19 @@
   dependencies:
     tslib "^2.0.1"
 
-"@vue/reactivity@3.0.0-rc.7", "@vue/reactivity@^3.0.0-rc.4":
+"@vue/reactivity@3.0.0-rc.7":
   version "3.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-rc.7.tgz#fd5fda961c57a8065c6408170e06808a39f801a2"
   integrity sha512-j8wUuc131JrHvQzEWjlRMYHadRLhGaubIZHR+4QO/xwvNIdJWK8zQd9iqxizjBW0E1MhrZkDbsiClNN8lq/ILQ==
   dependencies:
     "@vue/shared" "3.0.0-rc.7"
+
+"@vue/reactivity@^3.0.0-rc.9":
+  version "3.0.0-rc.9"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.0-rc.9.tgz#d6a3f40bb9c2e3b0f6f20b4693efc2f91d0c220b"
+  integrity sha512-1fJSt4zZ/icZUNsN3Te5BeVChmQ7Ner2xUYy9ALtShLSj2RwxRVhtysjXxLE16TbwLkHjsOHjA8tQWrdBfQG0A==
+  dependencies:
+    "@vue/shared" "3.0.0-rc.9"
 
 "@vue/runtime-core@3.0.0-rc.7", "@vue/runtime-core@^3.0.0-rc.4":
   version "3.0.0-rc.7"
@@ -1616,6 +1623,11 @@
   version "3.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-rc.7.tgz#62054a314105019efab590f767db528c8c603954"
   integrity sha512-wRqe6DvR9UIH4Il4bxMIbuGupWFtJW+PZKqgclYjuO+zWNQEC7hC5OxONgXeGcv1h4KtfJsc8wSU31hxok9XAQ==
+
+"@vue/shared@3.0.0-rc.9":
+  version "3.0.0-rc.9"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-rc.9.tgz#81e71c2c40dbbfc4f05b3b4a3f92cb2842864aa3"
+  integrity sha512-SHD7qwziiG6208nKrs0qqbWbYckvBiCBCLwlRjUb6NEDUMN0TOVyzyaTvdnHND9ion/ZMdwEKMtWWtgJJkHDdw==
 
 "@vuepress/core@1.5.4":
   version "1.5.4"
