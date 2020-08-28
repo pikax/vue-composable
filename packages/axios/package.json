@@ -7,7 +7,8 @@
   "unpkg": "dist/axios.global.js",
   "files": [
     "index.js",
-    "dist"
+    "dist",
+    "scripts"
   ],
   "types": "dist/axios.d.ts",
   "buildOptions": {
