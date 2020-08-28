@@ -4,18 +4,6 @@
 
 - **axios:** add postinstall script for @vue-composable/axios ([8f7dab4](https://github.com/pikax/vue-composable/commit/8f7dab40695798a0039be0acb29b9ff236c2f918))
 
-# [1.0.0-beta.5](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2020-08-28)
-
-### Bug Fixes
-
-- **axios:** add postinstall script for @vue-composable/axios ([8f7dab4](https://github.com/pikax/vue-composable/commit/8f7dab40695798a0039be0acb29b9ff236c2f918))
-
-# [1.0.0-beta.5](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2020-08-28)
-
-### Bug Fixes
-
-- **axios:** add postinstall script for @vue-composable/axios ([8f7dab4](https://github.com/pikax/vue-composable/commit/8f7dab40695798a0039be0acb29b9ff236c2f918))
-
 # [1.0.0-beta.4](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2020-08-15)
 
 ### Features
