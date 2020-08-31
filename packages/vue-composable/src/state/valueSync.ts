@@ -38,7 +38,11 @@ export function useValueSync<T>(
     ([m, list]) => {
       // value added set master
       if (lastLen < list.length) {
-        list.forEach(x => (x.value = m));
+        list.forEach(x => {
+          if (x.value !== m) {
+            x.value = m;
+          }
+        });
         return;
       }
       lastLen = list.length;
