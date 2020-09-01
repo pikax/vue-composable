@@ -5,23 +5,23 @@ import type {
   Hookable,
   TimelineLayerOptions,
   TimelineEventOptions,
+  CustomInspectorOptions,
 } from "@vue/devtools-api";
 import { App, InjectionKey, inject } from "../api";
-import { NO_OP } from "../utils";
+import { NO_OP, promisedTimeout } from "../utils";
 
 // istanbul ignore next
 const DEVTOOLS_KEY: InjectionKey<DevtoolsPluginApi> = /*#__PURE__*/ Symbol(
   (__DEV__ && "DEVTOOLS_KEY") || ``
 );
 
+type DevtoolsPluginApiMethods = Exclude<keyof DevtoolsPluginApi, "on">;
+
 // queue devtools event
 class DevtoolsQueue implements DevtoolsPluginApi {
+  private _queue: { key: DevtoolsPluginApiMethods; args: any }[] = [];
+
   private _onQueue: { event: keyof Hookable<Context>; handler: any }[] = [];
-
-  private _notifyComponentUpdateQueue = new Set<any>();
-  private _timelineLayerQueue: any[] = [];
-  private _timelineEventQueue: any[] = [];
-
   private _api: DevtoolsPluginApi | undefined = undefined;
 
   constructor() {
@@ -97,43 +97,84 @@ class DevtoolsQueue implements DevtoolsPluginApi {
           self._onQueue.push({ event: "getElementComponent", handler });
         }
       },
+
+      getInspectorTree(handler): any {
+        if (self._api) {
+          self._api.on.getInspectorTree(handler);
+        } else {
+          self._onQueue.push({ event: "getInspectorTree", handler });
+        }
+      },
+      getInspectorState(handler): any {
+        if (self._api) {
+          self._api.on.getInspectorState(handler);
+        } else {
+          self._onQueue.push({ event: "getInspectorState", handler });
+        }
+      },
     };
   }
 
   on: Hookable<Context>;
-  notifyComponentUpdate(instance: any): any {
+
+  private queueEvent(key: DevtoolsPluginApiMethods, args: any) {
     if (this._api) {
-      this._api.notifyComponentUpdate(instance);
+      //@ts-ignore
+      this._api[key](...args);
     } else {
-      this._notifyComponentUpdateQueue.add(instance);
+      this._queue.push({ key, args });
     }
   }
-  addTimelineLayer(options: TimelineLayerOptions) {
-    if (this._api) {
-      this._api.addTimelineLayer(options);
-    } else {
-      this._timelineLayerQueue.push(options);
-    }
+
+  notifyComponentUpdate(_: any): any {
+    this.queueEvent("notifyComponentUpdate", arguments);
   }
-  addTimelineEvent(options: TimelineEventOptions): any {
-    if (this._api) {
-      this._api.addTimelineEvent(options);
-    } else {
-      this._timelineEventQueue.push(options);
-    }
+  addTimelineLayer(_: TimelineLayerOptions) {
+    this.queueEvent("addTimelineLayer", arguments);
+  }
+  addTimelineEvent(_: TimelineEventOptions): any {
+    this.queueEvent("addTimelineEvent", arguments);
+  }
+
+  addInspector(_: CustomInspectorOptions): any {
+    this.queueEvent("addInspector", arguments);
+  }
+  sendInspectorTree(_: string): any {
+    this.queueEvent("sendInspectorTree", arguments);
+  }
+  sendInspectorState(_: string): any {
+    this.queueEvent("sendInspectorState", arguments);
   }
 
   toDevtools(api: DevtoolsPluginApi) {
-    this._timelineLayerQueue.forEach((x) => api.addTimelineLayer(x));
-    this._timelineEventQueue.forEach((x) => api.addTimelineEvent(x));
-
-    this._onQueue.forEach((x) => api.on[x.event](x.handler));
-
-    this._notifyComponentUpdateQueue.forEach((x) =>
-      api.notifyComponentUpdate(x)
-    );
-
     this._api = api;
+
+    setTimeout(async () => {
+      const priority: DevtoolsPluginApiMethods[] = [
+        "addTimelineLayer",
+        "addInspector",
+        "sendInspectorTree",
+        "sendInspectorState",
+        "addTimelineEvent",
+      ];
+
+      for (const k of priority) {
+        for (const it of this._queue.filter((x) => x.key === k)) {
+          // @ts-ignore
+          api[k](...it.args);
+        }
+        await promisedTimeout(20);
+      }
+
+      new Set(
+        this._queue
+          .filter((x) => x.key === "notifyComponentUpdate")
+          .map((x) => x.args[0])
+      ).forEach((x) => api.notifyComponentUpdate(x));
+
+      this._onQueue.forEach((x) => api.on[x.event](x.handler));
+    }, 10);
+
     return api;
   }
 }

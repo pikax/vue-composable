@@ -122,7 +122,7 @@ export function useUndo<T>(
     const layer = useDevtoolsTimelineLayer(
       `useUndo:${options.devtoolId}`,
       options.devtoolId,
-      0x32a2bf
+      0x32a2bf // TODO devtools fix color
     );
     addTimelineEvent = (time, data) =>
       layer.addEvent({
