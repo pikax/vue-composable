@@ -5,12 +5,16 @@
 ```ts
 import { App } from "@vue/runtime-core";
 import { ComputedRef } from "@vue/runtime-core";
+import type { CustomInspectorNode } from "@vue/devtools-api";
+import type { CustomInspectorOptions } from "@vue/devtools-api";
+import type { CustomInspectorState } from "@vue/devtools-api";
 import { DeepReadonly } from "@vue/runtime-core";
 import type { DevtoolsPluginApi } from "@vue/devtools-api";
 import { InjectionKey } from "@vue/runtime-core";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
+import { Ref as Ref_2 } from "@vue/composition-api";
 import type { TimelineEvent } from "@vue/devtools-api";
 import { UnwrapRef } from "@vue/runtime-core";
 
@@ -352,6 +356,68 @@ export function deepClone<T extends object = object>(
   result: T,
   ...sources: T[]
 ): T;
+
+// @public (undocumented)
+export interface DevtoolInspectorNode extends CustomInspectorNode {
+  // (undocumented)
+  children: DevtoolInspectorNode[];
+  // (undocumented)
+  state: CustomInspectorState;
+}
+
+// @public (undocumented)
+export interface DevtoolInspectorNodeState {
+  // (undocumented)
+  "register module": RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  "unregister module": RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  "vuex bindings": RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  $attrs: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  $refs: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  [key: string]: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  computed: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  getters: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  mutation: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  props: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  setup: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  state: RefTyped<DevtoolInspectorNodeStateValue>[];
+  // (undocumented)
+  undefined: RefTyped<DevtoolInspectorNodeStateValue>[];
+}
+
+// @public (undocumented)
+export interface DevtoolInspectorNodeStateValue {
+  // (undocumented)
+  editable: boolean;
+  // (undocumented)
+  objectType: string;
+  // (undocumented)
+  type: string;
+  // (undocumented)
+  value: any;
+}
+
+// @public (undocumented)
+export type DevtoolsInpectorNodeFilter = (
+  search: string,
+  nodes: DevtoolInspectorNode[]
+) => DevtoolInspectorNode[];
+
+// @public (undocumented)
+export type DevtoolsInpectorStateFilter = (
+  search: string,
+  state: CustomInspectorState
+) => CustomInspectorState;
 
 // Warning: (ae-forgotten-export) The symbol "RetryDelayFactory" needs to be exported by the entry point index.d.ts
 //
@@ -1289,6 +1355,17 @@ export function useDebounce<T extends Procedure>(
 
 // @public (undocumented)
 export const UseDevtoolsApp: (app: App, id?: string, label?: string) => void;
+
+// @public (undocumented)
+export function useDevtoolsInpector(
+  options: CustomInspectorOptions & {
+    nodeFilter?: DevtoolsInpectorNodeFilter;
+    stateFilter?: DevtoolsInpectorStateFilter;
+  },
+  nodeList?: DevtoolInspectorNode[]
+): {
+  nodes: Ref_2<DevtoolInspectorNode[]>;
+};
 
 // @public (undocumented)
 export function useDevtoolsTimelineLayer(

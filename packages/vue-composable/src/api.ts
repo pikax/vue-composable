@@ -23,7 +23,8 @@ export {
   Plugin,
   App,
   readonly,
-  DeepReadonly
+  toRaw,
+  DeepReadonly,
 } from "@vue/runtime-core";
 
 // istanbul ignore next

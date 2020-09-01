@@ -19,7 +19,8 @@ export {
   onBeforeUnmount,
   onDeactivated,
   ComputedRef,
-  UnwrapRef // Plugin,
+  toRaw,
+  UnwrapRef, // Plugin,
 } from "@vue/composition-api";
 export { VueConstructor as App } from "vue";
 
