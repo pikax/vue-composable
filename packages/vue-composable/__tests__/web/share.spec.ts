@@ -39,6 +39,7 @@ describe("share", () => {
   });
 
   it("should not throw if not supported", () => {
+    // @ts-ignore
     delete navigator.share;
     const share = useShare();
 
