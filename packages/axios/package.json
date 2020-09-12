@@ -62,7 +62,7 @@
     "typescript": "^4.0.2"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-rc.2",
+    "@vue/composition-api": "^1.0.0-beta.2",
     "axios": "^0.19.2"
   }
 }

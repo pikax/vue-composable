@@ -44,7 +44,7 @@
     "vue-composable-fix": "./scripts/postinstall.js"
   },
   "dependencies": {
-    "@vue/devtools-api": "C:\\dev\\vue-devtools\\packages\\api"
+    "@vue/devtools-api": "file:../vue-devtools/packages/api"
   },
   "peerDependencies3": {
     "@vue/runtime-core": "^3.0.0-rc.2"
@@ -54,6 +54,7 @@
     "vue": "^2.6.10"
   },
   "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0-rc.2"
+    "@vue/composition-api": "^1.0.0-beta.2",
+    "vue": "^2.6.10"
   }
 }
