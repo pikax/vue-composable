@@ -1,3 +1,9 @@
+# [1.0.0-beta.7](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2020-09-13)
+
+### Bug Fixes
+
+- **devtools:** return the new created callback ([9ef375a](https://github.com/pikax/vue-composable/commit/9ef375ac546705ad26f1395e4410eef1b1a1fdaa))
+
 # [1.0.0-beta.6](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2020-09-13)
 
 ### Bug Fixes
