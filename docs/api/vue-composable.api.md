@@ -5,17 +5,16 @@
 ```ts
 import { App } from "@vue/runtime-core";
 import { ComputedRef } from "@vue/runtime-core";
-import type { CustomInspectorNode } from "@vue/devtools-api";
-import type { CustomInspectorOptions } from "@vue/devtools-api";
-import type { CustomInspectorState } from "@vue/devtools-api";
+import { CustomInspectorNode } from "@vue/devtools-api";
+import { CustomInspectorOptions } from "@vue/devtools-api";
+import { CustomInspectorState } from "@vue/devtools-api";
 import { DeepReadonly } from "@vue/runtime-core";
-import type { DevtoolsPluginApi } from "@vue/devtools-api";
+import { DevtoolsPluginApi } from "@vue/devtools-api";
 import { InjectionKey } from "@vue/runtime-core";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
-import { Ref as Ref_2 } from "@vue/composition-api";
-import type { TimelineEvent } from "@vue/devtools-api";
+import { TimelineEvent } from "@vue/devtools-api";
 import { UnwrapRef } from "@vue/runtime-core";
 
 // @public (undocumented)
@@ -452,6 +451,9 @@ export function getCssVariableFor(
   element: HTMLElement,
   name: string
 ): CssVariable;
+
+// @public
+export function getDevtools(): DevtoolsPluginApi | undefined;
 
 // @public (undocumented)
 export const hydrationPlugin: Plugin_2;
@@ -1038,11 +1040,8 @@ export function setCssVariableFor(
   value: CssVariable
 ): void;
 
-// @public (undocumented)
-export function setDevtoolApi(
-  app: App,
-  promiseApi: Promise<DevtoolsPluginApi>
-): void;
+// @public
+export function setDevtools(app: App, api: DevtoolsPluginApi): void;
 
 // @public
 export function setI18n<
@@ -1364,7 +1363,7 @@ export function useDevtoolsInpector(
   },
   nodeList?: DevtoolInspectorNode[]
 ): {
-  nodes: Ref_2<DevtoolInspectorNode[]>;
+  nodes: Ref<DevtoolInspectorNode[]>;
 };
 
 // @public (undocumented)
@@ -1375,6 +1374,7 @@ export function useDevtoolsTimelineLayer(
 ): {
   id: string;
   addEvent: (event: TimelineEvent, all?: boolean | undefined) => any;
+  pushEvent: (event: Omit<TimelineEvent, "time">) => any;
 };
 
 // @public (undocumented)
@@ -2169,6 +2169,17 @@ export const VERSION: string;
 
 // @public (undocumented)
 export const VUE_VERSION: "2" | "3";
+
+// @public (undocumented)
+export const VueComposableDevtools: {
+  install(
+    app: App,
+    options?: {
+      id: string;
+      label: string;
+    }
+  ): void;
+};
 
 // @public (undocumented)
 export interface WebSocketReturn {

@@ -42,3 +42,9 @@ export function readonly<T extends object>(
 
 // FAKE DeepReadonly
 export type DeepReadonly<T> = Readonly<T>;
+
+declare module "vue" {
+  interface VueConstructor {
+    provide(key: any, value: any): void;
+  }
+}

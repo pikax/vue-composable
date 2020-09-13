@@ -1,5 +1,6 @@
 import { DevtoolsPluginApi } from "@vue/devtools-api";
 import { App, InjectionKey, inject } from "../api";
+import { isFunction } from "../utils";
 
 // istanbul ignore next
 const DEVTOOLS_KEY: InjectionKey<DevtoolsPluginApi> = /*#__PURE__*/ Symbol(
@@ -12,6 +13,10 @@ const DEVTOOLS_KEY: InjectionKey<DevtoolsPluginApi> = /*#__PURE__*/ Symbol(
  * @param api
  */
 export function setDevtools(app: App, api: DevtoolsPluginApi) {
+  if (!isFunction(app.provide)) {
+    console.warn("[vue-composable] devtools is not supported for vue 2");
+    return;
+  }
   app.provide(DEVTOOLS_KEY, api);
 }
 

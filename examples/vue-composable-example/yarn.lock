@@ -1151,12 +1151,12 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
-"@vue-composable/axios@^1.0.0-beta.1":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-beta.3.tgz#5e50a1cf15a1efbb02339a659835eefb40546ccf"
-  integrity sha512-sPkivRnWvYd4TsDia3ivpqxiw4UKCac9t3SuarJHBGJbw1l2LG2G6XT9LNdkHCIDe4yxqh09OGXqyO3P6jNMYg==
+"@vue-composable/axios@^1.0.0-beta.5":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@vue-composable/axios/-/axios-1.0.0-beta.5.tgz#aea2c1f3a934ffe689a3c32a0e939b118b79b32c"
+  integrity sha512-RIH325JtgcVLifXB+eT0tQyPl6uTyVipoXcor+lULAi5XIkHZa9OluRs8sRXCWrx2ByQIb+FUhnxuTBnRKJiqg==
   dependencies:
-    vue-composable "^1.0.0-beta.3"
+    vue-composable "^1.0.0-beta.5"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
@@ -7889,10 +7889,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-composable@^1.0.0-beta.1, vue-composable@^1.0.0-beta.3:
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-beta.3.tgz#ba442d24768b8a452dc4b313f42840ef8ecd3d99"
-  integrity sha512-PZ19JR3/aZc/PPDZhJC9X4oytSo7eDpoKku6cHQX4OHAGRxg7Cqb/rDt7mbZk3zCIb3GD6jpR3Qm8HqliV745Q==
+vue-composable@^1.0.0-beta.5:
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/vue-composable/-/vue-composable-1.0.0-beta.5.tgz#3de1ee9dbd1768c575d06a3657c1b7234df9e49c"
+  integrity sha512-AsuyLdUhbsdYlnDC7Se3207j8WXNoy0/9hwGmkuxJE5QIylOTd6vkg4nyJ8j+vTL740nEofVwnwsH20W0pc2jw==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
@@ -7931,10 +7931,10 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.11:
-  version "2.6.11"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
-  integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+vue@^2.6.12:
+  version "2.6.12"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
+  integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
 watchpack@^1.6.0:
   version "1.6.0"
