@@ -4,4 +4,3 @@ export * from "./lockScroll";
 export * from "./vmodel";
 export * from "./injectFactory";
 export * from "./interval";
-export * from "./devtools";

@@ -1,6 +1,6 @@
 import { ref, computed, watch, Ref, ComputedRef } from "../api";
 import { RefTyped, MAX_ARRAY_SIZE, wrap } from "../utils";
-import { useDevtoolsTimelineLayer } from "../misc/devtools";
+import { useDevtoolsTimelineLayer } from "../devtools";
 
 export interface UndoOptions<T> {
   /**

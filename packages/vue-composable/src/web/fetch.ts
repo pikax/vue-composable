@@ -1,7 +1,7 @@
 import { isBoolean, isString } from "../utils";
 import { ref, computed, Ref, onUnmounted, getCurrentInstance } from "../api";
 import { PromiseResultFactory, usePromise } from "../promise";
-import { useDevtoolsTimelineLayer } from "../misc";
+import { useDevtoolsTimelineLayer } from "../devtools";
 
 export interface UseFetchOptions {
   /**
