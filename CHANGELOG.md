@@ -1,3 +1,13 @@
+# [1.0.0-beta.6](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2020-09-13)
+
+### Bug Fixes
+
+- **valueSync:** `vue3` prevent recursive error when assigning a new `ref` to a list ([3350183](https://github.com/pikax/vue-composable/commit/3350183d784a215a354c0614fbca39d5eb3d0df4))
+
+### Features
+
+- devtools support ([#563](https://github.com/pikax/vue-composable/issues/563)) ([f726bf4](https://github.com/pikax/vue-composable/commit/f726bf4d9a7585e816d8429104d87beec6ac7fee))
+
 # [1.0.0-beta.5](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2020-08-28)
 
 ### Bug Fixes
