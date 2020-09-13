@@ -151,6 +151,103 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 This is a monorepo project, please check [packages](packages/)
 
+## Devtools
+
+There's some experimental devtools support starting from `1.0.0-beta.6`, only available for `vue-next` and `devtools beta 6`.
+
+- [devtools beta chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg)
+
+### Install plugin
+
+To use devtools you need to install the plugin first:
+
+```ts
+import { createApp } from "vue";
+import { VueComposableDevtools } from "vue-composable";
+import App from "./App.vue";
+
+const app = createApp(App);
+app.use(VueComposableDevtools);
+// or
+app.use(VueComposableDevtools, {
+  id: "vue-composable",
+  label: "devtool composables",
+});
+
+app.mount("#app");
+```
+
+### Timeline events
+
+To add timeline events:
+
+```ts
+const id = "vue-composable";
+const label = "Test events";
+const color = 0x92a2bf;
+
+const { addEvent, pushEvent } = useDevtoolsTimelineLayer(
+  id,
+  description,
+  color
+);
+
+// adds event to a specific point in the timeline
+addEvent({
+  time: Date.now(),
+  data: {
+    // data object
+  },
+  meta: {
+    // meta object
+  },
+});
+
+// adds event with `time: Date.now()`
+pushEvent({
+  data: {
+    // data object
+  },
+  meta: {
+    // meta object
+  },
+});
+```
+
+### Inspector
+
+Allows to create a new inpector for your data.
+
+> I'm still experimenting on how to expose this API on a composable, this will likely to change in the future, suggestions are welcome.
+
+```ts
+useDevtoolsInpector(
+  {
+    id: "vue-composable",
+    label: "test vue-composable",
+  },
+  // list of nodes, this can be reactive
+  [
+    {
+      id: "test",
+      label: "test - vue-composable",
+      depth: 0,
+      state: {
+        composable: [
+          {
+            editable: false,
+            key: "count",
+            objectType: "Ref",
+            type: "setup",
+            value: myRefValue,
+          },
+        ],
+      },
+    },
+  ]
+);
+```
+
 ## Contributing
 
 You can contribute raising issues and by helping out with code.

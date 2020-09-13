@@ -19,7 +19,8 @@ export {
   onBeforeUnmount,
   onDeactivated,
   ComputedRef,
-  UnwrapRef // Plugin,
+  toRaw,
+  UnwrapRef, // Plugin,
 } from "@vue/composition-api";
 export { VueConstructor as App } from "vue";
 
@@ -41,3 +42,9 @@ export function readonly<T extends object>(
 
 // FAKE DeepReadonly
 export type DeepReadonly<T> = Readonly<T>;
+
+declare module "vue" {
+  interface VueConstructor {
+    provide(key: any, value: any): void;
+  }
+}

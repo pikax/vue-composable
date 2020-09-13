@@ -1,5 +1,6 @@
 import { ref, computed, watch, Ref, ComputedRef } from "../api";
 import { RefTyped, MAX_ARRAY_SIZE, wrap } from "../utils";
+import { useDevtoolsTimelineLayer } from "../devtools";
 
 export interface UndoOptions<T> {
   /**
@@ -19,6 +20,12 @@ export interface UndoOptions<T> {
    * @default (x)=>x
    */
   clone: (entry: T) => T;
+
+  /**
+   * Adds it to the devtools timeline
+   * @default undefined
+   */
+  devtoolId?: string;
 }
 
 export interface UndoOperation {
@@ -96,9 +103,45 @@ export function useUndo<T>(
   const maxLen = (options && options.maxLength) || MAX_ARRAY_SIZE;
   const clone = (options && options.clone) || ((t: any) => t);
 
+  const prev = computed(() => {
+    // hide current
+    const p = position.value === 0 ? 1 : position.value;
+    return timeline.value.slice(p);
+  });
+  const next = computed(() => {
+    // hide current
+    const p = position.value === 0 ? 1 : 0;
+    return timeline.value.slice(p, position.value);
+  });
+
+  let addTimelineEvent:
+    | ((time: number, data: any) => any)
+    | undefined = undefined;
+
+  if (__DEV__ && options && options.devtoolId) {
+    const layer = useDevtoolsTimelineLayer(
+      `useUndo:${options.devtoolId}`,
+      options.devtoolId,
+      0x32a2bf // TODO devtools fix color
+    );
+    addTimelineEvent = (time, data) =>
+      layer.addEvent({
+        time,
+        data: {
+          value: data,
+          prev: [...prev.value],
+          next: [...next.value],
+        },
+        meta: {
+          prev: [...prev.value],
+          next: [...next.value],
+        },
+      });
+  }
+
   watch(
     current,
-    c => {
+    (c) => {
       if (timeline.value[position.value] === c) {
         //ignore because is the same value
         return;
@@ -115,13 +158,17 @@ export function useUndo<T>(
       if (timeline.value.length > maxLen) {
         timeline.value.pop();
       }
+      const v = clone(c);
+      timeline.value.unshift(v);
 
-      timeline.value.unshift(clone(c));
+      if (addTimelineEvent) {
+        addTimelineEvent(Date.now(), c);
+      }
     },
     {
       ...options,
       immediate: true,
-      flush: "sync"
+      flush: "sync",
     }
   );
 
@@ -136,18 +183,11 @@ export function useUndo<T>(
 
     position.value += s;
     current.value = timeline.value[position.value];
-  };
 
-  const prev = computed(() => {
-    // hide current
-    const p = position.value === 0 ? 1 : position.value;
-    return timeline.value.slice(p);
-  });
-  const next = computed(() => {
-    // hide current
-    const p = position.value === 0 ? 1 : 0;
-    return timeline.value.slice(p, position.value);
-  });
+    if (addTimelineEvent) {
+      addTimelineEvent(Date.now(), clone(current.value));
+    }
+  };
 
   return {
     value: current,
@@ -157,6 +197,6 @@ export function useUndo<T>(
     jump,
 
     prev,
-    next
+    next,
   };
 }

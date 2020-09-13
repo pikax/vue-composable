@@ -12,7 +12,7 @@ if (!process.env.TARGET) {
 const packagesDir = path.resolve(__dirname, "packages");
 const packageDir = path.resolve(packagesDir, process.env.TARGET);
 const name = path.basename(packageDir);
-const resolve = p => path.resolve(packageDir, p);
+const resolve = (p) => path.resolve(packageDir, p);
 const pkg = require(resolve(`package.json`));
 const packageOptions = pkg.buildOptions || {};
 const vueVersion = process.env.VUE_VERSION;
@@ -25,11 +25,11 @@ let hasTSChecked = false;
 const configs = {
   "esm-bundler": {
     file: resolve(`dist/v${vueVersion}/${name}.esm-bundler.js`),
-    format: `es`
+    format: `es`,
   },
   cjs: {
     file: resolve(`dist/v${vueVersion}/${name}.cjs.js`),
-    format: `cjs`
+    format: `cjs`,
   },
   global: {
     file: resolve(`dist/v${vueVersion}/${name}.global.js`),
@@ -38,19 +38,25 @@ const configs = {
       "@vue/composition-api": "vueCompositionApi",
       "@vue/runtime-core": "VueRuntimeCore",
       axios: "axios",
-      vue: "Vue"
-    }
+      vue: "Vue",
+    },
   },
   esm: {
     file: resolve(`dist/v${vueVersion}/${name}.esm.js`),
     format: `es`,
-    external: ["vue", "@vue/composition-api", "axios"]
-  }
+    external: ["vue", "@vue/composition-api", "axios", "@vue/devtools-api"],
+  },
 };
 
 const setup = {
   global: {
-    external: ["vue", "@vue/composition-api", "axios", "@vue/runtime-core"],
+    external: [
+      "vue",
+      "@vue/composition-api",
+      "axios",
+      "@vue/runtime-core",
+      "@vue/devtools-api",
+    ],
     plugins: [
       resolvePlugin({
         // mainFields: [
@@ -59,9 +65,9 @@ const setup = {
         // modulesOnly: true,
         // only: "@vue-composable/core",
         // dedupe: ["vue", "@vue/composition-api"]
-      })
-    ]
-  }
+      }),
+    ],
+  },
 };
 
 const defaultFormats = ["esm-bundler", "cjs"];
@@ -70,7 +76,7 @@ const packageFormats =
   inlineFormats || packageOptions.formats || defaultFormats;
 const packageConfigs = process.env.PROD_ONLY
   ? []
-  : packageFormats.map(format =>
+  : packageFormats.map((format) =>
       createConfig(
         configs[format],
         configs[format].plugins || [],
@@ -79,7 +85,7 @@ const packageConfigs = process.env.PROD_ONLY
     );
 
 if (process.env.NODE_ENV === "production") {
-  packageFormats.forEach(format => {
+  packageFormats.forEach((format) => {
     if (format === "cjs" && packageOptions.prod !== false) {
       packageConfigs.push(createProductionConfig(format));
     }
@@ -117,10 +123,10 @@ function createConfig(output, plugins = [], config = {}) {
     tsconfigOverride: {
       compilerOptions: {
         declaration: shouldEmitDeclarations,
-        declarationMap: shouldEmitDeclarations
+        declarationMap: shouldEmitDeclarations,
       },
-      exclude: ["**/__tests__", "test-dts"]
-    }
+      exclude: ["**/__tests__", "test-dts"],
+    },
   });
   // we only need to check TS and generate declarations once for each build.
   // it also seems to run into weird issues when checking multiple times
@@ -144,7 +150,7 @@ function createConfig(output, plugins = [], config = {}) {
       ...(config.plugins || []),
 
       json({
-        namedExports: false
+        namedExports: false,
       }),
       tsPlugin,
       createReplacePlugin(
@@ -154,9 +160,9 @@ function createConfig(output, plugins = [], config = {}) {
           !packageOptions.enableNonBrowserBranches,
         isRuntimeCompileBuild
       ),
-      ...plugins
+      ...plugins,
     ],
-    output
+    output,
   };
 }
 
@@ -191,7 +197,7 @@ function createReplacePlugin(
       ? `process.env.NODE_ENV`
       : "'production'",
 
-    __VUE_2__: process.env.VUE_VERSION === "2"
+    __VUE_2__: process.env.VUE_VERSION === "2",
   });
 }
 
@@ -199,7 +205,7 @@ function createProductionConfig(format) {
   return createConfig(
     {
       file: resolve(`dist/v${vueVersion}/${name}.${format}.prod.js`),
-      format: configs[format].format
+      format: configs[format].format,
     },
     configs[format].plugins || [],
     setup[format] || {}
@@ -212,13 +218,13 @@ function createMinifiedConfig(format) {
     {
       ...configs[format],
       file: resolve(`dist/v${vueVersion}/${name}.${format}.prod.js`),
-      format: configs[format].format
+      format: configs[format].format,
     },
     [
       ...(configs[format].plugins || []),
       terser({
-        module: /^esm/.test(format)
-      })
+        module: /^esm/.test(format),
+      }),
     ],
     setup[format] || {}
   );

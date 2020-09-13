@@ -10,9 +10,9 @@ describe("fetch", () => {
       Promise.resolve({
         json() {
           return Promise.resolve({
-            test: 1
+            test: 1,
           });
-        }
+        },
       })
     );
   });
@@ -36,8 +36,8 @@ describe("fetch", () => {
   it("should call fetch with options", () => {
     const init = {
       headers: {
-        test: "test"
-      }
+        test: "test",
+      },
     };
     const { exec } = useFetch();
 
@@ -52,11 +52,11 @@ describe("fetch", () => {
   it("should exec only be resolved after parsing json()", async () => {
     const { exec, result } = useFetch({
       isJson: true,
-      parseImmediate: true
+      parseImmediate: true,
     });
     const wait = 100;
     const expectedResult = {
-      test: 2
+      test: 2,
     };
     let r;
     fetchSpy.mockImplementationOnce(async () => {
@@ -73,7 +73,7 @@ describe("fetch", () => {
         },
         json() {
           return (r = expectedResult);
-        }
+        },
       };
     });
 
@@ -93,11 +93,11 @@ describe("fetch", () => {
   it("should exec should not parse json() immediate", async () => {
     const { exec, result } = useFetch({
       isJson: true,
-      parseImmediate: false
+      parseImmediate: false,
     });
     const wait = 100;
     const expectedResult = {
-      test: 2
+      test: 2,
     };
     let r;
     let jsonExecuted = false;
@@ -117,7 +117,7 @@ describe("fetch", () => {
           jsonExecuted = true;
           await promisedTimeout(wait);
           return (r = expectedResult);
-        }
+        },
       };
     });
 
@@ -142,11 +142,11 @@ describe("fetch", () => {
 
   it("should exec should not call response.json()", async () => {
     const { exec, result } = useFetch({
-      isJson: false
+      isJson: false,
     });
     const wait = 100;
     const expectedResult = {
-      test: 2
+      test: 2,
     };
     let r;
     let jsonExecuted = false;
@@ -165,7 +165,7 @@ describe("fetch", () => {
           jsonExecuted = true;
           await promisedTimeout(wait);
           return (r = expectedResult);
-        }
+        },
       };
     });
 
@@ -185,7 +185,7 @@ describe("fetch", () => {
 
   it("should exec should empty `json` and set the `jsonError` when exception has being thrown parsing json()", async () => {
     const { exec, json, jsonError } = useFetch({
-      isJson: true
+      isJson: true,
     });
     const exception = new Error("error parsing json");
     fetchSpy.mockImplementationOnce(async () => {
@@ -201,7 +201,7 @@ describe("fetch", () => {
         },
         async json() {
           throw exception;
-        }
+        },
       };
     });
 
@@ -219,7 +219,7 @@ describe("fetch", () => {
 
     const expectedResult = {
       status: 200,
-      statusText: "OK"
+      statusText: "OK",
     };
 
     expect(status.value).toBe(null);
@@ -239,7 +239,7 @@ describe("fetch", () => {
         },
         json() {
           return Promise.resolve("");
-        }
+        },
       };
     });
 
@@ -273,23 +273,23 @@ describe("fetch", () => {
     expect({
       cancelledMessage,
       isCancelled,
-      error
+      error,
     }).toMatchObject({
       cancelledMessage: {
-        value: message
+        value: message,
       },
       isCancelled: {
-        value: true
-      }
+        value: true,
+      },
     });
   });
 
   it("should use first parameter as requestInit", () => {
     const headers = new Headers({
-      test: "1"
+      test: "1",
     });
     const { exec } = useFetch({
-      headers
+      headers,
     });
 
     exec("./api/1");
@@ -302,11 +302,11 @@ describe("fetch", () => {
 
   it("should use second argument as arguments", () => {
     const req: Partial<RequestInfo> = {
-      url: "./api/1"
+      url: "./api/1",
     };
     const init = {
       method: "POST",
-      isJson: true
+      isJson: true,
     };
     useFetch(req, init);
     expect(fetchSpy).toBeCalledWith(
@@ -319,17 +319,17 @@ describe("fetch", () => {
     const url = "./api/1";
 
     const init: RequestInit = {
-      method: "POST"
+      method: "POST",
     };
     useFetch(url, init);
     expect(fetchSpy).toBeCalledWith(url, expect.objectContaining(init));
   });
   it("should execute request if request is passed", () => {
     const req: Partial<RequestInfo> = {
-      url: "./api/1"
+      url: "./api/1",
     };
     const init: RequestInit = {
-      method: "POST"
+      method: "POST",
     };
     useFetch(req, init);
     expect(fetchSpy).toBeCalledWith(
@@ -352,7 +352,7 @@ describe("fetch", () => {
       template: `<div></div>`,
       setup() {
         isCancelled = useFetch("./api").isCancelled;
-      }
+      },
     });
 
     mount();
@@ -370,7 +370,7 @@ describe("fetch", () => {
       template: `<div></div>`,
       setup() {
         isCancelled = useFetch().isCancelled;
-      }
+      },
     });
 
     mount();
