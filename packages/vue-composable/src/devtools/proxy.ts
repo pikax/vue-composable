@@ -205,12 +205,12 @@ if (__VUE_2__) {
             return target[prop];
           } else {
             //@ts-ignore
-            target[prop] = (...args) => {
+            return (target[prop] = (...args) => {
               EventQueue.push({
                 type: prop,
                 args,
               });
-            };
+            });
           }
         },
       }
