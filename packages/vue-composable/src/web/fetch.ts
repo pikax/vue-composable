@@ -109,7 +109,7 @@ export function useFetch<T = any>(
   let devtoolId = __DEV__
     ? isString(options)
       ? options
-      : isString((options as Request).url)
+      : options && isString((options as Request).url)
       ? (options as any).url
       : "useFetch"
     : undefined;

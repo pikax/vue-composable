@@ -24,11 +24,13 @@ export function setDevtools(app: App, api: DevtoolsPluginApi) {
  * Exposes the internal devtools api instance
  */
 export function getDevtools(): DevtoolsPluginApi | undefined {
-  const devtools = inject(DEVTOOLS_KEY);
-  if (!devtools) {
+  const empty = {};
+  const devtools = inject(DEVTOOLS_KEY, empty) as DevtoolsPluginApi;
+  if (devtools === empty) {
     console.warn(
       `[vue-composable] devtools not found, please run app.use(VueComposableDevtools)`
     );
+    return undefined;
   }
-  return devtools;
+  return devtools!;
 }
