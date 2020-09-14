@@ -35,19 +35,19 @@ export interface DevtoolInspectorNodeState {
   $attrs: RefTyped<DevtoolInspectorNodeStateValue>[];
 }
 
-export type DevtoolsInpectorNodeFilter = (
+export type DevtoolsInspectorNodeFilter = (
   search: string,
   nodes: DevtoolInspectorNode[]
 ) => DevtoolInspectorNode[];
-export type DevtoolsInpectorStateFilter = (
+export type DevtoolsInspectorStateFilter = (
   search: string,
   state: CustomInspectorState
 ) => CustomInspectorState;
 
-export function useDevtoolsInpector(
+export function useDevtoolsInspector(
   options: CustomInspectorOptions & {
-    nodeFilter?: DevtoolsInpectorNodeFilter;
-    stateFilter?: DevtoolsInpectorStateFilter;
+    nodeFilter?: DevtoolsInspectorNodeFilter;
+    stateFilter?: DevtoolsInspectorStateFilter;
   },
   nodeList: DevtoolInspectorNode[] = []
 ): { nodes: Ref<DevtoolInspectorNode[]> } {

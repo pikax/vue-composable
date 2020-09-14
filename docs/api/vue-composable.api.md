@@ -407,13 +407,13 @@ export interface DevtoolInspectorNodeStateValue {
 }
 
 // @public (undocumented)
-export type DevtoolsInpectorNodeFilter = (
+export type DevtoolsInspectorNodeFilter = (
   search: string,
   nodes: DevtoolInspectorNode[]
 ) => DevtoolInspectorNode[];
 
 // @public (undocumented)
-export type DevtoolsInpectorStateFilter = (
+export type DevtoolsInspectorStateFilter = (
   search: string,
   state: CustomInspectorState
 ) => CustomInspectorState;
@@ -1356,10 +1356,10 @@ export function useDebounce<T extends Procedure>(
 export const UseDevtoolsApp: (app: App, id?: string, label?: string) => void;
 
 // @public (undocumented)
-export function useDevtoolsInpector(
+export function useDevtoolsInspector(
   options: CustomInspectorOptions & {
-    nodeFilter?: DevtoolsInpectorNodeFilter;
-    stateFilter?: DevtoolsInpectorStateFilter;
+    nodeFilter?: DevtoolsInspectorNodeFilter;
+    stateFilter?: DevtoolsInspectorStateFilter;
   },
   nodeList?: DevtoolInspectorNode[]
 ): {
