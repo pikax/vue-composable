@@ -1,3 +1,9 @@
+# [1.0.0-beta.8](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2020-09-14)
+
+### Bug Fixes
+
+- typo on `useDevtoolsInspector` ([#565](https://github.com/pikax/vue-composable/issues/565)) ([11274ac](https://github.com/pikax/vue-composable/commit/11274ac200e991165f6a534675b360f8220c33ae))
+
 # [1.0.0-beta.7](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2020-09-13)
 
 ### Bug Fixes
