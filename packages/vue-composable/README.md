@@ -216,12 +216,12 @@ pushEvent({
 
 ### Inspector
 
-Allows to create a new inpector for your data.
+Allows to create a new inspector for your data.
 
 > I'm still experimenting on how to expose this API on a composable, this will likely to change in the future, suggestions are welcome.
 
 ```ts
-useDevtoolsInpector(
+useDevtoolsInspector(
   {
     id: "vue-composable",
     label: "test vue-composable",
