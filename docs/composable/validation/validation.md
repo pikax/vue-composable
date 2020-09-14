@@ -250,6 +250,7 @@ interface ValidationGroupResult {
 
 <script>
 import { defineComponent, ref, reactive, computed } from "@vue/composition-api";
+import { required } from '@vuelidate/validators'
 import { useValidation } from "vue-composable";
 
 const required = x => !!x;
@@ -272,7 +273,7 @@ export default defineComponent({
       password: {
         $value: password,
         required: {
-          $validator: required,
+          $validator: required.$validator,
           $message: ref("password is required")
         }
       },
