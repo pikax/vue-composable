@@ -1,3 +1,7 @@
+# [1.0.0-beta.9](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2020-09-15)
+
+# [1.0.0-beta.9](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2020-09-15)
+
 # [1.0.0-beta.8](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2020-09-14)
 
 ### Bug Fixes
