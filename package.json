@@ -79,7 +79,7 @@
     "fs-extra": "^9.0.1",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
-    "jest-websocket-mock": "^2.1.0",
+    "jest-websocket-mock": "^2.2.0",
     "lint-staged": "^10.3.0",
     "lodash.camelcase": "^4.3.0",
     "minimist": "^1.2.5",
