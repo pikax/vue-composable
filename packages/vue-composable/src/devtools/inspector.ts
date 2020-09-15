@@ -1,7 +1,7 @@
 import {
   CustomInspectorOptions,
   CustomInspectorNode,
-  CustomInspectorState
+  CustomInspectorState,
 } from "@vue/devtools-api";
 import { reactive, Ref, computed, toRaw, watch, ref } from "../api";
 import { RefTyped } from "../utils";
@@ -71,11 +71,9 @@ export function useDevtoolsInspector(
 
     // api.on.getInspectorState();
 
-    api.on.getInspectorTree(payload => {
+    api.on.getInspectorTree((payload) => {
       if (payload.inspectorId != id) return;
-      console.log();
       if (!nodes.value) return;
-
       const filter = payload.filter;
       let m = toRaw(nodes.value);
       if (payload.filter) {
@@ -84,14 +82,14 @@ export function useDevtoolsInspector(
         } else {
           // TODO better filtering, only currently filtering root nodes
           m = m.filter(
-            x => x.id.indexOf(filter) >= 0 || x.label.indexOf(filter) >= 0
+            (x) => x.id.indexOf(filter) >= 0 || x.label.indexOf(filter) >= 0
           );
         }
       }
       payload.rootNodes = m;
     });
 
-    api.on.getInspectorState(payload => {
+    api.on.getInspectorState((payload) => {
       if (payload.inspectorId != id) return;
 
       const node = byId.value.get(payload.nodeId);
@@ -109,12 +107,12 @@ export function useDevtoolsInspector(
       },
       {
         immediate: true,
-        deep: true
+        deep: true,
       }
     );
   }
 
   return {
-    nodes
+    nodes,
   };
 }

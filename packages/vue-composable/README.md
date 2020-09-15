@@ -177,6 +177,77 @@ app.use(VueComposableDevtools, {
 app.mount("#app");
 ```
 
+### Component State
+
+To add properties to the component inspector tab
+[ComponentState](https://github.com/vuejs/vue-devtools/blob/next/packages/api/src/api/component.ts#L68)
+
+```ts
+const bar = "bar";
+useDevtoolsComponentState(
+  {
+    bar,
+  },
+  {
+    type: "custom composable", // change group
+  }
+);
+
+const baz = () => "baz";
+useDevtoolsComponentState({ baz });
+// no duplicates added by default
+useDevtoolsComponentState({ baz });
+
+const the = 42;
+useDevtoolsComponentState({ the });
+// to allow multiple same key
+useDevtoolsComponentState({ the }, { duplicate: true });
+
+// use a devtools api list directly
+interface StateBase {
+  key: string;
+  value: any;
+  editable: boolean;
+  objectType?: "ref" | "reactive" | "computed" | "other";
+  raw?: string;
+  type?: string;
+}
+useDevtoolsComponentState([
+  {
+    key: "_bar",
+    type: "direct",
+    value: "bar",
+    editable: true,
+  },
+  {
+    key: "_baz",
+    type: "direct",
+    value: "baz",
+    editable: false,
+  },
+]);
+
+// raw change
+useDevtoolsComponentState((payload, ctx) => {
+  payload.state.push(
+    ...[
+      {
+        key: "_bar",
+        type: "raw",
+        value: "bar",
+        editable: true,
+      },
+      {
+        key: "_baz",
+        type: "raw",
+        value: "baz",
+        editable: false,
+      },
+    ]
+  );
+});
+```
+
 ### Timeline events
 
 To add timeline events:

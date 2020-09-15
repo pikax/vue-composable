@@ -5,3 +5,4 @@ export * from "./install";
 // composables
 export * from "./inspector";
 export * from "./timelineLayer";
+export * from "./componentState";
