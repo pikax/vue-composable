@@ -4,13 +4,16 @@
 
 ```ts
 import { App } from "@vue/runtime-core";
+import { ComponentState } from "@vue/devtools-api";
 import { ComputedRef } from "@vue/runtime-core";
+import { Context } from "vm";
 import { CustomInspectorNode } from "@vue/devtools-api";
 import { CustomInspectorOptions } from "@vue/devtools-api";
 import { CustomInspectorState } from "@vue/devtools-api";
 import { DeepReadonly } from "@vue/runtime-core";
 import { DevtoolsPluginApi } from "@vue/devtools-api";
 import { InjectionKey } from "@vue/runtime-core";
+import { InspectedComponentData } from "@vue/devtools-api";
 import { Plugin as Plugin_2 } from "@vue/runtime-core";
 import { provide } from "@vue/runtime-core";
 import { Ref } from "@vue/runtime-core";
@@ -404,6 +407,12 @@ export interface DevtoolInspectorNodeStateValue {
   type: string;
   // (undocumented)
   value: any;
+}
+
+// @public (undocumented)
+export interface DevtoolsComponentStateOptions {
+  multiple: boolean;
+  type: string;
 }
 
 // @public (undocumented)
@@ -1354,6 +1363,23 @@ export function useDebounce<T extends Procedure>(
 
 // @public (undocumented)
 export const UseDevtoolsApp: (app: App, id?: string, label?: string) => void;
+
+// @public (undocumented)
+export function useDevtoolsComponentState(
+  getState: (
+    instanceData: InspectedComponentData,
+    ctx: Context
+  ) => ComponentState[]
+): void;
+
+// @public (undocumented)
+export function useDevtoolsComponentState(state: ComponentState[]): void;
+
+// @public (undocumented)
+export function useDevtoolsComponentState(
+  state: Record<string, object | ComponentState>,
+  options?: DevtoolsComponentStateOptions
+): void;
 
 // @public (undocumented)
 export function useDevtoolsInspector(
