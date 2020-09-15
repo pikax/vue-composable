@@ -1,3 +1,9 @@
+# [1.0.0-beta.10](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.8...v1.0.0-beta.10) (2020-09-15)
+
+### Features
+
+- **devtools:** add `useDevtoolsComponentState` ([#570](https://github.com/pikax/vue-composable/issues/570)) ([aff632e](https://github.com/pikax/vue-composable/commit/aff632eb9297c2207367d307a2aae99b86f615d6))
+
 # [1.0.0-beta.8](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2020-09-14)
 
 ### Bug Fixes

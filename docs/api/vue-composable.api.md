@@ -1373,7 +1373,10 @@ export function useDevtoolsComponentState(
 ): void;
 
 // @public (undocumented)
-export function useDevtoolsComponentState(state: ComponentState[]): void;
+export function useDevtoolsComponentState(
+  state: ComponentState[],
+  options?: Omit<DevtoolsComponentStateOptions, "type">
+): void;
 
 // @public (undocumented)
 export function useDevtoolsComponentState(
