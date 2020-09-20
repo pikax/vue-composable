@@ -9,9 +9,10 @@ export default function useMouseDistanceFromElement(
   let remove: RemoveEventFunction = NO_OP;
 
   if (isClient) {
-    const debounce = 10;
+    // todo pass as option
+    const debounce = 0;
     const { mouseX, mouseY, remove: removeMouseEvent } = useOnMouseMove(
-      element,
+      window,
       debounce
     );
 
