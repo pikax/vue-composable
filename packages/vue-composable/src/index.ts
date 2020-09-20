@@ -16,6 +16,7 @@ export * from "./meta";
 export * from "./ssr";
 export * from "./state";
 export * from "./devtools";
+export * from "./dom";
 
 export const VERSION = __VERSION__;
 // istanbul ignore next
