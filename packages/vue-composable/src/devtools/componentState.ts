@@ -1,4 +1,4 @@
-import { ComponentState, InspectedComponentData } from "@vue/devtools-api";
+import type { ComponentState, InspectedComponentData } from "@vue/devtools-api";
 import { Context } from "vm";
 import { getCurrentInstance } from "../api";
 import { isArray, isFunction, isObject, unwrap } from "../utils";
