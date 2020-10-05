@@ -62,7 +62,7 @@
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.2",
     "@vue/compiler-sfc": "^3.0.0",
-    "@vue/composition-api": "^1.0.0-beta.14",
+    "@vue/composition-api": "^1.0.0-beta.15",
     "@vue/reactivity": "^3.0.0",
     "@vue/runtime-core": "^3.0.0",
     "@vue/runtime-dom": "^3.0.0",
