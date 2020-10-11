@@ -12,10 +12,12 @@ import { useOnMouseMove } from "vue-composable";
 const { mouseX, mouseY } = useOnMouseMove();
 ```
 
-| State  | Type     | Description      |
-| ------ | -------- | ---------------- |
-| mouseX | `Number` | Mouse X position |
-| mouseY | `Number` | Mouse Y position |
+| State  | Type     | Description                                                                          |
+| ------ | -------- | ------------------------------------------------------------------------------------ |
+| mouseX | `Number` | Mouse X position                                                                     |
+| mouseY | `Number` | Mouse Y position                                                                     |
+| pageX  | `Number` | [Page X](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/pageX) position |
+| pageY  | `Number` | [Page Y](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/pageY) position |
 
 ## Methods
 
@@ -43,6 +45,8 @@ const { remove } = useOnMouseMove();
     Mouse Move
     <p>x: {{ mouseX }}</p>
     <p>y: {{ mouseY }}</p>
+    <p>pageX: {{ pageX }}</p>
+    <p>pageY: {{ pageY }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -57,15 +61,17 @@ export default {
   setup(_) {
     const elref = ref(null);
 
-    const { mouseX, mouseY, remove } = useMouseMove(elref);
+    const { mouseX, mouseY, pageX, pageY, remove } = useMouseMove(elref);
 
     return {
       elref,
       remove,
       mouseX,
-      mouseY
+      mouseY,
+      pageX,
+      pageY,
     };
-  }
+  },
 };
 </script>
 ```
