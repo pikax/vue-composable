@@ -1,1 +1,1 @@
-export * from "./useMouseDistanceFromElement";
+export * from "./mouseDistanceFromElement";
