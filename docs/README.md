@@ -53,6 +53,10 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Scroll](composable/event/onScroll) - Attach `scroll` listener to a DOM element
 - [onOutsidePress](composable/event/onOutsidePress) - Execute callback when click is outside of element
 
+### Dom
+
+- [Mouse distance from Element](https://pikax.me/vue-composable/composable/dom/mouseDistanceFromElement) - Distance in pixels from an element center
+
 ### Date
 
 - [useNow](composable/date/now) : Return reactive custom timer with specified refresh rate
@@ -172,12 +176,12 @@ export default {
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
       array,
       {
-        pageSize: 3
+        pageSize: 3,
       }
     );
 
     return { result, next, prev, currentPage, lastPage };
-  }
+  },
 };
 </script>
 ```
