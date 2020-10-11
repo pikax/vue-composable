@@ -7,12 +7,12 @@
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 [![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
-<center>Out-of-the-box ready to use composables</center>
+<p align="center">Out-of-the-box ready to use composables</p>
 
 - **🌴 TreeShakable**
 - **🧙‍♂️ Fully Typescript**
 - **💚 Vue 3 and 2 support**
-- **🔨Vue Devtools support**
+- **🔨 Vue Devtools support**
 
 ## Introduction
 
