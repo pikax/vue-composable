@@ -7,8 +7,8 @@ import { nextTick } from "../utils";
 describe("useMouseDistanceFromElement", () => {
   const useOnMouseMoveMock: jest.Mock<typeof useOnMouseMove> = useOnMouseMove as any;
 
-  const mouseXMock = ref(100);
-  const mouseYMock = ref(0);
+  const pageXMock = ref(100);
+  const pageYMock = ref(0);
   const removeMock = jest.fn();
 
   const mockElement = ref({
@@ -23,8 +23,8 @@ describe("useMouseDistanceFromElement", () => {
   beforeEach(() => {
     useOnMouseMoveMock.mockClear();
     useOnMouseMoveMock.mockReturnValue({
-      mouseX: mouseXMock,
-      mouseY: mouseYMock,
+      pageX: pageXMock,
+      pageY: pageYMock,
       remove: removeMock,
     } as any);
 
@@ -66,8 +66,8 @@ describe("useMouseDistanceFromElement", () => {
     beforeEach(() => {
       useOnMouseMoveMock.mockClear();
       useOnMouseMoveMock.mockReturnValue({
-        mouseX: mouseXMock,
-        mouseY: mouseYMock,
+        pageX: pageXMock,
+        pageY: pageYMock,
         remove: removeMock,
       } as any);
 
@@ -81,14 +81,14 @@ describe("useMouseDistanceFromElement", () => {
 
     test("mouseX", async () => {
       mockElement.value.offsetTop = 0;
-      mouseYMock.value = 5;
-      mouseXMock.value = 0;
+      pageYMock.value = 5;
+      pageXMock.value = 0;
 
       const { distance } = useMouseDistanceFromElement(element);
 
       expect(distance.value).toBe(105);
 
-      mouseXMock.value += 5;
+      pageXMock.value += 5;
 
       await nextTick();
       expect(distance.value).toBe(100);
@@ -96,14 +96,14 @@ describe("useMouseDistanceFromElement", () => {
 
     test("mouseY", async () => {
       mockElement.value.offsetLeft = 0;
-      mouseYMock.value = 0;
-      mouseXMock.value = 5;
+      pageYMock.value = 0;
+      pageXMock.value = 5;
 
       const { distance } = useMouseDistanceFromElement(element);
 
       expect(distance.value).toBe(105);
 
-      mouseYMock.value += 5;
+      pageYMock.value += 5;
 
       await nextTick();
       expect(distance.value).toBe(100);
@@ -111,8 +111,8 @@ describe("useMouseDistanceFromElement", () => {
 
     test("element position", async () => {
       mockElement.value.offsetLeft = 0;
-      mouseYMock.value = 0;
-      mouseXMock.value = 5;
+      pageYMock.value = 0;
+      pageXMock.value = 5;
 
       const { distance } = useMouseDistanceFromElement(element);
 
@@ -126,8 +126,8 @@ describe("useMouseDistanceFromElement", () => {
 
     test("element", async () => {
       mockElement.value.offsetLeft = 0;
-      mouseYMock.value = 0;
-      mouseXMock.value = 5;
+      pageYMock.value = 0;
+      pageXMock.value = 5;
 
       const { distance } = useMouseDistanceFromElement(element);
 
