@@ -39,7 +39,7 @@ export function useMouseDistanceFromElement(
 
   if (isClient) {
     // @ts-ignore
-    const { mouseX, mouseY, remove: removeMouseEvent } = useOnMouseMove(
+    const { pageX, pageY, remove: removeMouseEvent } = useOnMouseMove(
       window,
       options,
       wait
@@ -51,8 +51,8 @@ export function useMouseDistanceFromElement(
 
       return Math.floor(
         Math.sqrt(
-          Math.pow(mouseX.value - (elem.offsetLeft + elem.clientWidth / 2), 2) +
-            Math.pow(mouseY.value - (elem.offsetTop + elem.clientHeight / 2), 2)
+          Math.pow(pageX.value - (elem.offsetLeft + elem.clientWidth / 2), 2) +
+            Math.pow(pageY.value - (elem.offsetTop + elem.clientHeight / 2), 2)
         )
       );
     });
