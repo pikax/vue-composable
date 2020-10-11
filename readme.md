@@ -9,10 +9,10 @@
 
 <center>Out-of-the-box ready to use composables</center>
 
-- ### **TreeShakable**
-- ### **Fully Typescript**
-- ### **Works with vue 3 and 2**
-- ### **Vue Devtools support**
+- **🌴 TreeShakable**
+- **🧙‍♂️ Fully Typescript**
+- **💚 Vue 3 and 2 support**
+- **🔨Vue Devtools support**
 
 ## Introduction
 
