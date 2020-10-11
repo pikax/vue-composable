@@ -3,8 +3,6 @@
     Mouse Move
     <p>x: {{ mouseX }}</p>
     <p>y: {{ mouseY }}</p>
-    <p>pageX: {{ pageX }}</p>
-    <p>pageY: {{ pageY }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -19,15 +17,13 @@ export default {
   setup(_) {
     const elref = ref(null);
 
-    const { mouseX, mouseY, pageX, pageY, remove } = useMouseMove(elref);
+    const { mouseX, mouseY, remove } = useMouseMove(elref);
 
     return {
       elref,
       remove,
       mouseX,
       mouseY,
-      pageX,
-      pageY,
     };
   },
 };
