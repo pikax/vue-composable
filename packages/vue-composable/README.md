@@ -52,6 +52,10 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
 - [onOutsidePress](https://pikax.me/vue-composable/composable/event/onOutsidePress) - Execute callback when click is outside of element
 
+### Dom
+
+- [Mouse distance from Element](https://pikax.me/vue-composable/composable/dom/mouseDistanceFromElement) - Distance in pixels from an element center
+
 ### Date
 
 - [useNow](https://pikax.me/vue-composable/composable/date/now) : Return reactive custom timer with specified refresh rate
