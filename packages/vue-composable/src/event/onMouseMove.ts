@@ -6,6 +6,8 @@ import { useDebounce } from "../debounce";
 export interface MouseMoveResult {
   mouseX: Ref<number>;
   mouseY: Ref<number>;
+  pageX: Ref<number>;
+  pageY: Ref<number>;
   remove: RemoveEventFunction;
 }
 
@@ -43,10 +45,14 @@ export function useOnMouseMove(
 ): MouseMoveResult {
   const mouseX = ref(0);
   const mouseY = ref(0);
+  const pageX = ref(0);
+  const pageY = ref(0);
 
   let handler = (ev: MouseEvent) => {
     mouseX.value = ev.x;
     mouseY.value = ev.y;
+    pageX.value = ev.pageX;
+    pageY.value = ev.pageY;
   };
 
   const [eventOptions, ms] = isNumber(options)
@@ -62,7 +68,9 @@ export function useOnMouseMove(
   return {
     mouseX,
     mouseY,
+    pageX,
+    pageY,
 
-    remove
+    remove,
   };
 }

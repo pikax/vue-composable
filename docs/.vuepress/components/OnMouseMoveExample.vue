@@ -3,6 +3,8 @@
     Mouse Move
     <p>x: {{ mouseX }}</p>
     <p>y: {{ mouseY }}</p>
+    <p>pageX: {{ pageX }}</p>
+    <p>pageY: {{ pageY }}</p>
 
     <button @click="remove">remove</button>
   </div>
@@ -10,21 +12,23 @@
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useOnMouseMove } from "vue-composable";
+import { useMouseMove } from "vue-composable";
 
 export default {
   name: "on-mouse-move-example",
   setup(_) {
     const elref = ref(null);
 
-    const { mouseX, mouseY, remove } = useOnMouseMove(elref);
+    const { mouseX, mouseY, pageX, pageY, remove } = useMouseMove(elref);
 
     return {
       elref,
       remove,
       mouseX,
-      mouseY
+      mouseY,
+      pageX,
+      pageY,
     };
-  }
+  },
 };
 </script>
