@@ -7,19 +7,16 @@
 [![npm version](https://badge.fury.io/js/vue-composable.svg)](https://badge.fury.io/js/vue-composable)
 [![bundle size](https://badgen.net/bundlephobia/minzip/vue-composable)](https://bundlephobia.com/result?p=vue-composable)
 
+<p align="center">Out-of-the-box ready to use composables</p>
+
+- **🌴 TreeShakable**
+- **🧙‍♂️ Fully Typescript**
+- **💚 Vue 3 and 2 support**
+- **🔨 Vue Devtools support**
+
 ## Introduction
 
-`vue-composable` is out-of-box ready to use [composition-api](https://github.com/vuejs/composition-api) generic components.
-
-100% typescript based composable components and full type support out-of-box.
-
-Built for [vue-next](https://github.com/vuejs/vue-next) and [composition-api](https://github.com/vuejs/composition-api)
-
 This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code.
-
-# Vue 3
-
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported.
 
 ## Installing
 
