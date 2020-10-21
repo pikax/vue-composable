@@ -1,6 +1,7 @@
 import { Ref, ref, watch } from "../api";
 import { wrap, isString, isClient } from "../utils";
 import { debounce } from "../debounce";
+import { StorageSerializer } from "../serializer/serializer";
 
 type WebStorageType = "localStorage" | "sessionStorage";
 const STORAGE_TEST_KEY = __DEV__ ? "__storage_test__" : ":$";
@@ -36,11 +37,6 @@ export function storageAvailable(storage?: Storage) {
   } catch (e) {
     return isQuotaExceededError(e, storage);
   }
-}
-
-export interface StorageSerializer<T = any> {
-  stringify(item: T): string;
-  parse(data: string): T;
 }
 
 export interface WebStorage {
@@ -109,7 +105,7 @@ export function useWebStorage(
     storageMap = new Map();
 
     if (isClient) {
-      window.addEventListener("storage", e => {
+      window.addEventListener("storage", (e) => {
         if (e.newValue === e.oldValue) {
           return;
         }
@@ -207,7 +203,7 @@ export function useWebStorage(
                   new StorageEvent(key, {
                     newValue: data,
                     oldValue,
-                    storageArea: storage
+                    storageArea: storage,
                   })
                 );
               }
@@ -221,12 +217,12 @@ export function useWebStorage(
           // @ts-ignore
           const stop = watch(
             reference,
-            debounce(r => {
+            debounce((r) => {
               save(k, r);
             }, ms),
             {
               immediate: false,
-              deep: true
+              deep: true,
             }
           );
 
@@ -239,7 +235,7 @@ export function useWebStorage(
           if (r) {
             r.value = safeParse(serializer, data);
           }
-        }
+        },
       } as WebStorage;
 
       storageMap.set(type, store);
@@ -256,6 +252,6 @@ export function useWebStorage(
 
     quotaError,
     store,
-    remove
+    remove,
   };
 }
