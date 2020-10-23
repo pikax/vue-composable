@@ -26,7 +26,7 @@ describe("worker function SSR", () => {
       template: `<comp1/>`,
       setup() {
         if (__VUE_2__) {
-          provideSSRTitle(app);
+          provideSSRTitle({ provide });
         }
         onUnmounted(() => {
           lastTitle = useSSRTitle();
