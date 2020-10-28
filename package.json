@@ -89,7 +89,7 @@
     "rollup": "^2.32.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.28.0",
-    "ts-jest": "^26.4.2",
+    "ts-jest": "^26.4.3",
     "tsd": "^0.13.1",
     "typescript": "^4.0.3",
     "vue": "^2.6.12",
