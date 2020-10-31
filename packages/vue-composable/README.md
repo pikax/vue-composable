@@ -81,6 +81,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 - [interval](https://pikax.me/vue-composable/composable/misc/interval) - self-remove `setInterval` on unmount
 - [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) - `lock-scroll` component
+- [refDebounced](https://pikax.me/vue-composable/composable/misc/refDebounced) - debounces the update value of a `ref`
 
 ### Storage
 

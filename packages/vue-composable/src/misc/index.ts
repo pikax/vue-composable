@@ -4,4 +4,4 @@ export * from "./lockScroll";
 export * from "./vmodel";
 export * from "./injectFactory";
 export * from "./interval";
-export * from "./useRefDebounced";
+export * from "./refDebounced";
