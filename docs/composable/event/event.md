@@ -6,12 +6,12 @@ Base composable used in the other element composables
 
 ## Methods
 
-The `useEvent` function exposes the following methods:
+The `useEvent` function returns a `remove` function
 
 ```js
 import { useEvent } from "vue-composable";
 
-const { remove } = useEvent(element, name, listener);
+const remove = useEvent(element, name, listener);
 ```
 
 ## Example
@@ -41,9 +41,9 @@ export default {
     const elref = ref(null);
     const state = reactive({
       x: 0,
-      y: 0
+      y: 0,
     });
-    const remove = useEvent(elref, "mousemove", e => {
+    const remove = useEvent(elref, "mousemove", (e) => {
       state.x = e.x;
       state.y = e.y;
     });
@@ -51,9 +51,9 @@ export default {
     return {
       elref,
       remove,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
 ```
