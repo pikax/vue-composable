@@ -27,8 +27,11 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test
-      - name: Publish coverage to coveralls
-        run: yarn coveralls < coverage/lcov.info
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   vue:
     runs-on: [ubuntu-latest]
     strategy:
