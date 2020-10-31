@@ -5,10 +5,10 @@
 ## Parameters
 
 ```js
-import { useRefDebounced } from "vue-composable";
+import { refDebounced } from "vue-composable";
 
-useRefDebounced(delay);
-useRefDebounced(value, delay);
+refDebounced(delay);
+refDebounced(value, delay);
 ```
 
 | Parameters | Type     | Required | Default     | Description    |
@@ -18,12 +18,12 @@ useRefDebounced(value, delay);
 
 ## State
 
-The `useRefDebounced` function retuns a `ref`:
+The `refDebounced` function retuns a `ref`:
 
 ```js
-import { useRefDebounced } from "vue-composable";
+import { refDebounced } from "vue-composable";
 
-const debouncedValue = useRefDebounced();
+const debouncedValue = refDebounced();
 ```
 
 | State          | Type     | Description     |

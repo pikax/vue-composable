@@ -1,4 +1,4 @@
-import { useRefDebounced } from "../../src";
+import { refDebounced } from "../../src";
 
 describe("refDebounced", () => {
   beforeAll(() => {
@@ -8,7 +8,7 @@ describe("refDebounced", () => {
     jest.useRealTimers();
   });
   it("should work", () => {
-    const r = useRefDebounced("a", 1);
+    const r = refDebounced("a", 1);
 
     expect(r.value).toBe("a");
 
@@ -22,7 +22,7 @@ describe("refDebounced", () => {
   });
 
   it("should allow use only a delay", () => {
-    const r = useRefDebounced(1);
+    const r = refDebounced(1);
     expect(r.value).toBe(undefined);
 
     r.value = 1;
