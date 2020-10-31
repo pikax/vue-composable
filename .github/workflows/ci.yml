@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  vue-coverage:
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Test
+        run: yarn test
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  vue:
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Test
+        run: yarn test
+  vue-2:
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:vue2
+      - name: Test
+        run: yarn test:vue2

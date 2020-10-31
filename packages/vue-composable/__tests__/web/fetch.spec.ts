@@ -258,7 +258,11 @@ describe("fetch", () => {
       expect(x).toBeDefined();
       expect(x.signal).toBeDefined();
 
-      const r = await Promise.race([promisedTimeout(5000)]);
+      const abortPromise = new Promise((res, rej) => {
+        x.signal!.onabort = rej;
+      });
+
+      const r = await Promise.race([abortPromise, promisedTimeout(5000)]);
       return r;
     });
 
