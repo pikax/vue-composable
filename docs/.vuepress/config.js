@@ -147,6 +147,7 @@ module.exports = {
             ["composable/misc/vmodel", "vModel"],
             ["composable/misc/injectFactory", "injectFactory"],
             ["composable/misc/lockScroll", "lockScroll"],
+            ["composable/misc/refDebounced", "refDebounced"],
           ],
         },
         {

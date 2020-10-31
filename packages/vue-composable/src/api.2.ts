@@ -21,6 +21,7 @@ export {
   ComputedRef,
   toRaw,
   UnwrapRef, // Plugin,
+  customRef,
 } from "@vue/composition-api";
 export { VueConstructor as App } from "vue";
 

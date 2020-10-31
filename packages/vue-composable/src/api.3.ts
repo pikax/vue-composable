@@ -25,6 +25,7 @@ export {
   readonly,
   toRaw,
   DeepReadonly,
+  customRef,
 } from "@vue/runtime-core";
 
 // istanbul ignore next
