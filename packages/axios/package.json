@@ -49,11 +49,11 @@
   },
   "peerDependencies2": {
     "@vue/composition-api": "^1.0.0-beta.14",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   },
   "peerDependencies3": {
     "@vue/runtime-core": "^3.0.0",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
@@ -63,6 +63,6 @@
   },
   "peerDependencies": {
     "@vue/runtime-core": "^3.0.0",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   }
 }
