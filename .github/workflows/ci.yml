@@ -4,13 +4,9 @@ on:
   pull_request:
     branches:
       - master
-      except:
-        - gh-pages
   push:
     branches:
       - master
-      except:
-        - gh-pages
 
 jobs: 
   vue: 
