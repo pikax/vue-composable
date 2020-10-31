@@ -1,3 +1,11 @@
+# [1.0.0-beta.12](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2020-10-31)
+
+### Features
+
+- add `useRefDebounced` ([#579](https://github.com/pikax/vue-composable/issues/579)) ([42c027a](https://github.com/pikax/vue-composable/commit/42c027ab5cba7f2c27fc3d979287f10b7fb352b0))
+- **injectFactory:** use `inject` with treatDefaultAsFactory: true ([2b378c0](https://github.com/pikax/vue-composable/commit/2b378c0c11d4c1afadc69c7586fd9b09dd4be1d8))
+- **onScroll:** add `scrollBy` and `scrollIntoView` methods ([3f6e559](https://github.com/pikax/vue-composable/commit/3f6e559e5b21751d391691ee61c3af1f434e561e)), closes [#640](https://github.com/pikax/vue-composable/issues/640)
+
 # [1.0.0-beta.11](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2020-10-11)
 
 ### Features
