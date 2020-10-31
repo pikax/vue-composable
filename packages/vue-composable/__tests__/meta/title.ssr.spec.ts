@@ -1,7 +1,7 @@
 jest.mock("../../src/utils", () => ({
   //@ts-ignore
   ...jest.requireActual("../../src/utils"),
-  isClient: false
+  isClient: false,
 }));
 import { useTitle, provideSSRTitle, useSSRTitle } from "../../src/";
 import { createVue } from "../utils";
@@ -17,22 +17,26 @@ describe("worker function SSR", () => {
       template: "<p></p>",
       setup() {
         title = useTitle("ssr");
-      }
+      },
     };
-    const { mount, destroy } = createVue({
+    const { app, mount, destroy } = createVue({
       components: {
-        comp1
+        comp1,
       },
       template: `<comp1/>`,
       setup() {
-        // faking app
-        provideSSRTitle({ provide });
-
+        if (__VUE_2__) {
+          provideSSRTitle({ provide });
+        }
         onUnmounted(() => {
           lastTitle = useSSRTitle();
         });
-      }
+      },
     });
+
+    if (!__VUE_2__) {
+      provideSSRTitle(app);
+    }
 
     mount();
 
@@ -58,7 +62,7 @@ describe("worker function SSR", () => {
     createVue({
       setup() {
         title = useSSRTitle("test");
-      }
+      },
     }).mount();
 
     expect(title.value).toBe("test");
@@ -77,18 +81,18 @@ describe("worker function SSR", () => {
       template: "<p></p>",
       setup() {
         comp1TitleRef = useTitle();
-      }
+      },
     };
 
     const app = createVue({
       components: {
-        comp1
+        comp1,
       },
       template: `<comp1></comp1>`,
       setup() {
         // faking app
         provideSSRTitle({ provide }, titleRef);
-      }
+      },
     });
 
     app.mount();

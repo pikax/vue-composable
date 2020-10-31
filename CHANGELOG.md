@@ -1,3 +1,11 @@
+# [1.0.0-beta.11](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2020-10-11)
+
+### Features
+
+- add `useMouseDistanceFromElement` ([#578](https://github.com/pikax/vue-composable/issues/578)) ([a09cb69](https://github.com/pikax/vue-composable/commit/a09cb69d1b847f5824ad395309867c41205bd5b3))
+- **onMouseMove:** add `pageX` and `pageY` properties ([ed4788d](https://github.com/pikax/vue-composable/commit/ed4788d99376b550cd2e17578895ecb9637a5c91))
+- remove devtools code from production build ([916187e](https://github.com/pikax/vue-composable/commit/916187efc823032afb6bea31b0123b034b0b8ce5))
+
 # [1.0.0-beta.10](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.8...v1.0.0-beta.10) (2020-09-15)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/axios",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "description": "@vue-composable/axios",
   "main": "index.js",
   "module": "dist/axios.esm-bundler.js",
@@ -45,24 +45,24 @@
     "vue-composable-axios-fix": "./scripts/postinstall.js"
   },
   "dependencies": {
-    "vue-composable": "^1.0.0-beta.10"
+    "vue-composable": "^1.0.0-beta.11"
   },
   "peerDependencies2": {
     "@vue/composition-api": "^1.0.0-beta.14",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   },
   "peerDependencies3": {
     "@vue/runtime-core": "^3.0.0",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.8",
-    "@vue/runtime-core": "^3.0.0",
-    "typescript": "^4.0.3"
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.6",
+    "@vue/runtime-core": "^3.0.2",
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "@vue/runtime-core": "^3.0.0",
-    "axios": "^0.20.0"
+    "axios": "^0.22.0"
   }
 }

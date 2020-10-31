@@ -1,7 +1,7 @@
 module.exports = {
   define: {
     __VUE_2__: true,
-    "process.env.SSR": true
+    "process.env.SSR": true,
   },
   title: "vue-composable",
   description:
@@ -12,9 +12,9 @@ module.exports = {
       "@vuepress/pwa",
       {
         serviceWorker: true,
-        updatePopup: true
-      }
-    ]
+        updatePopup: true,
+      },
+    ],
   ],
   base: process.env.DOCS_BASE || "",
   head: [
@@ -22,20 +22,20 @@ module.exports = {
     ["meta", { name: "msapplication-TileColor", content: "#ffffff" }],
     [
       "meta",
-      { name: "msapplication-TileImage", content: "/img/ms-icon-144x144.png" }
+      { name: "msapplication-TileImage", content: "/img/ms-icon-144x144.png" },
     ],
     ["meta", { name: "theme-color", content: "#41b883" }],
     [
       "meta",
-      { name: "viewport", content: "width=device-width, initial-scale=1" }
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
     ],
     ["meta", { property: "og:image", content: "/img/favicon-32x32.png" }],
     [
       "link",
       {
         rel: "apple-touch-icon",
-        href: "/img/apple-touch-icon.png"
-      }
+        href: "/img/apple-touch-icon.png",
+      },
     ],
     [
       "link",
@@ -43,8 +43,8 @@ module.exports = {
         rel: "icon",
         type: "image/png",
         sizes: "192x192",
-        href: "/img/android-icon-192x192.png"
-      }
+        href: "/img/android-icon-192x192.png",
+      },
     ],
     [
       "link",
@@ -52,8 +52,8 @@ module.exports = {
         rel: "icon",
         type: "image/png",
         sizes: "32x32",
-        href: "/img/favicon-32x32.png"
-      }
+        href: "/img/favicon-32x32.png",
+      },
     ],
     [
       "link",
@@ -61,16 +61,16 @@ module.exports = {
         rel: "icon",
         type: "image/png",
         sizes: "16x16",
-        href: "/img/favicon-16x16.png"
-      }
-    ]
+        href: "/img/favicon-16x16.png",
+      },
+    ],
   ],
   locales: {
     "/": {
       lang: "en-US",
       title: "vue-composable",
-      description: "Vue composition-api composable components"
-    }
+      description: "Vue composition-api composable components",
+    },
   },
   themeConfig: {
     repo: "pikax/vue-composable",
@@ -92,9 +92,21 @@ module.exports = {
             ["composable/event/onMouseMove", "onMouseMove"],
             ["composable/event/onResize", "onResize"],
             ["composable/event/onScroll", "onScroll"],
-            ["composable/event/onOutsidePress", "onOutsidePress"]
-          ]
+            ["composable/event/onOutsidePress", "onOutsidePress"],
+          ],
         },
+        {
+          title: "DOM",
+          collapsable: false,
+          sidebarDepth: 1,
+          children: [
+            [
+              "composable/dom/mouseDistanceFromElement",
+              "Mouse distance from Element",
+            ],
+          ],
+        },
+
         {
           title: "Date",
           sidebarDepth: 1,
@@ -102,8 +114,8 @@ module.exports = {
           children: [
             ["composable/date/now", "now"],
             ["composable/date/dateNow", "dateNow"],
-            ["composable/date/performanceNow", "performanceNow"]
-          ]
+            ["composable/date/performanceNow", "performanceNow"],
+          ],
         },
         {
           title: "Format",
@@ -111,8 +123,8 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/format/format", "format"],
-            ["composable/format/path", "path"]
-          ]
+            ["composable/format/path", "path"],
+          ],
         },
 
         {
@@ -123,8 +135,8 @@ module.exports = {
             ["composable/breakpoint/matchMedia", "matchMedia"],
             ["composable/breakpoint/breakpoint", "breakpoint"],
             ["composable/breakpoint/breakpointChrome", "Chrome"],
-            ["composable/breakpoint/breakpointTailwindCSS", "TailwindCSS"]
-          ]
+            ["composable/breakpoint/breakpointTailwindCSS", "TailwindCSS"],
+          ],
         },
         {
           title: "Misc",
@@ -134,8 +146,8 @@ module.exports = {
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
             ["composable/misc/injectFactory", "injectFactory"],
-            ["composable/misc/lockScroll", "lockScroll"]
-          ]
+            ["composable/misc/lockScroll", "lockScroll"],
+          ],
         },
         {
           title: "Storage",
@@ -145,8 +157,8 @@ module.exports = {
             ["composable/storage/webStorage", "WebStorage"],
             ["composable/storage/storage", "Storage"],
             ["composable/storage/localStorage", "localStorage"],
-            ["composable/storage/sessionStorage", "sessionStorage"]
-          ]
+            ["composable/storage/sessionStorage", "sessionStorage"],
+          ],
         },
         {
           title: "Pagination",
@@ -154,8 +166,8 @@ module.exports = {
           sidebarDepth: 1,
           children: [
             ["composable/pagination/pagination", "pagination"],
-            ["composable/pagination/arrayPagination", "arrayPagination"]
-          ]
+            ["composable/pagination/arrayPagination", "arrayPagination"],
+          ],
         },
         {
           title: "Promise",
@@ -165,8 +177,8 @@ module.exports = {
             ["composable/promise/promise", "promise"],
             ["composable/promise/promiseLazy", "Lazy Promise"],
             ["composable/promise/cancellablePromise", "cancellablePromise"],
-            ["composable/promise/retry", "retry"]
-          ]
+            ["composable/promise/retry", "retry"],
+          ],
         },
         {
           title: "Intl",
@@ -175,8 +187,8 @@ module.exports = {
           children: [
             ["composable/Intl/dateTimeFormat", "dateTimeFormat"],
             ["composable/Intl/numberFormat", "numberFormat"],
-            ["composable/Intl/currencyFormat", "currencyFormat"]
-          ]
+            ["composable/Intl/currencyFormat", "currencyFormat"],
+          ],
         },
         {
           title: "Web",
@@ -195,26 +207,26 @@ module.exports = {
             ["composable/web/cssVariables", "CSS variables"],
             ["composable/web/worker", "WebWorker API"],
             ["composable/web/workerFunction", "WebWorker Function"],
-            ["composable/web/share", "WebShare API"]
-          ]
+            ["composable/web/share", "WebShare API"],
+          ],
         },
         {
           title: "Validation",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/validation/validation", "Validation"]]
+          children: [["composable/validation/validation", "Validation"]],
         },
         {
           title: "i18n",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/i18n/i18n", "i18n"]]
+          children: [["composable/i18n/i18n", "i18n"]],
         },
         {
           title: "meta",
           sidebarDepth: 1,
           collapsable: false,
-          children: [["composable/meta/title", "Title"]]
+          children: [["composable/meta/title", "Title"]],
         },
         {
           title: "state",
@@ -223,8 +235,8 @@ module.exports = {
           children: [
             ["composable/state/timeline", "Timeline"],
             ["composable/state/undo", "Undo"],
-            ["composable/state/valueSync", "ValueSync"]
-          ]
+            ["composable/state/valueSync", "ValueSync"],
+          ],
         },
         {
           title: "External",
@@ -232,10 +244,10 @@ module.exports = {
           collapsable: false,
           children: [
             ["composable/external/axios", "axios"],
-            ["composable/external/makeAxios", "makeAxios"]
-          ]
-        }
-      ]
+            ["composable/external/makeAxios", "makeAxios"],
+          ],
+        },
+      ],
     },
     locales: {
       "/": {
@@ -243,10 +255,10 @@ module.exports = {
         selectText: "Languages",
         editLinkText: "Help us improve this page!",
         nav: [
-          { text: "Composable", link: "/composable/" }
+          { text: "Composable", link: "/composable/" },
           // { text: "Examples", link: "/examples/" }
-        ]
-      }
-    }
-  }
+        ],
+      },
+    },
+  },
 };

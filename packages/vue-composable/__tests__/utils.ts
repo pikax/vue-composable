@@ -5,14 +5,14 @@ export { nextTick } from "@vue/runtime-dom";
 import {
   createApp,
   Component,
-  ComponentPublicInstance
+  ComponentPublicInstance,
 } from "@vue/runtime-dom";
 
 import { compile, CompilerOptions, CompilerError } from "@vue/compiler-dom";
 import {
   registerRuntimeCompiler,
   RenderFunction,
-  warn
+  warn,
 } from "@vue/runtime-dom";
 import { isString, NOOP, generateCodeFrame, extend } from "@vue/shared";
 import * as runtimeDom from "@vue/runtime-dom";
@@ -72,7 +72,7 @@ function compileToFunction(
             /* istanbul ignore next */
             throw err;
           }
-        }
+        },
       },
       options
     )
@@ -103,7 +103,7 @@ export const createVue = <
   const app = createApp(
     {
       template: `<div></div>`,
-      ...component
+      ...component,
     },
     props
   );
@@ -129,8 +129,9 @@ export const createVue = <
     throw err;
   };
   return {
+    app,
     el,
     mount,
-    destroy
+    destroy,
   };
 };

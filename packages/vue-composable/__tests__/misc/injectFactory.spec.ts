@@ -12,14 +12,14 @@ describe("injectFactory", () => {
       template: `<div/>`,
       setup() {
         injectFactory(key, fn);
-      }
+      },
     };
 
     createVue({
       components: {
-        comp
+        comp,
       },
-      template: `<comp/>`
+      template: `<comp/>`,
     }).mount();
 
     expect(fn).toHaveBeenCalledTimes(1);
@@ -34,20 +34,27 @@ describe("injectFactory", () => {
       template: `<div/>`,
       setup() {
         injectFactory(key, fn);
-      }
+      },
     };
 
-    createVue({
+    const { app, mount } = createVue({
       components: {
-        comp
+        comp,
       },
       template: `<comp/>`,
 
       setup() {
-        provide(key, 1);
+        if (__VUE_2__) {
+          provide(key, 1);
+        }
         injectFactory(key, fn);
-      }
-    }).mount();
+      },
+    });
+
+    if (!__VUE_2__) {
+      app.provide(key, 1);
+    }
+    mount();
 
     expect(fn).not.toHaveBeenCalled();
   });
