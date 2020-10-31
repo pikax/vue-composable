@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  vue + coverage:
+  vue-coverage:
     runs-on: [ubuntu-latest]
     strategy:
       matrix:
