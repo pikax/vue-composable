@@ -8,8 +8,8 @@ on:
     branches:
       - master
 
-jobs: 
-  vue: 
+jobs:
+  vue:
     runs-on: [ubuntu-latest]
     strategy:
       matrix:
@@ -20,14 +20,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2-beta
         with:
-          node-version: '14.14.0'
+          node-version: ${{ matrix.node-version }}
       - name: Install
         run: yarn install --frozen-lockfile
       - name: Build
         run: yarn build
       - name: Test
         run: yarn test
-  vue-2: 
+  vue-2:
     runs-on: [ubuntu-latest]
     strategy:
       matrix:
@@ -38,11 +38,28 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2-beta
         with:
-          node-version: '14.14.0'
+          node-version: ${{ matrix.node-version }}
       - name: Install
         run: yarn install --frozen-lockfile
       - name: Build
         run: yarn build:vue2
       - name: Test
         run: yarn test:vue2
-          
+  coverage:
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "14.14.0"
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Test
+        run: yarn test
+      - name: Publish coverage to coveralls
+        run: yarn coveralls < coverage/lcov.info
