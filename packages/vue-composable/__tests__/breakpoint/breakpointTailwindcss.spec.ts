@@ -4,7 +4,12 @@ jest.mock("../../src/api", () => ({
     ? jest.requireActual("../../src/api.2")
     : jest.requireActual("../../src/api.3")),
   provide: jest.fn(),
-  inject: jest.fn().mockImplementation((k, defaultValue) => defaultValue)
+  inject: jest.fn().mockImplementation((k, defaultValue, asFactory) => {
+    if (asFactory) {
+      return defaultValue();
+    }
+    return defaultValue;
+  }),
 }));
 
 jest.mock("../../src/breakpoint/breakpoint");
@@ -16,7 +21,7 @@ import {
   screenRangeToBreakpoint,
   screenToBreakpoint,
   setBreakpointTailwindCSS,
-  useBreakpointTailwindCSS
+  useBreakpointTailwindCSS,
 } from "../../src/breakpoint/breakpointTailwind";
 
 import { useBreakpoint } from "../../src/breakpoint/breakpoint";
@@ -26,7 +31,7 @@ describe("breakpointTailwindcss", () => {
   describe("setBreakpoint", () => {
     test("tailwind config", () => {
       const bk = {
-        a: 1
+        a: 1,
       };
       (useBreakpoint as jest.Mock).mockImplementationOnce(() => bk);
 
@@ -34,9 +39,9 @@ describe("breakpointTailwindcss", () => {
         setBreakpointTailwindCSS({
           theme: {
             screens: {
-              sm: 123
-            }
-          }
+              sm: 123,
+            },
+          },
         })
       ).toBe(bk);
 
@@ -46,12 +51,12 @@ describe("breakpointTailwindcss", () => {
 
     it("should use default breakpoints", () => {
       const bk = {
-        a: 1
+        a: 1,
       };
       (useBreakpoint as jest.Mock).mockImplementationOnce(() => bk);
       expect(
         setBreakpointTailwindCSS({
-          sm: 123
+          sm: 123,
         })
       ).toBe(bk);
 
@@ -61,7 +66,7 @@ describe("breakpointTailwindcss", () => {
 
     it("should inject", () => {
       const bk = {
-        a: 1
+        a: 1,
       };
       (inject as jest.Mock).mockImplementationOnce(() => bk);
 
@@ -77,7 +82,7 @@ describe("breakpointTailwindcss", () => {
 
     it("should setBreakpoint with config", () => {
       const bk = {
-        a: 1
+        a: 1,
       };
       (useBreakpoint as jest.Mock).mockImplementationOnce(() => bk);
 
@@ -85,9 +90,9 @@ describe("breakpointTailwindcss", () => {
         useBreakpointTailwindCSS({
           theme: {
             screens: {
-              sm: 123
-            }
-          }
+              sm: 123,
+            },
+          },
         })
       ).toBe(bk);
 
@@ -104,17 +109,17 @@ describe("breakpointTailwindcss", () => {
       expect(
         isTailwind({
           theme: {
-            screens: {}
-          }
+            screens: {},
+          },
         })
       ).toBe(true);
       expect(
         isTailwind({
           theme: {
             screens: {
-              myScreen: "sadd"
-            }
-          }
+              myScreen: "sadd",
+            },
+          },
         })
       ).toBe(true);
     });
@@ -123,15 +128,15 @@ describe("breakpointTailwindcss", () => {
       expect(isRawScreen(undefined)).toBe(false);
       expect(
         isRawScreen({
-          raw: "ddd"
+          raw: "ddd",
         })
       ).toBe(true);
 
       expect(
         isRawScreen({
           raw: {
-            ss: "1"
-          }
+            ss: "1",
+          },
         })
       ).toBe(false);
 
@@ -178,25 +183,25 @@ describe("breakpointTailwindcss", () => {
         screenToBreakpoint([
           { max: "12px" },
           { min: "12px" },
-          { max: "12px", min: "9em" }
+          { max: "12px", min: "9em" },
         ])
       ).toMatchObject([
         "(max-width: 12px)",
         "(min-width: 12px)",
-        "(max-width: 12px and min-width: 9em)"
+        "(max-width: 12px and min-width: 9em)",
       ]);
 
       const opts = [
         { raw: "raw stuff" },
         { max: "12px" },
         { min: "12px" },
-        { max: "12px", min: "9em" }
+        { max: "12px", min: "9em" },
       ];
       expect(screenToBreakpoint(opts[0])).toMatchObject([opts[0].raw]);
       expect(screenToBreakpoint(opts[1])).toMatchObject(["(max-width: 12px)"]);
       expect(screenToBreakpoint(opts[2])).toMatchObject(["(min-width: 12px)"]);
       expect(screenToBreakpoint(opts[3])).toMatchObject([
-        "(max-width: 12px and min-width: 9em)"
+        "(max-width: 12px and min-width: 9em)",
       ]);
 
       expect(screenToBreakpoint(42)).toMatchObject(["(min-width: 42px)"]);
