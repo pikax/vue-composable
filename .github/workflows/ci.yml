@@ -13,7 +13,7 @@ jobs:
     runs-on: [ubuntu-latest]
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -56,10 +56,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2-beta
         with:
-          node-version: "14.14.0"
+          node-version: "14.x"
       - name: Install
         run: yarn install --frozen-lockfile
       - name: Test
         run: yarn test
+      - name: Build
+        run: yarn build
       - name: Publish coverage to coveralls
         run: yarn coveralls < coverage/lcov.info
