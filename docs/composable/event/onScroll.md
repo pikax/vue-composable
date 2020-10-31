@@ -14,11 +14,11 @@ const scroll = useOnScroll(element, options?, wait?);
 
 ```
 
-| Parameters | Type                                | Required | Default           | Description                               |
-| ---------- | ----------------------------------- | -------- | ----------------- | ----------------------------------------- |
-| element    | `Ref<Element>|Element`              | `false`  | `window`          | DOM element used to track scroll position |
-| options    | `boolean | AddEventListenerOptions` | `false`  | `{passive: true}` | Listener options                          |
-| wait       | `Number`                            | `false`  | `undefined`       | Debounce event in `ms`                    |
+| Parameters | Type          | Required                 | Default     | Description            |
+| ---------- | ------------- | ------------------------ | ----------- | ---------------------- |
+| element    | `Ref<Element> | Element`                 | `false`     | `window`               | DOM element used to track scroll position |
+| options    | `boolean      | AddEventListenerOptions` | `false`     | `{passive: true}`      | Listener options |
+| wait       | `Number`      | `false`                  | `undefined` | Debounce event in `ms` |
 
 ::: tip
 
@@ -51,12 +51,14 @@ import { useOnScroll } from "vue-composable";
 const { remove, scrollTo, scrollLeftTo, scrollTopTo } = useOnScroll();
 ```
 
-| Signature      | Description                                                                                            |
-| -------------- | ------------------------------------------------------------------------------------------------------ |
-| `remove`       | Manually removes the event listener                                                                    |
-| `scrollTo`     | Same as calling [element.scrollTo()](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo) |
-| `scrollLeftTo` | Calls scrollTo with left argument                                                                      |
-| `scrollTopTo`  | Calls scrollTo with top argument                                                                       |
+| Signature        | Description                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `remove`         | Manually removes the event listener                                                                                 |
+| `scrollTo`       | Same as calling [element.scrollTo()](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTo)             |
+| `scrollBy`       | Same as calling [element.scrollBy()](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollBy)             |
+| `scrollIntoView` | Same as calling [element.scrollIntoView()](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView) |
+| `scrollLeftTo`   | Calls scrollTo with left argument                                                                                   |
+| `scrollTopTo`    | Calls scrollTo with top argument                                                                                    |
 
 ## Example
 
@@ -94,9 +96,9 @@ export default {
       elref,
       scrollTop,
       scrollLeft,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 ```

@@ -12,7 +12,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     let use: ScrollResult | undefined = undefined;
@@ -21,14 +21,14 @@ describe("onScroll", () => {
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
-      }
+      },
     }).mount();
 
     expect(element.addEventListener).toHaveBeenCalled();
 
     expect(use).toMatchObject({
       scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      scrollLeft: { value: 0 },
     });
 
     (element as any).scrollTop = 50;
@@ -39,7 +39,7 @@ describe("onScroll", () => {
 
     expect(use).toMatchObject({
       scrollTop: { value: 50 },
-      scrollLeft: { value: 50 }
+      scrollLeft: { value: 50 },
     });
   });
 
@@ -49,7 +49,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any;
     let use: ScrollResult | undefined = undefined;
 
@@ -57,7 +57,7 @@ describe("onScroll", () => {
       template: "<div></div>",
       setup() {
         use = useOnScroll(element);
-      }
+      },
     }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
@@ -75,7 +75,7 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
@@ -85,7 +85,7 @@ describe("onScroll", () => {
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, wait);
-      }
+      },
     }).mount();
     expect(element.addEventListener).toHaveBeenCalled();
 
@@ -101,13 +101,13 @@ describe("onScroll", () => {
     // still waiting to set the values
     expect(use).toMatchObject({
       scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      scrollLeft: { value: 0 },
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
       scrollTop: { value: 19 },
-      scrollLeft: { value: 19 }
+      scrollLeft: { value: 19 },
     });
   });
 
@@ -117,17 +117,17 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any;
     const options = {
-      passive: true
+      passive: true,
     };
 
     createVue({
       template: "<div></div>",
       setup() {
         return useOnScroll(element, options);
-      }
+      },
     }).mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
@@ -145,20 +145,20 @@ describe("onScroll", () => {
       removeEventListener: jest.fn(),
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any;
     let use: ScrollResult | undefined = undefined;
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
     const options = {
-      passive: true
+      passive: true,
     };
 
     createVue({
       template: "<div></div>",
       setup() {
         use = useOnScroll(element, options, wait);
-      }
+      },
     }).mount();
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
@@ -178,13 +178,13 @@ describe("onScroll", () => {
     // still waiting to set the values
     expect(use).toMatchObject({
       scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      scrollLeft: { value: 0 },
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
       scrollTop: { value: 19 },
-      scrollLeft: { value: 19 }
+      scrollLeft: { value: 19 },
     });
   });
 
@@ -192,7 +192,7 @@ describe("onScroll", () => {
     const element = ((window.document.scrollingElement as any) = ({
       scrollTop: 0,
       scrollLeft: 0,
-      tagName: "div"
+      tagName: "div",
     } as any) as Element);
 
     (window as any).addEventListener = jest
@@ -210,7 +210,7 @@ describe("onScroll", () => {
       template: "<div></div>",
       setup() {
         use = useOnScroll(wait);
-      }
+      },
     }).mount();
     expect(window.addEventListener).toHaveBeenCalled();
 
@@ -226,13 +226,55 @@ describe("onScroll", () => {
     // still waiting to set the values
     expect(use).toMatchObject({
       scrollTop: { value: 0 },
-      scrollLeft: { value: 0 }
+      scrollLeft: { value: 0 },
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
       scrollTop: { value: 19 },
-      scrollLeft: { value: 19 }
+      scrollLeft: { value: 19 },
+    });
+  });
+
+  describe("methods", () => {
+    const methods = ["scrollBy", "scrollTo", "scrollIntoView"];
+    const element = document.createElement("div");
+    methods.forEach((m) => {
+      // @ts-ignore
+      element[m] = jest.fn();
+    });
+
+    const prevMethods = {};
+
+    beforeEach(() => {
+      methods.forEach((m) => {
+        //@ts-ignore
+        element[m].mockClear();
+      });
+    });
+
+    afterAll(() => {});
+
+    afterEach(() => {
+      methods.forEach((m) => {
+        //@ts-ignore
+        window[m] = prevMethods[m];
+      });
+    });
+
+    test.each(methods)("call %s", (method) => {
+      const args = {};
+      const use = useOnScroll(element);
+      // @ts-ignore
+      use[method](args);
+      //@ts-ignore
+      expect(element[method]).toHaveBeenCalledTimes(1);
+    });
+
+    test.each(methods)("not fail if %s doesnt exist", (method) => {
+      const use = useOnScroll({});
+      // @ts-ignore
+      use[method]();
     });
   });
 });

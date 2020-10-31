@@ -7,19 +7,29 @@ import {
   PASSIVE_EV,
   isBoolean,
   isElement,
-  isClient
+  isClient,
 } from "../utils";
 import { useEvent, RemoveEventFunction } from "./event";
 import { useDebounce } from "../debounce";
+
+const SCROLL_METHODS = ["scrollBy", "scrollTo", "scrollIntoView"];
+interface ScrollMethods {
+  scrollBy: Element["scrollBy"];
+  scrollTo: Element["scrollTo"];
+  scrollIntoView: Element["scrollIntoView"];
+}
 
 export interface ScrollResult {
   scrollTop: Ref<number>;
   scrollLeft: Ref<number>;
   remove: RemoveEventFunction;
 
-  scrollTo: Element["scrollTo"];
   scrollTopTo: (y: number) => void;
   scrollLeftTo: (x: number) => void;
+
+  scrollTo: Element["scrollTo"];
+  scrollBy: Element["scrollBy"];
+  scrollIntoView: Element["scrollIntoView"];
 }
 
 export function useOnScroll(): ScrollResult;
@@ -81,13 +91,20 @@ export function useOnScroll(
     scrollLeft.value = scrollableElement.value!.scrollLeft;
   };
 
-  const scrollTo: Element["scrollTo"] = (...args: any) =>
-    scrollableElement.value &&
-    scrollableElement.value.scrollTo &&
-    scrollableElement.value.scrollTo.apply(scrollableElement.value, args);
+  const methods = SCROLL_METHODS.reduce((p, c) => {
+    //@ts-ignore
+    p[c] = (...args: any) =>
+      //@ts-ignore
+      scrollableElement.value &&
+      //@ts-ignore
+      scrollableElement.value[c] &&
+      //@ts-ignore
+      scrollableElement.value[c].apply(scrollableElement.value, args);
+    return p;
+  }, {}) as ScrollMethods;
 
-  const scrollTopTo = (top: number) => scrollTo({ top });
-  const scrollLeftTo = (left: number) => scrollTo({ left });
+  const scrollTopTo = (top: number) => methods.scrollTo({ top });
+  const scrollLeftTo = (left: number) => methods.scrollTo({ left });
 
   const [eventOptions, ms] =
     isNumber(el) || !el
@@ -113,10 +130,10 @@ export function useOnScroll(
     scrollTop,
     scrollLeft,
 
-    scrollTo,
-
     remove,
     scrollTopTo,
-    scrollLeftTo
+    scrollLeftTo,
+
+    ...methods,
   };
 }
