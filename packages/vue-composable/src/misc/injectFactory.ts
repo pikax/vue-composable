@@ -24,5 +24,5 @@ export function injectFactory<T>(
   key: InjectionKey<T> | string,
   defaultValueFactory: () => Promise<T> | T
 ): T {
-  return inject(key, defaultValueFactory, true) as T;
+  return inject<any>(key, defaultValueFactory, true) as T;
 }
