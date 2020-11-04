@@ -7,7 +7,7 @@ import {
   provide,
   computed,
   vueSet,
-  vueDelete
+  vueDelete,
 } from "../api";
 import {
   RefTyped,
@@ -16,7 +16,7 @@ import {
   isFunction,
   isBoolean,
   wrap,
-  unwrap
+  unwrap,
 } from "../utils";
 import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
@@ -172,7 +172,12 @@ type I18nExtractLocale<T> = T extends (...args: any[]) => any
 export function useI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+>(
+  definition: T
+): i18nResult<
+  keyof T["messages"],
+  I18nExtractLocale<T["messages"][T["locale"]]>
+>;
 /**
  * Inject i18n
  */
@@ -223,7 +228,7 @@ export function buildI18n<
 
     let m = isFunction(l) ? (l as Function)() : l;
     if (isPromise(m)) {
-      return m.then(x => (cache[locale] = wrap<i18n>(x)));
+      return m.then((x) => (cache[locale] = wrap<i18n>(x)));
     }
 
     // if it was function we don't keep track on that
@@ -249,7 +254,7 @@ export function buildI18n<
       localeMessages
     );
     if (isPromise(fallbackI18n)) {
-      fallbackI18n.then(x => {
+      fallbackI18n.then((x) => {
         fallback.value = x.value;
       });
       fallbackIsPromise = true;
@@ -263,7 +268,7 @@ export function buildI18n<
   const localeChangesCount = ref(0);
   watch(localeMessages, () => localeChangesCount.value++, {
     deep: true,
-    immediate: false
+    immediate: false,
   });
 
   watch(
@@ -286,7 +291,7 @@ export function buildI18n<
       }
     },
     {
-      immediate: !fallbackIsPromise
+      immediate: !fallbackIsPromise,
     }
   );
 
@@ -337,8 +342,8 @@ export function buildI18n<
       const nextLocale = [
         locale.value,
         fallback.value && definition.fallback,
-        ...locales.value
-      ].find(x => x && x !== l);
+        ...locales.value,
+      ].find((x) => x && x !== l);
 
       if (nextLocale) {
         if (l === definition.fallback) {
@@ -389,7 +394,7 @@ export function buildI18n<
     $ts,
 
     addLocale,
-    removeLocale
+    removeLocale,
   };
 }
 
