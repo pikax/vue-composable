@@ -1619,10 +1619,10 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/composition-api@^1.0.0-beta.18":
-  version "1.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.0.0-beta.18.tgz#9c91ed2fc297e643defee95f16c551d457384239"
-  integrity sha512-5Ins/G+un8rZoXRllMquvuihHYUMz7EKxgCPTvJiBRml0gRrOz2eRisQbjzj8fuTC6yeURjySpOKXdVkTV4HJA==
+"@vue/composition-api@^1.0.0-beta.19":
+  version "1.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.0.0-beta.19.tgz#54355c5b6143337aafb37b022b240c90c431571c"
+  integrity sha512-FYl3DofSJAKdLO2Ig18ITelcOAWc1CWwfgMrqh7op38aqR5RfcJ7RA3kiDu38iZB0r86dMxcaOHoszIGKpU98g==
   dependencies:
     tslib "^2.0.1"
 
