@@ -1155,20 +1155,20 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@microsoft/api-extractor-model@7.10.10":
-  version "7.10.10"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.10.10.tgz#d7d3e0b28319370c46eb5b30314e087bf95c9a45"
-  integrity sha512-Sy3kjAQARyW54YneYdf1c7vKZAQbFSZA1Px9TekkcKCOGER8h5trplTSCQWwTgWOKarQaNNSnlkHII0CNMoMjA==
+"@microsoft/api-extractor-model@7.11.0":
+  version "7.11.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.11.0.tgz#3413941d196927e0914133626394e0b229e00635"
+  integrity sha512-DV5rewugfqhdptob5X4Pd4VMPpzxDZTvPdziM6P5JMWGMn8tvF2PGd88nzsatbCXQXgkM8EQCYPMGDclZY39tQ==
   dependencies:
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.35.1"
 
-"@microsoft/api-extractor@^7.11.4":
-  version "7.11.4"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.11.4.tgz#265638db0edf3dc6a6bcc54566e561969d5e5f97"
-  integrity sha512-BRAB6IuwWgK7toDBgiaSkYb04dp3xbTOXdDvWUqcILvrzPF8WQHGPWFmmr5OLg2WknjiIE3TEKF9turfZcgcjw==
+"@microsoft/api-extractor@^7.11.5":
+  version "7.11.5"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.11.5.tgz#5824c4a9739fa40b21e49b7d3fb36735084769fd"
+  integrity sha512-m2JRenJ56MjPSqxDr9ytxxWXs5d6NT9PKlb8G8239VybEGNk+PWkQlm0usV88Lm+hFW1805KEOPcFAZhol/p9A==
   dependencies:
-    "@microsoft/api-extractor-model" "7.10.10"
+    "@microsoft/api-extractor-model" "7.11.0"
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.35.1"
     "@rushstack/rig-package" "0.2.8"
