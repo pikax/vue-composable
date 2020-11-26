@@ -60,7 +60,7 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-replace": "^2.3.4",
     "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.7",
+    "@types/node": "^14.14.10",
     "@vue/compiler-sfc": "^3.0.2",
     "@vue/composition-api": "^1.0.0-beta.19",
     "@vue/reactivity": "^3.0.2",
