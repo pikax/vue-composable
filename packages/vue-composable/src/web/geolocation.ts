@@ -17,10 +17,10 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
     options ? options.immediate === false : undefined
   );
 
-  const error = ref<PositionError | null>(null);
+  const error = ref<GeolocationPositionError | null>(null);
 
   const timestamp = ref<number | null>(null);
-  const coords = ref<Position["coords"] | null>(null);
+  const coords = ref<GeolocationPosition["coords"] | null>(null);
   const highAccuracy = ref<boolean | null>(
     (options && options.enableHighAccuracy) || null
   );
@@ -29,12 +29,12 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
   let refresh = NO_OP;
 
   if (supported) {
-    const setPosition = (pos: Position) => {
+    const setPosition = (pos: GeolocationPosition) => {
       timestamp.value = pos.timestamp;
       coords.value = pos.coords;
       error.value = null;
     };
-    const setError = (err: PositionError) => {
+    const setError = (err: GeolocationPositionError) => {
       timestamp.value = Date.now();
       coords.value = null;
       error.value = err;
@@ -65,7 +65,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
     onMounted(() =>
       watch(
         [highAccuracy, lazy],
-        a => {
+        (a) => {
           clearWatch();
 
           const enableHighAccuracy = isBoolean(a[0])
@@ -83,7 +83,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
           );
         },
         {
-          immediate: !lazy.value
+          immediate: !lazy.value,
         }
       )
     );
@@ -99,6 +99,6 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
 
     timestamp,
     coords,
-    highAccuracy
+    highAccuracy,
   };
 }

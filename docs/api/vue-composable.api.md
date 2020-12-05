@@ -673,7 +673,13 @@ export type IntNumberFormatterFormat<T> = (
 ) => T;
 
 // @public (undocumented)
-export const isArray: (arg: any) => arg is any[];
+export const isArray: <T>(
+  arg: {} | T
+) => arg is T extends readonly any[]
+  ? unknown extends T
+    ? never
+    : readonly any[]
+  : any[];
 
 // @public (undocumented)
 export const isBoolean: (val: unknown) => val is Boolean;
@@ -1207,9 +1213,7 @@ export function useBreakpointTailwindCSS<
 // Warning: (ae-forgotten-export) The symbol "DefaultTailwindBreakpoints" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export function useBreakpointTailwindCSS(): BreakpointReturn<
-  DefaultTailwindBreakpoints
->;
+export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
 
 // @public (undocumented)
 export function useBreakpointTailwindCSS<
@@ -1572,7 +1576,12 @@ export function useHydration(): Ref<Boolean>;
 export function useI18n<
   T extends i18nDefinition<TMessage>,
   TMessage extends Record<keyof T["messages"], i18n | (() => Promise<any>)>
->(definition: T): i18nResult<keyof T["messages"], T["messages"][T["locale"]]>;
+>(
+  definition: T
+): i18nResult<
+  keyof T["messages"],
+  I18nExtractLocale<T["messages"][T["locale"]]>
+>;
 
 // @public
 export function useI18n<T = i18n>(): i18nResult<string[], T>;
@@ -2239,7 +2248,8 @@ export function useWorker<TData = any, TArgs = any | any[]>(
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
+): PromiseResultFactory<Promise<T | undefined>, TArgs> &
+  CancellablePromiseResult;
 
 // @public (undocumented)
 export const VERSION: string;
