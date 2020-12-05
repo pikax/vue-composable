@@ -3,20 +3,20 @@ import { watch, computed, isRef } from "../api";
 import {
   PromiseResultFactory,
   useCancellablePromise,
-  CancellablePromiseResult
+  CancellablePromiseResult,
 } from "../promise";
 
 export const inlineWorkExecution = (f: Function) =>
-  function(e: MessageEvent) {
+  function (e: MessageEvent) {
     const args = e.data || [];
 
-    return new Promise(res => {
+    return new Promise((res) => {
       try {
         Promise.resolve(f.apply(f, args))
           // @ts-ignore
-          .then(x => res(postMessage([true, x])))
+          .then((x) => res(postMessage([true, x])))
           // @ts-ignore
-          .catch(x => res(postMessage([false, x])));
+          .catch((x) => res(postMessage([false, x])));
       } catch (e) {
         // @ts-ignore
         res(postMessage([false, e]));
@@ -33,7 +33,7 @@ export function createBlobUrl(fn: Function, dependencies: readonly string[]) {
   const blobScript = [
     scripts,
     "onmessage=",
-    `(${inlineWorkExecution.toString()})(${fn.toString()})`
+    `(${inlineWorkExecution.toString()})(${fn.toString()})`,
   ];
 
   const blob = new Blob(blobScript, { type: "text/javascript" });
@@ -99,7 +99,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
 
         worker.addEventListener(
           "message",
-          e => {
+          (e) => {
             if (e.data[0]) {
               res(e.data[1]);
             } else {
@@ -112,7 +112,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
 
         worker.addEventListener(
           "error",
-          e => {
+          (e) => {
             terminate();
             rej(e);
           },
@@ -129,7 +129,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
       }),
     {
       lazy: true,
-      throwException: true
+      throwException: true,
     }
   );
 
