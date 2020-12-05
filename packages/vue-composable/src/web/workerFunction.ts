@@ -48,7 +48,8 @@ export interface WebWorkerFunctionOptions {
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult {
+): PromiseResultFactory<Promise<T | undefined>, TArgs> &
+  CancellablePromiseResult {
   const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
@@ -60,9 +61,9 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
     return useCancellablePromise(fn, { lazy: true, throwException: true });
   }
 
-  const promise = useCancellablePromise<T, TArgs>(
+  const promise = useCancellablePromise<T | undefined, TArgs>(
     (...args: TArgs) =>
-      new Promise((res, rej) => {
+      new Promise<T | undefined>((res, rej) => {
         const blobUrl = createBlobUrl(fn, dependencies.value);
         const worker = new Worker(blobUrl);
 
