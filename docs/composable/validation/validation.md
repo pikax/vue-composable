@@ -323,18 +323,33 @@ export default defineComponent({
 
 <style scoped>
 .invalid {
-  color: #aa2233;
-  background: grey;
+	color: #e0e0e0;
+	background: #282c34;
+	border: none;
+	outline: none;
+	border-radius: 3px;
+	padding: 0.3rem;
+	margin: 0.5rem auto;
 }
 
 .dirty {
-  color: yellow;
-  background: grey;
+	color: #ffff92;
+	background: #282c34;
+	border: none;
+	padding: 0.3rem;
+	border-radius: 3px;
+	margin: 0.5rem auto;
+	outline: none;
 }
 
 .error {
-  color: red;
-  background: grey;
+	color: #fb686c;
+	background: #282c34;
+	padding: 0.3rem;
+	margin: 0.5rem auto;
+	border: none;
+	outline: none;
+	border-radius: 3px;
 }
 </style>
 ```
