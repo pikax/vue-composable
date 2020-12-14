@@ -60,7 +60,7 @@ Array pagination
 </template>
 
 <script>
-import { reactive, ref, computed } from "@vue/composition-api";
+import { ref, computed } from "@vue/composition-api";
 import { usePagination } from "vue-composable";
 
 export default {
