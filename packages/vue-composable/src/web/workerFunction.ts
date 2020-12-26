@@ -3,20 +3,20 @@ import { watch, computed, isRef } from "../api";
 import {
   PromiseResultFactory,
   useCancellablePromise,
-  CancellablePromiseResult
+  CancellablePromiseResult,
 } from "../promise";
 
 export const inlineWorkExecution = (f: Function) =>
-  function(e: MessageEvent) {
+  function (e: MessageEvent) {
     const args = e.data || [];
 
-    return new Promise(res => {
+    return new Promise((res) => {
       try {
         Promise.resolve(f.apply(f, args))
           // @ts-ignore
-          .then(x => res(postMessage([true, x])))
+          .then((x) => res(postMessage([true, x])))
           // @ts-ignore
-          .catch(x => res(postMessage([false, x])));
+          .catch((x) => res(postMessage([false, x])));
       } catch (e) {
         // @ts-ignore
         res(postMessage([false, e]));
@@ -33,7 +33,7 @@ export function createBlobUrl(fn: Function, dependencies: readonly string[]) {
   const blobScript = [
     scripts,
     "onmessage=",
-    `(${inlineWorkExecution.toString()})(${fn.toString()})`
+    `(${inlineWorkExecution.toString()})(${fn.toString()})`,
   ];
 
   const blob = new Blob(blobScript, { type: "text/javascript" });
@@ -48,7 +48,8 @@ export interface WebWorkerFunctionOptions {
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
   options?: WebWorkerFunctionOptions
-): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult {
+): PromiseResultFactory<Promise<T | undefined>, TArgs> &
+  CancellablePromiseResult {
   const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
@@ -60,9 +61,9 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
     return useCancellablePromise(fn, { lazy: true, throwException: true });
   }
 
-  const promise = useCancellablePromise<T, TArgs>(
+  const promise = useCancellablePromise<T | undefined, TArgs>(
     (...args: TArgs) =>
-      new Promise((res, rej) => {
+      new Promise<T | undefined>((res, rej) => {
         const blobUrl = createBlobUrl(fn, dependencies.value);
         const worker = new Worker(blobUrl);
 
@@ -99,7 +100,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
 
         worker.addEventListener(
           "message",
-          e => {
+          (e) => {
             if (e.data[0]) {
               res(e.data[1]);
             } else {
@@ -112,7 +113,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
 
         worker.addEventListener(
           "error",
-          e => {
+          (e) => {
             terminate();
             rej(e);
           },
@@ -129,7 +130,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
       }),
     {
       lazy: true,
-      throwException: true
+      throwException: true,
     }
   );
 
