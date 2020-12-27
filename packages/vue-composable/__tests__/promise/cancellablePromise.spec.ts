@@ -11,7 +11,9 @@ describe("cancellablePromise", () => {
   });
 
   it("should resolve promise", async () => {
-    const use = useCancellablePromise(() => promisedTimeout(100).then(x => 34));
+    const use = useCancellablePromise(() =>
+      promisedTimeout(100).then((x) => 34)
+    );
 
     expect(await use.exec()).toBe(34);
 
@@ -19,12 +21,14 @@ describe("cancellablePromise", () => {
       result: { value: 34 },
       cancelled: { value: false },
       error: { value: null },
-      loading: { value: false }
+      loading: { value: false },
     });
   });
 
   it("should not be resolved after cancelled", async () => {
-    const use = useCancellablePromise(() => promisedTimeout(100).then(x => 34));
+    const use = useCancellablePromise(() =>
+      promisedTimeout(100).then((x) => 34)
+    );
 
     expect(use.cancelled.value).toBe(false);
 
@@ -32,7 +36,7 @@ describe("cancellablePromise", () => {
 
     expect(use).toMatchObject({
       cancelled: { value: false },
-      loading: { value: true }
+      loading: { value: true },
     });
 
     use.cancel("cancelled");
@@ -41,7 +45,7 @@ describe("cancellablePromise", () => {
     expect(use).toMatchObject({
       cancelled: { value: true },
       error: { value: "cancelled" },
-      loading: { value: false }
+      loading: { value: false },
     });
 
     // wait 200ms to wait for the other promise
@@ -52,7 +56,7 @@ describe("cancellablePromise", () => {
       cancelled: { value: true },
       error: { value: "cancelled" },
       result: { value: null },
-      loading: { value: false }
+      loading: { value: false },
     });
   });
 
@@ -75,7 +79,7 @@ describe("cancellablePromise", () => {
       template: `<div></div>`,
       setup() {
         isCancelled = useCancellablePromise(() => Promise.resolve(1)).cancelled;
-      }
+      },
     });
 
     mount();
@@ -94,7 +98,7 @@ describe("cancellablePromise", () => {
       setup() {
         isCancelled = useCancellablePromise(() => Promise.resolve(1), true)
           .cancelled;
-      }
+      },
     });
 
     mount();
@@ -103,5 +107,18 @@ describe("cancellablePromise", () => {
 
     destroy();
     expect(isCancelled.value).toBe(false);
+  });
+
+  it("should reset cancelled if you call the exec after cancel", () => {
+    const { exec, cancel, cancelled } = useCancellablePromise(
+      () => new Promise(() => {})
+    );
+
+    expect(cancelled.value).toBe(false);
+    cancel();
+    expect(cancelled.value).toBe(true);
+
+    exec();
+    expect(cancelled.value).toBe(false);
   });
 });

@@ -19,7 +19,9 @@ const { clipboardData, supported, write, read } = useClipboard();
 
 ## Example
 
-<clipboard-example/>
+<ClientOnly>
+  <clipboard-example/>
+</ClientOnly>
 
 ### Code
 

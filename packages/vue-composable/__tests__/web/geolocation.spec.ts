@@ -11,7 +11,7 @@ describe("geolocation", () => {
   const geolocation: Geolocation = {
     clearWatch: clearWatchFn,
     getCurrentPosition: getCurrentPositionFn,
-    watchPosition: watchPositionFn
+    watchPosition: watchPositionFn,
   };
 
   beforeEach(() => {
@@ -40,13 +40,13 @@ describe("geolocation", () => {
         const opts: PositionOptions = {
           maximumAge: 10,
           timeout: 10,
-          enableHighAccuracy: false
+          enableHighAccuracy: false,
         };
         const geo = useGeolocation(opts);
 
         expect(geo.supported).toBe(true);
 
-        promise = nextTick().then(async x => {
+        promise = nextTick().then(async (x) => {
           expect(clearWatchFn).not.toHaveBeenCalled();
           expect(watchPositionFn).toHaveBeenCalledWith(
             expect.anything(),
@@ -56,9 +56,9 @@ describe("geolocation", () => {
         });
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
     return promise;
@@ -75,9 +75,9 @@ describe("geolocation", () => {
         expect(getCurrentPositionFn).toHaveBeenCalled();
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
   });
@@ -102,9 +102,9 @@ describe("geolocation", () => {
         });
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
     return promise;
@@ -117,15 +117,15 @@ describe("geolocation", () => {
       setup() {
         const geo = useGeolocation();
 
-        promise = nextTick().then(async x => {
+        promise = nextTick().then(async (x) => {
           expect(clearWatchFn).not.toHaveBeenCalled();
           expect(watchPositionFn).toHaveBeenCalledTimes(1);
         });
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
     await promise;
@@ -159,9 +159,9 @@ describe("geolocation", () => {
         });
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
     await promise;
@@ -176,7 +176,7 @@ describe("geolocation", () => {
       setup() {
         const geo = useGeolocation();
 
-        promise = nextTick().then(async x => {
+        promise = nextTick().then(async (x) => {
           expect(clearWatchFn).not.toHaveBeenCalled();
           expect(watchPositionFn).toHaveBeenCalledTimes(1);
 
@@ -190,7 +190,7 @@ describe("geolocation", () => {
           expect(geo.highAccuracy.value).toBeNull();
           expect(geo.error.value).toBeNull();
 
-          const pos: Position = {
+          const pos: GeolocationPosition = {
             coords: {
               accuracy: 10,
               altitude: 20,
@@ -198,9 +198,9 @@ describe("geolocation", () => {
               heading: 40,
               latitude: 50,
               longitude: 60,
-              speed: 70
+              speed: 70,
             },
-            timestamp: 11111111
+            timestamp: 11111111,
           };
 
           setPosition(pos);
@@ -212,7 +212,7 @@ describe("geolocation", () => {
           expect(geo.error.value).toBeNull();
 
           const error = {
-            err: 1
+            err: 1,
           };
           setError(error);
           await nextTick();
@@ -221,7 +221,7 @@ describe("geolocation", () => {
           expect(geo.timestamp.value).not.toBe(pos.timestamp);
           expect(geo.error.value).toStrictEqual(error);
 
-          const pos2: Position = {
+          const pos2: GeolocationPosition = {
             coords: {
               accuracy: 1,
               altitude: 2,
@@ -229,9 +229,9 @@ describe("geolocation", () => {
               heading: 4,
               latitude: 5,
               longitude: 6,
-              speed: 7
+              speed: 7,
             },
-            timestamp: 22222
+            timestamp: 22222,
           };
 
           setPosition(pos2);
@@ -244,9 +244,9 @@ describe("geolocation", () => {
         });
 
         return {
-          geo
+          geo,
         };
-      }
+      },
     });
     vm.mount();
     await promise;
