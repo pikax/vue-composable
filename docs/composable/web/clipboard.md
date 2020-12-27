@@ -27,9 +27,8 @@ const { clipboardData, supported, write, read } = useClipboard();
 <template>
   <div>
     <p>click the button to copy a random number</p>
-    <button @click="write(Math.random())">copy</button>
-    <p>Text In Clipboard: {{ clipboardData }}</p>
-    <button @click="read">readText In Clipboard</button>
+    <button @click="copy">copy</button>
+    <p>To see what has been copied to the clipboard open your devTools</p>
   </div>
 </template>
 
@@ -37,11 +36,15 @@ const { clipboardData, supported, write, read } = useClipboard();
 import { useClipboard } from "vue-composable";
 export default {
   setup() {
-    const { clipboardData, write, read } = useClipboard();
+    const { clipboardData, write } = useClipboard();
+
+    function copy() {
+      write(Math.random());
+      console.log(clipboardData.value);
+    }
+
     return {
-      clipboardData,
       copy,
-      read,
     };
   },
 };
