@@ -17,7 +17,7 @@
         :class="{
           invalid: form.$anyDirty && form.$anyInvalid,
           dirty: form.$anyDirty && !form.$anyInvalid,
-          error: form.$errors.length > 0
+          error: form.$errors.length > 0,
         }"
       />
     </form>
@@ -28,7 +28,7 @@
 import { defineComponent, ref, reactive, computed } from "@vue/composition-api";
 import { useValidation } from "vue-composable";
 
-const required = x => !!x;
+const required = (x) => !!x;
 
 export default defineComponent({
   setup() {
@@ -39,18 +39,18 @@ export default defineComponent({
     const form = useValidation({
       firstName: {
         $value: name,
-        required
+        required,
       },
       lastName: {
         $value: surname,
-        required
+        required,
       },
       password: {
         $value: password,
         required: {
           $validator: required,
-          $message: ref("password is required")
-        }
+          $message: ref("password is required"),
+        },
       },
       samePassword: {
         $value: ref(""),
@@ -59,9 +59,9 @@ export default defineComponent({
           $validator(x) {
             return x === password.value;
           },
-          $message: "Password don't match"
-        }
-      }
+          $message: "Password don't match",
+        },
+      },
     });
 
     const submitText = computed(() => {
@@ -79,7 +79,7 @@ export default defineComponent({
       return "Submit";
     });
 
-    const onSubmit = e => {
+    const onSubmit = (e) => {
       e.preventDefault();
       if (form.$anyInvalid) {
         alert("invalid form");
@@ -91,25 +91,40 @@ export default defineComponent({
     return {
       onSubmit,
       submitText,
-      form
+      form,
     };
-  }
+  },
 });
 </script>
 
 <style scoped>
 .invalid {
-  color: #aa2233;
-  background: grey;
+  color: #e0e0e0;
+  background: #282c34;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 0.3rem;
+  margin: 0.5rem auto;
 }
 
 .dirty {
-  color: yellow;
-  background: grey;
+  color: #ffff92;
+  background: #282c34;
+  border: none;
+  padding: 0.3rem;
+  border-radius: 3px;
+  margin: 0.5rem auto;
+  outline: none;
 }
 
 .error {
-  color: red;
-  background: grey;
+  color: #fb686c;
+  background: #282c34;
+  padding: 0.3rem;
+  margin: 0.5rem auto;
+  border: none;
+  outline: none;
+  border-radius: 3px;
 }
 </style>

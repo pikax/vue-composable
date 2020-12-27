@@ -5,7 +5,7 @@ import {
   onUnmounted,
   computed,
   getCurrentInstance,
-  ComputedRef
+  ComputedRef,
 } from "../api";
 import { PASSIVE_EV, isObject, RefTyped, isClient } from "../utils";
 import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
@@ -21,7 +21,7 @@ export const enum RefSharedMessageType {
   LEAVE,
 
   PING,
-  PONG
+  PONG,
 }
 
 export const enum SharedRefMind {
@@ -29,7 +29,7 @@ export const enum SharedRefMind {
   HIVE,
 
   // only master can update
-  MASTER
+  MASTER,
 }
 
 export type RefSharedMessageInit = { type: RefSharedMessageType.INIT };
@@ -120,12 +120,12 @@ export function useSharedRef<T = any>(
       send({
         type: RefSharedMessageType.SET_MIND,
         mind: SharedRefMind.MASTER,
-        id: Math.min(...targets.value)
+        id: Math.min(...targets.value),
       });
     }
     send({
       type: RefSharedMessageType.LEAVE,
-      id
+      id,
     });
   };
 
@@ -144,17 +144,17 @@ export function useSharedRef<T = any>(
     send({
       type: RefSharedMessageType.SET_MIND,
       id: id,
-      mind: mind.value
+      mind: mind.value,
     });
   };
 
-  addListener(e => {
+  addListener((e) => {
     switch (e.data.type) {
       case RefSharedMessageType.INIT: {
         send({
           type: RefSharedMessageType.UPDATE,
           value: data.value as T,
-          mind: mind.value
+          mind: mind.value,
         });
         break;
       }
@@ -168,7 +168,7 @@ export function useSharedRef<T = any>(
           send({
             type: RefSharedMessageType.SET_MIND,
             mind: SharedRefMind.MASTER,
-            id: Math.min(id, ...targets.value)
+            id: Math.min(id, ...targets.value),
           });
         }
         break;
@@ -194,7 +194,7 @@ export function useSharedRef<T = any>(
         targets.value = [e.data.id];
         send({
           type: RefSharedMessageType.PONG,
-          id
+          id,
         });
         break;
       }
@@ -224,7 +224,7 @@ export function useSharedRef<T = any>(
       send({
         type: RefSharedMessageType.UPDATE,
         mind: mind.value,
-        value: isObject(v) ? { ...v } : v
+        value: isObject(v) ? { ...v } : v,
       });
       updateState = false;
     },
@@ -257,7 +257,7 @@ export function useSharedRef<T = any>(
     addListener: addListener as (
       cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void,
       options?: boolean | AddEventListenerOptions
-    ) => void
+    ) => void,
   };
 }
 
@@ -271,7 +271,7 @@ export function refShared<T = any>(
   const name = id
     ? id
     : __VUE_2__
-    ? (vm as any).$vnode.tag
+    ? (vm as any).$vnode && (vm as any).$vnode.tag
     : (vm as any).vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
 
   if (!name) {

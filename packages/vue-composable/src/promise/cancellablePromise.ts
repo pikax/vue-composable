@@ -113,7 +113,8 @@ export function useCancellablePromise<
 
   const promise = (p: T): T =>
     new Promise<TR>((res, rej) => {
-      _cancel = result => {
+      cancelled.value = false;
+      _cancel = (result) => {
         cancelled.value = true;
         rej(result);
       };
@@ -135,6 +136,6 @@ export function useCancellablePromise<
   return {
     ...use,
     cancel,
-    cancelled
+    cancelled,
   };
 }

@@ -60,7 +60,7 @@ Array pagination
 </template>
 
 <script>
-import { reactive, ref, computed } from "@vue/composition-api";
+import { ref, computed } from "@vue/composition-api";
 import { usePagination } from "vue-composable";
 
 export default {
@@ -74,11 +74,11 @@ export default {
       next,
       prev,
       offset,
-      pageSize
+      pageSize,
     } = usePagination({
       currentPage: 1,
       pageSize: 10,
-      total: computed(() => arrayRef.value.length)
+      total: computed(() => arrayRef.value.length),
     });
 
     const result = computed(() => {
@@ -92,9 +92,9 @@ export default {
       lastPage,
       next,
       prev,
-      result
+      result,
     };
-  }
+  },
 };
 </script>
 ```
