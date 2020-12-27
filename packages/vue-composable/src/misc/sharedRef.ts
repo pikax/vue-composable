@@ -271,7 +271,7 @@ export function refShared<T = any>(
   const name = id
     ? id
     : __VUE_2__
-    ? (vm as any).$vnode?.tag
+    ? (vm as any).$vnode && (vm as any).$vnode.tag
     : (vm as any).vnode.scopeId; // TODO test this :/ NOTE @vue/runtime-core might be different
 
   if (!name) {
