@@ -2,7 +2,7 @@
   <div>
     <p>click the button to copy a random number</p>
     <button @click="copy">copy</button>
-    <p>To see what has been copied to the clipboard open your devTools</p>
+    <p>Check your dev tools to see what has been copied to your clipboard</p>
   </div>
 </template>
 
