@@ -18,10 +18,10 @@
 import { useClipboard } from "vue-composable";
 export default {
   setup() {
-    const { text, write, read } = useClipboard();
+    const { text, writeText } = useClipboard();
 
     function copy() {
-      write(Math.random().toString());
+      writeText(Math.random().toString());
       console.log(text.value);
     }
 

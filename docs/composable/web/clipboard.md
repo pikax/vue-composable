@@ -30,13 +30,13 @@ The `useClipboard` function exposes the following methods:
 ```js
 import { useClipboard } from "vue-composable";
 
-const { write, read } = useClipboard();
+const { writeText, readText } = useClipboard();
 ```
 
-| Signature | Description              |
-| --------- | ------------------------ |
-| `write`   | Writes to the clipboard  |
-| `read`    | Reads from the clipboard |
+| Signature   | Description              |
+| ----------- | ------------------------ |
+| `writeText` | Writes to the clipboard  |
+| `readText`  | Reads from the clipboard |
 
 ### Code
 
@@ -61,10 +61,10 @@ const { write, read } = useClipboard();
 import { useClipboard } from "vue-composable";
 export default {
   setup() {
-    const { text, write, read } = useClipboard();
+    const { text, writeText } = useClipboard();
 
     function copy() {
-      write(Math.random().toString());
+      writeText(Math.random().toString());
       console.log(text.value);
     }
 

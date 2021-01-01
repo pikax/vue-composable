@@ -7,32 +7,32 @@ export interface UseClipboard {
   supported: boolean;
   text: Ref<string | undefined>;
 
-  write(data: string): Promise<void>;
-  read(): Promise<string | undefined>;
+  writeText(text: string): Promise<void>;
+  readText(): Promise<string | undefined>;
 }
 
 export function useClipboard(): UseClipboard {
   const supported = isClient && "clipboard" in navigator;
   const text = ref<string>();
 
-  let write = (data: string) => {
+  let writeText = (data: string) => {
     text.value = data;
     if (!supported) return Promise.resolve();
     // TOOD check for permissions
     return navigator.clipboard.writeText(data);
   };
 
-  let read: () => Promise<string | undefined> = () =>
+  let readText: () => Promise<string | undefined> = () =>
     Promise.resolve(undefined);
 
   if (supported) {
     let updating = false;
-    const update = () => read().then((x) => (text.value = x));
+    const update = () => readText().then((x) => (text.value = x));
     (["copy", "cut", "focus"] as const).map((event) =>
       useEvent(window, event, () => update())
     );
 
-    read = () =>
+    readText = () =>
       navigator.clipboard.readText().then((x) => {
         try {
           updating = true;
@@ -47,7 +47,7 @@ export function useClipboard(): UseClipboard {
       text,
       debounce((s: string) => {
         if (updating || !isString(s)) return;
-        write(s);
+        writeText(s);
       }, 100)
     );
   }
@@ -56,7 +56,7 @@ export function useClipboard(): UseClipboard {
     supported,
     text,
 
-    write,
-    read,
+    writeText,
+    readText,
   };
 }
