@@ -10,4 +10,5 @@ export * from "./geolocation";
 export * from "./cssVariables";
 export * from "./worker";
 export * from "./share";
+export * from "./clipboard";
 export { useWorkerFunction, WebWorkerFunctionOptions } from "./workerFunction";

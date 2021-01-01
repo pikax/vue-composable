@@ -9,19 +9,34 @@ The `useClipboard` function exposes the following reactive state:
 ```js
 import { useClipboard } from "vue-composable";
 
-const { clipboardData, supported, write, read } = useClipboard();
+const { text, supported, write, read } = useClipboard();
 ```
 
-| State         | Type       | Description                                                                                                                 |
-| ------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| supported     | `Boolean`  | Returns true if the browser has [navigator.clipboard](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) |
-| clipboardData | `Ref(any)` | data in clipboard                                                                                                           |
+| State     | Type          | Description                                                                                                                 |
+| --------- | ------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| supported | `Boolean`     | Returns true if the browser has [navigator.clipboard](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) |
+| text      | `Ref<string>` | Reactive data in clipboard, also updates the clipboard if changed                                                           |
 
 ## Example
 
 <ClientOnly>
   <clipboard-example/>
 </ClientOnly>
+
+## Methods
+
+The `useClipboard` function exposes the following methods:
+
+```js
+import { useClipboard } from "vue-composable";
+
+const { write, read } = useClipboard();
+```
+
+| Signature | Description              |
+| --------- | ------------------------ |
+| `write`   | Writes to the clipboard  |
+| `read`    | Reads from the clipboard |
 
 ### Code
 
@@ -30,7 +45,15 @@ const { clipboardData, supported, write, read } = useClipboard();
   <div>
     <p>click the button to copy a random number</p>
     <button @click="copy">copy</button>
-    <p>To see what has been copied to the clipboard open your devTools</p>
+    <p>Check your dev tools to see what has been copied to your clipboard</p>
+
+    <p>You can also change the clipboard</p>
+    <input v-model="text" />
+
+    <div>
+      <p>Current clipboard:</p>
+      <p>{{ text }}</p>
+    </div>
   </div>
 </template>
 
@@ -38,15 +61,17 @@ const { clipboardData, supported, write, read } = useClipboard();
 import { useClipboard } from "vue-composable";
 export default {
   setup() {
-    const { clipboardData, write } = useClipboard();
+    const { text, write, read } = useClipboard();
 
     function copy() {
-      write(Math.random());
-      console.log(clipboardData.value);
+      write(Math.random().toString());
+      console.log(text.value);
     }
 
     return {
       copy,
+
+      text,
     };
   },
 };
