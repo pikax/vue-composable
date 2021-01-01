@@ -12,10 +12,11 @@ import { useClipboard } from "vue-composable";
 const { text, supported, write, read } = useClipboard();
 ```
 
-| State     | Type          | Description                                                                                                                 |
-| --------- | ------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| supported | `Boolean`     | Returns true if the browser has [navigator.clipboard](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) |
-| text      | `Ref<string>` | Reactive data in clipboard, also updates the clipboard if changed                                                           |
+| State     | Type              | Description                                                                                                                 |
+| --------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| supported | `Boolean`         | Returns true if the browser has [navigator.clipboard](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) |
+| text      | `Ref<string       | undefined>`                                                                                                                 | Reactive text in clipboard, also updates the clipboard if changed          |
+| data      | `Ref<DataTransfer | undefined>`                                                                                                                 | Reactive data in clipboard, it does **not** update the clipboard on change |
 
 ## Example
 
@@ -33,10 +34,12 @@ import { useClipboard } from "vue-composable";
 const { writeText, readText } = useClipboard();
 ```
 
-| Signature   | Description              |
-| ----------- | ------------------------ |
-| `writeText` | Writes to the clipboard  |
-| `readText`  | Reads from the clipboard |
+| Signature   | Description                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------- |
+| `writeText` | Writes text to the clipboard                                                                                  |
+| `readText`  | Reads text from the clipboard                                                                                 |
+| `write`     | Writes to the clipboard [Clipboard.write()](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write) |
+| `read`      | Reads from the clipboard [Clipboard.read()](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/read)  |
 
 ### Code
 
