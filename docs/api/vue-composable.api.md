@@ -88,6 +88,14 @@ export interface CancellablePromiseResult<TCancel = any> {
 }
 
 // @public (undocumented)
+export interface ClipboardItem {
+    // (undocumented)
+    new (input: {
+        [contentType: string]: Blob;
+    }): ClipboardItem;
+}
+
+// @public (undocumented)
 export const COMMIT: string;
 
 // @public
@@ -857,9 +865,7 @@ export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(): Break
 // Warning: (ae-forgotten-export) The symbol "DefaultTailwindBreakpoints" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export function useBreakpointTailwindCSS(): BreakpointReturn<
-  DefaultTailwindBreakpoints
->;
+export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
 
 // @public (undocumented)
 export function useBreakpointTailwindCSS<T extends BreakpointObject>(): BreakpointReturn<T>;
@@ -905,6 +911,27 @@ export function useCancellablePromise<T = any>(fn: () => T, options: Cancellable
 
 // @public (undocumented)
 export function useCancellablePromise<T extends Promise<TR>, TR>(fn: () => T): PromiseResultFactory<T> & CancellablePromiseResult;
+
+// @public (undocumented)
+export interface UseClipboard {
+    // (undocumented)
+    data: Ref<DataTransfer | undefined>;
+    // (undocumented)
+    read(): Promise<DataTransfer | undefined>;
+    // (undocumented)
+    readText(): Promise<string | undefined>;
+    // (undocumented)
+    supported: boolean;
+    // (undocumented)
+    text: Ref<string | undefined>;
+    // (undocumented)
+    write(items: ClipboardItem[]): Promise<void>;
+    // (undocumented)
+    writeText(text: string): Promise<void>;
+}
+
+// @public (undocumented)
+export function useClipboard(): UseClipboard;
 
 // @public
 export type UseCssVariables<T> = CssVariableObject<T> & CssVariablesMethods;
@@ -992,6 +1019,9 @@ export function useEvent<T extends {
 
 // @public (undocumented)
 export function useEvent<K extends keyof WindowEventMap>(el: RefTyped<Window>, name: K, listener: (this: Document, ev: WindowEventMap[K]) => any, options?: boolean | AddEventListenerOptions): RemoveEventFunction;
+
+// @public (undocumented)
+export function useEvent(el: Window, name: string, listener: (this: Document, ev: Event) => any, options?: boolean | AddEventListenerOptions): RemoveEventFunction;
 
 // @public (undocumented)
 export function useEvent<K extends keyof DocumentEventMap>(el: Element | Ref<Element | undefined>, name: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): RemoveEventFunction;
