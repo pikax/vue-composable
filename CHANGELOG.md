@@ -1,3 +1,13 @@
+# [1.0.0-beta.13](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-01-01)
+
+### Bug Fixes
+
+- **cancellablePromise:** `cancelled` not set to false when executing ([d1b9ef9](https://github.com/pikax/vue-composable/commit/d1b9ef9437d5f2d20e6ea8d9af2f8377477533b3)), closes [#704](https://github.com/pikax/vue-composable/issues/704)
+
+### Features
+
+- **useClipboard:** added a new composable ([#709](https://github.com/pikax/vue-composable/issues/709)) ([e2d12c9](https://github.com/pikax/vue-composable/commit/e2d12c95e10536e012974c0d250ba1d469c70c02))
+
 # [1.0.0-beta.12](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2020-10-31)
 
 ### Features
