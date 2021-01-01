@@ -142,6 +142,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Worker](composable/web/worker) - `Web Worker API`
 - [WorkerFunction](composable/web/workerFunction) - Webworker Function, offload a function to webworker
 - [share](composable/web/share) - WebShare API
+- [Clipboard](https://pikax.me/vue-composable/composable/web/clipboard) - Clipboard API
 
 ### External
 
@@ -177,12 +178,12 @@ export default {
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
       array,
       {
-        pageSize: 3,
+        pageSize: 3
       }
     );
 
     return { result, next, prev, currentPage, lastPage };
-  },
+  }
 };
 </script>
 ```
