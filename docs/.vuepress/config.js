@@ -12,7 +12,12 @@ module.exports = {
       "@vuepress/pwa",
       {
         serviceWorker: true,
-        updatePopup: true,
+        updatePopup: {
+          "/": {
+            message: "New content is available.",
+            buttonText: "Refresh",
+          },
+        },
       },
     ],
   ],
@@ -201,6 +206,7 @@ module.exports = {
             ["composable/web/intersectionObserver", "IntersectionObserver"],
             ["composable/web/networkInformation", "NetworkInformation"],
             ["composable/web/online", "Navigator.onLine"],
+            ["composable/web/clipboard", "Clipboard API"],
             ["composable/web/pageVisibility", "PageVisibilityAPI"],
             ["composable/web/language", "Language"],
             ["composable/web/broadcastChannel", "BroadcastChannel API"],

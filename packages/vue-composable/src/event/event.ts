@@ -49,6 +49,13 @@ export function useEvent<K extends keyof WindowEventMap>(
   options?: boolean | AddEventListenerOptions
 ): RemoveEventFunction;
 
+export function useEvent(
+  el: Window,
+  name: string,
+  listener: (this: Document, ev: Event) => any,
+  options?: boolean | AddEventListenerOptions
+): RemoveEventFunction;
+
 export function useEvent<K extends keyof DocumentEventMap>(
   el: Element | Ref<Element | undefined>,
   name: K,

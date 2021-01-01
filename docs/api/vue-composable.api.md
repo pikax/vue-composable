@@ -857,7 +857,9 @@ export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(): Break
 // Warning: (ae-forgotten-export) The symbol "DefaultTailwindBreakpoints" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
+export function useBreakpointTailwindCSS(): BreakpointReturn<
+  DefaultTailwindBreakpoints
+>;
 
 // @public (undocumented)
 export function useBreakpointTailwindCSS<T extends BreakpointObject>(): BreakpointReturn<T>;
