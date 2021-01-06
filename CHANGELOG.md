@@ -1,3 +1,10 @@
+# [1.0.0-beta.14](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-01-06)
+
+### Features
+
+- **refDebounced:** support passing a ref as a value ([f8a26b9](https://github.com/pikax/vue-composable/commit/f8a26b96ac1ac4c043283c73cd557223a842c954))
+- **useValidation:** add `toObject` ([#723](https://github.com/pikax/vue-composable/issues/723)) ([28e9fd3](https://github.com/pikax/vue-composable/commit/28e9fd3d00d96293ec8bca0b9a8f1aa85072fb25))
+
 # [1.0.0-beta.13](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-01-01)
 
 ### Bug Fixes
