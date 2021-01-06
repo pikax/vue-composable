@@ -4,7 +4,8 @@ import {
   isBoolean,
   RefTyped,
   wrap,
-  unwrap
+  unwrap,
+  NO_OP,
 } from "../utils";
 import { ref, Ref, watch, computed, reactive, UnwrapRef } from "../api";
 
@@ -63,15 +64,16 @@ type UseValidation<T> = { [K in keyof T]: ValidationInput<T[K]> };
 
 /* Output */
 
-type ValidatorOutputFunc<T extends ValidatorFunc<T>> = ReturnType<
-  T
-> extends Promise<boolean>
+type ValidatorOutputFunc<
+  T extends ValidatorFunc<T>
+> = ReturnType<T> extends Promise<boolean>
   ? ValidatorResult & ValidatorResultPromise
   : ValidatorResult;
 
-type ValidatorOutput<T extends Validator<E>, E = any> = T extends ValidatorFunc<
-  any
->
+type ValidatorOutput<
+  T extends Validator<E>,
+  E = any
+> = T extends ValidatorFunc<any>
   ? ValidatorOutputFunc<T>
   : T extends ValidatorObject<any>
   ? ValidatorOutputFunc<T["$validator"]> & ValidatorResultMessage
@@ -88,8 +90,18 @@ type ValidationOutput<T extends Record<string, any>> = T extends {
   $value: any;
 }
   ? ValidationValue<T["$value"]> &
-      ValidatorObjectOutput<T, Exclude<keyof T, "$value">>
-  : { [K in keyof T]: ValidationOutput<T[K]> };
+      ValidatorObjectOutput<T, Exclude<keyof T, "$value">> & {
+        toObject(): T["$value"];
+      }
+  : { [K in keyof T]: ValidationOutput<T[K]> } & {
+      toObject(): ValidationOutputObject<T>;
+    };
+
+type ValidationOutputObject<T extends Record<string, any>> = T extends {
+  $value: any;
+}
+  ? T["$value"]
+  : { [K in keyof T]: ValidationOutputObject<T[K]> };
 
 /* /Output */
 
@@ -132,7 +144,7 @@ const buildValidationFunction = (
         $pending.value = false;
       }
     };
-    $promise.value = p().catch(x => {
+    $promise.value = p().catch((x) => {
       $error.value = unwrap(x);
       $invalid.value = true;
       return x;
@@ -160,7 +172,7 @@ const buildValidationFunction = (
     $promise,
     $pending,
     $invalid,
-    $error
+    $error,
   };
 };
 
@@ -186,7 +198,7 @@ const buildValidationValue = (
     $promise,
     $invalid,
     $message,
-    ...$rest
+    ...$rest,
   } as any;
 };
 
@@ -211,6 +223,9 @@ const buildValidation = <T>(
         );
 
         (r as any)["$dirty"] = $dirty;
+
+        // @ts-ignore
+        r.toObject = () => unwrap($value);
         continue;
       } else {
         r[k] = (o as any)[k];
@@ -227,7 +242,10 @@ const buildValidation = <T>(
 
       r[k] = {
         ...validation,
-        $value
+        $value,
+        toObject() {
+          return unwrap($value);
+        },
       } as any;
     } else {
       const validation = buildValidation(
@@ -239,37 +257,50 @@ const buildValidation = <T>(
       let $errors: Readonly<Ref<Readonly<Array<any>>>>;
       let $anyInvalid: Ref<boolean>;
 
+      let toObject: () => Record<string, any> = NO_OP as any;
+
       if (isValidation(validation)) {
         const validations = Object.keys(validation)
-          .filter(x => x[0] !== "$")
-          .map(x => (validation[x] as any) as ValidatorResult);
+          .filter((x) => x[0] !== "$")
+          .map((x) => (validation[x] as any) as ValidatorResult);
 
         $errors = computed(() =>
           validations
-            .map(x => x.$error)
-            .map(x => unwrap(x))
+            .map((x) => x.$error)
+            .map((x) => unwrap(x))
             .filter(Boolean)
         );
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() =>
-          validations.some(x => {
+          validations.some((x) => {
             return !!unwrap(x.$invalid);
           })
         );
+
+        toObject = () => {
+          return Object.keys(validation)
+            .filter((x) => x[0] !== "$")
+            .reduce((p, c) => {
+              debugger;
+              //@ts-ignore
+              p[c] = validation[c].toObject();
+              return p;
+            }, {});
+        };
       } else {
         const validations = Object.keys(validation).map(
-          x => (validation[x] as any) as ValidationGroupResult
+          (x) => (validation[x] as any) as ValidationGroupResult
         );
         $errors = computed(() => {
           return validations
-            .map(x => unwrap(x.$errors))
+            .map((x) => unwrap(x.$errors))
             .filter(Boolean)
-            .filter(x => {
+            .filter((x) => {
               return x.some(Boolean);
             });
         });
         $anyDirty = computed(() => {
-          return validations.some(x => {
+          return validations.some((x) => {
             return (
               x.$anyDirty ||
               (isBoolean(unwrap((x as any).$dirty)) &&
@@ -278,16 +309,27 @@ const buildValidation = <T>(
           });
         });
         $anyInvalid = computed(() =>
-          validations.some(x => {
+          validations.some((x) => {
             return !!unwrap(x.$anyInvalid);
           })
         );
+
+        toObject = () => {
+          return Object.keys(validation)
+            .filter((x) => x[0] !== "$")
+            .reduce((p, c) => {
+              //@ts-ignore
+              p[c] = validation[c].toObject();
+              return p;
+            }, {});
+        };
       }
 
       r[k] = {
+        toObject,
         ...validation,
         $errors,
-        $anyInvalid
+        $anyInvalid,
       } as any;
 
       if ($anyDirty) {
@@ -309,7 +351,7 @@ export function useValidation<T extends UseValidation<E>, E = any>(
   const validationInput = reactive(validation.input);
   // set the context, this will allow to use this object as the second
   // argument when calling validators
-  handlers.forEach(x => x(validationInput));
+  handlers.forEach((x) => x(validationInput));
 
   return validationInput as any;
 }

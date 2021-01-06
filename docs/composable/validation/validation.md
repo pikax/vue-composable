@@ -117,6 +117,8 @@ interface ValidationValue<T> {
 
   $anyInvalid: boolean; // any validation invalid
   $errors: any[]; // array of errors
+
+  toObject(): T;
 }
 
 // validator
@@ -159,6 +161,9 @@ validationUsername.containsInvalidWords.$customProp; //custom prop
 
 // custom properties
 validationUsername.$placeholder; // custom prop
+
+// retrieve value object
+validationUsername.toObject(); // returns string
 ```
 
 ### NestedValidationObject
@@ -205,6 +210,8 @@ form.settings.$errors;
 form.personal.$anyDirty;
 form.personal.$anyInvalid;
 form.personal.$errors;
+
+form.toObject(); // returns { settings: { email: '' }, personal: { name: { first: '', last: '' } } }
 ```
 
 ```ts
@@ -308,7 +315,9 @@ export default defineComponent({
       if (form.$anyInvalid) {
         alert("invalid form");
       } else {
-        alert("submit form");
+        const o = form.toObject();
+        alert(`submit form "${JSON.stringify(o)}"`);
+        console.log("submitted", o);
       }
     };
 
