@@ -12,14 +12,14 @@ describe("validation", () => {
         $value,
         required(x: string) {
           return !!x;
-        }
+        },
       },
       test1: {
         $value: $value1,
         required(x: string) {
           return !!x;
-        }
-      }
+        },
+      },
     });
 
     expect(validation).toMatchObject({
@@ -30,16 +30,16 @@ describe("validation", () => {
         $dirty: false,
         $value: $value.value,
         required: {
-          $invalid: true
-        }
+          $invalid: true,
+        },
       },
       test1: {
         $dirty: false,
         $value: $value1.value,
         required: {
-          $invalid: true
-        }
-      }
+          $invalid: true,
+        },
+      },
     });
 
     $value.value = "hello";
@@ -55,16 +55,16 @@ describe("validation", () => {
         $dirty: true,
         $value: $value.value,
         required: {
-          $invalid: false
-        }
+          $invalid: false,
+        },
       },
       test1: {
         $dirty: false,
         $value: $value1.value,
         required: {
-          $invalid: true
-        }
-      }
+          $invalid: true,
+        },
+      },
     });
   });
 
@@ -72,14 +72,14 @@ describe("validation", () => {
     const password = ref("");
     const form = useValidation({
       password: {
-        $value: password
+        $value: password,
       },
       password2: {
         $value: ref(""),
         samePassword(r: string, ctx: any) {
           return r === ctx.password.$value;
-        }
-      }
+        },
+      },
     });
 
     expect(form.password2.samePassword.$invalid).toBe(false);
@@ -95,8 +95,8 @@ describe("validation", () => {
     const v = useValidation({
       password: {
         $value: ref(""),
-        $args
-      }
+        $args,
+      },
     });
 
     expect(v.password.$args).toStrictEqual($args);
@@ -109,8 +109,8 @@ describe("validation", () => {
         $value: ref(""),
         required() {
           throw error;
-        }
-      }
+        },
+      },
     });
 
     await nextTick();
@@ -122,15 +122,17 @@ describe("validation", () => {
 
   it("should handle promise validator", async () => {
     let promiseResolve: Function = NO_OP;
-    const promise = new Promise<boolean>(resolve => (promiseResolve = resolve));
+    const promise = new Promise<boolean>(
+      (resolve) => (promiseResolve = resolve)
+    );
 
     const v = useValidation({
       password: {
         $value: ref(""),
         required() {
           return promise;
-        }
-      }
+        },
+      },
     });
 
     expect(v.password.required.$pending).toBe(true);
@@ -143,7 +145,9 @@ describe("validation", () => {
 
   it("should handle promise validator with objectValidator", async () => {
     let promiseResolve: Function = NO_OP;
-    const promise = new Promise<boolean>(resolve => (promiseResolve = resolve));
+    const promise = new Promise<boolean>(
+      (resolve) => (promiseResolve = resolve)
+    );
 
     const v = useValidation({
       password: {
@@ -152,9 +156,9 @@ describe("validation", () => {
           $validator() {
             return promise;
           },
-          $message: ref("Err")
-        }
-      }
+          $message: ref("Err"),
+        },
+      },
     });
 
     v.password.$value;
@@ -178,15 +182,15 @@ describe("validation", () => {
         },
         match() {
           throw Error("error 2");
-        }
-      }
+        },
+      },
     });
     v.input.$value = "1";
     await nextTick();
 
     expect(v.input.$errors).toStrictEqual([
       new Error("error 1"),
-      new Error("error 2")
+      new Error("error 2"),
     ]);
   });
 
@@ -199,19 +203,107 @@ describe("validation", () => {
           $validator(x: string) {
             return false;
           },
-          $message
-        }
+          $message,
+        },
       },
       otherInput: {
         $value: "",
         required(x: string) {
           return false;
-        }
-      }
+        },
+      },
     });
 
     expect(v.input.$errors).toMatchObject([$message]);
     expect(v.otherInput.$errors).toMatchObject([]);
+  });
+
+  describe("object", () => {
+    it("should convert to object", () => {
+      const v = useValidation({
+        input: {
+          $value: "",
+          required: {
+            $validator(x: string) {
+              return false;
+            },
+            $message: "test",
+          },
+        },
+        otherInput: {
+          $value: "",
+          required(x: string) {
+            return false;
+          },
+        },
+      });
+
+      expect(v.toObject()).toMatchObject({ input: "", otherInput: "" });
+
+      v.input.$value = "test";
+      v.otherInput.$value = "other";
+
+      expect(v.toObject()).toMatchObject({
+        input: "test",
+        otherInput: "other",
+      });
+
+      expect(v.input.toObject()).toBe("test");
+    });
+
+    it("should convert to object even on nested validations", () => {
+      const v = useValidation({
+        address: {
+          address1: {
+            $value: "address1",
+          },
+          address2: {
+            part1: {
+              $value: "part1",
+            },
+            part2: {
+              $value: "part2",
+            },
+          },
+        },
+      });
+      expect(v.toObject()).toMatchObject({
+        address: {
+          address1: "address1",
+          address2: {
+            part1: "part1",
+            part2: "part2",
+          },
+        },
+      });
+
+      v.address.address2.part1.$value = "1";
+
+      expect(v.toObject()).toMatchObject({
+        address: {
+          address1: "address1",
+          address2: {
+            part1: "1",
+            part2: "part2",
+          },
+        },
+      });
+
+      expect(v.address.toObject()).toMatchObject({
+        address1: "address1",
+        address2: {
+          part1: "1",
+          part2: "part2",
+        },
+      });
+
+      expect(v.address.address1.toObject()).toBe(v.address.address1.$value);
+
+      expect(v.address.address2.toObject()).toMatchObject({
+        part1: "1",
+        part2: "part2",
+      });
+    });
   });
 
   describe("render", () => {
@@ -223,9 +315,9 @@ describe("validation", () => {
           required,
           otherRequired: {
             $validator: required,
-            $message: ref("password is required")
-          }
-        }
+            $message: ref("password is required"),
+          },
+        },
       });
 
       const { mount } = createVue({
@@ -245,9 +337,9 @@ describe("validation", () => {
         `,
         setup() {
           return {
-            form
+            form,
           };
-        }
+        },
       });
 
       const vm = mount();

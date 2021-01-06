@@ -84,7 +84,9 @@ export default defineComponent({
       if (form.$anyInvalid) {
         alert("invalid form");
       } else {
-        alert("submit form");
+        const o = form.toObject();
+        alert(`submit form "${JSON.stringify(o)}"`);
+        console.log("submitted", o);
       }
     };
 
