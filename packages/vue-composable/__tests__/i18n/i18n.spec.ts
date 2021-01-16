@@ -10,7 +10,7 @@ jest.mock("../../src/api", () => ({
     ? jest.requireActual("../../src/api.2")
     : jest.requireActual("../../src/api.3")),
   provide: provideSpy,
-  inject: injectSpy
+  inject: injectSpy,
 }));
 
 // import Vue from "vue";
@@ -35,21 +35,21 @@ describe("i18n", () => {
           hello: "hello world",
           helloName: "Hello {name}",
           version: "My version is",
-          ref: ref("Hey")
+          ref: ref("Hey"),
         },
         pt: {
           hello: "Olá mundo",
           helloName: "Olá {name}",
-          ref: ref("Boas")
-        }
-      }
+          ref: ref("Boas"),
+        },
+      },
     });
 
     expect(x.i18n.value).toMatchObject({
       hello: "hello world",
       helloName: "Hello {name}",
       version: "My version is",
-      ref: "Hey"
+      ref: "Hey",
     });
 
     expect(x.$t("hello").value).toBe("hello world");
@@ -66,7 +66,7 @@ describe("i18n", () => {
       hello: "Olá mundo",
       helloName: "Olá {name}",
       version: "My version is",
-      ref: "Boas"
+      ref: "Boas",
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");
@@ -81,11 +81,33 @@ describe("i18n", () => {
       hello: "Olá mundo",
       helloName: "Olá {name}",
       version: "My version is",
-      ref: "Boas"
+      ref: "Boas",
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");
     expect(x.$t("helloName", { name: "pikax" }).value).toBe("Olá pikax");
+  });
+
+  // #729
+  it("should work with module import and not import `default` key", async () => {
+    let loaded = false;
+    const x = buildI18n({
+      locale: "en",
+      fallback: "en",
+      messages: {
+        en: () =>
+          import("./i18n.test.json").then((x) => {
+            loaded = true;
+            return x;
+          }),
+      },
+    });
+
+    while (!loaded) {
+      await promisedTimeout(10);
+    }
+
+    expect(x.i18n.value.default).toBeUndefined();
   });
 
   describe("fallback", () => {
@@ -94,9 +116,9 @@ describe("i18n", () => {
         locale: "en",
         messages: {
           en: {
-            hello: "hello world"
-          }
-        }
+            hello: "hello world",
+          },
+        },
       });
 
       const path = "hello.moto.how.are.you";
@@ -109,12 +131,12 @@ describe("i18n", () => {
         locale: "pt",
         messages: {
           en: {
-            hello: "hello world"
+            hello: "hello world",
           },
           pt: {
-            helloName: "Olá {name}"
-          }
-        }
+            helloName: "Olá {name}",
+          },
+        },
       });
 
       expect((x.i18n.value as any).hello).toBeUndefined();
@@ -127,12 +149,12 @@ describe("i18n", () => {
         notFoundFallback: false,
         messages: {
           en: {
-            hello: "hello world"
+            hello: "hello world",
           },
           pt: {
-            helloName: "Olá {name}"
-          }
-        }
+            helloName: "Olá {name}",
+          },
+        },
       });
 
       expect((x.i18n.value as any).hello).toBeUndefined();
@@ -145,8 +167,8 @@ describe("i18n", () => {
       fallback: "en",
       messages: {
         en: { hello: "Hello" },
-        jp: {}
-      }
+        jp: {},
+      },
     });
 
     await nextTick();
@@ -163,14 +185,14 @@ describe("i18n", () => {
             hello: "hello world",
             helloName: "Hello {name}",
             version: "My version is",
-            ref: ref("Hey")
+            ref: ref("Hey"),
           }),
         pt: () => ({
           hello: "Olá mundo",
           helloName: "Olá {name}",
-          ref: ref("Boas")
-        })
-      }
+          ref: ref("Boas"),
+        }),
+      },
     });
 
     await promisedTimeout(10);
@@ -181,7 +203,7 @@ describe("i18n", () => {
       hello: "hello world",
       helloName: "Hello {name}",
       version: "My version is",
-      ref: "Hey"
+      ref: "Hey",
     });
 
     expect(x.$t("hello").value).toBe("hello world");
@@ -198,7 +220,7 @@ describe("i18n", () => {
       hello: "Olá mundo",
       helloName: "Olá {name}",
       version: "My version is",
-      ref: "Boas"
+      ref: "Boas",
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");
@@ -213,7 +235,7 @@ describe("i18n", () => {
       hello: "Olá mundo",
       helloName: "Olá {name}",
       version: "My version is",
-      ref: "Boas"
+      ref: "Boas",
     });
 
     expect(x.$t("hello").value).toBe("Olá mundo");
@@ -226,7 +248,7 @@ describe("i18n", () => {
       hello: "hello world",
       helloName: "Hello {name}",
       version: "My version is",
-      ref: "Hey"
+      ref: "Hey",
     });
   });
 
@@ -243,14 +265,14 @@ describe("i18n", () => {
           hello: "hello world",
           helloName: "Hello {name}",
           version: "My version is",
-          ref: ref("Hey")
+          ref: ref("Hey"),
         },
         pt: {
           hello: "Olá mundo",
           helloName: "Olá {name}",
-          ref: ref("Boas")
-        }
-      }
+          ref: ref("Boas"),
+        },
+      },
     });
 
     expect($t("x", { a: 1 }).value).toBe("hello x 1");
@@ -260,7 +282,7 @@ describe("i18n", () => {
   it("should add/remove locales", async () => {
     const pt = {
       hello: "Olá mundo",
-      helloName: "Olá {name}"
+      helloName: "Olá {name}",
     };
     const x = buildI18n({
       locale: "en",
@@ -268,9 +290,9 @@ describe("i18n", () => {
       messages: {
         en: {
           hello: "hello world",
-          helloName: "Hello {name}"
-        }
-      }
+          helloName: "Hello {name}",
+        },
+      },
     });
 
     x.removeLocale("pt" as any);
@@ -284,7 +306,7 @@ describe("i18n", () => {
 
     expect(x.i18n.value).toMatchObject({
       hello: "hello world",
-      helloName: "Hello {name}"
+      helloName: "Hello {name}",
     });
 
     x.addLocale("pt", pt);
@@ -296,7 +318,7 @@ describe("i18n", () => {
 
     const overridePT = {
       hello: "Oi",
-      helloName: "Oi {name}"
+      helloName: "Oi {name}",
     };
 
     x.addLocale("pt", overridePT);
@@ -374,9 +396,9 @@ describe("i18n", () => {
             hello: "hello world",
             helloName: "Hello {name}",
             version: "My version is",
-            ref: ref("Hey")
-          }
-        }
+            ref: ref("Hey"),
+          },
+        },
       };
       const x = setI18n(i18n);
 
@@ -384,7 +406,7 @@ describe("i18n", () => {
         hello: "hello world",
         helloName: "Hello {name}",
         version: "My version is",
-        ref: "Hey"
+        ref: "Hey",
       });
       expect(provideSpy).toHaveBeenCalledWith(expect.anything(), x);
     });
@@ -398,16 +420,16 @@ describe("i18n", () => {
             hello: "hello world",
             helloName: "Hello {name}",
             version: "My version is",
-            ref: ref("Hey")
-          }
-        }
+            ref: ref("Hey"),
+          },
+        },
       });
 
       expect(x.i18n.value).toMatchObject({
         hello: "hello world",
         helloName: "Hello {name}",
         version: "My version is",
-        ref: "Hey"
+        ref: "Hey",
       });
       expect(injectSpy).not.toHaveBeenCalled();
     });

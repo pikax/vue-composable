@@ -22,10 +22,9 @@ import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
 // istanbul ignore next
 // Symbol used to inject/provide the i18n values
-const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<
-  string[],
-  string
->> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
+const I18n_ACCESS_SYMBOL: InjectionKey<
+  i18nResult<string[], string>
+> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
 
 /**
  * i18n key and message value
@@ -228,7 +227,10 @@ export function buildI18n<
 
     let m = isFunction(l) ? (l as Function)() : l;
     if (isPromise(m)) {
-      return m.then((x) => (cache[locale] = wrap<i18n>(x)));
+      return m.then((x) => {
+        //TODO check if this works
+        return (cache[locale] = wrap<i18n>("__esModule" in x ? x.default : x));
+      });
     }
 
     // if it was function we don't keep track on that
