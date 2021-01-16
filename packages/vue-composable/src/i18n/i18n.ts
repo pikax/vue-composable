@@ -22,10 +22,9 @@ import { usePath, useFormat, FormatObject, FormatValue } from "../format";
 
 // istanbul ignore next
 // Symbol used to inject/provide the i18n values
-const I18n_ACCESS_SYMBOL: InjectionKey<i18nResult<
-  string[],
-  string
->> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
+const I18n_ACCESS_SYMBOL: InjectionKey<
+  i18nResult<string[], string>
+> = /*#__PURE__*/ Symbol((__DEV__ && "I18n") || ``);
 
 /**
  * i18n key and message value
@@ -97,7 +96,11 @@ export interface i18nDefinition<TMessage> {
    * Object containing locale and messages for locale
    */
   messages: {
-    [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
+    [K in keyof TMessage]:
+      | i18n
+      | (() => Promise<i18n>)
+      | (() => i18n)
+      | Promise<i18n>;
   };
 
   /**
@@ -213,6 +216,13 @@ export function buildI18n<
 
   const cache: Record<string, Ref<i18n>> = {};
 
+  const retrieveLocaleValue = (x: any) => {
+    return ("__esModule" in x || x[Symbol.toStringTag] === "Module") &&
+      "default" in x
+      ? x.default
+      : x;
+  };
+
   const loadLocale = (
     locale: string,
     messages: typeof localeMessages
@@ -228,16 +238,19 @@ export function buildI18n<
 
     let m = isFunction(l) ? (l as Function)() : l;
     if (isPromise(m)) {
-      return m.then((x) => (cache[locale] = wrap<i18n>(x)));
+      return m.then((x) => {
+        return (cache[locale] = wrap(retrieveLocaleValue(x)));
+      });
     }
 
     // if it was function we don't keep track on that
     if (isFunction(l)) {
-      return wrap(m);
+      // return wrap(m)
+      return wrap(retrieveLocaleValue(m));
     }
 
-    return (cache[locale] = computed(
-      () => (messages.value as any)[locale as any]
+    return (cache[locale] = computed(() =>
+      retrieveLocaleValue((messages.value as any)[locale as any])
     ) as any);
   };
 
