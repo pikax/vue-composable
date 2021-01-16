@@ -100,7 +100,7 @@ type ValidationOutput<T extends Record<string, any>> = T extends {
 type ValidationOutputObject<T extends Record<string, any>> = T extends {
   $value: any;
 }
-  ? T["$value"]
+  ? UnwrapRef<T["$value"]>
   : { [K in keyof T]: ValidationOutputObject<T[K]> };
 
 /* /Output */
