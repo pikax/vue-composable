@@ -1,3 +1,9 @@
+# [1.0.0-beta.15](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-01-16)
+
+### Bug Fixes
+
+- **i18n:** do not import default when importing a json as a module ([#732](https://github.com/pikax/vue-composable/issues/732)) ([1ef0912](https://github.com/pikax/vue-composable/commit/1ef09126e507d1464176f0ad059fc6a01d1eda4c))
+
 # [1.0.0-beta.14](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-01-06)
 
 ### Features

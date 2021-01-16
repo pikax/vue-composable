@@ -481,7 +481,11 @@ export interface i18nDefinition<TMessage> {
   fallback?: keyof TMessage;
   locale: keyof TMessage;
   messages: {
-    [K in keyof TMessage]: i18n | (() => Promise<i18n>) | (() => i18n);
+    [K in keyof TMessage]:
+      | i18n
+      | (() => Promise<i18n>)
+      | (() => i18n)
+      | Promise<i18n>;
   };
   notFoundFallback?: boolean;
   resolve?: i18nResolver;
