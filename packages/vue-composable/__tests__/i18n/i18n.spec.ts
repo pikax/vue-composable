@@ -89,25 +89,156 @@ describe("i18n", () => {
   });
 
   // #729
-  it("should work with module import and not import `default` key", async () => {
-    let loaded = false;
-    const x = buildI18n({
-      locale: "en",
-      fallback: "en",
-      messages: {
-        en: () =>
-          import("./i18n.test.json").then((x) => {
-            loaded = true;
-            return x;
+  describe("should support esmodule import by importing 'default'", () => {
+    it("should work with () => import('./any.json')", async () => {
+      const x = buildI18n({
+        locale: "vite",
+        messages: {
+          vite: () =>
+            Promise.resolve({
+              [Symbol.toStringTag]: "Module",
+              default: {
+                message: "default vite",
+              },
+              message: "wrong vite",
+            }),
+          //@ts-ignore
+          babel: () =>
+            Promise.resolve({
+              __esModule: true,
+              default: {
+                message: "default babel",
+              },
+              message: "wrong babel",
+            }),
+
+          regular: () =>
+            Promise.resolve({
+              default: {
+                message: "default regular",
+              },
+              message: "correct",
+            }),
+        },
+      });
+
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default vite");
+
+      x.locale.value = "babel";
+
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default babel");
+
+      x.locale.value = "regular";
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeDefined();
+      // @ts-expect-error doesn't match with the main type
+      expect(x.i18n.value.default.message).toBe("default regular");
+      expect(x.i18n.value.message).toBe("correct");
+    });
+    it("should work with import('./any.json')", async () => {
+      const x = buildI18n({
+        locale: "vite",
+        messages: {
+          vite: Promise.resolve({
+            [Symbol.toStringTag]: "Module",
+            default: {
+              message: "default vite",
+            },
+            message: "wrong vite",
           }),
-      },
+          //@ts-ignore
+          babel: Promise.resolve({
+            __esModule: true,
+            default: {
+              message: "default babel",
+            },
+            message: "wrong babel",
+          }),
+
+          regular: Promise.resolve({
+            default: {
+              message: "default regular",
+            },
+            message: "correct",
+          }),
+        },
+      });
+
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default vite");
+
+      x.locale.value = "babel";
+
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default babel");
+
+      x.locale.value = "regular";
+      await promisedTimeout(5);
+
+      expect(x.i18n.value.default).toBeDefined();
+      // @ts-expect-error doesn't match with the main type
+      expect(x.i18n.value.default.message).toBe("default regular");
+      expect(x.i18n.value.message).toBe("correct");
     });
 
-    while (!loaded) {
-      await promisedTimeout(10);
-    }
+    it("should support modules imported before hand", async () => {
+      const x = buildI18n({
+        locale: "vite",
+        messages: {
+          vite: {
+            [Symbol.toStringTag]: "Module",
+            default: {
+              message: "default vite",
+            },
+            message: "wrong vite",
+          },
+          //@ts-ignore
+          babel: {
+            //@ts-ignore
+            __esModule: true,
+            default: {
+              message: "default babel",
+            },
+            message: "wrong babel",
+          },
 
-    expect(x.i18n.value.default).toBeUndefined();
+          regular: {
+            default: {
+              message: "default regular",
+            },
+            message: "correct",
+          },
+        },
+      });
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default vite");
+
+      x.locale.value = "babel";
+      await Promise.resolve();
+
+      expect(x.i18n.value.default).toBeUndefined();
+      expect(x.i18n.value.message).toBe("default babel");
+
+      x.locale.value = "regular";
+      await Promise.resolve();
+
+      expect(x.i18n.value.default).toBeDefined();
+      // @ts-expect-error doesn't match with the main type
+      expect(x.i18n.value.default.message).toBe("default regular");
+      expect(x.i18n.value.message).toBe("correct");
+    });
   });
 
   describe("fallback", () => {
