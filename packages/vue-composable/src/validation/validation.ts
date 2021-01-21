@@ -101,7 +101,11 @@ type ValidationOutputObject<T extends Record<string, any>> = T extends {
   $value: any;
 }
   ? UnwrapRef<T["$value"]>
-  : { [K in keyof T]: ValidationOutputObject<T[K]> };
+  : {
+      [K in keyof T & string as K extends `$${string}`
+        ? never
+        : K]: ValidationOutputObject<T[K]>;
+    };
 
 /* /Output */
 

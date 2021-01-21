@@ -304,6 +304,21 @@ describe("validation", () => {
         part2: "part2",
       });
     });
+
+    it("should not keep keys starting with '$'", () => {
+      const v = useValidation({
+        $test: "ddd",
+        age: {
+          $value: 20,
+        },
+      }).toObject();
+
+      //@ts-expect-error not to be defined
+      expect(v.$test).toBe(undefined);
+      expect(v).toStrictEqual({
+        age: 20,
+      });
+    });
   });
 
   describe("render", () => {
