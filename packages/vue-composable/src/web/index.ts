@@ -11,4 +11,5 @@ export * from "./cssVariables";
 export * from "./worker";
 export * from "./share";
 export * from "./clipboard";
+export * from "./timeout";
 export { useWorkerFunction, WebWorkerFunctionOptions } from "./workerFunction";
