@@ -2,15 +2,8 @@ import { useTimeout } from "../../src";
 import { createVue } from "../utils";
 import { Ref, ref } from "../../src/api";
 
-function sleep(duration: number): Promise<boolean> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, duration);
-  });
-}
-
 describe("timeout", () => {
+  jest.useFakeTimers();
   it("should be defined", () => {
     expect(useTimeout).toBeDefined();
   });
@@ -22,7 +15,11 @@ describe("timeout", () => {
     }, 1000);
 
     expect(count).toBe(0);
-    await sleep(1000);
+    jest.advanceTimersByTime(900);
+    // should not be resolved
+    expect(count).toBe(0);
+
+    jest.advanceTimersByTime(100);
     expect(count).toBe(1);
   });
 
@@ -30,7 +27,7 @@ describe("timeout", () => {
     const { ready } = useTimeout(() => {}, 1000);
 
     expect(ready.value).toBe(false);
-    await sleep(1000);
+    jest.advanceTimersByTime(1000);
     expect(ready.value).toBe(true);
   });
 
@@ -45,7 +42,7 @@ describe("timeout", () => {
 
     cancel();
 
-    await sleep(1000);
+    jest.advanceTimersByTime(1000);
     expect(ready.value).toBe(null);
     expect(count).toBe(0);
   });
@@ -63,10 +60,21 @@ describe("timeout", () => {
     mount();
 
     expect(ready.value).toBe(false);
-    await sleep(1000);
-    expect(ready.value).toBe(true);
+    jest.advanceTimersByTime(500);
+    expect(ready.value).toBe(false);
 
     destroy();
     expect(ready.value).toBe(null);
+  });
+
+  it("should default the delay to 0", () => {
+    let count = 0;
+    useTimeout(() => {
+      count++;
+    });
+
+    expect(count).toBe(0);
+    jest.runOnlyPendingTimers();
+    expect(count).toBe(1);
   });
 });
