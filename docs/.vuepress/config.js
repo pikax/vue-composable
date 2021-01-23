@@ -215,6 +215,7 @@ module.exports = {
             ["composable/web/worker", "WebWorker API"],
             ["composable/web/workerFunction", "WebWorker Function"],
             ["composable/web/share", "WebShare API"],
+            ["composable/web/timeout", "Timeout"],
           ],
         },
         {
