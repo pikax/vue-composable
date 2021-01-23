@@ -1,3 +1,9 @@
+# [1.0.0-beta.16](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-01-23)
+
+### Features
+
+- **useTimeout:** add a new composable ([#740](https://github.com/pikax/vue-composable/issues/740)) ([e40ea53](https://github.com/pikax/vue-composable/commit/e40ea53fe6564402ab53f3c390c3499be4ffcabd))
+
 # [1.0.0-beta.15](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-01-16)
 
 ### Bug Fixes

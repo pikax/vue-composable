@@ -2211,6 +2211,11 @@ export function useTimeline<T>(
   options?: Partial<TimelineOptions<T>>
 ): DeepReadonly<Ref<TimelineEntry<T>[]>>;
 
+// Warning: (ae-forgotten-export) The symbol "UseTimeoutReturn" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function useTimeout(fn: () => void, delay?: number): UseTimeoutReturn;
+
 // @public (undocumented)
 export function useTitle(overrideTitle?: string | null): Ref<string | null>;
 
