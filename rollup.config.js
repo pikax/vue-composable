@@ -44,7 +44,13 @@ const configs = {
   esm: {
     file: resolve(`dist/v${vueVersion}/${name}.esm.js`),
     format: `es`,
-    external: ["vue", "@vue/composition-api", "axios", "@vue/devtools-api"],
+    external: [
+      "vue",
+      "@vue/composition-api",
+      "axios",
+      "@vue/devtools-api",
+      "js-cookie",
+    ],
   },
 };
 
@@ -56,6 +62,7 @@ const setup = {
       "axios",
       "@vue/runtime-core",
       "@vue/devtools-api",
+      "js-cookie",
     ],
     plugins: [
       resolvePlugin({

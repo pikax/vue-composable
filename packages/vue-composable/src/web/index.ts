@@ -12,4 +12,5 @@ export * from "./worker";
 export * from "./share";
 export * from "./clipboard";
 export * from "./timeout";
+export * from "./cookie";
 export { useWorkerFunction, WebWorkerFunctionOptions } from "./workerFunction";
