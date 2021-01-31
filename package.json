@@ -96,9 +96,5 @@
     "vuepress": "^1.8.0",
     "yorkie": "^2.0.0",
     "zlib": "^1.0.5"
-  },
-  "dependencies": {
-    "@types/js-cookie": "^2.2.6",
-    "js-cookie": "^2.2.1"
   }
 }

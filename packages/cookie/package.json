@@ -1,0 +1,57 @@
+{
+  "name": "@vue-composable/cookie",
+  "version": "1.0.0-beta.16",
+  "description": "@vue-composable/cookie",
+  "main": "index.js",
+  "module": "dist/cookie.esm-bundler.js",
+  "unpkg": "dist/cookie.global.js",
+  "files": [
+    "index.js",
+    "scripts"
+  ],
+  "types": "dist/cookie.d.ts",
+  "buildOptions": {
+    "priotity": 201,
+    "name": "vueComposableCookie",
+    "formats": [
+      "esm-bundler",
+      "cjs",
+      "global"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikax/vue-composable.git"
+  },
+  "keywords": [
+    "vue",
+    "composition-api",
+    "vue-composable",
+    "composable",
+    "cookie"
+  ],
+  "author": "jy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pikax/vue-composable/issues"
+  },
+  "homepage": "https://pikax.me/vue-composable/composable/external/cookie.html",
+  "sideEffects": false,
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "bin": {
+    "vue-composable-cookie-fix": "./scripts/postinstall.js"
+  },
+  "dependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "js-cookie": "^2.2.1",
+    "vue-composable": "^1.0.0-beta.16"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
+    "@vue/runtime-core": "^3.0.5",
+    "typescript": "^4.1.3"
+  }
+}

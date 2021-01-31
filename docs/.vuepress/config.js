@@ -216,7 +216,6 @@ module.exports = {
             ["composable/web/workerFunction", "WebWorker Function"],
             ["composable/web/share", "WebShare API"],
             ["composable/web/timeout", "Timeout"],
-            ["composable/web/cookie", "Cookie"],
           ],
         },
         {
@@ -254,6 +253,7 @@ module.exports = {
           children: [
             ["composable/external/axios", "axios"],
             ["composable/external/makeAxios", "makeAxios"],
+            ["composable/external/cookie", "cookie"],
           ],
         },
       ],

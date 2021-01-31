@@ -5,14 +5,14 @@
       <button @click="updateCookie">Update Cookie</button>
     </p>
     <p>
-      <button @click="removeCookie">Remove Cookie</button>
+      <button @click="deleteCookie">Remove Cookie</button>
     </p>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "@vue/composition-api";
-import { useCookie } from "vue-composable";
+import { useCookie } from "@vue-composable/cookie";
 
 export default defineComponent({
   name: "cookie-example",
@@ -26,11 +26,15 @@ export default defineComponent({
       cookie.value = `my-cookie-${++idx}`;
     }
 
+    function deleteCookie() {
+      removeCookie();
+    }
+
     return {
       cookie,
 
       updateCookie,
-      removeCookie,
+      deleteCookie,
     };
   },
 });

@@ -1,5 +1,5 @@
-import { ref, Ref, watch } from "../api";
-import { isUndefined, isNull } from "../utils";
+import { ref, Ref, watch } from "./api";
+import { isUndefined, isNull } from "./utils";
 import Cookies from "js-cookie";
 
 interface UseCookieReturn {
@@ -14,6 +14,7 @@ export function useCookie(
   defaultOptions?: Cookies.CookieAttributes
 ): UseCookieReturn {
   let cookie: Ref<string | undefined | null> = ref(null);
+  let _options: Cookies.CookieAttributes | undefined;
 
   let value = Cookies.get(key);
   if (isUndefined(value)) {
@@ -21,6 +22,7 @@ export function useCookie(
 
     if (!isUndefined(defaultValue) && !isNull(defaultValue)) {
       Cookies.set(key, defaultValue, defaultOptions);
+      _options = defaultOptions;
     }
   } else {
     cookie.value = value;
@@ -28,21 +30,28 @@ export function useCookie(
 
   const setCookie = (newValue: string, options?: Cookies.CookieAttributes) => {
     cookie.value = newValue;
-    Cookies.set(key, newValue, options);
+    _options = options;
+    Cookies.set(key, cookie.value, _options);
   };
 
-  const removeCookie = (options?: Cookies.CookieAttributes) => {
+  const removeCookie = () => {
     cookie.value = undefined;
-    Cookies.remove(key, options);
+    Cookies.remove(key, _options);
   };
 
-  watch(cookie, (cookie, prevCookie) => {
-    if (isUndefined(cookie) || isNull(cookie)) {
-      removeCookie();
-    } else if (cookie !== prevCookie) {
-      setCookie(cookie);
+  watch(
+    cookie,
+    (cookie, prevCookie) => {
+      if (isUndefined(cookie) || isNull(cookie)) {
+        Cookies.remove(key, _options);
+      } else if (cookie !== prevCookie) {
+        Cookies.set(key, cookie, _options);
+      }
+    },
+    {
+      deep: true,
     }
-  });
+  );
 
   return {
     cookie,
