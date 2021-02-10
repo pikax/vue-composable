@@ -149,6 +149,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 - [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
+- [useCookie](https://pikax.me/vue-composable/composable/external/useCookie) - [@vue-composable/cookie](https://www.npmjs.com/package/@vue-composable/cookie) `js-cookie` wrapper
 
 ## Information
 
@@ -174,7 +175,7 @@ app.use(VueComposableDevtools);
 // or
 app.use(VueComposableDevtools, {
   id: "vue-composable",
-  label: "devtool composables"
+  label: "devtool composables",
 });
 
 app.mount("#app");
@@ -189,10 +190,10 @@ To add properties to the component inspector tab
 const bar = "bar";
 useDevtoolsComponentState(
   {
-    bar
+    bar,
   },
   {
-    type: "custom composable" // change group
+    type: "custom composable", // change group
   }
 );
 
@@ -220,14 +221,14 @@ useDevtoolsComponentState([
     key: "_bar",
     type: "direct",
     value: "bar",
-    editable: true
+    editable: true,
   },
   {
     key: "_baz",
     type: "direct",
     value: "baz",
-    editable: false
-  }
+    editable: false,
+  },
 ]);
 
 // raw change
@@ -238,14 +239,14 @@ useDevtoolsComponentState((payload, ctx) => {
         key: "_bar",
         type: "raw",
         value: "bar",
-        editable: true
+        editable: true,
       },
       {
         key: "_baz",
         type: "raw",
         value: "baz",
-        editable: false
-      }
+        editable: false,
+      },
     ]
   );
 });
@@ -274,7 +275,7 @@ addEvent({
   },
   meta: {
     // meta object
-  }
+  },
 });
 
 // adds event with `time: Date.now()`
@@ -284,7 +285,7 @@ pushEvent({
   },
   meta: {
     // meta object
-  }
+  },
 });
 ```
 
@@ -298,7 +299,7 @@ Allows to create a new inspector for your data.
 useDevtoolsInspector(
   {
     id: "vue-composable",
-    label: "test vue-composable"
+    label: "test vue-composable",
   },
   // list of nodes, this can be reactive
   [
@@ -313,11 +314,11 @@ useDevtoolsInspector(
             key: "count",
             objectType: "Ref",
             type: "setup",
-            value: myRefValue
-          }
-        ]
-      }
-    }
+            value: myRefValue,
+          },
+        ],
+      },
+    },
   ]
 );
 ```

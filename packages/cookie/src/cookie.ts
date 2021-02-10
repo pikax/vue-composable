@@ -1,6 +1,6 @@
 import { ref, Ref, watch } from "./api";
-import { isUndefined, isNull } from "./utils";
 import Cookies from "js-cookie";
+import { isNull, isUndefined } from "vue-composable";
 
 interface UseCookieReturn {
   cookie: Ref<string | undefined | null>;

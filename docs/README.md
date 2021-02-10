@@ -150,7 +150,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [Axios](composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 - [makeAxios](composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
-- [Cookie](composable/external/cookie) - reactive `js-cookie` wrapper
+- [useCookie](https://pikax.me/vue-composable/composable/external/useCookie) - [@vue-composable/cookie](https://www.npmjs.com/package/@vue-composable/cookie) `js-cookie` wrapper
 
 ## Usage
 
