@@ -42,44 +42,44 @@ Check our [documentation](https://pikax.me/vue-composable/composable/external/co
 ```vue
 <template>
   <div>
-    <p>current Id {{ id }}</p>
+    cookie value: {{ cookie }}
     <p>
-      <button @click="id--">prev</button>
-      <button @click="id++">next</button>
+      <button @click="updateCookie">Update Cookie</button>
     </p>
-    <p v-if="loading">loading...</p>
-    <div v-else>
-      <p>Status: {{ status }}</p>
-      {{ data }}
-    </div>
+    <p>
+      <button @click="deleteCookie">Remove Cookie</button>
+    </p>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "@vue/runtime-core";
-import { useAxios } from "@vue-composable/axios";
+import { defineComponent } from "@vue/composition-api";
+import { useCookie } from "@vue-composable/cookie";
 
-export default {
-  name: "axios-example",
+export default defineComponent({
+  name: "cookie-example",
+
   setup() {
-    const id = ref(1);
-    const { data, loading, exec, error, status } = useAxios();
+    let idx = 0;
 
-    watch(id, (id) => {
-      exec({
-        method: "GET",
-        url: "https://reqres.in/api/user/" + id,
-      });
-    });
+    let { cookie, setCookie, removeCookie } = useCookie("my-cookie");
+
+    function updateCookie() {
+      cookie.value = `my-cookie-${++idx}`;
+    }
+
+    function deleteCookie() {
+      removeCookie();
+    }
 
     return {
-      id,
-      data,
-      loading,
-      status,
+      cookie,
+
+      updateCookie,
+      deleteCookie,
     };
   },
-};
+});
 </script>
 ```
 
