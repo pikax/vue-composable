@@ -60,6 +60,8 @@ type ValidatorObject<T> = {
 // typed validationObject
 type ValidationObject<T> = {
   $value: T | Ref<T>;
+  $touch(): void;
+  $reset(): void;
 } & Record<string, ValidatorFunction<T> | ValidatorObject<T>>;
 
 const validationUsername = useValidation({
@@ -119,6 +121,8 @@ interface ValidationValue<T> {
   $errors: any[]; // array of errors
 
   toObject(): T;
+  $touch(): void;
+  $reset(): void;
 }
 
 // validator
@@ -212,6 +216,9 @@ form.personal.$anyInvalid;
 form.personal.$errors;
 
 form.toObject(); // returns { settings: { email: '' }, personal: { name: { first: '', last: '' } } }
+
+form.$touch(); // sets all the validations to `$dirty: true`
+form.$reset(); // sets all the validations to `$dirty: false`
 ```
 
 ```ts

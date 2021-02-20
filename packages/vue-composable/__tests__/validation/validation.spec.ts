@@ -215,7 +215,7 @@ describe("validation", () => {
     });
 
     expect(v.input.$errors).toMatchObject([$message]);
-    expect(v.otherInput.$errors).toMatchObject([]);
+    expect(v.otherInput.$errors).toMatchObject([true]);
   });
 
   describe("object", () => {
@@ -400,6 +400,57 @@ describe("validation", () => {
       expect(otherRequired()!.textContent!.trim()).toBe(
         form.firstName.otherRequired.$message
       );
+    });
+  });
+
+  describe("touch/reset", () => {
+    it("should run validation", () => {
+      const required = (x: any) => !!x;
+      const v = useValidation({
+        test: {
+          $value: "",
+          required,
+        },
+        deep: {
+          v1: {
+            $value: "",
+            required,
+          },
+          v2: {
+            $value: "",
+            required,
+          },
+        },
+      });
+
+      expect(v.$anyDirty).toBe(false);
+
+      expect(v.test.$dirty).toBe(false);
+      expect(v.test.$anyInvalid).toBe(true);
+      v.test.$touch();
+      expect(v.test.$dirty).toBe(true);
+      v.test.$reset();
+      expect(v.test.$dirty).toBe(false);
+
+      expect(v.deep.v1.$dirty).toBe(false);
+      expect(v.deep.v2.$dirty).toBe(false);
+      v.deep.$touch();
+      expect(v.deep.v1.$dirty).toBe(true);
+      expect(v.deep.v2.$dirty).toBe(true);
+      v.deep.$reset();
+      expect(v.deep.v1.$dirty).toBe(false);
+      expect(v.deep.v2.$dirty).toBe(false);
+
+      v.$touch();
+      expect(v.$anyDirty).toBe(true);
+      expect(v.test.$dirty).toBe(true);
+      expect(v.deep.v1.$dirty).toBe(true);
+      expect(v.deep.v2.$dirty).toBe(true);
+      v.$reset();
+      expect(v.test.$dirty).toBe(false);
+      expect(v.deep.v1.$dirty).toBe(false);
+      expect(v.deep.v2.$dirty).toBe(false);
+      expect(v.$anyDirty).toBe(false);
     });
   });
 });

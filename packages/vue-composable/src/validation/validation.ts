@@ -27,8 +27,8 @@ interface ValidationValue<T> {
   $errors: Array<any>;
   $anyInvalid: boolean;
 
-  // $touch(): void;
-  // $reset(): void;
+  $touch(): void;
+  $reset(): void;
 }
 
 interface ValidatorResult {
@@ -40,6 +40,9 @@ interface ValidationGroupResult {
   $anyDirty: boolean;
   $errors: Array<any>;
   $anyInvalid: boolean;
+
+  $touch(): void;
+  $reset(): void;
 }
 
 interface ValidatorResultPromise {
@@ -132,7 +135,7 @@ const buildValidationFunction = (
 ) => {
   const $promise: Ref<Promise<boolean> | null> = ref(null);
   const $pending = ref(false);
-  const $error = ref<Error | string>();
+  const $error = ref<Error | string | true>();
   const $invalid = ref(false);
   let context: any = undefined;
 
@@ -147,7 +150,8 @@ const buildValidationFunction = (
         } else {
           $invalid.value = !result;
         }
-        $error.value = $invalid.value ? m.value : undefined;
+        // @ts-ignore
+        $error.value = $invalid.value ? m.value || true : undefined;
       } catch (e) {
         $invalid.value = true;
         throw e;
@@ -179,11 +183,17 @@ const buildValidationFunction = (
     );
   });
 
+  function $touch() {
+    onChange(r.value);
+  }
+
   return {
     $promise,
     $pending,
     $invalid,
     $error,
+
+    $touch,
   };
 };
 
@@ -196,12 +206,13 @@ const buildValidationValue = (
     ? v
     : { $validator: v, $message: undefined };
 
-  const { $pending, $promise, $invalid, $error } = buildValidationFunction(
-    r,
-    $validator,
-    ref($message),
-    handlers
-  );
+  const {
+    $pending,
+    $promise,
+    $invalid,
+    $error,
+    $touch,
+  } = buildValidationFunction(r, $validator, ref($message), handlers);
 
   return {
     $pending,
@@ -209,6 +220,7 @@ const buildValidationValue = (
     $promise,
     $invalid,
     $message,
+    $touch,
     ...$rest,
   } as any;
 };
@@ -234,6 +246,8 @@ const buildValidation = <T>(
         );
 
         (r as any)["$dirty"] = $dirty;
+        (r as any)["$reset"] = () => ($dirty.value = false);
+        (r as any)["$touch"] = () => ($dirty.value = true);
 
         // @ts-ignore
         r.toObject = () => unwrap($value);
@@ -251,13 +265,8 @@ const buildValidation = <T>(
         handlers
       );
 
-      r[k] = {
-        ...validation,
-        $value,
-        toObject() {
-          return unwrap($value);
-        },
-      } as any;
+      // @ts-expect-error no valid type
+      r[k] = validation;
     } else {
       const validation = buildValidation(
         (o as Record<string, any>)[k],
@@ -279,7 +288,7 @@ const buildValidation = <T>(
           validations
             .map((x) => x.$error)
             .map((x) => unwrap(x))
-            .filter(Boolean)
+            .filter((x) => x !== undefined)
         );
         // $anyDirty = computed(() => validations.some(x => !!x));
         $anyInvalid = computed(() =>
@@ -292,7 +301,6 @@ const buildValidation = <T>(
           return Object.keys(validation)
             .filter((x) => x[0] !== "$")
             .reduce((p, c) => {
-              debugger;
               //@ts-ignore
               p[c] = validation[c].toObject();
               return p;
@@ -305,7 +313,7 @@ const buildValidation = <T>(
         $errors = computed(() => {
           return validations
             .map((x) => unwrap(x.$errors))
-            .filter(Boolean)
+            .filter((x) => x !== undefined)
             .filter((x) => {
               return x.some(Boolean);
             });
@@ -313,7 +321,7 @@ const buildValidation = <T>(
         $anyDirty = computed(() => {
           return validations.some((x) => {
             return (
-              x.$anyDirty ||
+              unwrap(x.$anyDirty) ||
               (isBoolean(unwrap((x as any).$dirty)) &&
                 unwrap((x as any).$dirty))
             );
@@ -345,6 +353,21 @@ const buildValidation = <T>(
 
       if ($anyDirty) {
         (r[k] as any).$anyDirty = $anyDirty;
+
+        const keys = Object.keys(r[k]).filter(
+          (x) => x[0] !== "$" && isObject(r[k][x])
+        );
+        r[k].$touch = () => {
+          // r[k].
+          keys.forEach((m) => {
+            r[k][m].$touch?.();
+          });
+        };
+        r[k].$reset = () => {
+          keys.forEach((m) => {
+            r[k][m].$reset?.();
+          });
+        };
       }
     }
   }
