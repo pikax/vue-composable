@@ -701,6 +701,9 @@ export const isElement: (val: unknown) => val is Element;
 export const isFunction: (val: unknown) => val is Function;
 
 // @public (undocumented)
+export const isNull: (val: unknown) => val is null;
+
+// @public (undocumented)
 export const isNumber: (val: unknown) => val is number;
 
 // @public (undocumented)
@@ -714,6 +717,9 @@ export const isString: (val: unknown) => val is string;
 
 // @public (undocumented)
 export const isSymbol: (val: unknown) => val is symbol;
+
+// @public (undocumented)
+export const isUndefined: (val: unknown) => val is undefined;
 
 // @public (undocumented)
 export interface LocalStorageReturn<T> {

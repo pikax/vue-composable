@@ -253,6 +253,7 @@ module.exports = {
           children: [
             ["composable/external/axios", "axios"],
             ["composable/external/makeAxios", "makeAxios"],
+            ["composable/external/cookie", "cookie"],
           ],
         },
       ],
