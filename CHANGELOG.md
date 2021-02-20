@@ -1,3 +1,10 @@
+# [1.0.0-beta.17](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-02-20)
+
+### Features
+
+- **validation:** add `$touch`/`$reset` methods and some return changes ([7b3b83d](https://github.com/pikax/vue-composable/commit/7b3b83dded7c6edf62093c5d41401fd13bdecb7e)), closes [#753](https://github.com/pikax/vue-composable/issues/753)
+- add useCookie composable ([#745](https://github.com/pikax/vue-composable/issues/745)) ([03e6633](https://github.com/pikax/vue-composable/commit/03e6633b7f9f40d4383032782d347c5cf117a5be))
+
 # [1.0.0-beta.16](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-01-23)
 
 ### Features
