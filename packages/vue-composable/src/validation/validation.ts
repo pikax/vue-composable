@@ -360,12 +360,18 @@ const buildValidation = <T>(
         r[k].$touch = () => {
           // r[k].
           keys.forEach((m) => {
-            r[k][m].$touch?.();
+            const touch = r[k][m].$touch;
+            if (touch) {
+              touch();
+            }
           });
         };
         r[k].$reset = () => {
           keys.forEach((m) => {
-            r[k][m].$reset?.();
+            const reset = r[k][m].$reset;
+            if (reset) {
+              reset();
+            }
           });
         };
       }
