@@ -150,6 +150,7 @@ module.exports = {
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
+            ["composable/misc/interval", "interval"],
             ["composable/misc/injectFactory", "injectFactory"],
             ["composable/misc/lockScroll", "lockScroll"],
             ["composable/misc/refDebounced", "refDebounced"],
