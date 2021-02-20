@@ -26,6 +26,9 @@ interface ValidationValue<T> {
   $dirty: boolean;
   $errors: Array<any>;
   $anyInvalid: boolean;
+
+  // $touch(): void;
+  // $reset(): void;
 }
 
 interface ValidatorResult {
@@ -64,48 +67,52 @@ type UseValidation<T> = { [K in keyof T]: ValidationInput<T[K]> };
 
 /* Output */
 
-type ValidatorOutputFunc<
-  T extends ValidatorFunc<T>
-> = ReturnType<T> extends Promise<boolean>
-  ? ValidatorResult & ValidatorResultPromise
-  : ValidatorResult;
-
-type ValidatorOutput<
-  T extends Validator<E>,
-  E = any
-> = T extends ValidatorFunc<any>
-  ? ValidatorOutputFunc<T>
-  : T extends ValidatorObject<any>
-  ? ValidatorOutputFunc<T["$validator"]> & ValidatorResultMessage
+type ValidatorOutput<T, TValue> = T extends (
+  value?: TValue,
+  ctx?: any
+) => boolean
+  ? ReturnType<T> extends Promise<boolean>
+    ? ValidatorResultPromise & ValidatorResult
+    : ValidatorResult
+  : T extends { $validator: Function }
+  ? ValidatorOutput<T["$validator"], TValue> &
+      (T extends { $message: infer TM } ? { $message: TM } : {})
+  : T extends (...args: any) => infer TReturn
+  ? TReturn extends Promise<any>
+    ? ValidatorResultPromise & ValidatorResult
+    : ValidatorResult
   : never;
 
-// TODO variables started with $ are not treated as validators, not
-// sure how to do that on typescript :/
+type NonDollarSign<T> = T extends `$${infer _}` ? never : T;
 
-type ValidatorObjectOutput<T, TK extends keyof T> = {
-  [K in TK]: T[K] extends Validator<infer V> ? ValidatorOutput<T[K], V> : never;
-};
-
-type ValidationOutput<T extends Record<string, any>> = T extends {
-  $value: any;
+type ToObjectOutput<T extends Record<string, any>> = T extends {
+  $value: infer V;
 }
-  ? ValidationValue<T["$value"]> &
-      ValidatorObjectOutput<T, Exclude<keyof T, "$value">> & {
-        toObject(): T["$value"];
-      }
-  : { [K in keyof T]: ValidationOutput<T[K]> } & {
-      toObject(): ValidationOutputObject<T>;
-    };
-
-type ValidationOutputObject<T extends Record<string, any>> = T extends {
-  $value: any;
-}
-  ? UnwrapRef<T["$value"]>
+  ? UnwrapRef<V>
   : {
-      [K in keyof T & string as K extends `$${string}`
-        ? never
-        : K]: ValidationOutputObject<T[K]>;
+      [K in NonDollarSign<keyof T>]: ToObjectOutput<T[K]>;
     };
+
+type Validation<T extends Record<string, any>> = T extends {
+  $value: infer TV;
+}
+  ? {
+      [K in keyof Omit<T, "$value">]: K extends `$${infer _}`
+        ? UnwrapRef<T[K]>
+        : ValidatorOutput<T[K], TV>;
+    } & {
+      $value: UnwrapRef<TV>;
+    } & {
+      toObject(): UnwrapRef<TV>;
+    } & ValidationValue<TV> & { b: 1 }
+  : {
+      [K in keyof T]: K extends `$${infer _}`
+        ? UnwrapRef<T[K]>
+        : Validation<T[K]>;
+    } &
+      (NonDollarSign<keyof T> extends string
+        ? ValidationGroupResult & { toObject(): ToObjectOutput<T> }
+        : {});
 
 /* /Output */
 
@@ -209,8 +216,8 @@ const buildValidationValue = (
 const buildValidation = <T>(
   o: ValidationInput<T>,
   handlers: Array<Function>
-): Record<string, ValidationOutput<any>> => {
-  const r: Record<string, ValidationOutput<any>> = {};
+): Record<string, Validation<any>> => {
+  const r: Record<string, Validation<any>> = {};
   const $value: any | undefined = isValidation(o) ? wrap(o.$value) : undefined;
   for (const k of Object.keys(o)) {
     if (k[0] === "$") {
@@ -346,12 +353,14 @@ const buildValidation = <T>(
 
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
-): ValidationOutput<E> & ValidationGroupResult {
+): Validation<E> & ValidationGroupResult & { toObject(): ToObjectOutput<E> } {
   const handlers: Array<Function> = [];
   const validation = buildValidation({ input }, handlers);
   // convert to reactive, this will make it annoying to deconstruct, but
   // allows to use it directly on the render template without `.value`
   // https://github.com/vuejs/vue-next/pull/738
+
+  // @ts-expect-error TODO check this error
   const validationInput = reactive(validation.input);
   // set the context, this will allow to use this object as the second
   // argument when calling validators
