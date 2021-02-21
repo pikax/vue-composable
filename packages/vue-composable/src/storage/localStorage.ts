@@ -1,5 +1,5 @@
-import { Ref, ref } from "../api";
-import { RefTyped, NO_OP } from "../utils";
+import { Ref, ref, watchEffect } from "../api";
+import { RefTyped, NO_OP, unwrap } from "../utils";
 import { useWebStorage } from "./webStorage";
 
 export interface LocalStorageReturn<T> {
@@ -24,17 +24,17 @@ export interface LocalStorageReturn<T> {
 }
 
 export function useLocalStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
 export function useLocalStorage<T>(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
 export function useLocalStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<any>,
   sync?: boolean
 ) {
@@ -46,18 +46,21 @@ export function useLocalStorage(
   let storage = undefined;
 
   if (supported && store) {
-    setSync = s => store.setSync(key, s);
-    remove = () => store.removeItem(key);
+    setSync = (s) => store.setSync(unwrap(key), s);
+    remove = () => store.removeItem(unwrap(key));
     clear = () => store.clear();
 
-    storage = store.getItem(key);
-    if (!storage) {
-      storage = store.setItem(key, defaultValue);
+    storage = store.getRef(key);
+    if (storage.value == null) {
+      store.save(unwrap(key), defaultValue);
+      storage.value = defaultValue;
     }
 
-    if (sync !== false) {
-      setSync(true);
-    }
+    watchEffect(() => {
+      if (sync !== false) {
+        setSync(true);
+      }
+    });
   } else {
     /* istanbul ignore else */
     if (__DEV__) {
@@ -74,6 +77,6 @@ export function useLocalStorage(
 
     clear,
     remove,
-    setSync
+    setSync,
   };
 }

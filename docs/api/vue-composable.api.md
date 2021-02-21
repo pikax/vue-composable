@@ -1746,14 +1746,14 @@ export function useLanguage(): {
 
 // @public (undocumented)
 export function useLocalStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
 export function useLocalStorage<T>(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;
@@ -2235,13 +2235,16 @@ export function useUndo<T>(
 ): UndoReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "UseValidation" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ValidationOutput" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Validation" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ValidationGroupResult" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export function useValidation<T extends UseValidation<E>, E = any>(
   input: E
-): ValidationOutput<E> & ValidationGroupResult;
+): Validation<E> &
+  ValidationGroupResult & {
+    toObject(): ToObjectOutput<E>;
+  };
 
 // @public (undocumented)
 export function useValueSync<T>(
@@ -2348,9 +2351,12 @@ export interface WebStorage {
   $watchHandlers: Map<string, Function>;
   clear(): void;
   getItem<T = any>(key: string): Ref<T> | null;
+  getRef<T = any>(key: RefTyped<string>): Ref<T>;
   key(index: number): string | null;
   readonly length: number;
   removeItem(key: string): void;
+  // (undocumented)
+  save(key: string, value: any): void;
   setItem<T>(key: string, value: T): Ref<T>;
   // (undocumented)
   setSync(key: string, sync: boolean): void;
@@ -2392,6 +2398,10 @@ export function wrap<T>(o: RefTyped<T>): Ref<T>;
 
 // @public (undocumented)
 export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
+
+// Warnings were encountered during analysis:
+//
+// dist/v3/packages/vue-composable/src/validation/validation.d.ts:72:5 - (ae-forgotten-export) The symbol "ToObjectOutput" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 ```

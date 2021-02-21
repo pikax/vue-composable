@@ -10,11 +10,11 @@ import { useSessionStorage } from "vue-composable";
 const SessionStorage = useSessionStorage(key, defaultValue?, sync?);
 ```
 
-| Parameters   | Type                            | Required | Default     | Description                                         |
-| ------------ | ------------------------------- | -------- | ----------- | --------------------------------------------------- |
-| key          | `string|SessionStorageTyped<T>` | `true`   |             | Key that will be used to store in SessionStorage    |
-| defaultValue | `object`                        | `false`  | `undefined` | default value stored in the SessionStorage          |
-| sync         | `Boolean`                       | `false`  | `true`      | sets the storage to sync automatically between tabs |
+| Parameters   | Type                  | Required | Default     | Description                                         |
+| ------------ | --------------------- | -------- | ----------- | --------------------------------------------------- |
+| key          | `string, ref<string>` | `true`   |             | Key that will be used to store in SessionStorage    |
+| defaultValue | `object`              | `false`  | `undefined` | default value stored in the SessionStorage          |
+| sync         | `Boolean`             | `false`  | `true`      | sets the storage to sync automatically between tabs |
 
 ## State
 
@@ -90,9 +90,9 @@ export default {
       supported,
       tabSync,
       storage,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 

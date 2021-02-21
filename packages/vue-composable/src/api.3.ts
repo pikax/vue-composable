@@ -26,6 +26,7 @@ export {
   toRaw,
   DeepReadonly,
   customRef,
+  watchEffect,
 } from "@vue/runtime-core";
 
 // istanbul ignore next

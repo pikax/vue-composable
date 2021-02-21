@@ -22,6 +22,7 @@ export {
   toRaw,
   UnwrapRef, // Plugin,
   customRef,
+  watchEffect,
 } from "@vue/composition-api";
 export { VueConstructor as App } from "vue";
 

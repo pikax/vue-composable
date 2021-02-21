@@ -1,4 +1,5 @@
 import { useLocalStorage, useWebStorage } from "../../src";
+import { ref } from "../../src/api";
 import { nextTick } from "../utils";
 import { promisedTimeout } from "../../src/utils";
 
@@ -110,5 +111,34 @@ describe("localStorage", () => {
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       "[localStorage] is not available"
     );
+  });
+
+  it("should handle ref key", async () => {
+    jest.useFakeTimers();
+    const key = ref("hello");
+
+    const { storage } = useLocalStorage(key, { k: 10 });
+
+    expect(localStorage.key(0)).toBe(key.value);
+    expect(storage.value).toMatchObject({ k: 10 });
+
+    key.value = "hey";
+    jest.runAllTimers();
+
+    // key not created yet
+    // expect(localStorage.length).toBe(1);
+    // key doesn't exist so it's null
+    expect(storage.value).toBeNull();
+    jest.runAllTimers();
+
+    storage.value = { k: 0 };
+    jest.advanceTimersByTime(20);
+
+    expect(localStorage.key(1)).toBe(key.value);
+    expect(localStorage.getItem(key.value)).toBe(JSON.stringify(storage.value));
+
+    key.value = "hello";
+    // should rollback to prev value
+    expect(storage.value).toMatchObject({ k: 10 });
   });
 });
