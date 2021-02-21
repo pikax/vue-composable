@@ -1,3 +1,9 @@
+# [1.0.0-beta.18](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-02-21)
+
+### Features
+
+- **storage:** support for `ref` key for localStorage and sessionStorage ([f873ca0](https://github.com/pikax/vue-composable/commit/f873ca054c3808ca4792adb81b0edb57338f7f1e)), closes [#776](https://github.com/pikax/vue-composable/issues/776)
+
 # [1.0.0-beta.17](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-02-20)
 
 ### Features

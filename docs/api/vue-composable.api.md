@@ -2170,14 +2170,14 @@ export function useRetry<T, TArgs extends Array<any>>(
 
 // @public (undocumented)
 export function useSessionStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<string>,
   sync?: boolean
 ): LocalStorageReturn<string>;
 
 // @public (undocumented)
 export function useSessionStorage<T>(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
   sync?: boolean
 ): LocalStorageReturn<T>;

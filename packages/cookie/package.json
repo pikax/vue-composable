@@ -1,6 +1,6 @@
 {
   "name": "@vue-composable/cookie",
-  "version": "1.0.0-beta.16",
+  "version": "1.0.0-beta.18",
   "description": "@vue-composable/cookie",
   "main": "index.js",
   "module": "dist/cookie.esm-bundler.js",
@@ -45,7 +45,7 @@
     "vue-composable-cookie-fix": "./scripts/postinstall.js"
   },
   "dependencies": {
-    "vue-composable": "^1.0.0-beta.16"
+    "vue-composable": "^1.0.0-beta.18"
   },
   "peerDependencies2": {
     "@vue/composition-api": "^1.0.0-beta.14",
@@ -62,10 +62,5 @@
     "@types/node": "^14.14.22",
     "@vue/runtime-core": "^3.0.5",
     "typescript": "^4.1.3"
-  },
-  "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0",
-    "@types/js-cookie": "^2.2.6",
-    "js-cookie": "^2.2.1"
   }
 }
