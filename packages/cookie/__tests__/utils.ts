@@ -119,7 +119,7 @@ export const createVue = <
     return app.mount(el as any) as any;
   };
 
-  const destroy = () => app.unmount(el);
+  const destroy = () => app.unmount();
 
   app.config.warnHandler = (err: any) => {
     throw err;
