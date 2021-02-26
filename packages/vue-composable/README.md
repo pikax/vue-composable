@@ -323,6 +323,10 @@ useDevtoolsInspector(
 );
 ```
 
+## Typescript
+
+`Typescript@3.x` is not supported, the supported version can be checked on [package.json](./package.json), usually is the latest version or the same major as `vue-3`
+
 ## Contributing
 
 You can contribute raising issues and by helping out with code.
