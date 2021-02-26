@@ -1,6 +1,7 @@
 import { IntlNumberFormatLocales } from "./numberFormat";
 import { RefTyped, wrap, isObject, isArray, isString } from "../utils";
 import { Ref, isRef } from "../api";
+import { DateTimeFormatLocales } from "./dateTimeFormat";
 
 export function intlDateFormatExtractArguments(
   locales: IntlNumberFormatLocales,
@@ -15,6 +16,20 @@ export function intlDateFormatExtractArguments(
   Ref<string> | Ref<string[]> | undefined,
   Ref<Intl.NumberFormatOptions> | undefined
 ];
+
+export function intlDateFormatExtractArguments(
+  locales: DateTimeFormatLocales,
+  options?: RefTyped<Intl.DateTimeFormatOptions>
+): [
+  Ref<string> | Ref<string[]> | undefined,
+  Ref<Intl.DateTimeFormatOptions> | undefined
+];
+export function intlDateFormatExtractArguments(
+  options: RefTyped<Intl.DateTimeFormatOptions>
+): [
+  Ref<string> | Ref<string[]> | undefined,
+  Ref<Intl.DateTimeFormatOptions> | undefined
+];
 export function intlDateFormatExtractArguments(
   localesOptions: IntlNumberFormatLocales | RefTyped<Intl.NumberFormatOptions>,
   opts?: RefTyped<Intl.NumberFormatOptions>
@@ -27,7 +42,7 @@ export function intlDateFormatExtractArguments(
         wrappedLocalesOptions.value !== undefined
           ? wrappedLocalesOptions
           : undefined,
-        wrappedOpts
+        wrappedOpts,
       ]
     : isObject(wrappedLocalesOptions.value) &&
       !isArray(wrappedLocalesOptions.value) &&
@@ -37,6 +52,6 @@ export function intlDateFormatExtractArguments(
         wrappedLocalesOptions.value
           ? (wrappedLocalesOptions as Ref<string>)
           : undefined,
-        undefined
+        undefined,
       ];
 }

@@ -55,8 +55,8 @@ export function useIntlDateTimeFormat(
   opts?: any
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
-    localesOptions as any,
-    opts
+    localesOptions as DateTimeFormatLocales,
+    opts as Intl.DateTimeFormatOptions
   );
 
   const formatter = computed(
@@ -95,6 +95,6 @@ export function useIntlDateTimeFormat(
     format,
     formatString,
 
-    formatter
+    formatter,
   };
 }

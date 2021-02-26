@@ -19,11 +19,11 @@ async function pushEventsToApi(
       "addInspector",
       "sendInspectorTree",
       "sendInspectorState",
-      "addTimelineEvent"
+      "addTimelineEvent",
     ];
 
     for (const k of priority) {
-      for (const it of ApiQueue.filter(x => x.type === k)) {
+      for (const it of ApiQueue.filter((x) => x.type === k)) {
         // @ts-ignore
         api[k](...it.args);
       }
@@ -31,13 +31,13 @@ async function pushEventsToApi(
     }
 
     new Set(
-      ApiQueue.filter(x => x.type === "notifyComponentUpdate").map(
-        x => x.args[0]
+      ApiQueue.filter((x) => x.type === "notifyComponentUpdate").map(
+        (x) => x.args[0]
       )
-    ).forEach(x => api.notifyComponentUpdate(x));
+    ).forEach((x) => api.notifyComponentUpdate(x));
 
     // @ts-ignore
-    EventQueue.forEach(x => api.on[x.type](...x.args));
+    EventQueue.forEach((x) => api.on[x.type](...x.args));
 
     EventQueue.length = 0;
     ApiQueue.length = 0;
@@ -45,7 +45,7 @@ async function pushEventsToApi(
 }
 
 if (__VUE_2__) {
-  apiProxyFactory = promiseApi => {
+  apiProxyFactory = (promiseApi) => {
     const EventQueue: OnEvent[] = [];
     const ApiQueue: ApiEvent[] = [];
     let api: DevtoolsPluginApi;
@@ -59,7 +59,7 @@ if (__VUE_2__) {
       }
     }
 
-    promiseApi.then(x => {
+    promiseApi.then((x) => {
       api = x;
       pushEventsToApi(api, EventQueue, ApiQueue);
     });
@@ -133,6 +133,14 @@ if (__VUE_2__) {
             EventQueue.push({ type: "walkComponentTree", args: arguments });
           }
         },
+        visitComponentTree(handler): any {
+          if (api) {
+            api.on.visitComponentTree(handler);
+          } else {
+            //@ts-ignore
+            EventQueue.push({ type: "visitComponentTree", args: arguments });
+          }
+        },
         walkComponentParents(handler): any {
           if (api) {
             api.on.walkComponentParents(handler);
@@ -178,9 +186,11 @@ if (__VUE_2__) {
             api.on.getComponentRootElements(handler);
           } else {
             EventQueue.push({
+              //@ts-ignore
               type: "getComponentRootElements",
-              args: arguments
-            } as any);
+              //@ts-ignore
+              args: arguments,
+            });
           }
         },
         editComponentState(handler): any {
@@ -222,14 +232,14 @@ if (__VUE_2__) {
             //@ts-ignore
             EventQueue.push({ type: "editInspectorState", args: arguments });
           }
-        }
-      }
+        },
+      },
     };
 
     return proxyApi;
   };
 } else {
-  apiProxyFactory = promiseApi => {
+  apiProxyFactory = (promiseApi) => {
     let api: DevtoolsPluginApi;
     const EventQueue: OnEvent[] = [];
     const ApiQueue: ApiEvent[] = [];
@@ -248,16 +258,16 @@ if (__VUE_2__) {
             return (target[prop] = (...args) => {
               EventQueue.push({
                 type: prop,
-                args
+                args,
               });
             });
           }
-        }
+        },
       }
     );
     const proxy = new Proxy(
       {
-        on: onProxy
+        on: onProxy,
       },
       {
         get: (target, prop: keyof DevtoolsPluginApi) => {
@@ -277,14 +287,14 @@ if (__VUE_2__) {
           return (target[prop] = (...args) => {
             ApiQueue.push({
               type: prop,
-              args
+              args,
             });
           });
-        }
+        },
       }
     );
 
-    promiseApi.then(x => {
+    promiseApi.then((x) => {
       api = x;
       pushEventsToApi(api, EventQueue, ApiQueue);
     });

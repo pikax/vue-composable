@@ -180,31 +180,34 @@ function createReplacePlugin(
   isRuntimeCompileBuild
 ) {
   return replace({
-    __COMMIT__: `"${process.env.COMMIT}"`,
-    __VERSION__: `"${process.env.VERSION}"`,
-    __DEV__: isBundlerESMBuild
-      ? // preserve to be handled by bundlers
-        `(process.env.NODE_ENV !== 'production')`
-      : // hard coded dev/prod builds
-        !isProduction,
-    __SSR__: isBrowserBuild
-      ? false
-      : isBundlerESMBuild
-      ? `(process.env.SSR === 'true')`
-      : true,
-    // this is only used during tests
-    __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
-    // If the build is expected to run directly in the browser (global / esm builds)
-    __BROWSER__: isBrowserBuild,
-    // support compile in browser?
-    __RUNTIME_COMPILE__: isRuntimeCompileBuild,
-    // support options?
-    // the lean build drops options related code with buildOptions.lean: true
-    "process.env.NODE_ENV": isBundlerESMBuild
-      ? `process.env.NODE_ENV`
-      : "'production'",
+    preventAssignment: true,
+    values: {
+      __COMMIT__: `"${process.env.COMMIT}"`,
+      __VERSION__: `"${process.env.VERSION}"`,
+      __DEV__: isBundlerESMBuild
+        ? // preserve to be handled by bundlers
+          `(process.env.NODE_ENV !== 'production')`
+        : // hard coded dev/prod builds
+          !isProduction,
+      __SSR__: isBrowserBuild
+        ? false
+        : isBundlerESMBuild
+        ? `(process.env.SSR === 'true')`
+        : true,
+      // this is only used during tests
+      __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
+      // If the build is expected to run directly in the browser (global / esm builds)
+      __BROWSER__: isBrowserBuild,
+      // support compile in browser?
+      __RUNTIME_COMPILE__: isRuntimeCompileBuild,
+      // support options?
+      // the lean build drops options related code with buildOptions.lean: true
+      "process.env.NODE_ENV": isBundlerESMBuild
+        ? `process.env.NODE_ENV`
+        : "'production'",
 
-    __VUE_2__: process.env.VUE_VERSION === "2",
+      __VUE_2__: process.env.VUE_VERSION === "2",
+    },
   });
 }
 
