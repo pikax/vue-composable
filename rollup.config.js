@@ -192,7 +192,7 @@ function createReplacePlugin(
       __SSR__: isBrowserBuild
         ? false
         : isBundlerESMBuild
-        ? `(import.meta.env.SSR == true)`
+        ? `(('process' in globalThis ? globalThis.process.env.SSR : 'import' in globalThis ? globalThis.import.meta.env.SSR : false) == true)`
         : true,
       // this is only used during tests
       __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
