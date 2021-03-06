@@ -1,3 +1,9 @@
+# [1.0.0-beta.20](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-03-06)
+
+### Bug Fixes
+
+- **ssr:** SSR check changed to also taking `process.env` into consideration ([8ef1ad0](https://github.com/pikax/vue-composable/commit/8ef1ad09422a1303f39042ff0d691619219b9c47))
+
 # [1.0.0-beta.19](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-03-06)
 
 ### Bug Fixes
