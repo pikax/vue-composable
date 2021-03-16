@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
-    "@types/node": "^14.14.34",
+    "@types/node": "^14.14.35",
     "@vue/runtime-core": "^3.0.7",
     "typescript": "^4.2.3"
   }
