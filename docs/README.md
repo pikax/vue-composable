@@ -32,7 +32,6 @@ meta:
 ```bash
 # install with yarn
 yarn add @vue/composition-api vue-composable
-
 # install with npm
 npm install @vue/composition-api vue-composable
 ```
@@ -179,12 +178,12 @@ export default {
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
       array,
       {
-        pageSize: 3,
+        pageSize: 3
       }
     );
 
     return { result, next, prev, currentPage, lastPage };
-  },
+  }
 };
 </script>
 ```
