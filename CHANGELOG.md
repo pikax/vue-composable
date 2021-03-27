@@ -9,17 +9,6 @@
 
 - **useVModel:** Set to throw error if current instance is undefined ([#819](https://github.com/pikax/vue-composable/issues/819)) ([f352cf5](https://github.com/pikax/vue-composable/commit/f352cf5c0df711856e1ebfbb45c0fd82223b927b))
 
-# [1.0.0-beta.21](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-03-27)
-
-### Bug Fixes
-
-- **usePromise:** last promise would never be mark as complete ([bd03e00](https://github.com/pikax/vue-composable/commit/bd03e0098f2ee2c38f4791856e90e6e1ebed54ef))
-- import.meta SSR ([aafc3e1](https://github.com/pikax/vue-composable/commit/aafc3e1ef6e7d9e1d364c6ed955bf67675f23362))
-
-### Features
-
-- **useVModel:** Set to throw error if current instance is undefined ([#819](https://github.com/pikax/vue-composable/issues/819)) ([f352cf5](https://github.com/pikax/vue-composable/commit/f352cf5c0df711856e1ebfbb45c0fd82223b927b))
-
 # [1.0.0-beta.20](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-03-06)
 
 ### Bug Fixes
