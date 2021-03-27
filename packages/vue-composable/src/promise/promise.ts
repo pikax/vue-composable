@@ -1,4 +1,4 @@
-import { ref, Ref } from "../api";
+import { ref, Ref, toRaw } from "../api";
 import { isBoolean, isObject } from "../utils";
 
 type PromiseType<T extends Promise<any>> = T extends Promise<infer R>
@@ -141,7 +141,7 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
       }
       return r;
     } catch (er) {
-      if (promise.value === currentPromise) {
+      if (toRaw(promise.value) === toRaw(currentPromise)) {
         error.value = er;
         result.value = null;
       }
@@ -174,6 +174,6 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
     result,
     promise,
     loading,
-    error
+    error,
   };
 }
