@@ -77,7 +77,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
-- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
+- [VModel](https://pikax.me/vue-composable/composable/misc/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 - [interval](https://pikax.me/vue-composable/composable/misc/interval) - self-remove `setInterval` on unmount
 - [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) - `lock-scroll` component
@@ -175,7 +175,7 @@ app.use(VueComposableDevtools);
 // or
 app.use(VueComposableDevtools, {
   id: "vue-composable",
-  label: "devtool composables",
+  label: "devtool composables"
 });
 
 app.mount("#app");
@@ -190,10 +190,10 @@ To add properties to the component inspector tab
 const bar = "bar";
 useDevtoolsComponentState(
   {
-    bar,
+    bar
   },
   {
-    type: "custom composable", // change group
+    type: "custom composable" // change group
   }
 );
 
@@ -221,14 +221,14 @@ useDevtoolsComponentState([
     key: "_bar",
     type: "direct",
     value: "bar",
-    editable: true,
+    editable: true
   },
   {
     key: "_baz",
     type: "direct",
     value: "baz",
-    editable: false,
-  },
+    editable: false
+  }
 ]);
 
 // raw change
@@ -239,14 +239,14 @@ useDevtoolsComponentState((payload, ctx) => {
         key: "_bar",
         type: "raw",
         value: "bar",
-        editable: true,
+        editable: true
       },
       {
         key: "_baz",
         type: "raw",
         value: "baz",
-        editable: false,
-      },
+        editable: false
+      }
     ]
   );
 });
@@ -275,7 +275,7 @@ addEvent({
   },
   meta: {
     // meta object
-  },
+  }
 });
 
 // adds event with `time: Date.now()`
@@ -285,7 +285,7 @@ pushEvent({
   },
   meta: {
     // meta object
-  },
+  }
 });
 ```
 
@@ -299,7 +299,7 @@ Allows to create a new inspector for your data.
 useDevtoolsInspector(
   {
     id: "vue-composable",
-    label: "test vue-composable",
+    label: "test vue-composable"
   },
   // list of nodes, this can be reactive
   [
@@ -314,11 +314,11 @@ useDevtoolsInspector(
             key: "count",
             objectType: "Ref",
             type: "setup",
-            value: myRefValue,
-          },
-        ],
-      },
-    },
+            value: myRefValue
+          }
+        ]
+      }
+    }
   ]
 );
 ```
