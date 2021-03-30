@@ -64,7 +64,7 @@
     "@types/node": "^14.14.36",
     "@vue/compiler-sfc": "^3.0.9",
     "@vue/composition-api": "^1.0.0-rc.6",
-    "@vue/reactivity": "^3.0.7",
+    "@vue/reactivity": "^3.0.9",
     "@vue/runtime-core": "^3.0.7",
     "@vue/runtime-dom": "^3.0.7",
     "@vuepress/plugin-back-to-top": "^1.8.2",
