@@ -1628,12 +1628,19 @@
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.0-beta.7.tgz#1d306613c93b9a837a3776b1b9255502662f850f"
   integrity sha512-mIfqX8ZF6s2ulelIzfxGk9sFoigpoeK/2/DlWrtBGWfvwaK3kR1P2bxNkZ0LbJeuKHfcRP6hGZtGist7nxUN9A==
 
-"@vue/reactivity@3.0.8", "@vue/reactivity@^3.0.7":
+"@vue/reactivity@3.0.8":
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.8.tgz#c09afb698af2fc30fe47d2a9a918e7262e59288a"
   integrity sha512-W0oEQ005rUa6r1Rq/fEw/Nx3FN+AoAYV2Kf+qI8RGOXHYuUdgVEf//o0UUmlT7ocnniOEf46l+eLfgvilWYJoA==
   dependencies:
     "@vue/shared" "3.0.8"
+
+"@vue/reactivity@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.10.tgz#012830733291e60827f3b228d425ad53b83484ce"
+  integrity sha512-0GOSqlIv/a5wy4r6fAcdaglQ8v2sLYMRUpu49yK8Z2vHccK85Ym3R9C9K3vo6dfBRGbbCVvoKxYtQw49LvE8Ug==
+  dependencies:
+    "@vue/shared" "3.0.10"
 
 "@vue/runtime-core@3.0.8", "@vue/runtime-core@^3.0.7":
   version "3.0.8"
