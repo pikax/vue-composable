@@ -62,7 +62,7 @@
     "@types/jest": "26.0.22",
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^14.14.36",
-    "@vue/compiler-sfc": "^3.0.9",
+    "@vue/compiler-sfc": "^3.0.10",
     "@vue/composition-api": "^1.0.0-rc.6",
     "@vue/reactivity": "^3.0.7",
     "@vue/runtime-core": "^3.0.7",
