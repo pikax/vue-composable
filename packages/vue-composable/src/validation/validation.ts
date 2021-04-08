@@ -237,8 +237,11 @@ const buildValidation = <T>(
         r[k] = $value;
         const $dirty = ref(false);
 
+        let dirtyWatch = NO_OP;
         const createDirtyWatcher = () => {
-          const dirtyWatch = watch(
+          dirtyWatch();
+          
+          dirtyWatch = watch(
             $value,
             () => {
               $dirty.value = true;
