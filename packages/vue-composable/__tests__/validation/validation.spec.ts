@@ -453,20 +453,25 @@ describe("validation", () => {
       expect(v.$anyDirty).toBe(false);
     });
 
-    it("should update $dirty after $reset on update value", () => {
+    it("should update $dirty after $reset on update value", async () => {
       const required = (x: any) => !!x;
+      
+      const $testValue = ref("");
+      const $deepV1Value = ref("");
+      const $deepV2Value = ref("");
+      
       const v = useValidation({
         test: {
-          $value: "",
+          $value: $testValue,
           required,
         },
         deep: {
           v1: {
-            $value: "",
+            $value: $deepV1Value,
             required,
           },
           v2: {
-            $value: "",
+            $value: $deepV2Value,
             required,
           },
         },
@@ -476,15 +481,21 @@ describe("validation", () => {
 
       expect(v.test.$dirty).toBe(false);
       expect(v.test.$anyInvalid).toBe(true);
-      v.test.$value += 'test';
+      $testValue.value += "test";
+
+      await nextTick();
+      
       expect(v.test.$dirty).toBe(true);
       v.test.$reset();
       expect(v.test.$dirty).toBe(false);
 
       expect(v.deep.v1.$dirty).toBe(false);
       expect(v.deep.v2.$dirty).toBe(false);
-      v.deep.v1.$value += 'test';
-      v.deep.v2.$value += 'test';
+      $deepV1Value.value += "test";
+      $deepV2Value.value += "test";
+
+      await nextTick();
+      
       expect(v.deep.v1.$dirty).toBe(true);
       expect(v.deep.v2.$dirty).toBe(true);
       v.deep.$reset();
