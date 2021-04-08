@@ -452,5 +452,44 @@ describe("validation", () => {
       expect(v.deep.v2.$dirty).toBe(false);
       expect(v.$anyDirty).toBe(false);
     });
+
+    it("should update $dirty after $reset on update value", () => {
+      const required = (x: any) => !!x;
+      const v = useValidation({
+        test: {
+          $value: "",
+          required,
+        },
+        deep: {
+          v1: {
+            $value: "",
+            required,
+          },
+          v2: {
+            $value: "",
+            required,
+          },
+        },
+      });
+
+      expect(v.$anyDirty).toBe(false);
+
+      expect(v.test.$dirty).toBe(false);
+      expect(v.test.$anyInvalid).toBe(true);
+      v.test.$value.value += 'test';
+      expect(v.test.$dirty).toBe(true);
+      v.test.$reset();
+      expect(v.test.$dirty).toBe(false);
+
+      expect(v.deep.v1.$dirty).toBe(false);
+      expect(v.deep.v2.$dirty).toBe(false);
+      v.deep.v1.$value.value += 'test';
+      v.deep.v2.$value.value += 'test';
+      expect(v.deep.v1.$dirty).toBe(true);
+      expect(v.deep.v2.$dirty).toBe(true);
+      v.deep.$reset();
+      expect(v.deep.v1.$dirty).toBe(false);
+      expect(v.deep.v2.$dirty).toBe(false);
+    });
   });
 });
