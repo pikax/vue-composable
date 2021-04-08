@@ -476,15 +476,15 @@ describe("validation", () => {
 
       expect(v.test.$dirty).toBe(false);
       expect(v.test.$anyInvalid).toBe(true);
-      v.test.$value.value += 'test';
+      v.test.$value += 'test';
       expect(v.test.$dirty).toBe(true);
       v.test.$reset();
       expect(v.test.$dirty).toBe(false);
 
       expect(v.deep.v1.$dirty).toBe(false);
       expect(v.deep.v2.$dirty).toBe(false);
-      v.deep.v1.$value.value += 'test';
-      v.deep.v2.$value.value += 'test';
+      v.deep.v1.$value += 'test';
+      v.deep.v2.$value += 'test';
       expect(v.deep.v1.$dirty).toBe(true);
       expect(v.deep.v2.$dirty).toBe(true);
       v.deep.$reset();
