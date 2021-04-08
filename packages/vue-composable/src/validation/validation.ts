@@ -236,17 +236,26 @@ const buildValidation = <T>(
       if (k === "$value") {
         r[k] = $value;
         const $dirty = ref(false);
-        const dirtyWatch = watch(
-          $value,
-          () => {
-            $dirty.value = true;
-            dirtyWatch();
-          },
-          { immediate: false, deep: true }
-        );
+
+        const createDirtyWatcher = () => {
+          const dirtyWatch = watch(
+            $value,
+            () => {
+              $dirty.value = true;
+              dirtyWatch();
+            },
+            { immediate: false, deep: true }
+          );
+        };
+
+        createDirtyWatcher();
 
         (r as any)["$dirty"] = $dirty;
-        (r as any)["$reset"] = () => ($dirty.value = false);
+        (r as any)["$reset"] = () => {
+          $dirty.value = false
+
+          createDirtyWatcher();
+        };
         (r as any)["$touch"] = () => ($dirty.value = true);
 
         // @ts-ignore
