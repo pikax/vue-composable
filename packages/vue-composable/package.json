@@ -1,6 +1,6 @@
 {
   "name": "vue-composable",
-  "version": "1.0.0-beta.21",
+  "version": "1.0.0-beta.22",
   "description": "vue-composable",
   "main": "index.js",
   "module": "dist/vue-composable.esm-bundler.js",
@@ -52,8 +52,5 @@
   "peerDependencies2": {
     "@vue/composition-api": "^1.0.0-beta.14",
     "vue": "^2.6.10"
-  },
-  "peerDependencies": {
-    "@vue/runtime-core": "^3.0.0"
   }
 }

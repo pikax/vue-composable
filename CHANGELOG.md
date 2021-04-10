@@ -1,3 +1,9 @@
+# [1.0.0-beta.22](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-04-10)
+
+### Bug Fixes
+
+- **validation:** create dirty watcher after \$reset ([#843](https://github.com/pikax/vue-composable/issues/843)) ([f476114](https://github.com/pikax/vue-composable/commit/f476114334d07db4e5d37d9bb9bc6995b75452d0))
+
 # [1.0.0-beta.21](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-03-27)
 
 ### Bug Fixes
