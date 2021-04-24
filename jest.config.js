@@ -15,6 +15,12 @@ module.exports = {
     "<rootDir>/packages/axios/__tests__/setupTest.js",
     "<rootDir>/packages/cookie/__tests__/setupTest.js",
   ],
+  moduleNameMapper:
+    process.env.VUE === "2"
+      ? {}
+      : {
+          "^vue$": "@vue/runtime-core",
+        },
   coverageDirectory: "coverage",
   coverageReporters: ["html", "lcov", "text"],
   collectCoverageFrom: ["src/**/*.ts", "packages/*/src/**/*.ts"],
