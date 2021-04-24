@@ -1,3 +1,15 @@
+# [1.0.0-beta.23](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-04-24)
+
+### Bug Fixes
+
+- use Vue instead the VueRuntimeCore ([6f31250](https://github.com/pikax/vue-composable/commit/6f31250416774f68f9cd8a0425404d06a6354f23)), closes [#852](https://github.com/pikax/vue-composable/issues/852)
+
+# [1.0.0-beta.23](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-04-24)
+
+### Bug Fixes
+
+- use Vue instead the VueRuntimeCore ([6f31250](https://github.com/pikax/vue-composable/commit/6f31250416774f68f9cd8a0425404d06a6354f23)), closes [#852](https://github.com/pikax/vue-composable/issues/852)
+
 # [1.0.0-beta.22](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-04-10)
 
 ### Bug Fixes
