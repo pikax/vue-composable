@@ -1,11 +1,11 @@
-import { ref, Ref, computed } from "../api";
+import { computed, Ref, ref } from "../api";
 import {
+  isDate,
+  isFunction,
+  isNumber,
+  isObject,
   isPromise,
   promisedTimeout,
-  isNumber,
-  isDate,
-  isObject,
-  isFunction
 } from "../utils";
 
 const MAX_RETRIES = 9000;
@@ -14,7 +14,7 @@ const MAX_RETRIES = 9000;
 const ExecutionId = /*#__PURE__*/ Symbol((__DEV__ && "RetryId") || ``);
 /* istanbul ignore next */
 const CancellationToken = /*#__PURE__*/ Symbol(
-  (__DEV__ && "CancellationToken") || ``
+  (__DEV__ && "CancellationToken") || ``,
 );
 
 /**
@@ -23,7 +23,7 @@ const CancellationToken = /*#__PURE__*/ Symbol(
  * @returns {number | Date | Promise<void> | Promise<number> | Promise<Date>} - Should wait until `Date`, wait until `Promise` finish or wait `number` ms
  */
 type RetryDelayFactory = (
-  retry: number
+  retry: number,
 ) => number | Date | Promise<void> | Promise<number> | Promise<Date>;
 
 interface RetryOptions {
@@ -75,14 +75,14 @@ type RetryStrategy<T = any, TArgs extends Array<any> = any> = (
   options: RetryOptions,
   context: RetryContext,
   factory: Factory<T, TArgs>,
-  args: TArgs
+  args: TArgs,
 ) => Promise<(T extends Promise<infer R> ? R : T) | null>;
 
 const defaultStrategy: RetryStrategy = async (
   options,
   context,
   factory,
-  args
+  args,
 ) => {
   const retryId = context[ExecutionId].value;
   let i = -1;
@@ -135,7 +135,7 @@ const defaultStrategy: RetryStrategy = async (
       context.isRetrying.value = false;
       context.nextRetry.value = undefined;
       return Promise.reject(
-        new Error(`[useRetry] max retries reached ${maxRetries}`)
+        new Error(`[useRetry] max retries reached ${maxRetries}`),
       );
     }
 
@@ -152,7 +152,7 @@ const defaultStrategy: RetryStrategy = async (
         nextRetry = delayBy.getTime();
       } else {
         throw new Error(
-          `[useRetry] invalid value received from options.retryDelay '${typeof delayBy}'`
+          `[useRetry] invalid value received from options.retryDelay '${typeof delayBy}'`,
         );
       }
 
@@ -209,15 +209,15 @@ export interface RetryReturnFactory<T, TArgs extends Array<any>>
 
 export function useRetry(options?: RetryOptions): RetryReturnNoFactory;
 export function useRetry<T, TArgs extends Array<any>>(
-  factory: Factory<T, TArgs>
+  factory: Factory<T, TArgs>,
 ): RetryReturnFactory<T, TArgs>;
 export function useRetry<T, TArgs extends Array<any>>(
   options: RetryOptions,
-  factory: Factory<T, TArgs>
+  factory: Factory<T, TArgs>,
 ): RetryReturnFactory<T, TArgs>;
 export function useRetry(
   options?: RetryOptions | Factory<any, any>,
-  factory?: Factory<any, any>
+  factory?: Factory<any, any>,
 ): RetryReturnNoFactory {
   const opt = !options || isFunction(options) ? {} : options;
   const fn = isFunction(options) ? options : factory;
@@ -244,18 +244,18 @@ export function useRetry(
     nextRetry,
     retryErrors,
     [ExecutionId]: retryId,
-    [CancellationToken]: cancellationToken
+    [CancellationToken]: cancellationToken,
   };
 
   const exec: any = fn
     ? (...args: any[]) => {
-        ++context[ExecutionId].value;
-        return defaultStrategy(opt, context, fn, args);
-      }
+      ++context[ExecutionId].value;
+      return defaultStrategy(opt, context, fn, args);
+    }
     : (f: Factory<any, any>) => {
-        ++context[ExecutionId].value;
-        return defaultStrategy(opt, context, f, undefined);
-      };
+      ++context[ExecutionId].value;
+      return defaultStrategy(opt, context, f, undefined);
+    };
 
   const cancel = () => {
     context.isRetrying.value = false;
@@ -268,11 +268,11 @@ export function useRetry(
   return {
     ...context,
     cancel,
-    exec
+    exec,
   };
 }
 
-export const exponentialDelay: RetryDelayFactory = retryNumber => {
+export const exponentialDelay: RetryDelayFactory = (retryNumber) => {
   const delay = Math.pow(2, retryNumber) * 100;
   const randomSum = delay * 0.2 * Math.random(); // 0-20% of the delay
   return delay + randomSum;

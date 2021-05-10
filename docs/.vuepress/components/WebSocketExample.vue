@@ -24,8 +24,8 @@ export default {
       data,
       errored,
       send,
-      close
+      close,
     };
-  }
+  },
 };
 </script>

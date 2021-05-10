@@ -1,4 +1,4 @@
-import { useNow, NowOptions, NowReturn } from "./now";
+import { NowOptions, NowReturn, useNow } from "./now";
 import { isBoolean } from "../utils";
 
 /**
@@ -12,6 +12,6 @@ export function useDateNow(options?: NowOptions): NowReturn {
   return useNow({
     refreshMs,
     sync,
-    timeFn: Date.now
+    timeFn: Date.now,
   });
 }

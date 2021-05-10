@@ -16,6 +16,6 @@ export default {
   setup() {
     // it will return object with reactive properties {XL: boolean, L: boolean, S: boolean}
     return useBreakpoint({ XL: 1280, L: 768, S: "(min-width: 320px)" });
-  }
+  },
 };
 </script>

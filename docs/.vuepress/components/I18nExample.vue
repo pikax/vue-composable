@@ -2,9 +2,9 @@
   <div>
     <div>
       <select v-model="locale">
-        <option v-for="l in locales" :key="l" :value="l">{{
-          i18n.locales[l]
-        }}</option>
+        <option v-for="l in locales" :key="l" :value="l">
+          {{ i18n.locales[l] }}
+        </option>
       </select>
       <div>
         <label for="name">{{ i18n.input.name.label }}</label>
@@ -60,7 +60,7 @@ export default {
             en: "English",
             pt: "Portuguese",
             es: "Spanish",
-            custom: "YourLocale"
+            custom: "YourLocale",
           },
 
           weekDays: [
@@ -70,23 +70,23 @@ export default {
             "Wednesday",
             "Thrusday",
             "Friday",
-            "Saturday"
+            "Saturday",
           ],
 
           input: {
             name: {
               label: "Name",
-              placeholder: "Your name"
-            }
+              placeholder: "Your name",
+            },
           },
           hello: "Hello {name}",
-          currentDate: "Today is: {day}"
+          currentDate: "Today is: {day}",
         },
         pt: {
           locales: {
             en: "Inglês",
             pt: "Português",
-            es: "Espanhol"
+            es: "Espanhol",
           },
 
           weekDays: [
@@ -96,18 +96,18 @@ export default {
             "Quarta-feira",
             "Quinta-feira",
             "Sexta-feira",
-            "Sábado"
+            "Sábado",
           ],
 
           input: {
             name: {
               label: "Nome",
-              placeholder: "O teu nome"
-            }
+              placeholder: "O teu nome",
+            },
           },
           currentDate: "Hoje e': {day}",
 
-          hello: "Olá {name}"
+          hello: "Olá {name}",
         },
 
         // promised based
@@ -116,13 +116,13 @@ export default {
             locales: {
               en: "Ingles",
               pt: "Portugués",
-              es: "Espanol"
+              es: "Espanol",
             },
             input: {
               name: {
                 label: "Nombre",
-                placeholder: "Tu nombre"
-              }
+                placeholder: "Tu nombre",
+              },
             },
 
             weekDays: [
@@ -132,19 +132,19 @@ export default {
               "Miércoles",
               "Jueves",
               "Viernes",
-              "Sábado"
+              "Sábado",
             ],
 
-            hello: "Holla {name}"
-          }))
-      }
+            hello: "Holla {name}",
+          })),
+      },
     });
 
     const customLocale = ref({
       locales: {
-        custom: "Awesome"
+        custom: "Awesome",
       },
-      hello: "H3Y"
+      hello: "H3Y",
     });
     const customLocaleJson = ref(JSON.stringify(customLocale.value));
 
@@ -156,7 +156,7 @@ export default {
 
     watch(
       customLocaleJson,
-      json => {
+      (json) => {
         try {
           customLocale.value = JSON.parse(json);
         } catch (e) {
@@ -173,8 +173,8 @@ export default {
       customLocaleJson,
 
       addCustomLocale,
-      removeCustomLocale
+      removeCustomLocale,
     };
-  }
+  },
 };
 </script>

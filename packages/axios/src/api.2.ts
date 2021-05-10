@@ -1,18 +1,18 @@
 /* istanbul ignore file */
 
 export {
-  ref,
-  unref,
-  isRef,
-  Ref,
-  onMounted,
-  onUnmounted,
+  computed,
+  ComputedRef,
+  getCurrentInstance,
   inject,
   InjectionKey,
+  isRef,
+  onMounted,
+  onUnmounted,
   provide,
   reactive,
-  computed,
+  Ref,
+  ref,
+  unref,
   UnwrapRef,
-  ComputedRef,
-  getCurrentInstance
 } from "@vue/composition-api";

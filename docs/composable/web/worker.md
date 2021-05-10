@@ -10,11 +10,11 @@ import { useWorker } from "vue-composable";
 useWorker(stringUrl, args?, options?);
 ```
 
-| Parameters | Type         | Required | Default     | Description                                                                     |
-| ---------- | ------------ | -------- | ----------- | ------------------------------------------------------------------------------- |
-| stringUrl  | `String|URL` | `true`   |             | Webworker file path                                                             |
-| args       | `any|any[]`  | `false`  | `undefined` | arguments for the first message sent to the worker                              |
-| options    | `Options`    | `false`  | `undefined` | [Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) |
+| Parameters | Type      | Required | Default     | Description                                                                     |
+| ---------- | --------- | -------- | ----------- | ------------------------------------------------------------------------------- |
+| stringUrl  | `String   | URL`     | `true`      |                                                                                 | Webworker file path |
+| args       | `any      | any[]`   | `false`     | `undefined`                                                                     | arguments for the first message sent to the worker |
+| options    | `Options` | `false`  | `undefined` | [Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) |
 
 ## State
 
@@ -57,7 +57,7 @@ Inside of worker you can use the `exposeWorker`, it will post the result and exe
 // super.worker.js
 import { exposeWorker } from "vue-composable";
 
-const max = numbers => Math.max(...numbers);
+const max = (numbers) => Math.max(...numbers);
 
 exposeWorker(max);
 ```
@@ -140,7 +140,7 @@ import {
   ref,
   computed,
   watchEffect,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { useWorker, useDateNow } from "vue-composable";
 
@@ -165,7 +165,7 @@ export default defineComponent({
 
     watch(
       data,
-      d => {
+      (d) => {
         sortedNumbers.value = d;
       },
       { lazy: true }
@@ -173,7 +173,7 @@ export default defineComponent({
 
     watch(
       errorEvent,
-      e => {
+      (e) => {
         sortedNumbers.value = ["error", e.returnValue];
       },
       { lazy: true }
@@ -191,9 +191,9 @@ export default defineComponent({
 
       sortWorker,
       errored,
-      errorEvent
+      errorEvent,
     };
-  }
+  },
 });
 </script>
 ```

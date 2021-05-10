@@ -1,31 +1,32 @@
 /* istanbul ignore file */
 
 export {
-  ref,
-  isRef,
-  unref,
-  Ref,
+  computed,
+  ComputedRef,
+  customRef,
+  getCurrentInstance,
   inject,
   InjectionKey,
-  provide,
-  watch,
-  reactive,
-  computed,
-  getCurrentInstance,
-  onMounted,
-  onUnmounted,
+  isRef,
   onActivated,
   onBeforeMount,
   onBeforeUnmount,
   onDeactivated,
-  ComputedRef,
+  onMounted,
+  onUnmounted,
+  provide,
+  reactive,
+  Ref,
+  ref,
   toRaw,
+  unref,
   UnwrapRef, // Plugin,
-  customRef,
+  watch,
+  watchEffect,
 } from "@vue/composition-api";
 export { VueConstructor as App } from "vue";
 
-import { Ref, set, computed } from "@vue/composition-api";
+import { computed, Ref, set } from "@vue/composition-api";
 import Vue, { PluginFunction } from "vue";
 import { unwrap } from "./utils";
 
@@ -36,7 +37,7 @@ export const vueSet = set;
 
 // FAKE readonly
 export function readonly<T extends object>(
-  target: T
+  target: T,
 ): T extends Ref ? DeepReadonly<T> : DeepReadonly<Ref<T>> {
   return computed(() => unwrap(target)) as any;
 }

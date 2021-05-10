@@ -33,7 +33,7 @@ Check [usePromise#Methods](https://pikax.me/vue-composable/composable/promise/pr
 function usePromiseLazy(fn, throwException) {
   return usePromise(fn, {
     lazy: true,
-    throwException
+    throwException,
   });
 }
 ```

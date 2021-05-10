@@ -15,13 +15,13 @@ export function useOnline() {
     window.addEventListener(
       "offline",
       () => (online!.value = false),
-      PASSIVE_EV
+      PASSIVE_EV,
     );
     window.addEventListener("online", () => (online!.value = true), PASSIVE_EV);
   }
 
   return {
     supported,
-    online
+    online,
   };
 }

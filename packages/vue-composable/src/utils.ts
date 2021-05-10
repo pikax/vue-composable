@@ -1,4 +1,4 @@
-import { ref, Ref, isRef } from "./api";
+import { isRef, Ref, ref } from "./api";
 
 export type RefTyped<T> = T | Ref<T>;
 export type RefElement = Element | Ref<Element | undefined>;
@@ -28,6 +28,11 @@ export const isSymbol = (val: unknown): val is symbol =>
 export const isBoolean = (val: unknown): val is Boolean =>
   typeof val === "boolean";
 
+export const isUndefined = (val: unknown): val is undefined =>
+  typeof val === "undefined";
+
+export const isNull = (val: unknown): val is null => val === null;
+
 export const isDate = (val: unknown): val is Date =>
   isObject(val) && isFunction(val.getTime);
 
@@ -50,7 +55,7 @@ export const FALSE_OP = () => false;
 export const PASSIVE_EV: AddEventListenerOptions = { passive: true };
 
 export function promisedTimeout(timeout: number): Promise<void> {
-  return new Promise(res => {
+  return new Promise((res) => {
     setTimeout(res, timeout);
   });
 }

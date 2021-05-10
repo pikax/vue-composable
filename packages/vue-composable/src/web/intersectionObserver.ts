@@ -1,13 +1,13 @@
 import {
-  RefTyped,
-  wrap,
-  unwrap,
-  isElement,
-  RefElement,
   isClient,
-  NO_OP
+  isElement,
+  NO_OP,
+  RefElement,
+  RefTyped,
+  unwrap,
+  wrap,
 } from "../utils";
-import { ref, computed, watch, onMounted, onUnmounted, Ref } from "../api";
+import { computed, onMounted, onUnmounted, Ref, ref, watch } from "../api";
 
 export interface IntersectionObserverOptions {
   root?: RefTyped<Element> | null;
@@ -30,14 +30,14 @@ export interface IntersectionObserverResult {
 
 export function useIntersectionObserver(
   el: RefElement,
-  options?: RefTyped<IntersectionObserverOptions>
+  options?: RefTyped<IntersectionObserverOptions>,
 ): IntersectionObserverResult;
 export function useIntersectionObserver(
-  options: RefTyped<IntersectionObserverOptions>
+  options: RefTyped<IntersectionObserverOptions>,
 ): IntersectionObserverResult;
 export function useIntersectionObserver(
   refEl?: any,
-  refOptions?: RefTyped<IntersectionObserverOptions>
+  refOptions?: RefTyped<IntersectionObserverOptions>,
 ): IntersectionObserverResult {
   const supported = isClient && "IntersectionObserver" in window;
   const wrappedElement = refEl ? wrap(refEl) : undefined;
@@ -58,7 +58,8 @@ export function useIntersectionObserver(
 
   const isIntersecting = computed(
     () =>
-      elements.value.length > 0 && elements.value.every(x => x.isIntersecting)
+      elements.value.length > 0 &&
+      elements.value.every((x) => x.isIntersecting),
   );
 
   const handling = (entries: IntersectionObserverEntry[]) => {
@@ -70,39 +71,38 @@ export function useIntersectionObserver(
   if (supported) {
     watch(
       options,
-      options => {
+      (options) => {
         if (observer.value) {
           observer.value.disconnect();
         }
 
-        const opts: IntersectionObserverInit | undefined =
-          (options &&
-            options && {
-              root: unwrap(options.root),
-              rootMargin: unwrap(options.rootMargin),
-              threshold: unwrap(options.threshold)
-            }) ||
+        const opts: IntersectionObserverInit | undefined = (options &&
+          options && {
+          root: unwrap(options.root),
+          rootMargin: unwrap(options.rootMargin),
+          threshold: unwrap(options.threshold),
+        }) ||
           undefined;
         observer.value = new IntersectionObserver(handling, opts);
 
-        const targets = elements.value.map(x => x.target);
+        const targets = elements.value.map((x) => x.target);
         targets.forEach(observer.value.observe);
       },
-      { deep: true, immediate: true }
+      { deep: true, immediate: true },
     );
   }
 
   const observe = supported
     ? (element: RefTyped<Element>) => {
-        const e = unwrap(element);
-        observer.value!.observe(e);
-      }
+      const e = unwrap(element);
+      observer.value!.observe(e);
+    }
     : NO_OP;
   const unobserve = supported
     ? (element: RefTyped<Element>) => {
-        const e = unwrap(element);
-        observer.value!.unobserve(e);
-      }
+      const e = unwrap(element);
+      observer.value!.unobserve(e);
+    }
     : NO_OP;
 
   const disconnect = () => observer.value!.disconnect();
@@ -142,6 +142,6 @@ export function useIntersectionObserver(
     unobserve,
     disconnect,
 
-    isIntersecting
+    isIntersecting,
   };
 }

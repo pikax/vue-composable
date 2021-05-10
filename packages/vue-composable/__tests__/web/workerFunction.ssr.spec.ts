@@ -1,11 +1,11 @@
 jest.mock("../../src/utils", () => ({
   //@ts-ignore
   ...jest.requireActual("../../src/utils"),
-  isClient: false
+  isClient: false,
 }));
 
 jest.mock("../../src/promise/cancellablePromise", () => ({
-  useCancellablePromise: jest.fn()
+  useCancellablePromise: jest.fn(),
 }));
 import { useWorkerFunction } from "../../src/web/workerFunction";
 import { useCancellablePromise } from "../../src/promise/cancellablePromise";

@@ -1,8 +1,8 @@
 import {
   getCssVariableFor,
   setCssVariableFor,
+  UseCssVariables,
   useCssVariables,
-  UseCssVariables
 } from "../../src";
 import { createVue, nextTick } from "../utils";
 
@@ -27,12 +27,12 @@ describe("CSS variables", () => {
     Object.defineProperty(window, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: MutationObserver
+      value: MutationObserver,
     });
     Object.defineProperty(global, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: MutationObserver
+      value: MutationObserver,
     });
   });
 
@@ -40,12 +40,12 @@ describe("CSS variables", () => {
     Object.defineProperty(window, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: _mutationObserver
+      value: _mutationObserver,
     });
     Object.defineProperty(global, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: _mutationObserver
+      value: _mutationObserver,
     });
   });
 
@@ -64,7 +64,7 @@ describe("CSS variables", () => {
 
     const undefinedVariable = getCssVariableFor(
       element,
-      "--undefined-variable"
+      "--undefined-variable",
     );
     expect(undefinedVariable).toBeNull();
   });
@@ -73,7 +73,7 @@ describe("CSS variables", () => {
     const element = document.createElement("div");
     const undefinedVariable = getCssVariableFor(
       element,
-      "--undefined-variable"
+      "--undefined-variable",
     );
     expect(undefinedVariable).toBeNull();
   });
@@ -93,25 +93,25 @@ describe("CSS variables", () => {
       template: "<div></div>",
       setup() {
         variables = useCssVariables({}) as any;
-      }
+      },
     }).mount();
 
     let { observing, stop, resume } = variables;
 
     expect(observing).toMatchObject({
-      value: true
+      value: true,
     });
 
     stop();
 
     expect(observing).toMatchObject({
-      value: false
+      value: false,
     });
 
     resume();
 
     expect(observing).toMatchObject({
-      value: true
+      value: true,
     });
   });
 
@@ -120,9 +120,9 @@ describe("CSS variables", () => {
       template: "<div></div>",
       setup() {
         useCssVariables({
-          test: "--variable-name"
+          test: "--variable-name",
         });
-      }
+      },
     });
 
     vm.mount();
@@ -145,11 +145,11 @@ describe("CSS variables", () => {
       setup() {
         variables = useCssVariables(
           {
-            test: "variable-name"
+            test: "variable-name",
           },
-          element
+          element,
         );
-      }
+      },
     }).mount();
 
     callback = () => {
@@ -175,7 +175,7 @@ describe("CSS variables", () => {
       template: "<div></div>",
       setup() {
         variables = useCssVariables({ dummyName: "dummy-name" }, element);
-      }
+      },
     }).mount();
 
     let { dummyName } = variables;

@@ -17,20 +17,20 @@ const {
   data,
   isOpen,
   isClosed,
-  errored
+  errored,
 } = useWebSocket();
 ```
 
-| State        | Type                     | Description                                                 |
-| ------------ | ------------------------ | ----------------------------------------------------------- |
-| supported    | `Boolean`                | Is supported                                                |
-| ws           | `WebSocket|null`         | WebSocket instance, returns `null` if `supported === false` |
-| messageEvent | `Ref<MessageEvent|null>` | Last message event received                                 |
-| errorEvent   | `Ref<ErrorEvent>`        | Error event                                                 |
-| data         | `Ref<any>`               | Last data received                                          |
-| isOpen       | `Ref<Boolean>`           | Is websocket open                                           |
-| isClosed     | `Ref<Boolean>`           | Is websocket closed                                         |
-| errored      | `Ref<Boolean>`           | Is websocket errored                                        |
+| State        | Type              | Description          |
+| ------------ | ----------------- | -------------------- |
+| supported    | `Boolean`         | Is supported         |
+| ws           | `WebSocket        | null`                | WebSocket instance, returns `null` if `supported === false` |
+| messageEvent | `Ref<MessageEvent | null>`               | Last message event received |
+| errorEvent   | `Ref<ErrorEvent>` | Error event          |
+| data         | `Ref<any>`        | Last data received   |
+| isOpen       | `Ref<Boolean>`    | Is websocket open    |
+| isClosed     | `Ref<Boolean>`    | Is websocket closed  |
+| errored      | `Ref<Boolean>`    | Is websocket errored |
 
 ## Methods
 
@@ -80,9 +80,9 @@ export default {
       data,
       errored,
       send,
-      close
+      close,
     };
-  }
+  },
 };
 </script>
 ```

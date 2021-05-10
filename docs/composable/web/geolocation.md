@@ -73,9 +73,7 @@ const { refresh } = useGeolocation();
       <div v-else-if="error">
         <p><b>Error:</b> {{ error }}</p>
       </div>
-      <div v-else>
-        No coords
-      </div>
+      <div v-else>No coords</div>
     </div>
   </div>
 </template>
@@ -85,7 +83,7 @@ import { useGeolocation } from "vue-composable";
 export default {
   setup() {
     return useGeolocation({ immediate: true });
-  }
+  },
 };
 </script>
 ```

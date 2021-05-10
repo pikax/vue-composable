@@ -23,10 +23,10 @@ export default {
     const id = ref(1);
     const { data, loading, exec, error, status } = useAxios();
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec({
         method: "GET",
-        url: "https://reqres.in/api/user/" + id
+        url: "https://reqres.in/api/user/" + id,
       });
     });
 
@@ -34,8 +34,8 @@ export default {
       id,
       data,
       loading,
-      status
+      status,
     };
-  }
+  },
 };
 </script>

@@ -19,7 +19,7 @@ describe("pagination", () => {
     const use = usePagination({
       pageSize: 10,
       currentPage: 1,
-      total: 100
+      total: 100,
     });
 
     expect(use).toMatchObject({
@@ -32,7 +32,7 @@ describe("pagination", () => {
       next: expect.any(Function),
       prev: expect.any(Function),
       first: expect.any(Function),
-      last: expect.any(Function)
+      last: expect.any(Function),
     });
   });
 
@@ -40,7 +40,7 @@ describe("pagination", () => {
     const use = usePagination({
       pageSize: 10,
       currentPage: 1,
-      total: 100
+      total: 100,
     });
 
     use.pageSize.value = 20;
@@ -50,7 +50,7 @@ describe("pagination", () => {
       total: { value: 100 },
       currentPage: { value: 1 },
       lastPage: { value: 5 },
-      offset: { value: 0 }
+      offset: { value: 0 },
     });
 
     use.pageSize.value = 100;
@@ -60,7 +60,7 @@ describe("pagination", () => {
       total: { value: 100 },
       currentPage: { value: 1 },
       lastPage: { value: 1 },
-      offset: { value: 0 }
+      offset: { value: 0 },
     });
   });
 
@@ -68,7 +68,7 @@ describe("pagination", () => {
     const use = usePagination({
       pageSize: 10,
       currentPage: 1,
-      total: 100
+      total: 100,
     });
 
     use.total.value = 5;
@@ -78,7 +78,7 @@ describe("pagination", () => {
       total: { value: 5 },
       currentPage: { value: 1 },
       lastPage: { value: 1 },
-      offset: { value: 0 }
+      offset: { value: 0 },
     });
 
     use.total.value = 1000;
@@ -88,7 +88,7 @@ describe("pagination", () => {
       total: { value: 1000 },
       currentPage: { value: 1 },
       lastPage: { value: 100 },
-      offset: { value: 0 }
+      offset: { value: 0 },
     });
   });
 
@@ -96,7 +96,7 @@ describe("pagination", () => {
     const use = usePagination({
       pageSize: 10,
       currentPage: 9,
-      total: 100
+      total: 100,
     });
 
     expect(use.currentPage.value).toBe(9);
@@ -111,7 +111,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 5,
-        total: 100
+        total: 100,
       });
 
       expect(use.currentPage.value).toBe(5);
@@ -126,7 +126,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 5,
-        total: 100
+        total: 100,
       });
 
       expect(use.currentPage.value).toBe(5);
@@ -140,7 +140,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 5,
-        total: 100
+        total: 100,
       });
 
       expect(use.currentPage.value).toBe(5);
@@ -154,7 +154,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 5,
-        total: 100
+        total: 100,
       });
 
       expect(use.currentPage.value).toBe(5);
@@ -170,7 +170,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 0,
-        total: 100
+        total: 100,
       });
 
       expect(use.currentPage.value).toBe(1);
@@ -180,7 +180,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 2,
-        total: 100
+        total: 100,
       });
 
       use.currentPage.value = -1;
@@ -193,35 +193,35 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 1,
-        total: 100
+        total: 100,
       });
 
       use.currentPage.value++;
       await nextTick();
       expect(use).toMatchObject({
         offset: { value: 10 },
-        currentPage: { value: 2 }
+        currentPage: { value: 2 },
       });
 
       use.currentPage.value = 5;
       await nextTick();
       expect(use).toMatchObject({
         offset: { value: 40 },
-        currentPage: { value: 5 }
+        currentPage: { value: 5 },
       });
 
       use.currentPage.value = 500;
       await nextTick();
       expect(use).toMatchObject({
         offset: { value: 90 },
-        currentPage: { value: 10 }
+        currentPage: { value: 10 },
       });
 
       use.currentPage.value--;
       await nextTick();
       expect(use).toMatchObject({
         offset: { value: 80 },
-        currentPage: { value: 9 }
+        currentPage: { value: 9 },
       });
     });
 
@@ -229,7 +229,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 2,
-        total: 100
+        total: 100,
       });
 
       use.currentPage.value = "10" as any;
@@ -244,7 +244,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 1,
-        total: 100
+        total: 100,
       });
       const value = "11";
 
@@ -255,8 +255,8 @@ describe("pagination", () => {
 
       expect(warnSpy).toBeCalledWith(
         expect.stringContaining(
-          `[pageSize] expected number but got: '${typeof value}' value: '${value}'`
-        )
+          `[pageSize] expected number but got: '${typeof value}' value: '${value}'`,
+        ),
       );
       expect(use.pageSize.value).toBe(10);
     });
@@ -265,7 +265,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 1,
-        total: 100
+        total: 100,
       });
       const value = "11";
 
@@ -276,8 +276,8 @@ describe("pagination", () => {
 
       expect(warnSpy).toBeCalledWith(
         expect.stringContaining(
-          `[currentPage] expected number but got: '${typeof value}' value: '${value}'`
-        )
+          `[currentPage] expected number but got: '${typeof value}' value: '${value}'`,
+        ),
       );
       expect(use.currentPage.value).toBe(1);
     });
@@ -286,7 +286,7 @@ describe("pagination", () => {
       const use = usePagination({
         pageSize: 10,
         currentPage: 2,
-        total: 100
+        total: 100,
       });
       const value = "11";
 
@@ -297,8 +297,8 @@ describe("pagination", () => {
 
       expect(warnSpy).toBeCalledWith(
         expect.stringContaining(
-          `[offset] expected number but got: '${typeof value}' value: '${value}'`
-        )
+          `[offset] expected number but got: '${typeof value}' value: '${value}'`,
+        ),
       );
       expect(use.offset.value).toBe(10);
     });
@@ -308,7 +308,7 @@ describe("pagination", () => {
     const use = usePagination({
       pageSize: 10,
       currentPage: 2,
-      total: 100
+      total: 100,
     });
 
     use.pageSize.value++;

@@ -103,13 +103,13 @@ describe("localStorage", () => {
       key: string | null,
       oldValue: string,
       newValue: string | null,
-      storageArea = localStorage
+      storageArea = localStorage,
     ) => {
       var evt = new StorageEvent("storage", {
         key,
         oldValue,
         newValue,
-        storageArea
+        storageArea,
       });
 
       dispatchEvent(evt);
@@ -132,7 +132,7 @@ describe("localStorage", () => {
       dispatchStorageEvent(
         k,
         JSON.stringify(item.value),
-        JSON.stringify(item.value)
+        JSON.stringify(item.value),
       );
       expect(updateItemSpy).not.toBeCalled();
 
@@ -150,7 +150,7 @@ describe("localStorage", () => {
         k,
         JSON.stringify(item.value),
         JSON.stringify(o),
-        sessionStorage
+        sessionStorage,
       );
       expect(updateItemSpy).toHaveBeenCalledTimes(1);
 
@@ -183,7 +183,7 @@ describe("localStorage", () => {
       function getStorageTotalSize(upperLimit?: /*in bytes*/ number) {
         var store = localStorage,
           testkey = "$_test"; // (NOTE: Test key is part of the storage!!! It should also be an even number of characters)
-        var test = function(_size: number) {
+        var test = function (_size: number) {
           try {
             store.removeItem(testkey);
             store.setItem(testkey, new Array(_size + 1).join("0"));
@@ -193,8 +193,9 @@ describe("localStorage", () => {
           return true;
         };
         var backup: Record<string, any> = {};
-        for (var i = 0, n = store.length; i < n; ++i)
+        for (var i = 0, n = store.length; i < n; ++i) {
           backup[store.key(i)!] = store.getItem(store.key(i)!);
+        }
         store.clear(); // (you could iterate over the items and backup first then restore later)
         var low = 0,
           high = 1,
@@ -207,8 +208,9 @@ describe("localStorage", () => {
         if (!upperTest) {
           var half = ~~((high - low + 1) / 2); // (~~ is a faster Math.floor())
           high -= half;
-          while (half > 0)
+          while (half > 0) {
             high += (half = ~~(half / 2)) * (test(high) ? 1 : -1);
+          }
           high = testkey.length + high;
         }
         if (high > _upperLimit) high = _upperLimit;

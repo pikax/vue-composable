@@ -1,4 +1,4 @@
-import { useDebounce, promisedTimeout } from "../src";
+import { promisedTimeout, useDebounce } from "../src";
 
 describe("debounce", () => {
   it("should call the function", async () => {
@@ -46,7 +46,7 @@ describe("debounce", () => {
 
   it("should set wait to 50ms if not passed", async () => {
     let pResolver: any = null;
-    const p = new Promise(r => {
+    const p = new Promise((r) => {
       pResolver = r;
     });
     const fn = jest.fn().mockImplementation(pResolver);

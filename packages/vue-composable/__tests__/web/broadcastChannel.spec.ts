@@ -22,12 +22,12 @@ describe("broadcastChannel", () => {
     Object.defineProperty(window, "BroadcastChannel", {
       writable: true,
       configurable: true,
-      value: BroadcastChannel
+      value: BroadcastChannel,
     });
     Object.defineProperty(global, "BroadcastChannel", {
       writable: true,
       configurable: true,
-      value: BroadcastChannel
+      value: BroadcastChannel,
     });
   });
 
@@ -35,12 +35,12 @@ describe("broadcastChannel", () => {
     Object.defineProperty(window, "BroadcastChannel", {
       writable: true,
       configurable: true,
-      value: _broadcastChannel
+      value: _broadcastChannel,
     });
     Object.defineProperty(global, "BroadcastChannel", {
       writable: true,
       configurable: true,
-      value: _broadcastChannel
+      value: _broadcastChannel,
     });
   });
 
@@ -69,7 +69,7 @@ describe("broadcastChannel", () => {
         expect(closeFn).toHaveBeenCalled();
         expect(isClosed.value).toBe(true);
         return {};
-      }
+      },
     });
     vm.mount();
   });
@@ -79,7 +79,7 @@ describe("broadcastChannel", () => {
       template: "<div ref='el'></div>",
       setup() {
         return useBroadcastChannel("test");
-      }
+      },
     });
     vm.mount();
     expect(closeFn).not.toHaveBeenCalled();
@@ -97,7 +97,7 @@ describe("broadcastChannel", () => {
 
         const ev = {
           other: 1,
-          data: { test: 1 }
+          data: { test: 1 },
         };
 
         expect(data.value).toBeNull();
@@ -107,7 +107,7 @@ describe("broadcastChannel", () => {
 
         expect(messageEvent.value).toStrictEqual(ev);
         expect(data.value).toStrictEqual(ev.data);
-      }
+      },
     });
     vm.mount();
   });
@@ -119,7 +119,7 @@ describe("broadcastChannel", () => {
         const { errored, errorEvent } = useBroadcastChannel("test");
 
         const ev = {
-          test: 1
+          test: 1,
         };
 
         expect(errorEvent.value).toBeNull();
@@ -131,7 +131,7 @@ describe("broadcastChannel", () => {
         expect(errored.value).toBe(true);
 
         return {};
-      }
+      },
     });
     vm.mount();
   });
@@ -150,11 +150,11 @@ describe("broadcastChannel", () => {
           3,
           "message",
           addListenerCb,
-          PASSIVE_EV
+          PASSIVE_EV,
         );
 
         return {};
-      }
+      },
     });
     vm.mount();
 
@@ -162,7 +162,7 @@ describe("broadcastChannel", () => {
 
     expect(removeEventListenerFn).toHaveBeenCalledWith(
       "message",
-      addListenerCb
+      addListenerCb,
     );
   });
 
@@ -175,7 +175,7 @@ describe("broadcastChannel", () => {
         expect(onBeforeClose).not.toHaveBeenCalled();
 
         return {};
-      }
+      },
     });
     vm.mount();
 
@@ -197,7 +197,7 @@ describe("broadcastChannel", () => {
         expect(postMessageFn).toHaveBeenCalledWith(d);
 
         return {};
-      }
+      },
     });
     vm.mount();
   });

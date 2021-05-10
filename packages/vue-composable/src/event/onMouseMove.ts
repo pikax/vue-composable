@@ -1,6 +1,6 @@
 import { Ref, ref } from "../api";
-import { useEvent, RemoveEventFunction } from "./event";
-import { RefTyped, RefElement, isNumber } from "../utils";
+import { RemoveEventFunction, useEvent } from "./event";
+import { isNumber, RefElement, RefTyped } from "../utils";
 import { useDebounce } from "../debounce";
 
 export interface MouseMoveResult {
@@ -13,35 +13,35 @@ export interface MouseMoveResult {
 
 export function useOnMouseMove(
   el: RefTyped<Window>,
-  wait: number
+  wait: number,
 ): MouseMoveResult;
 export function useOnMouseMove(
   el: RefTyped<Window>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseMoveResult;
 export function useOnMouseMove(el: RefElement, wait: number): MouseMoveResult;
 
 export function useOnMouseMove<T extends Element>(
   el: Ref<T> | Ref<T | null>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseMoveResult;
 
 export function useOnMouseMove<T extends Element>(
   el: Ref<T | null>,
-  wait: number
+  wait: number,
 ): MouseMoveResult;
 
 export function useOnMouseMove(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseMoveResult;
 export function useOnMouseMove(
   el: any,
   options?: number | boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseMoveResult {
   const mouseX = ref(0);
   const mouseY = ref(0);

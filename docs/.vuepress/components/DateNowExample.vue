@@ -11,6 +11,6 @@ export default {
   name: "date-now-example",
   setup() {
     return useDateNow();
-  }
+  },
 };
 </script>

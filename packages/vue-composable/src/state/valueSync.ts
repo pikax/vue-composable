@@ -1,5 +1,5 @@
-import { Ref, watch, isRef, ref } from "../api";
-import { RefTyped, wrap, isArray } from "../utils";
+import { isRef, Ref, ref, watch } from "../api";
+import { isArray, RefTyped, wrap } from "../utils";
 
 export function useValueSync<T>(
   main: RefTyped<T>,
@@ -7,27 +7,26 @@ export function useValueSync<T>(
 ): Ref<Ref<T>[]>;
 export function useValueSync<T>(
   main: RefTyped<T>,
-  list: Ref<Ref<T>[]>
+  list: Ref<Ref<T>[]>,
 ): Ref<Ref<T>[]>;
 
 export function useValueSync<T>(
   main: RefTyped<T>,
-  args: RefTyped<T>[] | Ref<RefTyped<T>[]>
+  args: RefTyped<T>[] | Ref<RefTyped<T>[]>,
 ): Ref<Ref<T>[]> {
   const master = wrap(main);
 
-  const list: Ref<Ref<T>[]> =
-    arguments.length === 2
-      ? isRef(arguments[1]) && isArray(arguments[1].value)
-        ? ((arguments[1] as unknown) as Ref<Ref<T>[]>)
-        : ref([wrap(arguments[1])])
-      : ref(
-          Array.from(arguments)
-            .slice(1)
-            .map(x => wrap(x))
-        );
+  const list: Ref<Ref<T>[]> = arguments.length === 2
+    ? isRef(arguments[1]) && isArray(arguments[1].value)
+      ? ((arguments[1] as unknown) as Ref<Ref<T>[]>)
+      : ref([wrap(arguments[1])])
+    : ref(
+      Array.from(arguments)
+        .slice(1)
+        .map((x) => wrap(x)),
+    );
 
-  list.value.forEach(x => {
+  list.value.forEach((x) => {
     x.value = master.value;
   });
 
@@ -38,7 +37,7 @@ export function useValueSync<T>(
     ([m, list]) => {
       // value added set master
       if (lastLen < list.length) {
-        list.forEach(x => {
+        list.forEach((x) => {
           if (x.value !== m) {
             x.value = m;
           }
@@ -54,19 +53,19 @@ export function useValueSync<T>(
       }
     },
     {
-      deep: true
-    }
+      deep: true,
+    },
   );
 
   watch(
     master,
-    m => {
-      list.value.forEach(x => (x.value = m));
+    (m) => {
+      list.value.forEach((x) => (x.value = m));
     },
     {
       deep: true,
-      flush: "sync"
-    }
+      flush: "sync",
+    },
   );
 
   return list;

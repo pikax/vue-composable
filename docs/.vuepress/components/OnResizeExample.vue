@@ -22,8 +22,8 @@ export default {
     return {
       height,
       width,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>

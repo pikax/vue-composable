@@ -19,16 +19,16 @@ describe("intl dateTimeFormat", () => {
     writable: true,
     configurable: true,
     value: {
-      DateTimeFormat: Test
-    }
+      DateTimeFormat: Test,
+    },
   });
 
   Object.defineProperty(global, "Intl", {
     writable: true,
     configurable: true,
     value: {
-      DateTimeFormat: Test
-    }
+      DateTimeFormat: Test,
+    },
   });
 
   beforeEach(() => {
@@ -75,7 +75,7 @@ describe("intl dateTimeFormat", () => {
 
     expect(spy).toHaveBeenLastCalledWith(l.value, o.value);
 
-    o.value = { year: "2-digits" };
+    o.value = { year: "2-digit" };
     await nextTick();
     formatter.value;
     expect(spy).toHaveBeenLastCalledWith(l.value, o.value);
@@ -89,7 +89,7 @@ describe("intl dateTimeFormat", () => {
     formatString(111);
     expect(spy).toHaveBeenCalledTimes(1);
 
-    let overrideOpts = { year: "2-digits" };
+    let overrideOpts = { year: "2-digit" } as const;
     formatString(111, overrideOpts);
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenLastCalledWith(undefined, overrideOpts);
@@ -104,7 +104,7 @@ describe("intl dateTimeFormat", () => {
     const { format } = useIntlDateTimeFormat();
 
     expect(format(111)).toMatchObject({
-      value: "test"
+      value: "test",
     });
   });
 

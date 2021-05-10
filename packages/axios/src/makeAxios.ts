@@ -1,14 +1,14 @@
-import { computed, ref, ComputedRef, Ref } from "./api";
+import { computed, ComputedRef, Ref, ref } from "./api";
 import axios, {
+  AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosInstance,
-  CancelTokenSource
+  CancelTokenSource,
 } from "axios";
-import { usePromise, isString, PromiseResultFactory } from "vue-composable";
+import { isString, PromiseResultFactory, usePromise } from "vue-composable";
 
-export interface MakeAxiosReturn<TData>
-  extends PromiseResultFactory<
+export interface MakeAxiosReturn<TData> extends
+  PromiseResultFactory<
     Promise<AxiosResponse<TData>>,
     [AxiosRequestConfig | string]
   > {
@@ -25,7 +25,7 @@ export interface MakeAxiosReturn<TData>
 
 export function makeAxios<T>(
   client: AxiosInstance,
-  throwException = false
+  throwException = false,
 ): MakeAxiosReturn<T> {
   const isCancelled = ref(false);
   const cancelledMessage = ref<string | undefined | null>(null);
@@ -55,13 +55,13 @@ export function makeAxios<T>(
 
       return client.request<any, AxiosResponse>({
         cancelToken: cancelToken.token,
-        ...opts
+        ...opts,
       });
     },
     {
       lazy: true,
-      throwException
-    }
+      throwException,
+    },
   );
 
   const data = computed(
@@ -70,7 +70,7 @@ export function makeAxios<T>(
       (use.error.value &&
         use.error.value.response &&
         use.error.value.response.data) ||
-      null
+      null,
   );
   const status = computed<number>(
     () =>
@@ -78,7 +78,7 @@ export function makeAxios<T>(
       (use.error.value &&
         use.error.value.response &&
         use.error.value.response.status) ||
-      null
+      null,
   );
   const statusText = computed<string>(
     () =>
@@ -86,7 +86,7 @@ export function makeAxios<T>(
       (use.error.value &&
         use.error.value.response &&
         use.error.value.response.statusText) ||
-      null
+      null,
   );
 
   return {
@@ -98,6 +98,6 @@ export function makeAxios<T>(
 
     cancel,
     isCancelled,
-    cancelledMessage
+    cancelledMessage,
   };
 }

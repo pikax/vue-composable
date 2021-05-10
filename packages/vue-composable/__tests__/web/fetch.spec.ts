@@ -1,6 +1,6 @@
 import { useFetch } from "../../src";
 import { promisedTimeout } from "../../src/utils";
-import { nextTick, createVue } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { Ref } from "../../src/api";
 
 describe("fetch", () => {
@@ -45,7 +45,7 @@ describe("fetch", () => {
 
     expect(fetchSpy).toHaveBeenCalledWith(
       "./api/1",
-      expect.objectContaining(init)
+      expect.objectContaining(init),
     );
   });
 
@@ -300,7 +300,7 @@ describe("fetch", () => {
 
     expect(fetchSpy).toBeCalledWith(
       "./api/1",
-      expect.objectContaining({ headers })
+      expect.objectContaining({ headers }),
     );
   });
 
@@ -315,7 +315,7 @@ describe("fetch", () => {
     useFetch(req, init);
     expect(fetchSpy).toBeCalledWith(
       expect.objectContaining(req),
-      expect.objectContaining(init)
+      expect.objectContaining(init),
     );
   });
 
@@ -338,14 +338,14 @@ describe("fetch", () => {
     useFetch(req, init);
     expect(fetchSpy).toBeCalledWith(
       expect.objectContaining(req),
-      expect.objectContaining(init)
+      expect.objectContaining(init),
     );
   });
 
   it("should warn if cancel is called before any request has been made", () => {
     const { cancel } = useFetch();
     expect(cancel).toThrowError(
-      "Cannot cancel because no request has been made"
+      "Cannot cancel because no request has been made",
     );
   });
 

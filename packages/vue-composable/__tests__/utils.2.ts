@@ -25,10 +25,10 @@ export function nextTick<T>(callback?: (this: T) => void, context?: T) {
 
 export const createVue = <
   T extends Component,
-  TProps extends Record<string, unknown>
+  TProps extends Record<string, unknown>,
 >(
   component: T,
-  props?: TProps
+  props?: TProps,
 ) => {
   const vm = new Vue(component);
   const el = document.createElement("div");
@@ -42,6 +42,6 @@ export const createVue = <
   return {
     el,
     mount,
-    destroy
+    destroy,
   };
 };

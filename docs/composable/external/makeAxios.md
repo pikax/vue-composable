@@ -47,7 +47,7 @@ const {
   promise,
   result,
   loading,
-  error
+  error,
 } = makeAxios();
 ```
 
@@ -74,10 +74,10 @@ import { makeAxios } from "@vue-composable/axios";
 const { exec, cancel } = makeAxios();
 ```
 
-| Signature                   | Description              |
-| --------------------------- | ------------------------ |
-| `exec(AxiosRequest|string)` | Executes axios request   |
-| `cancel(message?)`          | Cancels the last request |
+| Signature          | Description              |
+| ------------------ | ------------------------ |
+| `exec(AxiosRequest | string)`                 | Executes axios request |
+| `cancel(message?)` | Cancels the last request |
 
 ::: tip
 You can pass `throwException` on the last argument of the `exec` to override the default behaviour

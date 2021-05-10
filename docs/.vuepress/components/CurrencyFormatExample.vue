@@ -54,7 +54,7 @@ export default defineComponent({
 
     const options = ref({
       currency: "USD",
-      currencyDisplay: "symbol"
+      currencyDisplay: "symbol",
     });
 
     const { formatString, format } = useCurrencyFormat(options, selectedLocale);
@@ -72,8 +72,8 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>

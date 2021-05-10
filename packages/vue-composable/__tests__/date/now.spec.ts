@@ -1,4 +1,4 @@
-import { useNow, UseNowOptions, NowOptions } from "../../src";
+import { NowOptions, useNow, UseNowOptions } from "../../src";
 import { createVue } from "../utils";
 type CoreTypes = typeof import("../../src"); // This is the import type!
 
@@ -44,7 +44,7 @@ describe("now", () => {
       setup() {
         r = useNow(options);
         return;
-      }
+      },
     });
     mount();
     destroy();
@@ -59,13 +59,13 @@ describe("now", () => {
 
   it("should warn if options dateFn is not a function", () => {
     const { now } = buildUseNow({
-      timeFn: 1234
+      timeFn: 1234,
     } as any);
 
     // check if we fallback to Date.now
     expect(now.value).toBe(nowMock());
     expect(warnSpy).toHaveBeenCalledWith(
-      "[useNow] timeFn param must be Function"
+      "[useNow] timeFn param must be Function",
     );
   });
 
@@ -74,7 +74,7 @@ describe("now", () => {
     const timeFn = jest.fn().mockImplementation(() => dateNow);
     const { now } = buildUseNow({
       timeFn,
-      sync: false
+      sync: false,
     });
 
     expect(now.value).toBe(dateNow);
@@ -121,7 +121,7 @@ describe("now", () => {
       template: "<div></div>",
       setup() {
         return useNow();
-      }
+      },
     });
     mount();
     destroy();
@@ -140,7 +140,7 @@ describe("now", () => {
     const refreshMs = 555;
     const { now } = buildUseNow({
       sync: false,
-      refreshMs
+      refreshMs,
     });
 
     expect(now.value).toBe(nowMock());
@@ -152,7 +152,7 @@ describe("now", () => {
 
     expect(setTimeout).toHaveBeenCalledWith(
       expect.any(Function),
-      expect.any(Number)
+      expect.any(Number),
     );
     remove();
     expect(clearTimeout).toHaveBeenCalled();
@@ -163,7 +163,7 @@ describe("now", () => {
 
     expect(setInterval).toHaveBeenCalledWith(
       expect.any(Function),
-      expect.any(Number)
+      expect.any(Number),
     );
     remove();
     expect(clearInterval).toHaveBeenCalled();

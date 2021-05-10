@@ -1,5 +1,5 @@
-import { ref, onUnmounted, Ref } from "../api";
-import { isFunction, isClient, NO_OP, isBoolean } from "../utils";
+import { onUnmounted, Ref, ref } from "../api";
+import { isBoolean, isClient, isFunction, NO_OP } from "../utils";
 
 export interface NowOptions {
   /**
@@ -47,8 +47,8 @@ export function useNow(options?: NowOptions & UseNowOptions) {
   const SYNC_MS = 1000;
   const ms = (options && options.refreshMs) || SYNC_MS;
   const sync = options && isBoolean(options.sync) ? options.sync : true;
-  const fn =
-    (options && isFunction(options.timeFn) && options.timeFn) || Date.now;
+  const fn = (options && isFunction(options.timeFn) && options.timeFn) ||
+    Date.now;
   /* istanbul ignore else */
   if (__DEV__) {
     if (options && options.timeFn && isFunction(options.timeFn) === false) {
@@ -69,8 +69,8 @@ export function useNow(options?: NowOptions & UseNowOptions) {
     : NO_OP;
 
   if (sync) {
-    const offset =
-      SYNC_MS - (now.value - Math.floor(now.value / SYNC_MS) * SYNC_MS);
+    const offset = SYNC_MS -
+      (now.value - Math.floor(now.value / SYNC_MS) * SYNC_MS);
     timeoutHandler = setTimeout(start, offset);
   } else {
     start();
@@ -80,6 +80,6 @@ export function useNow(options?: NowOptions & UseNowOptions) {
 
   return {
     now,
-    remove
+    remove,
   };
 }

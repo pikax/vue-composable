@@ -78,9 +78,9 @@ export default {
 
     return {
       value,
-      timeline
+      timeline,
     };
-  }
+  },
 };
 </script>
 ```

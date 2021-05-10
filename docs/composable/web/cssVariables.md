@@ -16,8 +16,8 @@ useCssVariables({
   foregroundColor: "--color-foreground", // value is css as --color-foreground
   onBackgroundColor: {
     name: "color-on-background",
-    value: "red"
-  }
+    value: "red",
+  },
 });
 
 /**
@@ -36,7 +36,7 @@ export type CssVarDef = CssVarDefinition | string;
 const defaultOptions = {
   attributes: true,
   childList: true,
-  subtree: true
+  subtree: true,
 };
 ```
 
@@ -57,13 +57,13 @@ const {
   supported,
   observing,
   backgroundColor,
-  onBackgroundColor
+  onBackgroundColor,
 } = useCssVariables({
   backgroundColor: "color-background",
   onBackgroundColor: {
     name: "color-on-background",
-    value: "red"
-  }
+    value: "red",
+  },
 });
 
 // backgroundColor contains the `--color-background` CSS variable
@@ -149,8 +149,8 @@ export default {
       {
         foreground: {
           name: "color-foreground",
-          value: "red"
-        }
+          value: "red",
+        },
       },
       textDiv
     );
@@ -162,9 +162,9 @@ export default {
       stop,
       resume,
       observing,
-      foreground
+      foreground,
     };
-  }
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 import { computed, Ref } from "../api";
 import { intlDateFormatExtractArguments } from "./_helper";
-import { RefTyped, unwrap, isString } from "../utils";
+import { isString, RefTyped, unwrap } from "../utils";
 import { IntlDateTimeFormatOptions } from "./types";
 
 export type DateTimeFormatLocales =
@@ -13,7 +13,7 @@ export type DateTimeFormatterFormat<T> = (
   overrideOpts?: RefTyped<
     Intl.DateTimeFormatOptions | IntlDateTimeFormatOptions
   >,
-  overrideLocale?: RefTyped<DateTimeFormatLocales>
+  overrideLocale?: RefTyped<DateTimeFormatLocales>,
 ) => T;
 
 export interface DateTimeFormatReturn {
@@ -26,25 +26,25 @@ export interface DateTimeFormatReturn {
 export function useIntlDateTimeFormat(): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
-  locales: DateTimeFormatLocales
+  locales: DateTimeFormatLocales,
 ): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
-  options: RefTyped<IntlDateTimeFormatOptions>
+  options: RefTyped<IntlDateTimeFormatOptions>,
 ): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
-  options: RefTyped<Intl.DateTimeFormatOptions>
+  options: RefTyped<Intl.DateTimeFormatOptions>,
 ): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
   locales: DateTimeFormatLocales,
-  options?: RefTyped<IntlDateTimeFormatOptions | undefined>
+  options?: RefTyped<IntlDateTimeFormatOptions | undefined>,
 ): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
   locales: DateTimeFormatLocales,
-  options: RefTyped<Intl.DateTimeFormatOptions | undefined>
+  options: RefTyped<Intl.DateTimeFormatOptions | undefined>,
 ): DateTimeFormatReturn;
 
 export function useIntlDateTimeFormat(
@@ -52,34 +52,33 @@ export function useIntlDateTimeFormat(
     | DateTimeFormatLocales
     | RefTyped<IntlDateTimeFormatOptions>
     | RefTyped<Intl.DateTimeFormatOptions>,
-  opts?: any
+  opts?: any,
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
-    localesOptions as any,
-    opts
+    localesOptions as DateTimeFormatLocales,
+    opts as Intl.DateTimeFormatOptions,
   );
 
   const formatter = computed(
     () =>
       new Intl.DateTimeFormat(
         unwrap(locales as Ref<string | string[]> | undefined),
-        unwrap(options)
-      )
+        unwrap(options),
+      ),
   );
 
   const formatString = (
     value: RefTyped<number | Date | string>,
     overrideOpts?: RefTyped<Intl.DateTimeFormatOptions>,
-    overrideLocale?: RefTyped<DateTimeFormatLocales>
+    overrideLocale?: RefTyped<DateTimeFormatLocales>,
   ) => {
-    const f =
-      overrideOpts || overrideLocale
-        ? new Intl.DateTimeFormat(
-            unwrap(overrideLocale as RefTyped<string>) ||
-              unwrap(locales as Ref<string | string[]>),
-            { ...unwrap(options), ...unwrap(overrideOpts) }
-          )
-        : formatter.value;
+    const f = overrideOpts || overrideLocale
+      ? new Intl.DateTimeFormat(
+        unwrap(overrideLocale as RefTyped<string>) ||
+          unwrap(locales as Ref<string | string[]>),
+        { ...unwrap(options), ...unwrap(overrideOpts) },
+      )
+      : formatter.value;
 
     const v = unwrap(value);
     return f.format(isString(v) ? new Date(v) : v);
@@ -88,13 +87,13 @@ export function useIntlDateTimeFormat(
   const format = (
     value: RefTyped<number | Date | string>,
     overrideOpts?: RefTyped<Intl.DateTimeFormatOptions>,
-    overrideLocale?: RefTyped<DateTimeFormatLocales>
+    overrideLocale?: RefTyped<DateTimeFormatLocales>,
   ) => computed(() => formatString(value, overrideOpts, overrideLocale));
 
   return {
     format,
     formatString,
 
-    formatter
+    formatter,
   };
 }

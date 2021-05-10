@@ -18,7 +18,7 @@ import { useBreakpoint } from "vue-composable";
 const { current, /* properties from the arguments */ L, XL } = useBreakpoint({
   L: 720,
   XL: 1280,
-  S: "(min-width: 320px)" // also supports media query - it uses `useMatchMedia`
+  S: "(min-width: 320px)", // also supports media query - it uses `useMatchMedia`
 });
 ```
 
@@ -65,7 +65,7 @@ export default {
   setup() {
     // it will return object with reactive properties {XL: boolean, L: boolean, S: boolean}
     return useBreakpoint({ XL: 1280, L: 768, S: "(min-width: 320px)" });
-  }
+  },
 };
 </script>
 ```

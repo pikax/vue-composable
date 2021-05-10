@@ -29,7 +29,7 @@ import {
   ref,
   computed,
   watchEffect,
-  watch
+  watch,
 } from "@vue/composition-api";
 import { useWorker, useDateNow } from "vue-composable";
 
@@ -54,7 +54,7 @@ export default defineComponent({
 
     watch(
       data,
-      d => {
+      (d) => {
         sortedNumbers.value = d;
       },
       { lazy: true }
@@ -62,7 +62,7 @@ export default defineComponent({
 
     watch(
       errorEvent,
-      e => {
+      (e) => {
         sortedNumbers.value = ["error", e.returnValue];
       },
       { lazy: true }
@@ -80,8 +80,8 @@ export default defineComponent({
 
       sortWorker,
       errored,
-      errorEvent
+      errorEvent,
     };
-  }
+  },
 });
 </script>

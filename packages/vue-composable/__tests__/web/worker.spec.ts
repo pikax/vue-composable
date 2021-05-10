@@ -5,10 +5,10 @@ jest.mock("../../src/api", () => ({
   ...(__VUE_2__
     ? jest.requireActual("../../src/api.2")
     : jest.requireActual("../../src/api.3")),
-  onUnmounted: onUnmountedSpy
+  onUnmounted: onUnmountedSpy,
 }));
 
-import { useWorker, exposeWorker } from "../../src";
+import { exposeWorker, useWorker } from "../../src";
 import { nextTick } from "../utils";
 
 describe("worker", () => {
@@ -29,7 +29,7 @@ describe("worker", () => {
     addEventListener = addEventListenerFn.mockImplementation(
       (s: keyof WorkerMock["cb"], cb: any) => {
         this.cb[s] = cb;
-      }
+      },
     );
     postMessage = postMessageFn;
     terminate = terminateFn;
@@ -38,12 +38,12 @@ describe("worker", () => {
     Object.defineProperty(window, "Worker", {
       writable: true,
       configurable: true,
-      value: WorkerMock
+      value: WorkerMock,
     });
     Object.defineProperty(global, "Worker", {
       writable: true,
       configurable: true,
-      value: WorkerMock
+      value: WorkerMock,
     });
   });
 
@@ -51,12 +51,12 @@ describe("worker", () => {
     Object.defineProperty(window, "Worker", {
       writable: true,
       configurable: true,
-      value: _worker
+      value: _worker,
     });
     Object.defineProperty(global, "Worker", {
       writable: true,
       configurable: true,
-      value: _worker
+      value: _worker,
     });
   });
 
@@ -95,7 +95,7 @@ describe("worker", () => {
 
     const sendMessage = (d: any) => {
       mock.cb.message({
-        data: d
+        data: d,
       } as any);
 
       return nextTick();
@@ -125,7 +125,7 @@ describe("worker", () => {
 
     expect(warnSpy).toBeCalledTimes(2);
     expect(warnSpy).toHaveBeenLastCalledWith(
-      "[useWorker] message rate is too high, you might not get updated of all the messages."
+      "[useWorker] message rate is too high, you might not get updated of all the messages.",
     );
   });
 
@@ -185,7 +185,7 @@ describe("worker", () => {
     const postMessageFn = jest.fn();
     const worker = {
       onmessage: (a: any) => {},
-      postMessage: postMessageFn
+      postMessage: postMessageFn,
     };
     const sendWorker = exposeWorker.bind(worker);
 
@@ -202,12 +202,12 @@ describe("worker", () => {
 
     it("should post messages", async () => {
       const warnSpy = jest.spyOn(console, "warn");
-      const func = jest.fn().mockImplementation(x => x);
+      const func = jest.fn().mockImplementation((x) => x);
       sendWorker((_: any) => func(_));
 
       const send = async (e: any) => {
         await worker.onmessage({
-          data: e
+          data: e,
         });
       };
 
@@ -217,7 +217,7 @@ describe("worker", () => {
       await send(11);
       expect(postMessageFn).toHaveBeenLastCalledWith(undefined);
       expect(warnSpy).toHaveBeenCalledWith(
-        "[exposeWorker] returned `undefined`, this might cause unexpected behaviour"
+        "[exposeWorker] returned `undefined`, this might cause unexpected behaviour",
       );
 
       await send(null);
@@ -244,7 +244,7 @@ describe("worker", () => {
       expect(postMessageFn).toHaveBeenLastCalledWith(expected);
 
       postMessageFn.mockClear();
-      let _gen = function*() {
+      let _gen = function* () {
         yield 1;
         yield 2;
         yield 3;
@@ -258,7 +258,7 @@ describe("worker", () => {
       );
 
       postMessageFn.mockClear();
-      let _genAsync = async function*() {
+      let _genAsync = async function* () {
         yield await Promise.resolve(1);
         yield await Promise.resolve(2);
         yield await Promise.resolve(3);

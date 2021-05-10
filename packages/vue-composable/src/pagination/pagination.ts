@@ -1,5 +1,5 @@
-import { isNumber, minMax, wrap, RefTyped } from "../utils";
-import { watch, Ref, computed, ref } from "../api";
+import { isNumber, minMax, RefTyped, wrap } from "../utils";
+import { computed, Ref, ref, watch } from "../api";
 /**
  * Pagination control
  */
@@ -95,13 +95,13 @@ export function usePagination(options: PaginationOptions): PaginationResult {
         /* istanbul ignore else */
         if (__DEV__) {
           console.warn(
-            `[offset] expected number but got: '${typeof v}' value: '${v}'`
+            `[offset] expected number but got: '${typeof v}' value: '${v}'`,
           );
         }
         return;
       }
       _offset.value = Math.min(v, total.value);
-    }
+    },
   });
 
   const currentPage: Ref<number> = computed<number>({
@@ -113,7 +113,7 @@ export function usePagination(options: PaginationOptions): PaginationResult {
         /* istanbul ignore else  */
         if (__DEV__) {
           console.warn(
-            `[currentPage] expected number but got: '${typeof v}' value: '${v}'`
+            `[currentPage] expected number but got: '${typeof v}' value: '${v}'`,
           );
         }
         return;
@@ -121,7 +121,7 @@ export function usePagination(options: PaginationOptions): PaginationResult {
       _currentPage.value = minMax(v, 1, lastPage.value);
       // set the offset
       offset.value = (_currentPage.value - 1) * pageSize.value;
-    }
+    },
   });
 
   const pageSize = computed<number>({
@@ -133,13 +133,13 @@ export function usePagination(options: PaginationOptions): PaginationResult {
         /* istanbul ignore else */
         if (__DEV__) {
           console.warn(
-            `[pageSize] expected number but got: '${typeof v}' value: '${v}'`
+            `[pageSize] expected number but got: '${typeof v}' value: '${v}'`,
           );
         }
         return;
       }
       _pageSize.value = v;
-    }
+    },
   });
 
   const lastPage = computed(() => Math.ceil(total.value / pageSize.value));
@@ -153,12 +153,12 @@ export function usePagination(options: PaginationOptions): PaginationResult {
 
   watch(
     [total, pageSize],
-    _ => {
+    (_) => {
       if (currentPage.value > lastPage.value) {
         currentPage.value = lastPage.value;
       }
     },
-    { immediate: false } // no need to run on first render
+    { immediate: false }, // no need to run on first render
   );
 
   return {
@@ -175,6 +175,6 @@ export function usePagination(options: PaginationOptions): PaginationResult {
     next,
     prev,
     first,
-    last
+    last,
   };
 }

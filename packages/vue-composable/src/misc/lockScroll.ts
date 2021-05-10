@@ -1,15 +1,15 @@
 import {
-  ref,
-  Ref,
-  watch,
-  onMounted,
+  computed,
   onActivated,
-  onDeactivated,
-  unref,
   onBeforeUnmount,
-  computed
+  onDeactivated,
+  onMounted,
+  Ref,
+  ref,
+  unref,
+  watch,
 } from "../api";
-import { RefTyped, isString, isArray, wrap, unwrap } from "../utils";
+import { isArray, isString, RefTyped, unwrap, wrap } from "../utils";
 
 export const SCROLL_LOCK_CLASS = "no-scroll";
 
@@ -29,39 +29,39 @@ export interface LockScrollReturn {
 
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
-  options?: LockScrollOptions
+  options?: LockScrollOptions,
 ): LockScrollReturn;
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined | null> | Element)[]>,
-  lockedClass: string
+  lockedClass: string,
 ): LockScrollReturn;
 
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
-  options?: LockScrollOptions
+  options?: LockScrollOptions,
 ): LockScrollReturn;
 export function useLockScroll(
   elements: RefTyped<(Ref<Element | undefined> | Element)[] | undefined>,
-  lockedClass: string
+  lockedClass: string,
 ): LockScrollReturn;
 
 export function useLockScroll(
   element: RefTyped<Element | undefined>,
-  options?: LockScrollOptions
+  options?: LockScrollOptions,
 ): LockScrollReturn;
 
 export function useLockScroll(
   element: RefTyped<Element | undefined>,
-  lockedClass: string
+  lockedClass: string,
 ): LockScrollReturn;
 
 export function useLockScroll(
   selector: string,
-  options?: LockScrollOptions
+  options?: LockScrollOptions,
 ): LockScrollReturn;
 export function useLockScroll(
   selector: string,
-  lockedClass: string
+  lockedClass: string,
 ): LockScrollReturn;
 
 export function useLockScroll(
@@ -69,7 +69,7 @@ export function useLockScroll(
     | RefTyped<Element | undefined>
     | RefTyped<(Ref<Element | undefined | null> | Element)[] | undefined>
     | string,
-  classOptions?: string | Partial<LockScrollOptions>
+  classOptions?: string | Partial<LockScrollOptions>,
 ): LockScrollReturn {
   const elements = (isString(selectorElements)
     ? ref([]) // it will be resolved when mounted
@@ -87,7 +87,7 @@ export function useLockScroll(
   const locked = ref(false);
 
   // NOTE issues on Vue3 because of the `watch.deep`, we wrap all elements
-  const tracked = computed(() => elements.value.map(x => ref(x))) as Readonly<
+  const tracked = computed(() => elements.value.map((x) => ref(x))) as Readonly<
     Ref<Ref<Element>[]>
   >;
 
@@ -109,12 +109,13 @@ export function useLockScroll(
           el.classList.toggle(options.lockedClass, l);
         }
         if (options.onChange) {
-          if (oldLocked !== l || !oldElements.find(x => unwrap(x) === el))
+          if (oldLocked !== l || !oldElements.find((x) => unwrap(x) === el)) {
             options.onChange(el, l);
+          }
         }
       }
     },
-    { flush: "sync", deep: false }
+    { flush: "sync", deep: false },
   );
 
   const lock = () => (locked.value = true);
@@ -122,10 +123,9 @@ export function useLockScroll(
 
   if (isString(selectorElements)) {
     onMounted(
-      () =>
-        (elements.value = Array.from(
-          document.querySelectorAll(selectorElements)
-        ))
+      () => (elements.value = Array.from(
+        document.querySelectorAll(selectorElements),
+      )),
     );
   }
 
@@ -141,6 +141,6 @@ export function useLockScroll(
 
     lock,
     unlock,
-    remove
+    remove,
   };
 }

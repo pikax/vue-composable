@@ -1,7 +1,7 @@
-import { Ref, onMounted, ref, onUnmounted } from "../api";
+import { onMounted, onUnmounted, Ref, ref } from "../api";
 import { RemoveEventFunction } from "../event/event";
 import { useMatchMedia } from "./../misc/matchMedia";
-import { isNumber, isClient, NO_OP, PASSIVE_EV } from "../utils";
+import { isClient, isNumber, NO_OP, PASSIVE_EV } from "../utils";
 import { useDebounce } from "../debounce";
 
 function getBreakpointWidth(bp: string | number) {
@@ -26,11 +26,12 @@ export interface BreakpointReturnObject<T> {
   current: Ref<keyof T | undefined>;
 }
 
-export type BreakpointReturn<T> = Record<keyof T, Ref<boolean>> &
-  BreakpointReturnObject<T>;
+export type BreakpointReturn<T> =
+  & Record<keyof T, Ref<boolean>>
+  & BreakpointReturnObject<T>;
 
 export function useBreakpoint<T extends BreakpointObject>(
-  breakpoints: T
+  breakpoints: T,
 ): BreakpointReturn<T> {
   const result: Record<keyof T, Ref<boolean>> = {} as any;
   const map = new Map<
@@ -52,7 +53,7 @@ export function useBreakpoint<T extends BreakpointObject>(
       result[key] = r;
       map.set(width, {
         name: key,
-        valid: r
+        valid: r,
       });
       sorted.push(width);
     } else {
@@ -66,18 +67,18 @@ export function useBreakpoint<T extends BreakpointObject>(
 
   const resize = isClient
     ? () => {
-        const width = window.innerWidth;
-        let c = undefined;
-        for (let i = 0; i < sorted.length; i++) {
-          const bp = sorted[i];
-          const r = map.get(bp)!;
-          r.valid.value = width >= bp;
-          if (width >= bp && c === undefined) {
-            c = r.name;
-          }
+      const width = window.innerWidth;
+      let c = undefined;
+      for (let i = 0; i < sorted.length; i++) {
+        const bp = sorted[i];
+        const r = map.get(bp)!;
+        r.valid.value = width >= bp;
+        if (width >= bp && c === undefined) {
+          c = r.name;
         }
-        current.value = c;
       }
+      current.value = c;
+    }
     : NO_OP;
 
   const processResize = useDebounce(resize, 10);
@@ -94,13 +95,13 @@ export function useBreakpoint<T extends BreakpointObject>(
 
     onUnmounted(() => {
       remove();
-      removeMedia.forEach(x => x());
+      removeMedia.forEach((x) => x());
     });
   }
 
   return {
     ...result,
     remove,
-    current
+    current,
   };
 }

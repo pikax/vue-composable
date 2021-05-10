@@ -7,9 +7,9 @@ describe("path", () => {
       deep: {
         a: 1,
         b: {
-          a: 2
-        }
-      }
+          a: 2,
+        },
+      },
     };
 
     expect(usePath(o, "deep.a").value).toBe(1);
@@ -25,11 +25,11 @@ describe("path", () => {
           1,
           {
             a: {
-              b: 1
-            }
-          }
-        ]
-      }
+              b: 1,
+            },
+          },
+        ],
+      },
     };
 
     expect(usePath(o, "array[0]").value).toBe(1);
@@ -49,19 +49,19 @@ describe("path", () => {
 
     test("source `undefined`", () => {
       expect(
-        usePath(ref(undefined), "yey", undefined, notFoundResolverMock).value
+        usePath(ref(undefined), "yey", undefined, notFoundResolverMock).value,
       ).toBe("test");
       expect(notFoundResolverMock).toHaveBeenLastCalledWith(
         "yey",
         undefined,
         "yey",
-        undefined
+        undefined,
       );
     });
 
     test("no path", () => {
       const o = {
-        a: 1
+        a: 1,
       };
       expect(usePath(o, "", undefined, notFoundResolverMock).value).toBe(o);
       expect(notFoundResolverMock).not.toBeCalled();
@@ -69,10 +69,10 @@ describe("path", () => {
 
     test("first path not found", () => {
       const o = {
-        a: 1
+        a: 1,
       };
       expect(usePath(o, "b", undefined, notFoundResolverMock).value).toBe(
-        "test"
+        "test",
       );
       expect(notFoundResolverMock).toBeCalled();
       expect(warnSpy).toBeCalledWith(`Path "b" doesn't exist on:`, o);
@@ -81,11 +81,11 @@ describe("path", () => {
     test("deep path not found", () => {
       const o = {
         a: {
-          c: "hello"
-        }
+          c: "hello",
+        },
       };
       expect(usePath(o, "a.c.a", undefined, notFoundResolverMock).value).toBe(
-        "test"
+        "test",
       );
       expect(notFoundResolverMock).toBeCalled();
       expect(warnSpy).toBeCalledWith(`Path "a.c.a" doesn't exist on:`, o);
@@ -94,7 +94,7 @@ describe("path", () => {
     test("if access with []", () => {
       const o = {};
       expect(usePath(o, "[]", undefined, notFoundResolverMock).value).toBe(
-        "test"
+        "test",
       );
       expect(warnSpy).toBeCalledWith(`Path "[]" doesn't exist on:`, o);
     });
@@ -107,18 +107,18 @@ describe("path", () => {
             2,
             {
               c: {
-                ["a-b-c-d"]: 3
-              }
-            }
-          ]
-        }
+                ["a-b-c-d"]: 3,
+              },
+            },
+          ],
+        },
       };
 
       expect(usePath(o, "a[a]").value).toBe(o.a.a);
       expect(usePath(o, "[a]['a']").value).toBe(o.a.a);
       expect(usePath(o, '["a"][`b`][0]').value).toBe(o.a.b[0]);
       expect(usePath(o, "a.b[1].c[a-b-c-d]").value).toBe(
-        (o.a.b[1] as any).c["a-b-c-d"]
+        (o.a.b[1] as any).c["a-b-c-d"],
       );
     });
 
@@ -126,7 +126,7 @@ describe("path", () => {
       expect(usePath({}, "a[a]o[a]").value).toBeUndefined();
       expect(warnSpy).toHaveBeenNthCalledWith(
         1,
-        `[usePath] invalid path "a[a]o[a]"`
+        `[usePath] invalid path "a[a]o[a]"`,
       );
     });
 
@@ -134,7 +134,7 @@ describe("path", () => {
       expect(usePath({}, "aa]").value).toBeUndefined();
       expect(warnSpy).toHaveBeenNthCalledWith(
         1,
-        `[usePath] invalid path provided "aa]"`
+        `[usePath] invalid path provided "aa]"`,
       );
     });
   });

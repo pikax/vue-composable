@@ -9,14 +9,14 @@ describe("axios", () => {
   let request = jest.fn();
   beforeEach(() => {
     axios.create = jest.fn(() => ({
-      request
+      request,
     })) as any;
     axios.CancelToken = __axios.CancelToken;
   });
 
   it("should create axios client", () => {
     const options: AxiosRequestConfig = {
-      baseURL: "./api"
+      baseURL: "./api",
     };
     useAxios(options);
 
@@ -27,7 +27,7 @@ describe("axios", () => {
     const { exec, client } = useAxios(false);
     const request: AxiosRequestConfig = {
       method: "GET",
-      url: "./api/1"
+      url: "./api/1",
     };
 
     await exec(request);
@@ -38,14 +38,14 @@ describe("axios", () => {
   it("should call axios using string and options", async () => {
     const url = "./api/1";
     const request: AxiosRequestConfig = {
-      method: "GET"
+      method: "GET",
     };
     const { exec, client } = useAxios(url, request);
 
     await exec(url);
 
     expect(client.request).toBeCalledWith(
-      expect.objectContaining({ url, ...request })
+      expect.objectContaining({ url, ...request }),
     );
   });
 
@@ -62,17 +62,17 @@ describe("axios", () => {
     const { exec, client, result, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {
       method: "GET",
-      url: "./api/1"
+      url: "./api/1",
     };
 
     const response: AxiosResponse = {
       data: {
-        test: 1
+        test: 1,
       },
       status: 200,
       statusText: "OK",
       headers: {},
-      config: {}
+      config: {},
     };
 
     (client.request as jest.Mock).mockImplementationOnce(() => response);
@@ -90,22 +90,22 @@ describe("axios", () => {
     const { exec, client, error, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {
       method: "GET",
-      url: "./api/1"
+      url: "./api/1",
     };
 
     const response: AxiosResponse = {
       data: {
-        test: 1
+        test: 1,
       },
       status: 200,
       statusText: "OK",
       headers: {},
-      config: {}
+      config: {},
     };
 
     (client.request as jest.Mock).mockImplementationOnce(() => {
       throw {
-        response
+        response,
       };
     });
 
@@ -121,7 +121,7 @@ describe("axios", () => {
     const { exec, client, data, status, statusText } = useAxios();
     const request: AxiosRequestConfig = {
       method: "GET",
-      url: "./api/1"
+      url: "./api/1",
     };
 
     (client.request as jest.Mock).mockImplementationOnce(() => {
@@ -150,7 +150,7 @@ describe("axios", () => {
       client,
       cancel,
       cancelledMessage,
-      isCancelled
+      isCancelled,
     } = useAxios();
 
     const message = "cancelled ";
@@ -161,12 +161,12 @@ describe("axios", () => {
 
         const r = await Promise.race([
           promisedTimeout(5000),
-          x.cancelToken!.promise
+          x.cancelToken!.promise,
         ]);
         x.cancelToken!.throwIfRequested();
 
         return r;
-      }
+      },
     );
 
     try {
@@ -180,25 +180,25 @@ describe("axios", () => {
     expect({
       cancelledMessage,
       isCancelled,
-      error
+      error,
     }).toMatchObject({
       cancelledMessage: {
-        value: message
+        value: message,
       },
       isCancelled: {
-        value: true
+        value: true,
       },
       error: {
         value: {
-          message
-        }
-      }
+          message,
+        },
+      },
     });
   });
 
   it("should execute request if request is passed", () => {
     const req: Partial<AxiosRequestConfig> = {
-      url: "./api/1"
+      url: "./api/1",
     };
     useAxios(req, false);
     expect(request).toBeCalledWith(expect.objectContaining(req));
@@ -213,14 +213,14 @@ describe("axios", () => {
   it("should warn if cancel is called before any request has been made", () => {
     const { cancel } = useAxios();
     expect(cancel).toThrowError(
-      "Cannot cancel because no request has been made"
+      "Cannot cancel because no request has been made",
     );
   });
 
   it("should warn if cancel is called before any request has been made", () => {
     const { cancel } = useAxios(true);
     expect(cancel).toThrowError(
-      "Cannot cancel because no request has been made"
+      "Cannot cancel because no request has been made",
     );
   });
 });

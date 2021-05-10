@@ -6,9 +6,7 @@
       <button @click="id--">prev</button>
       <button @click="id++">next</button>
     </p>
-    <p v-if="loading">
-      loading...
-    </p>
+    <p v-if="loading">loading...</p>
     <div v-else>
       <p>Status: {{ status }}</p>
       {{ json }}
@@ -26,7 +24,7 @@ export default {
     const id = ref(1);
     const { json, loading, exec, status } = useFetch();
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec("https://reqres.in/api/user/" + id);
     });
 
@@ -34,8 +32,8 @@ export default {
       id,
       json,
       loading,
-      status
+      status,
     };
-  }
+  },
 };
 </script>

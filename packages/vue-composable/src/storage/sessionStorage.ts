@@ -1,22 +1,22 @@
-import { RefTyped, NO_OP, FALSE_OP } from "../utils";
+import { FALSE_OP, NO_OP, RefTyped, unwrap } from "../utils";
 import { ref } from "../api";
 import { useWebStorage } from "./webStorage";
 import { LocalStorageReturn } from "./localStorage";
 
 export function useSessionStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<string>,
-  sync?: boolean
+  sync?: boolean,
 ): LocalStorageReturn<string>;
 export function useSessionStorage<T>(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
+  sync?: boolean,
 ): LocalStorageReturn<T>;
 export function useSessionStorage(
-  key: string,
+  key: RefTyped<string>,
   defaultValue?: any,
-  sync?: boolean
+  sync?: boolean,
 ) {
   const { supported, store } = useWebStorage("sessionStorage");
 
@@ -34,12 +34,13 @@ export function useSessionStorage(
         setSync(sync);
       }
     }
-    remove = () => store.removeItem(key);
+    remove = () => store.removeItem(unwrap(key));
     clear = () => store.clear();
 
-    storage = store.getItem(key);
-    if (!storage) {
-      storage = store.setItem(key, defaultValue);
+    storage = store.getRef(key);
+    if (storage.value == null) {
+      store.save(unwrap(key), defaultValue);
+      storage.value = defaultValue;
     }
   } else {
     /* istanbul ignore else */
@@ -56,6 +57,6 @@ export function useSessionStorage(
     storage,
     clear,
     remove,
-    setSync
+    setSync,
   };
 }

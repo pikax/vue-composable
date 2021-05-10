@@ -56,7 +56,7 @@ export default {
 
     const { supported, storage, setSync, remove } = useStorage(key, 1);
 
-    watch(tabSync, s => {
+    watch(tabSync, (s) => {
       if (setSync(s) === false) {
         supportedSync.value = false;
       }
@@ -69,9 +69,9 @@ export default {
 
       tabSync,
       storage,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 ```

@@ -69,9 +69,9 @@ export default {
   setup() {
     let i = 0;
     return useNow({
-      timeFn: () => ++i
+      timeFn: () => ++i,
     });
-  }
+  },
 };
 </script>
 ```

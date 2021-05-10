@@ -5,7 +5,7 @@ import { getDevtools } from "./api";
 export function useDevtoolsTimelineLayer(
   id: string,
   label: string,
-  color: number
+  color: number,
 ) {
   const api = getDevtools();
   let addEvent: (event: TimelineEvent, all?: boolean) => any = NO_OP;

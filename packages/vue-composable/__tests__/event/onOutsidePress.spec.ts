@@ -30,7 +30,7 @@ describe("onOutsidePress", () => {
       template: "<div></div>",
       setup() {
         useOnOutsidePress(element, callback);
-      }
+      },
     });
     mount();
 
@@ -39,18 +39,18 @@ describe("onOutsidePress", () => {
     expect(addEventListenerMock).toHaveBeenLastCalledWith(
       "mousedown",
       expect.any(Function),
-      { passive: true }
+      { passive: true },
     );
 
     // inside
     handler({
-      target: element
+      target: element,
     });
     expect(callback).not.toHaveBeenCalled();
 
     // outside
     handler({
-      target: document.createElement("div")
+      target: document.createElement("div"),
     });
     expect(callback).toHaveBeenCalledTimes(1);
   });

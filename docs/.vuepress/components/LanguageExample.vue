@@ -19,6 +19,6 @@ import { useLanguage } from "vue-composable";
 export default {
   setup() {
     return useLanguage();
-  }
+  },
 };
 </script>

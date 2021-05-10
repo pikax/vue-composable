@@ -15,7 +15,7 @@ const {
   currentPage,
   offset,
   lastPage,
-  result
+  result,
 } = useArrayPagination();
 ```
 
@@ -77,12 +77,12 @@ export default {
     const { result, next, prev, currentPage, lastPage } = useArrayPagination(
       array,
       {
-        pageSize: 3
+        pageSize: 3,
       }
     );
 
     return { result, next, prev, currentPage, lastPage };
-  }
+  },
 };
 </script>
 ```

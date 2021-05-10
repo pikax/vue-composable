@@ -31,13 +31,13 @@ useLockScroll(elements, lockClass?);
 
 ```
 
-| Parameters | Type                           | Required | Default     | Description                 |
-| ---------- | ------------------------------ | -------- | ----------- | --------------------------- |
-| selector   | `String`                       | `true`   |             | string selector             |
-| element    | `Ref<Element> | Element`       | `true`   |             | template element            |
-| elements   | `Ref<Elements[]> | Elements[]` | `true`   |             | list of elements            |
-| options    | `Options`                      | `false`  |             | Options for `useLockScroll` |
-| lockClass  | `String`                       | `false`  | `no-scroll` | custom `lockClass`          |
+| Parameters | Type             | Required    | Default     | Description                 |
+| ---------- | ---------------- | ----------- | ----------- | --------------------------- |
+| selector   | `String`         | `true`      |             | string selector             |
+| element    | `Ref<Element>    | Element`    | `true`      |                             | template element |
+| elements   | `Ref<Elements[]> | Elements[]` | `true`      |                             | list of elements |
+| options    | `Options`        | `false`     |             | Options for `useLockScroll` |
+| lockClass  | `String`         | `false`     | `no-scroll` | custom `lockClass`          |
 
 ## State
 
@@ -106,9 +106,9 @@ export default {
     return {
       elref,
       locked,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 <style scoped>

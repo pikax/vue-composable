@@ -1,5 +1,5 @@
 import { createVue, nextTick } from "../utils";
-import { useOnResize, ResizeResult } from "../../src/event/onResize";
+import { ResizeResult, useOnResize } from "../../src/event/onResize";
 import { promisedTimeout } from "../../src/utils";
 import { ref } from "../../src/api";
 
@@ -20,7 +20,7 @@ describe("onResize", () => {
     const element: Element = {
       removeEventListener: jest.fn(),
       clientHeight: 0,
-      clientWidth: 0
+      clientWidth: 0,
     } as any;
 
     windowEventSpy.mockImplementation((name, listener) => {
@@ -35,14 +35,14 @@ describe("onResize", () => {
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
-      }
+      },
     }).mount();
 
     expect(window.addEventListener).toHaveBeenCalled();
 
     expect(use).toMatchObject({
       height: { value: 0 },
-      width: { value: 0 }
+      width: { value: 0 },
     });
 
     (element as any).clientHeight = 50;
@@ -53,7 +53,7 @@ describe("onResize", () => {
 
     expect(use).toMatchObject({
       height: { value: 50 },
-      width: { value: 50 }
+      width: { value: 50 },
     });
   });
 
@@ -61,7 +61,7 @@ describe("onResize", () => {
     const element: Element = {
       addEventListener: jest.fn(),
       clientHeight: 0,
-      clientWidth: 0
+      clientWidth: 0,
     } as any;
     let use: ResizeResult | undefined = undefined;
     window.removeEventListener = jest.fn();
@@ -70,7 +70,7 @@ describe("onResize", () => {
       template: "<div></div>",
       setup() {
         use = useOnResize(element);
-      }
+      },
     }).mount();
     expect(window.removeEventListener).not.toHaveBeenCalled();
 
@@ -83,7 +83,7 @@ describe("onResize", () => {
     const element: Element = {
       removeEventListener: jest.fn(),
       clientHeight: 0,
-      clientWidth: 0
+      clientWidth: 0,
     } as any;
     windowEventSpy.mockImplementation((name, listener) => {
       expect(name).toBe("resize");
@@ -97,7 +97,7 @@ describe("onResize", () => {
       template: "<div></div>",
       setup() {
         use = useOnResize(element, wait);
-      }
+      },
     }).mount();
     expect(window.addEventListener).toHaveBeenCalled();
 
@@ -113,13 +113,13 @@ describe("onResize", () => {
     // still waiting to set the values
     expect(use).toMatchObject({
       height: { value: 0 },
-      width: { value: 0 }
+      width: { value: 0 },
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
       height: { value: 19 },
-      width: { value: 19 }
+      width: { value: 19 },
     });
   });
 
@@ -128,22 +128,22 @@ describe("onResize", () => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       clientHeight: 0,
-      clientWidth: 0
+      clientWidth: 0,
     } as any;
     const options = {
-      passive: true
+      passive: true,
     };
 
     createVue({
       template: "<div></div>",
       setup() {
         return useOnResize(element, options);
-      }
+      },
     }).mount();
     expect(window.addEventListener).toHaveBeenCalledWith(
       "resize",
       expect.any(Function),
-      options
+      options,
     );
   });
 
@@ -151,7 +151,7 @@ describe("onResize", () => {
     const element: Element = {
       removeEventListener: jest.fn(),
       clientHeight: 0,
-      clientWidth: 0
+      clientWidth: 0,
     } as any;
     windowEventSpy.mockImplementation((name, listener) => {
       expect(name).toBe("resize");
@@ -161,19 +161,19 @@ describe("onResize", () => {
     let handler: ((ev: Partial<MouseEvent>) => void) | undefined = undefined;
     const wait = 50;
     const options = {
-      passive: true
+      passive: true,
     };
 
     createVue({
       template: "<div></div>",
       setup() {
         use = useOnResize(element, options, wait);
-      }
+      },
     }).mount();
     expect(window.addEventListener).toHaveBeenCalledWith(
       "resize",
       expect.any(Function),
-      options
+      options,
     );
 
     for (let i = 0; i < 10; i++) {
@@ -188,13 +188,13 @@ describe("onResize", () => {
     // still waiting to set the values
     expect(use).toMatchObject({
       height: { value: 0 },
-      width: { value: 0 }
+      width: { value: 0 },
     });
 
     await promisedTimeout(wait);
     expect(use).toMatchObject({
       height: { value: 19 },
-      width: { value: 19 }
+      width: { value: 19 },
     });
   });
 
@@ -209,20 +209,20 @@ describe("onResize", () => {
         resize = useOnResize(el);
 
         return {
-          el
+          el,
         };
-      }
+      },
     });
 
     mount();
 
     expect(resize).toMatchObject({
       height: {
-        value: 0
+        value: 0,
       },
       width: {
-        value: 0
-      }
+        value: 0,
+      },
     });
   });
 });

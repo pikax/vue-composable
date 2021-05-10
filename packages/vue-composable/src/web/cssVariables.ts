@@ -1,12 +1,12 @@
-import { Ref, ref, onUnmounted, isRef, watch, onMounted } from "../api";
+import { isRef, onMounted, onUnmounted, Ref, ref, watch } from "../api";
 import {
-  RefTyped,
+  isClient,
+  isElement,
   isString,
+  NO_OP,
+  RefTyped,
   unwrap,
   wrap,
-  isElement,
-  isClient,
-  NO_OP
 } from "../utils";
 
 /**
@@ -72,7 +72,7 @@ export type CssVariableConfigurationObject = Record<string, CssVarDef>;
  */
 export function getCssVariableFor(
   element: HTMLElement,
-  name: string
+  name: string,
 ): CssVariable {
   const result = getComputedStyle(element).getPropertyValue(name);
   return result ? result.trim() : null;
@@ -88,7 +88,7 @@ export function getCssVariableFor(
 export function setCssVariableFor(
   element: HTMLElement,
   name: string,
-  value: CssVariable
+  value: CssVariable,
 ): void {
   element.style.setProperty(name, value);
 }
@@ -96,7 +96,7 @@ export function setCssVariableFor(
 const defaultOptions: MutationObserverInit = {
   attributes: true,
   childList: true,
-  subtree: true
+  subtree: true,
 };
 
 const sanitizeCssVarName = (name: string) => {
@@ -112,21 +112,21 @@ const sanitizeCssVarName = (name: string) => {
  * @param element
  */
 export function useCssVariables<T extends CssVariableConfigurationObject>(
-  variables: T
+  variables: T,
 ): UseCssVariables<T>;
 export function useCssVariables<T extends CssVariableConfigurationObject>(
   variables: T,
-  options?: MutationObserverInit
+  options?: MutationObserverInit,
 ): UseCssVariables<T>;
 export function useCssVariables<T extends CssVariableConfigurationObject>(
   variables: T,
   element: RefTyped<HTMLElement>,
-  options?: MutationObserverInit
+  options?: MutationObserverInit,
 ): UseCssVariables<T>;
 export function useCssVariables<T extends CssVariableConfigurationObject>(
   variables: T,
   elementOrOptions?: RefTyped<HTMLElement> | MutationObserverInit,
-  optionsConfig?: MutationObserverInit
+  optionsConfig?: MutationObserverInit,
 ): UseCssVariables<T> {
   const supported = isClient && "MutationObserver" in self;
 
@@ -134,9 +134,9 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
     isRef(elementOrOptions) || isElement(elementOrOptions)
       ? [elementOrOptions, optionsConfig || defaultOptions]
       : [
-          (supported && document.documentElement) || ({} as any),
-          elementOrOptions || defaultOptions
-        ];
+        (supported && document.documentElement) || ({} as any),
+        elementOrOptions || defaultOptions,
+      ];
 
   // Reactive property to tell if the observer is listening
   const observing = ref(true);
@@ -161,7 +161,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
       }
 
       return [x[0], sanitizeCssVarName(name)];
-    }
+    },
   );
 
   for (let i = 0; i < defEntries.length; i++) {
@@ -172,7 +172,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
       result[key] = ref(
         (isRef(element) && !element.value) || !supported
           ? null
-          : getCssVariableFor(unwrap(element), name as string)
+          : getCssVariableFor(unwrap(element), name as string),
       );
     }
 
@@ -189,7 +189,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
             setCssVariableFor(val[1], name as string, val[0]);
           }
         },
-        { immediate: !isRef(element) }
+        { immediate: !isRef(element) },
       );
     }
   }
@@ -201,7 +201,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
       stop: NO_OP,
       resume: NO_OP,
       supported,
-      observing
+      observing,
     };
   }
 
@@ -239,7 +239,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
 
   if (isRef(element)) {
     onMounted(() => {
-      updateValues.forEach(x => x());
+      updateValues.forEach((x) => x());
       watch(element, (n, o) => {
         if (o) {
           stop();
@@ -250,7 +250,7 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
       });
     });
   } else if (isClient || element) {
-    updateValues.forEach(x => x());
+    updateValues.forEach((x) => x());
     // Starts observe
     resume();
   }
@@ -262,6 +262,6 @@ export function useCssVariables<T extends CssVariableConfigurationObject>(
 
     resume,
     stop,
-    observing
+    observing,
   };
 }

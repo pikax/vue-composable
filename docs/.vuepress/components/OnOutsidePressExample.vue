@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="elref" style="background: red;width:100px">
+    <div ref="elref" style="background: red; width: 100px">
       Click Outside or inside
     </div>
     <p>check the console</p>
@@ -19,6 +19,6 @@ export default {
     useOnOutsidePress(elref, () => console.log("clicked outside"));
 
     return { elref };
-  }
+  },
 };
 </script>

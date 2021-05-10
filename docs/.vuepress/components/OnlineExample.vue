@@ -18,6 +18,6 @@ import { useOnline } from "vue-composable";
 export default {
   setup() {
     return useOnline();
-  }
+  },
 };
 </script>

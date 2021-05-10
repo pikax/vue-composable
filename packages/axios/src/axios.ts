@@ -1,29 +1,29 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { isString, isBoolean, isObject } from "vue-composable";
+import { isBoolean, isObject, isString } from "vue-composable";
 import { makeAxios, MakeAxiosReturn } from "./makeAxios";
 
 export interface AxiosReturn<TData> extends MakeAxiosReturn<TData> {}
 
 export function useAxios<TData = any>(
-  throwException?: boolean
+  throwException?: boolean,
 ): AxiosReturn<TData>;
 export function useAxios<TData = any>(
   url: string,
   config?: AxiosRequestConfig,
-  throwException?: boolean
+  throwException?: boolean,
 ): AxiosReturn<TData>;
 export function useAxios<TData = any>(
   url: string,
-  throwException?: boolean
+  throwException?: boolean,
 ): AxiosReturn<TData>;
 export function useAxios<TData = any>(
   config?: AxiosRequestConfig,
-  throwException?: boolean
+  throwException?: boolean,
 ): AxiosReturn<TData>;
 export function useAxios<TData = any>(
   configUrlThrowException?: AxiosRequestConfig | string | boolean,
   configThrowException?: AxiosRequestConfig | boolean,
-  throwException = false
+  throwException = false,
 ): AxiosReturn<TData> {
   /* istanbul ignore next  */
   __DEV__ && !axios && console.warn(`[axios] not installed, please install it`);

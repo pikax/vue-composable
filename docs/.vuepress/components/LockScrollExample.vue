@@ -28,9 +28,9 @@ export default {
     return {
       elref,
       locked,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 <style scoped>

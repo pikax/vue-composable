@@ -40,8 +40,8 @@ export default {
       supported,
       data,
       message,
-      submitMessage
+      submitMessage,
     };
-  }
+  },
 };
 </script>

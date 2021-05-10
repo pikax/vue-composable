@@ -53,11 +53,11 @@ export default {
     watch(visibility, () => {
       console.log("visibility changed", {
         visibility: visibility.value,
-        hidden: hidden.value
+        hidden: hidden.value,
       });
     });
     return { visibility, hidden };
-  }
+  },
 };
 </script>
 ```

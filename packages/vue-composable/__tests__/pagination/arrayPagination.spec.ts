@@ -7,7 +7,7 @@ describe("arrayPagination", () => {
     const array = new Array(100).map((x, i) => i);
     const use = useArrayPagination(array, {
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
     });
 
     expect(use.result.value).toMatchObject(array.slice(0, 10));
@@ -22,7 +22,7 @@ describe("arrayPagination", () => {
     const arr = ref(new Array(10).map((x, i) => i));
     const use = useArrayPagination(arr, {
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
     });
 
     expect(use.result.value).toMatchObject(arr.value.slice(0, 10));
@@ -35,7 +35,7 @@ describe("arrayPagination", () => {
     const arr = ref(new Array(10).map((x, i) => i));
     const use = useArrayPagination(arr, {
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
     });
 
     expect(use.result.value).toMatchObject(arr.value.slice(0, 10));

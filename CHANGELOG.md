@@ -1,3 +1,86 @@
+# [1.0.0-beta.23](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-04-24)
+
+### Bug Fixes
+
+- use Vue instead the VueRuntimeCore ([6f31250](https://github.com/pikax/vue-composable/commit/6f31250416774f68f9cd8a0425404d06a6354f23)), closes [#852](https://github.com/pikax/vue-composable/issues/852)
+
+# [1.0.0-beta.23](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-04-24)
+
+### Bug Fixes
+
+- use Vue instead the VueRuntimeCore ([6f31250](https://github.com/pikax/vue-composable/commit/6f31250416774f68f9cd8a0425404d06a6354f23)), closes [#852](https://github.com/pikax/vue-composable/issues/852)
+
+# [1.0.0-beta.22](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-04-10)
+
+### Bug Fixes
+
+- **validation:** create dirty watcher after \$reset ([#843](https://github.com/pikax/vue-composable/issues/843)) ([f476114](https://github.com/pikax/vue-composable/commit/f476114334d07db4e5d37d9bb9bc6995b75452d0))
+
+# [1.0.0-beta.21](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-03-27)
+
+### Bug Fixes
+
+- **usePromise:** last promise would never be mark as complete ([bd03e00](https://github.com/pikax/vue-composable/commit/bd03e0098f2ee2c38f4791856e90e6e1ebed54ef))
+- import.meta SSR ([aafc3e1](https://github.com/pikax/vue-composable/commit/aafc3e1ef6e7d9e1d364c6ed955bf67675f23362))
+
+### Features
+
+- **useVModel:** Set to throw error if current instance is undefined ([#819](https://github.com/pikax/vue-composable/issues/819)) ([f352cf5](https://github.com/pikax/vue-composable/commit/f352cf5c0df711856e1ebfbb45c0fd82223b927b))
+
+# [1.0.0-beta.20](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-03-06)
+
+### Bug Fixes
+
+- **ssr:** SSR check changed to also taking `process.env` into consideration ([8ef1ad0](https://github.com/pikax/vue-composable/commit/8ef1ad09422a1303f39042ff0d691619219b9c47))
+
+# [1.0.0-beta.19](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-03-06)
+
+### Bug Fixes
+
+- **ssr:** changing SSR check from `process.env.SSR` to `import.meta.env.SSR` ([957fab3](https://github.com/pikax/vue-composable/commit/957fab3004b89748a9e79bab593b20c174c8a8d2))
+
+# [1.0.0-beta.18](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-02-21)
+
+### Features
+
+- **storage:** support for `ref` key for localStorage and sessionStorage ([f873ca0](https://github.com/pikax/vue-composable/commit/f873ca054c3808ca4792adb81b0edb57338f7f1e)), closes [#776](https://github.com/pikax/vue-composable/issues/776)
+
+# [1.0.0-beta.17](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-02-20)
+
+### Features
+
+- **validation:** add `$touch`/`$reset` methods and some return changes ([7b3b83d](https://github.com/pikax/vue-composable/commit/7b3b83dded7c6edf62093c5d41401fd13bdecb7e)), closes [#753](https://github.com/pikax/vue-composable/issues/753)
+- add useCookie composable ([#745](https://github.com/pikax/vue-composable/issues/745)) ([03e6633](https://github.com/pikax/vue-composable/commit/03e6633b7f9f40d4383032782d347c5cf117a5be))
+
+# [1.0.0-beta.16](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-01-23)
+
+### Features
+
+- **useTimeout:** add a new composable ([#740](https://github.com/pikax/vue-composable/issues/740)) ([e40ea53](https://github.com/pikax/vue-composable/commit/e40ea53fe6564402ab53f3c390c3499be4ffcabd))
+
+# [1.0.0-beta.15](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-01-16)
+
+### Bug Fixes
+
+- **i18n:** do not import default when importing a json as a module ([#732](https://github.com/pikax/vue-composable/issues/732)) ([1ef0912](https://github.com/pikax/vue-composable/commit/1ef09126e507d1464176f0ad059fc6a01d1eda4c))
+
+# [1.0.0-beta.14](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-01-06)
+
+### Features
+
+- **refDebounced:** support passing a ref as a value ([f8a26b9](https://github.com/pikax/vue-composable/commit/f8a26b96ac1ac4c043283c73cd557223a842c954))
+- **useValidation:** add `toObject` ([#723](https://github.com/pikax/vue-composable/issues/723)) ([28e9fd3](https://github.com/pikax/vue-composable/commit/28e9fd3d00d96293ec8bca0b9a8f1aa85072fb25))
+
+# [1.0.0-beta.13](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-01-01)
+
+### Bug Fixes
+
+- **cancellablePromise:** `cancelled` not set to false when executing ([d1b9ef9](https://github.com/pikax/vue-composable/commit/d1b9ef9437d5f2d20e6ea8d9af2f8377477533b3)), closes [#704](https://github.com/pikax/vue-composable/issues/704)
+
+### Features
+
+- **useClipboard:** added a new composable ([#709](https://github.com/pikax/vue-composable/issues/709)) ([e2d12c9](https://github.com/pikax/vue-composable/commit/e2d12c95e10536e012974c0d250ba1d469c70c02))
+
 # [1.0.0-beta.12](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2020-10-31)
 
 ### Features

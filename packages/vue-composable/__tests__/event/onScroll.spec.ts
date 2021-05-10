@@ -1,5 +1,5 @@
 import { createVue, nextTick } from "../utils";
-import { useOnScroll, ScrollResult } from "../../src/event/onScroll";
+import { ScrollResult, useOnScroll } from "../../src/event/onScroll";
 import { promisedTimeout } from "../../src/utils";
 
 describe("onScroll", () => {
@@ -132,7 +132,7 @@ describe("onScroll", () => {
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
       expect.any(Function),
-      options
+      options,
     );
   });
 
@@ -163,7 +163,7 @@ describe("onScroll", () => {
     expect(element.addEventListener).toHaveBeenCalledWith(
       "scroll",
       expect.any(Function),
-      options
+      options,
     );
 
     for (let i = 0; i < 10; i++) {

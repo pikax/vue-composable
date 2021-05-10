@@ -1,21 +1,21 @@
 /* istanbul ignore file */
 
 export {
-  ref,
-  isRef,
-  unref,
-  Ref,
-  onMounted,
-  onUnmounted,
+  computed,
+  ComputedRef,
+  getCurrentInstance,
   inject,
   InjectionKey,
+  isRef,
+  onMounted,
+  onUnmounted,
   provide,
-  watch,
   reactive,
-  computed,
-  getCurrentInstance,
-  ComputedRef,
-  UnwrapRef
+  Ref,
+  ref,
+  unref,
+  UnwrapRef,
+  watch,
 } from "@vue/runtime-core";
 
 // istanbul ignore next

@@ -2,8 +2,8 @@ import { createVue } from "../utils";
 import {
   useInterval,
   UseIntervalReturn,
+  UseIntervalReturnArgs,
   UseIntervalReturnMs,
-  UseIntervalReturnArgs
 } from "../../src";
 
 describe("interval", () => {
@@ -22,7 +22,7 @@ describe("interval", () => {
       template: `<div></div>`,
       setup() {
         interval = useInterval(callback, ms);
-      }
+      },
     });
 
     mount();
@@ -53,7 +53,7 @@ describe("interval", () => {
       template: `<div></div>`,
       setup() {
         useInterval(callback, ms);
-      }
+      },
     });
 
     mount();
@@ -75,7 +75,7 @@ describe("interval", () => {
       template: `<div></div>`,
       setup() {
         interval = useInterval(callback);
-      }
+      },
     });
 
     mount();
@@ -98,7 +98,7 @@ describe("interval", () => {
       template: `<div></div>`,
       setup() {
         interval = useInterval(callback, ms);
-      }
+      },
     });
 
     mount();
@@ -116,13 +116,14 @@ describe("interval", () => {
     const callback = jest.fn((x: number) => x);
     const ms = 100;
 
-    let interval: UseIntervalReturn &
-      UseIntervalReturnArgs<[number]> = {} as any;
+    let interval:
+      & UseIntervalReturn
+      & UseIntervalReturnArgs<[number]> = {} as any;
     const { mount, destroy } = createVue({
       template: `<div></div>`,
       setup() {
         interval = useInterval(callback, ms, 1);
-      }
+      },
     });
 
     mount();
@@ -144,7 +145,7 @@ describe("interval", () => {
       setup() {
         // @ts-ignore
         interval = useInterval(callback);
-      }
+      },
     });
 
     mount();

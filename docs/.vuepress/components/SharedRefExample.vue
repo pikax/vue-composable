@@ -37,8 +37,8 @@ export default {
     return {
       ...sharedRef,
       mindDescription,
-      changeMind
+      changeMind,
     };
-  }
+  },
 };
 </script>

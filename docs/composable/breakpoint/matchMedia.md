@@ -66,7 +66,7 @@ export default {
   name: "match-media-example",
   setup() {
     return useMatchMedia("(max-width: 600px)");
-  }
+  },
 };
 </script>
 ```

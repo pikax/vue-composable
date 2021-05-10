@@ -1,5 +1,5 @@
-import { ref, onUnmounted, Ref } from "../api";
-import { PASSIVE_EV, NO_OP, isClient } from "../utils";
+import { onUnmounted, Ref, ref } from "../api";
+import { isClient, NO_OP, PASSIVE_EV } from "../utils";
 
 export interface BroadcastMessageEvent<T> extends MessageEvent {
   readonly data: T;
@@ -19,19 +19,19 @@ export interface BroadCastChannelReturn<T> {
   close: Function;
   addListener: (
     cb: (ev: BroadcastMessageEvent<T>) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ) => void;
 }
 
 export function useBroadcastChannel<T = any>(
   name: string,
-  onBeforeClose?: Function
+  onBeforeClose?: Function,
 ): BroadCastChannelReturn<T> {
   const supported = isClient && "BroadcastChannel" in self;
   const data = ref<T | null>(null) as Ref<T | null>;
 
   const messageEvent = ref<MessageEvent | null>(
-    null
+    null,
   ) as Ref<MessageEvent | null>;
   const errorEvent = ref<MessageEvent | null>(null) as Ref<MessageEvent | null>;
   const errored = ref(false);
@@ -42,7 +42,7 @@ export function useBroadcastChannel<T = any>(
   let close: Function = NO_OP;
   let addListener: (
     cb: (ev: BroadcastMessageEvent<T>) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ) => void = NO_OP;
 
   /* istanbul ignore else  */
@@ -51,23 +51,23 @@ export function useBroadcastChannel<T = any>(
 
     bc.addEventListener(
       "messageerror",
-      e => {
+      (e) => {
         errorEvent.value = e;
         errored.value = true;
       },
-      PASSIVE_EV
+      PASSIVE_EV,
     );
 
     bc.addEventListener(
       "message",
-      ev => {
+      (ev) => {
         messageEvent.value = ev;
         data.value = ev.data;
       },
-      PASSIVE_EV
+      PASSIVE_EV,
     );
 
-    send = d => bc.postMessage(d);
+    send = (d) => bc.postMessage(d);
     close = () => {
       bc.close();
       isClosed.value = true;
@@ -100,6 +100,6 @@ export function useBroadcastChannel<T = any>(
 
     send,
     close,
-    addListener
+    addListener,
   };
 }

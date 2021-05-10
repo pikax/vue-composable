@@ -1,5 +1,5 @@
-import { ref, watch, onMounted, onUnmounted, Ref } from "../api";
-import { NO_OP, isBoolean, isClient } from "../utils";
+import { onMounted, onUnmounted, Ref, ref, watch } from "../api";
+import { isBoolean, isClient, NO_OP } from "../utils";
 
 export interface GeolocationOptions {
   /**
@@ -14,7 +14,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
 
   // used to check if the execution is lazy
   const lazy: Ref<boolean | undefined> = ref(
-    options ? options.immediate === false : undefined
+    options ? options.immediate === false : undefined,
   );
 
   const error = ref<GeolocationPositionError | null>(null);
@@ -22,7 +22,7 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
   const timestamp = ref<number | null>(null);
   const coords = ref<GeolocationPosition["coords"] | null>(null);
   const highAccuracy = ref<boolean | null>(
-    (options && options.enableHighAccuracy) || null
+    (options && options.enableHighAccuracy) || null,
   );
 
   // allow manual control on when the geolocation is requested
@@ -79,12 +79,12 @@ export function useGeolocation(options?: PositionOptions & GeolocationOptions) {
             setError,
             options
               ? { ...options, enableHighAccuracy }
-              : { enableHighAccuracy }
+              : { enableHighAccuracy },
           );
         },
         {
           immediate: !lazy.value,
-        }
+        },
       )
     );
     onUnmounted(clearWatch);

@@ -42,26 +42,26 @@ function getSetupStateExtra(raw: any) {
 export function useDevtoolsComponentState(
   getState: (
     instanceData: InspectedComponentData,
-    ctx: Context
-  ) => ComponentState[]
+    ctx: Context,
+  ) => ComponentState[],
 ): void;
 export function useDevtoolsComponentState(
   state: ComponentState[],
-  options?: Omit<DevtoolsComponentStateOptions, "type">
+  options?: Omit<DevtoolsComponentStateOptions, "type">,
 ): void;
 export function useDevtoolsComponentState(
   state: Record<string, object | ComponentState>,
-  options?: DevtoolsComponentStateOptions
+  options?: DevtoolsComponentStateOptions,
 ): void;
 export function useDevtoolsComponentState(
   state:
     | ComponentState[]
     | Record<string, object | ComponentState>
     | ((
-        instanceData: InspectedComponentData,
-        ctx: Context
-      ) => ComponentState[]),
-  options?: DevtoolsComponentStateOptions
+      instanceData: InspectedComponentData,
+      ctx: Context,
+    ) => ComponentState[]),
+  options?: DevtoolsComponentStateOptions,
 ): void {
   const instance = getCurrentInstance();
   const api = getDevtools();
@@ -79,17 +79,14 @@ export function useDevtoolsComponentState(
         return;
       }
 
-      let data = isArray(state)
-        ? state
-        : Object.keys(state).map(
-            (key) =>
-              ({
-                type,
-                key,
-                value: unwrap(state[key]),
-                ...getSetupStateExtra(state[key]),
-              } as ComponentState)
-          );
+      let data = isArray(state) ? state : Object.keys(state).map(
+        (key) => ({
+          type,
+          key,
+          value: unwrap(state[key]),
+          ...getSetupStateExtra(state[key]),
+        } as ComponentState),
+      );
 
       if (!multiple) {
         const inserted = new Set(payload.instanceData.state.map((x) => x.key));

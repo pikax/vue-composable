@@ -40,7 +40,7 @@ import {
   exponentialDelay,
   isClient,
   useNow,
-  useDateNow
+  useDateNow,
 } from "vue-composable";
 
 export default {
@@ -54,10 +54,10 @@ export default {
     const mode = ref("delay");
 
     const { now } = useDateNow({
-      refreshMs: 10
+      refreshMs: 10,
     });
 
-    const retryDelay = n => {
+    const retryDelay = (n) => {
       switch (mode.value) {
         case "delay":
           return delay.value;
@@ -68,10 +68,10 @@ export default {
 
     const { json, loading, exec: fetchExec, error, status } = useFetch();
     const { isRetrying, nextRetry, retryCount, exec } = useRetry({
-      retryDelay
+      retryDelay,
     });
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec(() => {
         if (throwError.value) {
           throw new Error("blocked");
@@ -93,8 +93,8 @@ export default {
       mode,
       throwError,
       isRetrying,
-      nextRetryIn
+      nextRetryIn,
     };
-  }
+  },
 };
 </script>

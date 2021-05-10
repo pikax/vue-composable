@@ -16,6 +16,6 @@ export default {
   name: "performance-now-example",
   setup() {
     return usePerformanceNow();
-  }
+  },
 };
 </script>

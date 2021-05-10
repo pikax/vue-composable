@@ -1,9 +1,9 @@
-import { RefTyped, unwrap, PASSIVE_EV, NO_OP, isClient } from "../utils";
-import { watch, computed, isRef } from "../api";
+import { isClient, NO_OP, PASSIVE_EV, RefTyped, unwrap } from "../utils";
+import { computed, isRef, watch } from "../api";
 import {
+  CancellablePromiseResult,
   PromiseResultFactory,
   useCancellablePromise,
-  CancellablePromiseResult,
 } from "../promise";
 
 export const inlineWorkExecution = (f: Function) =>
@@ -25,10 +25,9 @@ export const inlineWorkExecution = (f: Function) =>
   };
 
 export function createBlobUrl(fn: Function, dependencies: readonly string[]) {
-  const scripts =
-    dependencies.length > 0
-      ? `importScripts("${dependencies.join('","')}");`
-      : "";
+  const scripts = dependencies.length > 0
+    ? `importScripts("${dependencies.join('","')}");`
+    : "";
 
   const blobScript = [
     scripts,
@@ -47,13 +46,14 @@ export interface WebWorkerFunctionOptions {
 
 export function useWorkerFunction<T, TArgs extends Array<any>>(
   fn: (...args: TArgs) => T,
-  options?: WebWorkerFunctionOptions
-): PromiseResultFactory<Promise<T | undefined>, TArgs> &
-  CancellablePromiseResult {
+  options?: WebWorkerFunctionOptions,
+):
+  & PromiseResultFactory<Promise<T | undefined>, TArgs>
+  & CancellablePromiseResult {
   const supported = isClient && "Worker" in self;
   // reactive
   const dependencies = computed(
-    () => (options && unwrap(options.dependencies)) || []
+    () => (options && unwrap(options.dependencies)) || [],
   );
   const timeoutRef = computed(() => options && unwrap(options.timeout));
 
@@ -78,24 +78,23 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
         };
 
         // if the last argument is ref(false) we should also track it
-        const watchCancel =
-          args.length === fn.length + 1 &&
-          isRef(args[args.length - 1]) &&
-          args[args.length - 1].value === false
-            ? computed(
-                () => promise.cancelled.value || args[args.length - 1].value
-              )
-            : promise.cancelled;
+        const watchCancel = args.length === fn.length + 1 &&
+            isRef(args[args.length - 1]) &&
+            args[args.length - 1].value === false
+          ? computed(
+            () => promise.cancelled.value || args[args.length - 1].value,
+          )
+          : promise.cancelled;
 
         const removeWatch = watchCancel
           ? watch(
-              watchCancel as any,
-              () => {
-                terminate();
-                res(undefined);
-              },
-              { immediate: false }
-            )
+            watchCancel as any,
+            () => {
+              terminate();
+              res(undefined);
+            },
+            { immediate: false },
+          )
           : NO_OP;
 
         worker.addEventListener(
@@ -108,7 +107,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
             }
             terminate();
           },
-          PASSIVE_EV
+          PASSIVE_EV,
         );
 
         worker.addEventListener(
@@ -117,7 +116,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
             terminate();
             rej(e);
           },
-          PASSIVE_EV
+          PASSIVE_EV,
         );
 
         worker.postMessage([...args]);
@@ -131,7 +130,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
     {
       lazy: true,
       throwException: true,
-    }
+    },
   );
 
   return promise;

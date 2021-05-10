@@ -1,22 +1,22 @@
 import {
+  inject,
+  InjectionKey,
+  onUnmounted,
+  provide,
   Ref,
   ref,
-  InjectionKey,
-  inject,
-  provide,
-  onUnmounted,
-  watch
+  watch,
 } from "../api";
-import { RefTyped, isClient, isString, wrap } from "../utils";
+import { isClient, isString, RefTyped, wrap } from "../utils";
 
 // istanbul ignore next
 const SSR_TITLE_KEY: InjectionKey<Ref<string>> = /*#__PURE__*/ Symbol(
-  (__DEV__ && "SSR_TITLE_KEY") || ``
+  (__DEV__ && "SSR_TITLE_KEY") || ``,
 );
 
 export function provideSSRTitle(
   app: { provide: typeof provide },
-  title?: RefTyped<string>
+  title?: RefTyped<string>,
 ): Ref<string> {
   const r = wrap(title === undefined ? "" : title);
   app.provide(SSR_TITLE_KEY, r);
@@ -31,7 +31,7 @@ export function useSSRTitle(defaultTitle?: string | null): Ref<string | null> {
     /* istanbul ignore else */
     if (__DEV__) {
       console.warn(
-        "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?"
+        "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?",
       );
     }
     // istanbul ignore next
@@ -49,16 +49,16 @@ export function useSSRTitle(defaultTitle?: string | null): Ref<string | null> {
 }
 
 export function useTitle(
-  overrideTitle: string | null = null
+  overrideTitle: string | null = null,
 ): Ref<string | null> {
   if (__SSR__ && !isClient) {
     return useSSRTitle(overrideTitle);
   }
 
   const title = ref<string | null>(
-    isString(overrideTitle) ? overrideTitle : document.title
+    isString(overrideTitle) ? overrideTitle : document.title,
   );
-  const observer = new MutationObserver(m => {
+  const observer = new MutationObserver((m) => {
     title.value = m[0].target.textContent;
   });
 
@@ -71,8 +71,8 @@ export function useTitle(
     },
     {
       immediate: true,
-      flush: "sync"
-    }
+      flush: "sync",
+    },
   );
 
   const titleElement = document.querySelector("title")!;

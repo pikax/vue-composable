@@ -1,6 +1,6 @@
 import { createVue, nextTick } from "../utils";
-import { useOnMouseMove, MouseMoveResult } from "../../src/event/onMouseMove";
-import { ref, Ref } from "../../src/api";
+import { MouseMoveResult, useOnMouseMove } from "../../src/event/onMouseMove";
+import { Ref, ref } from "../../src/api";
 import { promisedTimeout } from "../../src/utils";
 
 describe("onMouseMove", () => {
@@ -126,7 +126,7 @@ describe("onMouseMove", () => {
     expect(element.value.addEventListener).toHaveBeenCalledWith(
       "mousemove",
       expect.any(Function),
-      options
+      options,
     );
   });
 
@@ -154,7 +154,7 @@ describe("onMouseMove", () => {
     expect(element.addEventListener).toHaveBeenCalledWith(
       "mousemove",
       expect.any(Function),
-      options
+      options,
     );
 
     for (let i = 0; i < 10; i++) {

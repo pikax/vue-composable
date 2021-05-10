@@ -18,9 +18,9 @@ export default {
     const elref = ref(null);
     const state = reactive({
       x: 0,
-      y: 0
+      y: 0,
     });
-    const remove = useEvent(elref, "mousemove", e => {
+    const remove = useEvent(elref, "mousemove", (e) => {
       state.x = e.x;
       state.y = e.y;
     });
@@ -28,9 +28,9 @@ export default {
     return {
       elref,
       remove,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
 

@@ -57,7 +57,7 @@ export default {
     useOnOutsidePress(elref, () => console.log("clicked outside"));
 
     return { elref };
-  }
+  },
 };
 </script>
 ```

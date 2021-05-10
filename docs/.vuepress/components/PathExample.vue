@@ -39,8 +39,8 @@ export default defineComponent({
     return {
       inputPath,
       json,
-      inputValue
+      inputValue,
     };
-  }
+  },
 });
 </script>

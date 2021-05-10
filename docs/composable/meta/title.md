@@ -49,9 +49,9 @@ export default defineComponent({
   setup() {
     const title = useTitle();
     return {
-      title
+      title,
     };
-  }
+  },
 });
 </script>
 ```

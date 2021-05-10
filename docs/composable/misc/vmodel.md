@@ -61,25 +61,25 @@ export default defineComponent({
       <input name="child-input" v-model="value">
       </div>`,
       props: {
-        value: String
+        value: String,
       },
       setup(props) {
         const value = useVModel(props, "value");
 
         return {
-          value
+          value,
         };
-      }
-    })
+      },
+    }),
   },
 
   setup() {
     const myValue = ref("MyValue");
 
     return {
-      myValue
+      myValue,
     };
-  }
+  },
 });
 </script>
 ```

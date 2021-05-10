@@ -1,4 +1,4 @@
-import { RefTyped, unwrap, isObject, NO_OP } from "../utils";
+import { isObject, NO_OP, RefTyped, unwrap } from "../utils";
 import { computed, Ref } from "../../src/api";
 
 export type UsePathNotFoundReturn<TSource> = (
@@ -17,7 +17,7 @@ export type UsePathNotFoundReturn<TSource> = (
   /**
    * Original source
    */
-  originalSource: TSource
+  originalSource: TSource,
 ) => any;
 
 /**
@@ -31,7 +31,7 @@ export function usePath<T = any, TSource = any>(
   source: RefTyped<TSource>,
   path: RefTyped<string>,
   separator: string = ".",
-  notFoundReturn: UsePathNotFoundReturn<TSource> = NO_OP
+  notFoundReturn: UsePathNotFoundReturn<TSource> = NO_OP,
 ): Ref<Readonly<T>> {
   return computed(() => {
     const s = unwrap(source);
@@ -90,17 +90,19 @@ export function usePath<T = any, TSource = any>(
           // istanbul ignore else
           if (__DEV__) {
             console.warn(
-              `Path "${fragments
-                .slice(0, i + 1)
-                .join(separator)}" doesn't exist on:`,
-              source
+              `Path "${
+                fragments
+                  .slice(0, i + 1)
+                  .join(separator)
+              }" doesn't exist on:`,
+              source,
             );
           }
           return notFoundReturn(
             fragments.slice(0, i + 1).join(separator),
             c,
             p,
-            s
+            s,
           );
         }
 
@@ -109,17 +111,19 @@ export function usePath<T = any, TSource = any>(
         // istanbul ignore else
         if (__DEV__) {
           console.warn(
-            `Path "${fragments
-              .slice(0, i + 1)
-              .join(separator)}" doesn't exist on:`,
-            source
+            `Path "${
+              fragments
+                .slice(0, i + 1)
+                .join(separator)
+            }" doesn't exist on:`,
+            source,
           );
         }
         return notFoundReturn(
           fragments.slice(0, i + 1).join(separator),
           c,
           p,
-          s
+          s,
         );
       }
 
@@ -127,17 +131,19 @@ export function usePath<T = any, TSource = any>(
         // istanbul ignore else
         if (__DEV__) {
           console.warn(
-            `Path "${fragments
-              .slice(0, i + 1)
-              .join(separator)}" doesn't exist on:`,
-            source
+            `Path "${
+              fragments
+                .slice(0, i + 1)
+                .join(separator)
+            }" doesn't exist on:`,
+            source,
           );
         }
         return notFoundReturn(
           fragments.slice(0, i + 1).join(separator),
           c,
           p,
-          s
+          s,
         );
       }
     }

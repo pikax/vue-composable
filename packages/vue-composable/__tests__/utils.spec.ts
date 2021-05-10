@@ -8,11 +8,11 @@ describe("utils", () => {
           deep111: {
             a: 1,
             b: "1",
-            c: () => true
-          }
+            c: () => true,
+          },
         },
-        a: 1
-      }
+        a: 1,
+      },
     };
 
     const r = deepClone<any>({}, e);
@@ -23,31 +23,31 @@ describe("utils", () => {
     const s1 = {
       a: 1,
       b: {
-        a: "1"
-      }
+        a: "1",
+      },
     };
 
     const s2 = {
       a: {
-        a: 1
+        a: 1,
       },
       b: {
-        a: "22"
-      }
+        a: "22",
+      },
     };
 
     const s3 = {
       a: 2,
       b: {
-        a: 1
-      }
+        a: 1,
+      },
     };
 
     const e = {
       a: 2,
       b: {
-        a: "22"
-      }
+        a: "22",
+      },
     };
 
     const r = deepClone<any>({}, s1, s2, s3);

@@ -7,7 +7,7 @@
 export function useDebounce<T extends Procedure>(
   handler: T,
   wait?: number,
-  options?: Options
+  options?: Options,
 ): T {
   return debounce(handler, wait, options);
 }
@@ -29,15 +29,15 @@ export function debounce<F extends Procedure>(
   func: F,
   waitMilliseconds = 50,
   options: Options = {
-    isImmediate: false
-  }
+    isImmediate: false,
+  },
 ): F {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-  return function(this: any, ...args: any[]) {
+  return function (this: any, ...args: any[]) {
     const context = this;
 
-    const doLater = function() {
+    const doLater = function () {
       timeoutId = undefined;
       if (!options.isImmediate) {
         func.apply(context, args);

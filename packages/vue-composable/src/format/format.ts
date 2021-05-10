@@ -1,5 +1,5 @@
-import { RefTyped, unwrap, isArray } from "../utils";
-import { reactive, computed, Ref, isRef } from "../api";
+import { isArray, RefTyped, unwrap } from "../utils";
+import { computed, isRef, reactive, Ref } from "../api";
 
 export type FormatValue =
   | RefTyped<object>
@@ -20,12 +20,12 @@ export interface FormatObject {
  */
 export function useFormat(
   format: RefTyped<Readonly<string>>,
-  obj?: RefTyped<FormatObject>
+  obj?: RefTyped<FormatObject>,
 ): Readonly<Ref<string>>;
 
 export function useFormat(
   format: Readonly<RefTyped<string>>,
-  obj?: RefTyped<FormatObject>
+  obj?: RefTyped<FormatObject>,
 ): Readonly<Ref<string>>;
 
 /**
@@ -45,17 +45,17 @@ export function useFormat(
 
 export function useFormat(
   format: Readonly<RefTyped<string>>,
-  obj?: RefTyped<FormatObject> | Array<FormatValue>
+  obj?: RefTyped<FormatObject> | Array<FormatValue>,
 ): Readonly<Ref<string>>;
 
 export function useFormat(
   format: RefTyped<string>,
-  args: any
+  args: any,
 ): Readonly<Ref<string>>;
 
 export function useFormat(
   format: RefTyped<string>,
-  args: any
+  args: any,
 ): Readonly<Ref<string>> {
   return computed(() => {
     const f = unwrap(format);
@@ -65,11 +65,8 @@ export function useFormat(
     const r = isRef<any>(args) ? reactive(args.value) : reactive(args);
     const regEx = /({?{[\w\s]*}?})/g;
 
-    return f.replace(regEx, s => {
-      const k = s
-        .replace("{", "")
-        .replace("}", "")
-        .trim();
+    return f.replace(regEx, (s) => {
+      const k = s.replace("{", "").replace("}", "").trim();
       // ignore if {{ }}
       if (s[0] === s[1] && s[0] === "{") {
         return `${k}`;

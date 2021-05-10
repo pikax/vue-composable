@@ -13,11 +13,11 @@ useCurrencyFormat(currency, locale?, options?);
 useCurrencyFormat(options, locale?);
 ```
 
-| Parameters | Type                     | Required | Default     | Description                                                                                                                                 |
-| ---------- | ------------------------ | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| currency   | `Ref<string>|string`     | `false`  | `undefined` | Default currency                                                                                                                            |
-| locale     | `Ref<string | string[]>` | `false`  | `undefined` | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
-| options    |                          | `false`  | `undefined` | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| Parameters | Type         | Required   | Default     | Description                                                                                                                                 |
+| ---------- | ------------ | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| currency   | `Ref<string> | string`    | `false`     | `undefined`                                                                                                                                 | Default currency |
+| locale     | `Ref<string  | string[]>` | `false`     | `undefined`                                                                                                                                 | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| options    |              | `false`    | `undefined` | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 
 ## Methods
 
@@ -97,7 +97,7 @@ export default defineComponent({
 
     const options = ref({
       currency: "USD",
-      currencyDisplay: "symbol"
+      currencyDisplay: "symbol",
     });
 
     const { formatString, format } = useCurrencyFormat(options, selectedLocale);
@@ -115,9 +115,9 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>
 ```

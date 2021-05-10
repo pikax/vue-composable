@@ -25,6 +25,6 @@ import { useUndo } from "vue-composable";
 export default {
   setup() {
     return useUndo();
-  }
+  },
 };
 </script>

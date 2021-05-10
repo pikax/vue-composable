@@ -2,8 +2,8 @@ import { ref } from "../../src/api";
 
 import { createVue, nextTick } from "../utils";
 import {
+  IntersectionObserverOptions,
   useIntersectionObserver,
-  IntersectionObserverOptions
 } from "../../src";
 
 describe("IntersectionObserver", () => {
@@ -24,12 +24,12 @@ describe("IntersectionObserver", () => {
     Object.defineProperty(window, "IntersectionObserver", {
       writable: true,
       configurable: true,
-      value: IntersectionObserver
+      value: IntersectionObserver,
     });
     Object.defineProperty(global, "IntersectionObserver", {
       writable: true,
       configurable: true,
-      value: IntersectionObserver
+      value: IntersectionObserver,
     });
   });
 
@@ -37,12 +37,12 @@ describe("IntersectionObserver", () => {
     Object.defineProperty(window, "IntersectionObserver", {
       writable: true,
       configurable: true,
-      value: _intersectionObserver
+      value: _intersectionObserver,
     });
     Object.defineProperty(global, "IntersectionObserver", {
       writable: true,
       configurable: true,
-      value: _intersectionObserver
+      value: _intersectionObserver,
     });
   });
 
@@ -62,13 +62,13 @@ describe("IntersectionObserver", () => {
 
   it("should call disconnect on ref(options) change", async () => {
     const options = ref<IntersectionObserverOptions>({
-      rootMargin: "0px"
+      rootMargin: "0px",
     });
 
     useIntersectionObserver(options);
     expect(constructorFn).toHaveBeenCalledWith(
       expect.anything(),
-      options.value
+      options.value,
     );
     options.value.rootMargin = "1px";
     await nextTick();
@@ -76,7 +76,7 @@ describe("IntersectionObserver", () => {
     expect(constructorFn).toHaveBeenCalledTimes(2);
     expect(constructorFn).toHaveBeenLastCalledWith(
       expect.anything(),
-      options.value
+      options.value,
     );
     expect(disconnectFn).toHaveBeenCalledTimes(1);
 
@@ -86,7 +86,7 @@ describe("IntersectionObserver", () => {
   describe("observe/unobserve", () => {
     it("should `observe`/`unobserve` if `observe` has been called", () => {
       const options = ref<IntersectionObserverOptions>({
-        rootMargin: "0px"
+        rootMargin: "0px",
       });
       const { observe, unobserve } = useIntersectionObserver(options);
       expect(observeFn).not.toHaveBeenCalled();
@@ -100,7 +100,7 @@ describe("IntersectionObserver", () => {
 
     it("should unwrap the element", () => {
       const options = ref<IntersectionObserverOptions>({
-        rootMargin: "0px"
+        rootMargin: "0px",
       });
       const { observe, unobserve } = useIntersectionObserver(options);
       expect(observeFn).not.toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe("IntersectionObserver", () => {
 
   it("should set element when observing", () => {
     const options = ref<IntersectionObserverOptions>({
-      rootMargin: "0px"
+      rootMargin: "0px",
     });
     const { observe, elements } = useIntersectionObserver(options);
     const handling: (entries: IntersectionObserverEntry[]) => void =
@@ -132,7 +132,7 @@ describe("IntersectionObserver", () => {
 
   it("should set isIntersection if all elements are intersecting", async () => {
     const options = ref<IntersectionObserverOptions>({
-      rootMargin: "0px"
+      rootMargin: "0px",
     });
     const { isIntersecting } = useIntersectionObserver(options);
     const handling: (entries: IntersectionObserverEntry[]) => void =
@@ -143,7 +143,7 @@ describe("IntersectionObserver", () => {
     expect(handling).toBeDefined();
 
     let observeEntries: IntersectionObserverEntry[] = [
-      { isIntersecting: true } as any
+      { isIntersecting: true } as any,
     ];
     handling(observeEntries);
     await nextTick();
@@ -152,7 +152,7 @@ describe("IntersectionObserver", () => {
 
     observeEntries = [
       { isIntersecting: true } as any,
-      { isIntersecting: false } as any
+      { isIntersecting: false } as any,
     ];
     handling(observeEntries);
 
@@ -162,7 +162,7 @@ describe("IntersectionObserver", () => {
 
     observeEntries = [
       { isIntersecting: true } as any,
-      { isIntersecting: true } as any
+      { isIntersecting: true } as any,
     ];
     handling(observeEntries);
 
@@ -179,9 +179,9 @@ describe("IntersectionObserver", () => {
           const el = ref<Element>();
           return {
             ...useIntersectionObserver(el, { rootMargin: "0px" }),
-            el
+            el,
           };
-        }
+        },
       });
       vm.mount();
 
@@ -198,7 +198,7 @@ describe("IntersectionObserver", () => {
         template: "<div></div>",
         setup() {
           return useIntersectionObserver(document.createElement("div"));
-        }
+        },
       });
       vm.mount();
       await nextTick();
@@ -218,9 +218,9 @@ describe("IntersectionObserver", () => {
           const el = ref<Element>();
           return {
             ...useIntersectionObserver(el),
-            el
+            el,
           };
-        }
+        },
       });
       vm.mount();
 

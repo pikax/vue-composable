@@ -64,7 +64,7 @@ export default defineComponent({
     const options = ref({
       style: "currency",
       currency: "USD",
-      currencyDisplay: "symbol"
+      currencyDisplay: "symbol",
     });
 
     const { formatString, format } = useIntlNumberFormat(
@@ -85,8 +85,8 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>

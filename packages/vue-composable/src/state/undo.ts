@@ -1,5 +1,5 @@
-import { ref, computed, watch, Ref, ComputedRef } from "../api";
-import { RefTyped, MAX_ARRAY_SIZE, wrap } from "../utils";
+import { computed, ComputedRef, Ref, ref, watch } from "../api";
+import { MAX_ARRAY_SIZE, RefTyped, wrap } from "../utils";
 import { useDevtoolsTimelineLayer } from "../devtools";
 
 export interface UndoOptions<T> {
@@ -88,12 +88,12 @@ export function useUndo<T = any>(): UndoReturn<T | undefined>;
 
 export function useUndo<T>(
   defaultValue: RefTyped<T>,
-  options?: Partial<UndoOptions<T>>
+  options?: Partial<UndoOptions<T>>,
 ): UndoReturn<T>;
 
 export function useUndo<T>(
   defaultValue?: RefTyped<T>,
-  options?: Partial<UndoOptions<T>>
+  options?: Partial<UndoOptions<T>>,
 ): UndoReturn<T> {
   const current = wrap(defaultValue!);
 
@@ -122,7 +122,7 @@ export function useUndo<T>(
     const layer = useDevtoolsTimelineLayer(
       `useUndo:${options.devtoolId}`,
       options.devtoolId,
-      0x32a2bf // TODO devtools fix color
+      0x32a2bf, // TODO devtools fix color
     );
     addTimelineEvent = (time, data) =>
       layer.addEvent({
@@ -169,17 +169,16 @@ export function useUndo<T>(
       ...options,
       immediate: true,
       flush: "sync",
-    }
+    },
   );
 
   const undo = (step = 1) => jump(step);
   const redo = (step = 1) => jump(-step);
 
   const jump = (delta: number) => {
-    const s =
-      Math.sign(delta) <= 0
-        ? Math.max(delta, -next.value.length)
-        : Math.min(delta, prev.value.length);
+    const s = Math.sign(delta) <= 0
+      ? Math.max(delta, -next.value.length)
+      : Math.min(delta, prev.value.length);
 
     position.value += s;
     current.value = timeline.value[position.value];

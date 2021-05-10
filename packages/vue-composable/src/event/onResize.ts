@@ -1,14 +1,14 @@
-import { Ref, ref, isRef, onMounted } from "../api";
+import { isRef, onMounted, Ref, ref } from "../api";
 import {
-  RefElement,
-  wrap,
-  RefTyped,
   isClient,
-  NO_OP,
   isNumber,
-  PASSIVE_EV
+  NO_OP,
+  PASSIVE_EV,
+  RefElement,
+  RefTyped,
+  wrap,
 } from "../utils";
-import { useEvent, RemoveEventFunction } from "./event";
+import { RemoveEventFunction, useEvent } from "./event";
 import { useDebounce } from "../debounce";
 
 export interface ResizeResult {
@@ -21,30 +21,30 @@ export function useOnResize(el: RefTyped<Window>, wait: number): ResizeResult;
 export function useOnResize(
   el: RefTyped<Window>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): ResizeResult;
 export function useOnResize(el: RefElement, wait: number): ResizeResult;
 export function useOnResize(
   el: RefElement,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): ResizeResult;
 
 export function useOnResize<T extends Element>(
   el: Ref<T> | Ref<T | null>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): ResizeResult;
 
 export function useOnResize<T extends Element>(
   el: Ref<T | null>,
-  wait: number
+  wait: number,
 ): ResizeResult;
 
 export function useOnResize(
   el: any,
   options?: number | boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): ResizeResult {
   const element = wrap(el);
 
@@ -77,6 +77,6 @@ export function useOnResize(
     height,
     width,
 
-    remove
+    remove,
   };
 }

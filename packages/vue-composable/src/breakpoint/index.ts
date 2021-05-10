@@ -2,5 +2,5 @@ export * from "./breakpoint";
 export * from "./breakpointChrome";
 export {
   setBreakpointTailwindCSS,
-  useBreakpointTailwindCSS
+  useBreakpointTailwindCSS,
 } from "./breakpointTailwind";

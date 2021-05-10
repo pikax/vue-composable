@@ -50,7 +50,7 @@ export default defineComponent({
     const options = ref({
       year: "numeric",
       month: "2-digit",
-      day: "2-digit"
+      day: "2-digit",
     });
 
     const { formatString, format } = useIntlDateTimeFormat(
@@ -71,8 +71,8 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>

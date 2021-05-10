@@ -29,13 +29,13 @@ describe("online", () => {
       1,
       "offline",
       expect.anything(),
-      expect.anything()
+      expect.anything(),
     );
     expect(windowEventSpy).toHaveBeenNthCalledWith(
       2,
       "online",
       expect.anything(),
-      expect.anything()
+      expect.anything(),
     );
   });
 

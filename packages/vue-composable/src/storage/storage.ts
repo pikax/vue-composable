@@ -8,12 +8,12 @@ let canUseLocalStorage: boolean | undefined = undefined;
 export function useStorage(
   key: string,
   defaultValue?: RefTyped<string>,
-  sync?: boolean
+  sync?: boolean,
 ): LocalStorageReturn<string>;
 export function useStorage<T>(
   key: string,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
+  sync?: boolean,
 ): LocalStorageReturn<T>;
 export function useStorage(key: string, defaultValue?: any, sync?: boolean) {
   if (canUseLocalStorage === undefined) {

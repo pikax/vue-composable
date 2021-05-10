@@ -3,9 +3,9 @@ jest.mock("../../src/utils", () => ({
   ...jest.requireActual("../../src/utils"),
   isClient: false,
 }));
-import { useTitle, provideSSRTitle, useSSRTitle } from "../../src/";
+import { provideSSRTitle, useSSRTitle, useTitle } from "../../src/";
 import { createVue } from "../utils";
-import { Ref, ref, provide, onUnmounted } from "../../src/api";
+import { onUnmounted, provide, Ref, ref } from "../../src/api";
 
 describe("worker function SSR", () => {
   it("should not change document.title", () => {
@@ -68,7 +68,7 @@ describe("worker function SSR", () => {
     expect(title.value).toBe("test");
 
     expect(warnSpy).toBeCalledWith(
-      "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?"
+      "[useSSRTitle] can't find SSRTitle have you forgotten calling `provideSSRTitle`?",
     );
   });
 

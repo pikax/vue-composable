@@ -23,24 +23,26 @@ export function useInterval<TArgs extends Array<any>>(
 
 export function useInterval<TArgs extends Array<any>>(
   callback: (...args: TArgs) => void,
-  ms?: false
+  ms?: false,
 ): UseIntervalReturn<TArgs>;
 
 export function useInterval<TArgs extends Array<any>>(
   callback: (...args: TArgs) => void,
   ms: number,
   ...args: TArgs
-): UseIntervalReturn<TArgs> &
-  UseIntervalReturnMs &
-  UseIntervalReturnArgs<TArgs>;
+):
+  & UseIntervalReturn<TArgs>
+  & UseIntervalReturnMs
+  & UseIntervalReturnArgs<TArgs>;
 
 export function useInterval<TArgs extends Array<any>>(
   callback: (...args: TArgs) => void,
   ms?: number | false,
   ...args: TArgs
-): UseIntervalReturn<TArgs> &
-  UseIntervalReturnMs &
-  UseIntervalReturnArgs<TArgs> {
+):
+  & UseIntervalReturn<TArgs>
+  & UseIntervalReturnMs
+  & UseIntervalReturnArgs<TArgs> {
   let intervalId: number | undefined = undefined;
 
   const start = (_ms?: number, ..._args: any[]) => {
@@ -52,7 +54,7 @@ export function useInterval<TArgs extends Array<any>>(
     return (intervalId = setInterval(
       callback,
       m,
-      ...(_args && _args.length ? _args : args)
+      ...(_args && _args.length ? _args : args),
     ) as any);
   };
 

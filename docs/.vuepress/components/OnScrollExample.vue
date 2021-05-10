@@ -4,7 +4,7 @@
     <p>top: {{ scrollTop }}</p>
     <p>left: {{ scrollLeft }}</p>
 
-    <div ref="elref" style="overflow:scroll;height:70px;background:gray">
+    <div ref="elref" style="overflow: scroll; height: 70px; background: gray">
       <p v-for="x in 10" :key="x">{{ x }}</p>
     </div>
 
@@ -27,8 +27,8 @@ export default {
       elref,
       scrollTop,
       scrollLeft,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>

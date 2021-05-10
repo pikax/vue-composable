@@ -1,16 +1,16 @@
 import {
-  wrap,
-  unwrap,
   isArray,
+  isDate,
+  isElement,
+  isNumber,
+  isObject,
+  isPromise,
   isString,
   isSymbol,
-  isDate,
-  isObject,
-  isElement,
-  isPromise,
-  isNumber,
+  minMax,
   promisedTimeout,
-  minMax
+  unwrap,
+  wrap,
 } from "../../src";
 import { ref } from "../../src/api";
 import { isFunction } from "util";

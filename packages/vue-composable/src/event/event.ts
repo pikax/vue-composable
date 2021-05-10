@@ -1,5 +1,5 @@
-import { watch, Ref } from "../api";
-import { RefTyped, NO_OP, wrap } from "../utils";
+import { Ref, watch } from "../api";
+import { NO_OP, RefTyped, wrap } from "../utils";
 
 export type RemoveEventFunction = () => void;
 
@@ -7,60 +7,67 @@ export function useEvent<K extends keyof DocumentEventMap>(
   el: RefTyped<Document>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
 ): RemoveEventFunction;
 
 export function useEvent<
   T extends {
     addEventListener: (
       name: string,
-      listener: EventListenerOrEventListenerObject
+      listener: EventListenerOrEventListenerObject,
     ) => any;
     removeEventListener: Function;
   },
   M,
-  K extends keyof M
+  K extends keyof M,
 >(
   el: T | Ref<T | undefined>,
   name: K,
-  listener: (this: T, ev: M[K]) => any
+  listener: (this: T, ev: M[K]) => any,
 ): RemoveEventFunction;
 export function useEvent<
   T extends {
     addEventListener: (
       name: string,
       listener: EventListenerOrEventListenerObject,
-      options?: boolean | AddEventListenerOptions
+      options?: boolean | AddEventListenerOptions,
     ) => any;
     removeEventListener: Function;
   },
   M,
-  K extends keyof M
+  K extends keyof M,
 >(
   el: T | Ref<T | undefined>,
   name: K,
   listener: (this: T, ev: M[K]) => any,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
 ): RemoveEventFunction;
 export function useEvent<K extends keyof WindowEventMap>(
   el: RefTyped<Window>,
   name: K,
   listener: (this: Document, ev: WindowEventMap[K]) => any,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
+): RemoveEventFunction;
+
+export function useEvent(
+  el: Window,
+  name: string,
+  listener: (this: Document, ev: Event) => any,
+  options?: boolean | AddEventListenerOptions,
 ): RemoveEventFunction;
 
 export function useEvent<K extends keyof DocumentEventMap>(
   el: Element | Ref<Element | undefined>,
   name: K,
   listener: (this: Document, ev: DocumentEventMap[K]) => any,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
 ): RemoveEventFunction;
 
 export function useEvent(
   el: Element | Ref<Element | undefined> | RefTyped<Window> | RefTyped<any>,
   name: string,
   listener: EventListenerOrEventListenerObject,
-  options?: boolean | AddEventListenerOptions
+  options?: boolean | AddEventListenerOptions,
 ): RemoveEventFunction {
   let remove = NO_OP;
 
@@ -80,7 +87,7 @@ export function useEvent(
           cleanUp(() => removeEventListener(n));
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     remove = () => {

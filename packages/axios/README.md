@@ -8,11 +8,13 @@
 
 ## Introduction
 
-Use Axios library with the [composition-api](https://github.com/vuejs/composition-api)
+Use Axios library with the
+[composition-api](https://github.com/vuejs/composition-api)
 
 # Vue 3
 
-[Vue3](https://github.com/vuejs/vue-next) aka [vue-next](https://github.com/vuejs/vue-next) is fully supported
+[Vue3](https://github.com/vuejs/vue-next) aka
+[vue-next](https://github.com/vuejs/vue-next) is fully supported
 
 ## Installing
 
@@ -37,7 +39,8 @@ npm install @vue-composable/axios
 
 ## Documentation
 
-Check our [documentation](https://pikax.me/vue-composable/composable/external/axios)
+Check our
+[documentation](https://pikax.me/vue-composable/composable/external/axios)
 
 ```vue
 <template>
@@ -65,10 +68,10 @@ export default {
     const id = ref(1);
     const { data, loading, exec, error, status } = useAxios();
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec({
         method: "GET",
-        url: "https://reqres.in/api/user/" + id
+        url: "https://reqres.in/api/user/" + id,
       });
     });
 
@@ -76,9 +79,9 @@ export default {
       id,
       data,
       loading,
-      status
+      status,
     };
-  }
+  },
 };
 </script>
 ```
@@ -87,7 +90,8 @@ export default {
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`
-3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+3. Commit your changes:
+   `git commit -am 'feat(composable): add a new composable'`
 4. Push to the branch: `git push origin feat/new-composable`
 5. Submit a pull request
 
@@ -110,7 +114,8 @@ yarn test
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`
-3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+3. Commit your changes:
+   `git commit -am 'feat(composable): add a new composable'`
 4. Push to the branch: `git push origin feat/new-composable`
 5. Submit a pull request
 

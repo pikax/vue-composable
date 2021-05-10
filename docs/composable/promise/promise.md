@@ -98,11 +98,11 @@ export default {
     const timeout = ref(1000);
     const throwError = ref(false);
 
-    const { exec, error, loading, result } = usePromise(ms => {
+    const { exec, error, loading, result } = usePromise((ms) => {
       if (throwError.value) {
         return Promise.reject(new Error("Throw Error checked"));
       }
-      return new Promise(res => setTimeout(() => res("sucess"), ms));
+      return new Promise((res) => setTimeout(() => res("sucess"), ms));
     });
 
     return {
@@ -111,9 +111,9 @@ export default {
       error,
       exec,
       loading,
-      result
+      result,
     };
-  }
+  },
 };
 </script>
 ```

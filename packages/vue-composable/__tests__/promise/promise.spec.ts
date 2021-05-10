@@ -5,7 +5,7 @@ import { promisedTimeout } from "../../src/";
 describe("promise", () => {
   let cb: ((...args: any[]) => void) | null = null;
   let currentPromise: Promise<any> | null = null;
-  const factory = () => (currentPromise = new Promise(res => (cb = res)));
+  const factory = () => (currentPromise = new Promise((res) => (cb = res)));
 
   beforeEach(() => {
     cb = null;
@@ -17,7 +17,7 @@ describe("promise", () => {
       promise: { value: currentPromise },
       result: { value: null },
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -26,7 +26,7 @@ describe("promise", () => {
       promise: { value: undefined },
       result: { value: null },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -35,7 +35,7 @@ describe("promise", () => {
       promise: { value: undefined },
       result: { value: null },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -47,7 +47,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       promise: { value: currentPromise },
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
 
     cb!(result);
@@ -57,7 +57,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: result },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -76,7 +76,7 @@ describe("promise", () => {
     let i = 0;
     const callbacks: ((...args: any[]) => void)[] = [];
     const use = usePromise(
-      () => (currentPromise = new Promise(res => (callbacks[i++] = res)))
+      () => (currentPromise = new Promise((res) => (callbacks[i++] = res))),
     );
 
     const arr = [use.exec(), use.exec()];
@@ -89,7 +89,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: null },
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
 
     callbacks[2](1);
@@ -98,7 +98,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: 1 },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -106,7 +106,7 @@ describe("promise", () => {
     const error = new Error("error");
     let rejCb: Function | null = null;
     const use = usePromise(
-      () => (currentPromise = new Promise((_, rej) => (rejCb = rej)))
+      () => (currentPromise = new Promise((_, rej) => (rejCb = rej))),
     );
 
     use.exec();
@@ -117,7 +117,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: null },
       loading: { value: false },
-      error: { value: error }
+      error: { value: error },
     });
   });
 
@@ -132,7 +132,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       promise: { value: currentPromise },
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
 
     cb!(result);
@@ -141,7 +141,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: result },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
 
     use.exec();
@@ -151,7 +151,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       promise: { value: currentPromise },
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
 
     cb!(++result);
@@ -160,7 +160,7 @@ describe("promise", () => {
     expect(use).toMatchObject({
       result: { value: result },
       loading: { value: false },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
@@ -168,7 +168,7 @@ describe("promise", () => {
     let i = 0;
     const callbacks: ((...args: any[]) => void)[] = [];
     const use = usePromise(
-      () => (currentPromise = new Promise(res => (callbacks[i++] = res)))
+      () => (currentPromise = new Promise((res) => (callbacks[i++] = res))),
     );
 
     const arr = [use.exec(), use.exec()];
@@ -182,14 +182,13 @@ describe("promise", () => {
     const callbacks: ((...args: any[]) => void)[] = [];
     const rejCallbacks: Function[] = [];
     const use = usePromise(
-      () =>
-        (currentPromise = new Promise((res, rej) => {
-          callbacks[i] = res;
-          rejCallbacks[i++] = rej;
-        }))
+      () => (currentPromise = new Promise((res, rej) => {
+        callbacks[i] = res;
+        rejCallbacks[i++] = rej;
+      })),
     );
 
-    use.exec().catch(x => expect(x).toMatch("Error"));
+    use.exec().catch((x) => expect(x).toMatch("Error"));
     use.exec();
 
     rejCallbacks[0]("Error");
@@ -197,14 +196,14 @@ describe("promise", () => {
 
     expect(use).toMatchObject({
       loading: { value: true },
-      error: { value: null }
+      error: { value: null },
     });
   });
 
   it("should only update result after the promise is resolved", async () => {
     // result should not be set to `null` between executions
     let v = 1;
-    const use = usePromise(x => promisedTimeout(20).then(() => (v = x)));
+    const use = usePromise((x) => promisedTimeout(20).then(() => (v = x)));
 
     expect(use.result.value).toBe(null);
 
@@ -224,7 +223,7 @@ describe("promise", () => {
     it("should warn if the factory has argument but lazy no specified", () => {
       usePromise((a: any) => {});
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments."
+        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments.",
       );
 
       consoleWarnSpy.mockClear();
@@ -236,7 +235,7 @@ describe("promise", () => {
 
       usePromise((a: any) => {}, { throwException: true });
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments."
+        "[usePromise] parameters detected on `fn` factory. Executing promise without arguments.",
       );
     });
   });
@@ -247,7 +246,7 @@ describe("promise", () => {
 
       const error = new Error("error");
       const use = usePromise(() => Promise.reject(error), {
-        throwException: true
+        throwException: true,
       });
 
       try {
@@ -261,7 +260,7 @@ describe("promise", () => {
       expect(use).toMatchObject({
         result: { value: null },
         loading: { value: false },
-        error: { value: error }
+        error: { value: error },
       });
     });
 
@@ -282,7 +281,7 @@ describe("promise", () => {
       expect(use).toMatchObject({
         result: { value: null },
         loading: { value: false },
-        error: { value: error }
+        error: { value: error },
       });
     });
 
@@ -303,7 +302,7 @@ describe("promise", () => {
       expect(use).toMatchObject({
         result: { value: null },
         loading: { value: false },
-        error: { value: error }
+        error: { value: error },
       });
     });
 
@@ -324,7 +323,7 @@ describe("promise", () => {
       expect(use).toMatchObject({
         result: { value: null },
         loading: { value: false },
-        error: { value: error }
+        error: { value: error },
       });
     });
   });
@@ -341,7 +340,7 @@ describe("promise", () => {
     expect(() => {
       usePromise("1" as any);
     }).toThrowError(
-      `[usePromise] expects function, but received ${typeof "1"}`
+      `[usePromise] expects function, but received ${typeof "1"}`,
     );
 
     expect(() => {

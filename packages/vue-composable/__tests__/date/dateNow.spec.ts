@@ -34,7 +34,7 @@ describe("dateNow", () => {
       setup() {
         r = useDateNow(options);
         return;
-      }
+      },
     }).mount();
 
     return r;
@@ -46,8 +46,8 @@ describe("dateNow", () => {
     expect(nowModule.useNow).toHaveBeenCalledTimes(1);
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
-        timeFn: Date.now
-      })
+        timeFn: Date.now,
+      }),
     );
     expect(now.value).toBe(nowMock());
     expect(setTimeout).toHaveBeenCalled();
@@ -56,45 +56,45 @@ describe("dateNow", () => {
   it("should not sync", () => {
     const sync = false;
     const { now } = buildUseDateNow({
-      sync
+      sync,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync,
-        refreshMs: 1000
-      })
+        refreshMs: 1000,
+      }),
     );
   });
 
   it("should sync if sync is not boolean", () => {
     const sync: any = () => "sync";
     const { now } = buildUseDateNow({
-      sync
+      sync,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync: true,
-        refreshMs: 1000
-      })
+        refreshMs: 1000,
+      }),
     );
   });
 
   it("should pass the refreshMs", () => {
     const refreshMs = 444;
     const { now } = buildUseDateNow({
-      refreshMs
+      refreshMs,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync: true,
-        refreshMs
-      })
+        refreshMs,
+      }),
     );
   });
 });

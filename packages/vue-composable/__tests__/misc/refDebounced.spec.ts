@@ -1,3 +1,4 @@
+import { ref } from "../../src/api";
 import { refDebounced } from "../../src";
 
 describe("refDebounced", () => {
@@ -32,5 +33,21 @@ describe("refDebounced", () => {
 
     jest.runTimersToTime(2);
     expect(r.value).toBe(1);
+  });
+
+  it("should update the passed ref with delay", () => {
+    const v = ref("a");
+    const r = refDebounced(v, 1);
+    expect(r.value).toBe("a");
+
+    r.value = "b";
+
+    // should not been updated yet
+    expect(r.value).toBe("a");
+    expect(v.value).toBe("a");
+
+    jest.runTimersToTime(2);
+    expect(r.value).toBe("b");
+    expect(v.value).toBe("b");
   });
 });

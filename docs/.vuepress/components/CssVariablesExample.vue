@@ -38,8 +38,8 @@ export default defineComponent({
       {
         foreground: {
           name: "color-foreground",
-          value: "red"
-        }
+          value: "red",
+        },
       },
       textDiv
     );
@@ -50,9 +50,9 @@ export default defineComponent({
       observing,
       stop,
       resume,
-      foreground
+      foreground,
     };
-  }
+  },
 });
 </script>
 

@@ -43,7 +43,7 @@ describe("WebSocket", () => {
     expect(messageEvent.value).not.toBeNull();
 
     expect(messageEvent.value).toMatchObject({
-      data: "test"
+      data: "test",
     });
   });
 
@@ -85,7 +85,7 @@ describe("WebSocket", () => {
     await server.connected;
 
     watch(data, (m: any) => received.push(m), {
-      immediate: false
+      immediate: false,
     });
 
     for (let i = 0; i < messages.length; i++) {
@@ -104,7 +104,7 @@ describe("WebSocket", () => {
     await server.connected;
 
     watch(data, (m: any) => received.push(m), {
-      immediate: false
+      immediate: false,
     });
 
     for (let i = 0; i < messages.length; i++) {

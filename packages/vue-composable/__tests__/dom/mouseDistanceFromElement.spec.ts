@@ -1,11 +1,12 @@
 jest.mock("../../src/event/onMouseMove");
 
-import { ref, Ref } from "../../src/api";
+import { Ref, ref } from "../../src/api";
 import { useMouseDistanceFromElement, useOnMouseMove } from "../../src";
 import { nextTick } from "../utils";
 
 describe("useMouseDistanceFromElement", () => {
-  const useOnMouseMoveMock: jest.Mock<typeof useOnMouseMove> = useOnMouseMove as any;
+  const useOnMouseMoveMock: jest.Mock<typeof useOnMouseMove> =
+    useOnMouseMove as any;
 
   const pageXMock = ref(100);
   const pageYMock = ref(0);

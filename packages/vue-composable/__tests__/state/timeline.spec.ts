@@ -30,7 +30,7 @@ describe("timeline", () => {
 
   it("should use the clone option", () => {
     const value = ref("");
-    const clone = jest.fn().mockImplementation(x => `x${x}`);
+    const clone = jest.fn().mockImplementation((x) => `x${x}`);
     const timeline = useTimeline(value, { clone });
 
     expect(timeline.value).toMatchObject([]);
@@ -56,7 +56,7 @@ describe("timeline", () => {
     value.value.a++;
     expect(timeline.value).toMatchObject([
       { item: value.value },
-      { item: value.value }
+      { item: value.value },
     ]);
   });
 });

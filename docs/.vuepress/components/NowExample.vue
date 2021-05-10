@@ -15,8 +15,8 @@ export default {
       timeFn: () => {
         ++i;
         return i;
-      }
+      },
     });
-  }
+  },
 };
 </script>

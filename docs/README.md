@@ -32,7 +32,6 @@ meta:
 ```bash
 # install with yarn
 yarn add @vue/composition-api vue-composable
-
 # install with npm
 npm install @vue/composition-api vue-composable
 ```
@@ -142,6 +141,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 - [Worker](composable/web/worker) - `Web Worker API`
 - [WorkerFunction](composable/web/workerFunction) - Webworker Function, offload a function to webworker
 - [share](composable/web/share) - WebShare API
+- [Clipboard](https://pikax.me/vue-composable/composable/web/clipboard) - Clipboard API
 
 ### External
 
@@ -149,6 +149,7 @@ Check out the [examples folder](examples) or start hacking on [codesandbox](http
 
 - [Axios](composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 - [makeAxios](composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
+- [useCookie](https://pikax.me/vue-composable/composable/external/useCookie) - [@vue-composable/cookie](https://www.npmjs.com/package/@vue-composable/cookie) `js-cookie` wrapper
 
 ## Usage
 

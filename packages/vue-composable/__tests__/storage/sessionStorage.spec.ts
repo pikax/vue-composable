@@ -1,4 +1,5 @@
 import { useSessionStorage, useWebStorage } from "../../src";
+import { ref } from "../../src/api";
 import { nextTick } from "../utils";
 import { promisedTimeout } from "../../src/utils";
 
@@ -38,7 +39,7 @@ describe("sessionStorage", () => {
     await promisedTimeout(20);
     expect(setItemSpy).toHaveBeenLastCalledWith(
       "test",
-      JSON.stringify({ a: 33 })
+      JSON.stringify({ a: 33 }),
     );
   });
 
@@ -66,10 +67,10 @@ describe("sessionStorage", () => {
     const s2 = useSessionStorage("key2", { a: 2 });
 
     expect(sessionStorage.getItem("key")).toBe(
-      JSON.stringify(s1.storage.value)
+      JSON.stringify(s1.storage.value),
     );
     expect(sessionStorage.getItem("key2")).toBe(
-      JSON.stringify(s2.storage.value)
+      JSON.stringify(s2.storage.value),
     );
     expect(sessionStorage.getItem("_other_")).toBe("secret");
 
@@ -99,7 +100,7 @@ describe("sessionStorage", () => {
     expect(consoleWarnSpy).not.toHaveBeenCalled();
     setSync(true);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "sync is not supported, please `useLocalStorage` instead"
+      "sync is not supported, please `useLocalStorage` instead",
     );
   });
 
@@ -110,7 +111,38 @@ describe("sessionStorage", () => {
     const key = "hello";
     useSessionStorage(key, { k: 10 });
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "[sessionStorage] is not available"
+      "[sessionStorage] is not available",
     );
+  });
+
+  it("should handle ref key", async () => {
+    jest.useFakeTimers();
+    const key = ref("hello");
+
+    const { storage } = useSessionStorage(key, { k: 10 });
+
+    expect(sessionStorage.key(0)).toBe(key.value);
+    expect(storage.value).toMatchObject({ k: 10 });
+
+    key.value = "hey";
+    jest.runAllTimers();
+
+    // key not created yet
+    // expect(localStorage.length).toBe(1);
+    // key doesn't exist so it's null
+    expect(storage.value).toBeNull();
+    jest.runAllTimers();
+
+    storage.value = { k: 0 };
+    jest.advanceTimersByTime(20);
+
+    expect(sessionStorage.key(1)).toBe(key.value);
+    expect(sessionStorage.getItem(key.value)).toBe(
+      JSON.stringify(storage.value),
+    );
+
+    key.value = "hello";
+    // should rollback to prev value
+    expect(storage.value).toMatchObject({ k: 10 });
   });
 });

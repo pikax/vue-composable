@@ -33,6 +33,6 @@ export default {
   name: "NetworkInformationExample",
   setup() {
     return useNetworkInformation();
-  }
+  },
 };
 </script>

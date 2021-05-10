@@ -1,8 +1,6 @@
 <template>
   <div>
-    <p>
-      To test please open 2 or more tabs and edit the input box
-    </p>
+    <p>To test please open 2 or more tabs and edit the input box</p>
     <input v-model="myRefVar" />
   </div>
 </template>
@@ -14,6 +12,6 @@ export default {
   setup() {
     const myRefVar = refShared("Hello world");
     return { myRefVar };
-  }
+  },
 };
 </script>

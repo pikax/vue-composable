@@ -34,7 +34,7 @@ describe("performanceNow", () => {
       setup() {
         r = usePerformanceNow(options);
         return;
-      }
+      },
     });
     mount();
     destroy();
@@ -53,45 +53,45 @@ describe("performanceNow", () => {
   it("should not sync", () => {
     const sync = false;
     const { now } = buildUsePerformanceNow({
-      sync
+      sync,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync,
-        refreshMs: 1000
-      })
+        refreshMs: 1000,
+      }),
     );
   });
 
   it("should sync if sync is not boolean", () => {
     const sync: any = () => "sync";
     const { now } = buildUsePerformanceNow({
-      sync
+      sync,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync: true,
-        refreshMs: 1000
-      })
+        refreshMs: 1000,
+      }),
     );
   });
 
   it("should pass the refreshMs", () => {
     const refreshMs = 444;
     const { now } = buildUsePerformanceNow({
-      refreshMs
+      refreshMs,
     });
 
     expect(now.value).toBe(nowMock());
     expect(nowModule.useNow).toHaveBeenCalledWith(
       expect.objectContaining({
         sync: true,
-        refreshMs
-      })
+        refreshMs,
+      }),
     );
   });
 });

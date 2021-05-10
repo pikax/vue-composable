@@ -13,7 +13,7 @@ describe("sync", () => {
     expect(list.value).toMatchObject([
       { value: main.value },
       { value: main.value },
-      { value: main.value }
+      { value: main.value },
     ]);
 
     // main updates
@@ -21,7 +21,7 @@ describe("sync", () => {
     expect(list.value).toMatchObject([
       { value: main.value },
       { value: main.value },
-      { value: main.value }
+      { value: main.value },
     ]);
 
     // any other updates
@@ -31,7 +31,7 @@ describe("sync", () => {
     expect(list.value).toMatchObject([
       { value: { a: 55 } },
       { value: { a: 55 } },
-      { value: { a: 55 } }
+      { value: { a: 55 } },
     ]);
     expect(main.value.a).toBe(55);
 
@@ -41,7 +41,7 @@ describe("sync", () => {
     expect(list.value).toMatchObject([
       { value: o },
       { value: o },
-      { value: o }
+      { value: o },
     ]);
 
     const o2 = { c: 1 };
@@ -51,7 +51,7 @@ describe("sync", () => {
     expect(list.value).toMatchObject([
       { value: o2 },
       { value: o2 },
-      { value: o2 }
+      { value: o2 },
     ]);
     expect(main.value).toMatchObject(o2);
 
@@ -66,12 +66,12 @@ describe("sync", () => {
 
     const others = [{ a: 2 }, { a: 10 }, { a: 1 }];
 
-    const list = useValueSync(main, ref(others.map(x => wrap(x))));
+    const list = useValueSync(main, ref(others.map((x) => wrap(x))));
 
     expect(list.value).toMatchObject([
       { value: main.value },
       { value: main.value },
-      { value: main.value }
+      { value: main.value },
     ]);
   });
 

@@ -16,7 +16,7 @@ const {
   rtt,
   saveData,
   supported,
-  type
+  type,
 } = useNetworkInformation();
 ```
 
@@ -91,7 +91,7 @@ export default {
   name: "NetworkInformationExample",
   setup() {
     return useNetworkInformation();
-  }
+  },
 };
 </script>
 ```

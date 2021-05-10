@@ -8,7 +8,7 @@ describe("breakpoint", () => {
   beforeAll(() => {
     (window as any).innerWidth = windowWidth;
 
-    matchMediaSpy = window.matchMedia = jest.fn(query => {
+    matchMediaSpy = window.matchMedia = jest.fn((query) => {
       return {
         matches: true,
         media: query,
@@ -17,7 +17,7 @@ describe("breakpoint", () => {
         removeListener: jest.fn(), // deprecated
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn()
+        dispatchEvent: jest.fn(),
       };
     });
   });
@@ -50,7 +50,7 @@ describe("breakpoint", () => {
       template: "<div></div>",
       setup() {
         return useBreakpoint({ L: 100 });
-      }
+      },
     });
     expect(addEventListenerMock).not.toHaveBeenCalled();
     expect(removeEventListenerMock).not.toHaveBeenCalled();
@@ -60,15 +60,15 @@ describe("breakpoint", () => {
       "resize",
       expect.anything(),
       {
-        passive: true
-      }
+        passive: true,
+      },
     );
     expect(removeEventListenerMock).not.toHaveBeenCalled();
 
     destroy();
     expect(removeEventListenerMock).toHaveBeenCalledWith(
       "resize",
-      expect.anything()
+      expect.anything(),
     );
   });
 
@@ -76,14 +76,14 @@ describe("breakpoint", () => {
     const breakpoints = {
       XL: 100,
       S: 20,
-      L: 80
+      L: 80,
     };
     let breakpoint: any;
     const { mount, destroy } = createVue({
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
-      }
+      },
     });
 
     mount();
@@ -92,7 +92,7 @@ describe("breakpoint", () => {
       S: { value: true },
       L: { value: false },
       XL: { value: false },
-      current: { value: "S" }
+      current: { value: "S" },
     });
 
     await setWindowInnerWidth(20);
@@ -100,7 +100,7 @@ describe("breakpoint", () => {
       S: { value: true },
       L: { value: false },
       XL: { value: false },
-      current: { value: "S" }
+      current: { value: "S" },
     });
 
     await setWindowInnerWidth(19);
@@ -108,7 +108,7 @@ describe("breakpoint", () => {
       S: { value: false },
       L: { value: false },
       XL: { value: false },
-      current: { value: undefined }
+      current: { value: undefined },
     });
 
     await setWindowInnerWidth(85);
@@ -116,7 +116,7 @@ describe("breakpoint", () => {
       S: { value: true },
       L: { value: true },
       XL: { value: false },
-      current: { value: "L" }
+      current: { value: "L" },
     });
 
     await setWindowInnerWidth(200);
@@ -124,7 +124,7 @@ describe("breakpoint", () => {
       S: { value: true },
       L: { value: true },
       XL: { value: true },
-      current: { value: "XL" }
+      current: { value: "XL" },
     });
 
     destroy();
@@ -132,7 +132,7 @@ describe("breakpoint", () => {
 
   it("should useMatchMedia if string is passed", () => {
     const breakpoints = {
-      S: "(min-width: 320px)"
+      S: "(min-width: 320px)",
     };
 
     let breakpoint: any;
@@ -140,7 +140,7 @@ describe("breakpoint", () => {
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
-      }
+      },
     });
 
     mount();
@@ -149,14 +149,14 @@ describe("breakpoint", () => {
     expect(matchMedia).toHaveBeenCalledWith(breakpoints.S);
 
     expect(breakpoint).toMatchObject({
-      S: { value: true }
+      S: { value: true },
     });
   });
 
   it("should not useMatchMedia if valid width string is passed", () => {
     setWindowInnerWidth(500);
     const breakpoints = {
-      S: "320px"
+      S: "320px",
     };
 
     let breakpoint: any;
@@ -164,7 +164,7 @@ describe("breakpoint", () => {
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
-      }
+      },
     });
 
     mount();
@@ -173,14 +173,14 @@ describe("breakpoint", () => {
     expect(matchMedia).not.toHaveBeenCalled();
 
     expect(breakpoint).toMatchObject({
-      S: { value: true }
+      S: { value: true },
     });
   });
 
   it("should useMatchMedia if valid width string is passed", () => {
     setWindowInnerWidth(500);
     const breakpoints = {
-      S: "320px"
+      S: "320px",
     };
 
     let breakpoint: any;
@@ -188,7 +188,7 @@ describe("breakpoint", () => {
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints));
-      }
+      },
     });
 
     mount();
@@ -197,13 +197,13 @@ describe("breakpoint", () => {
     expect(matchMedia).not.toHaveBeenCalled();
 
     expect(breakpoint).toMatchObject({
-      S: { value: true }
+      S: { value: true },
     });
   });
 
   it("should still work with invalid breakpoint", () => {
     const breakpoints = {
-      S: false
+      S: false,
     };
 
     let breakpoint: any;
@@ -211,7 +211,7 @@ describe("breakpoint", () => {
       template: "<div></div>",
       setup() {
         return (breakpoint = useBreakpoint(breakpoints as any));
-      }
+      },
     });
 
     mount();
@@ -220,7 +220,7 @@ describe("breakpoint", () => {
     expect(matchMedia).toHaveBeenCalledWith(false);
 
     expect(breakpoint).toMatchObject({
-      S: { value: true }
+      S: { value: true },
     });
   });
 
@@ -231,7 +231,7 @@ describe("breakpoint", () => {
         const breakpoint = useBreakpoint({
           xs: "0px",
           sm: 600,
-          md: 960
+          md: 960,
         });
 
         // @ts-expect-error it should warn if the breakpoint doesn't exist
@@ -239,7 +239,7 @@ describe("breakpoint", () => {
 
         breakpoint.current.value === "xs";
         breakpoint.current.value === "sm";
-      }
+      },
     });
   });
 });

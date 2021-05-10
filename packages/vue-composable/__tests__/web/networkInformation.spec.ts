@@ -23,7 +23,7 @@ describe("network information", () => {
         eventListener = handler;
       }),
       removeEventListener: jest.fn(),
-      onchange: jest.fn()
+      onchange: jest.fn(),
     } as NetworkInformation;
 
     navigator.connection = connectionMock;
@@ -31,7 +31,8 @@ describe("network information", () => {
 
   const buildNetwork = (beforeSetup?: () => any) => {
     const conn = navigator.connection;
-    navigator.mozConnection = navigator.webkitConnection = navigator.connection = null as any;
+    navigator.mozConnection = navigator.webkitConnection = navigator
+      .connection = null as any;
     let networkInformation = useNetworkInformation();
     createVue({
       template: `<div></div>`,
@@ -43,7 +44,7 @@ describe("network information", () => {
           return networkInformation;
         }
         return networkInformation;
-      }
+      },
     }).mount();
     return networkInformation;
   };
@@ -52,7 +53,8 @@ describe("network information", () => {
     const consoleWarn = console.warn;
 
     beforeEach(() => {
-      navigator.connection = navigator.mozConnection = navigator.webkitConnection = null as any;
+      navigator.connection = navigator.mozConnection = navigator
+        .webkitConnection = null as any;
       console.warn = jest.fn();
     });
     afterAll(() => {
@@ -67,24 +69,24 @@ describe("network information", () => {
     it("should warn if not supported", () => {
       useNetworkInformation();
       expect(console.warn).toBeCalledWith(
-        "[navigator.connection] not found, networkInformation not available."
+        "[navigator.connection] not found, networkInformation not available.",
       );
     });
     it("should get connection from navigator", () => {
       const { supported } = buildNetwork(
-        () => (navigator.connection = connectionMock)
+        () => (navigator.connection = connectionMock),
       );
       expect(supported).toBe(true);
     });
     it("should get mozConnection from navigator", () => {
       const { supported } = buildNetwork(
-        () => (navigator.mozConnection = connectionMock)
+        () => (navigator.mozConnection = connectionMock),
       );
       expect(supported).toBe(true);
     });
     it("should get webkitConnection from navigator", () => {
       const { supported } = buildNetwork(
-        () => (navigator.webkitConnection = connectionMock)
+        () => (navigator.webkitConnection = connectionMock),
       );
       expect(supported).toBe(true);
     });
@@ -97,7 +99,7 @@ describe("network information", () => {
       effectiveType,
       rtt,
       saveData,
-      type
+      type,
     } = buildNetwork();
 
     expect(connectionMock.addEventListener).toHaveBeenCalled();
@@ -109,7 +111,7 @@ describe("network information", () => {
       effectiveType,
       rtt,
       saveData,
-      type
+      type,
     });
 
     expect(connectionMock).toMatchObject(r);
@@ -142,7 +144,7 @@ describe("network information", () => {
       template: "<div></div>",
       setup() {
         return useNetworkInformation();
-      }
+      },
     });
 
     expect(connectionMock.removeEventListener).not.toHaveBeenCalled();

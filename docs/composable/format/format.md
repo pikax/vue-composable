@@ -11,11 +11,11 @@ useFormat(format, obj);
 useFormat(format, arg1, arg2);
 ```
 
-| Parameters       | Type                                 | Required | Description             |
-| ---------------- | ------------------------------------ | -------- | ----------------------- |
-| format           | `Ref<string>|String`                 | `true`   | String format           |
-| obj              | `Record<string, Ref<string|object>>` | `true`   | Object based dictionary |
-| args/`arg1,arg2` | `Array<Ref<string|object>>`          | `true`   | Array based keys        |
+| Parameters       | Type                       | Required  | Description |
+| ---------------- | -------------------------- | --------- | ----------- |
+| format           | `Ref<string>               | String`   | `true`      | String format |
+| obj              | `Record<string, Ref<string | object>>` | `true`      | Object based dictionary |
+| args/`arg1,arg2` | `Array<Ref<string          | object>>` | `true`      | Array based keys |
 
 ## State
 
@@ -77,7 +77,7 @@ export default {
     const format = useFormat(inputFormat, args);
 
     const add = () => args.value.push(ref(`{${args.value.length}}`));
-    const remove = index => args.value.splice(index, 1);
+    const remove = (index) => args.value.splice(index, 1);
 
     const onChange = (ev, index) => {
       args.value[index].value = ev.target.value;
@@ -90,9 +90,9 @@ export default {
 
       onChange,
       add,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>
 ```

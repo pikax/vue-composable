@@ -1,7 +1,7 @@
 jest.mock("../../src/utils", () => ({
   //@ts-ignore
   ...jest.requireActual("../../src/utils"),
-  isClient: false
+  isClient: false,
 }));
 
 import { createVue } from "../utils";
@@ -13,7 +13,7 @@ describe("breakpoint ssr", () => {
   beforeAll(() => {
     (window as any).innerWidth = windowWidth;
 
-    matchMediaSpy = window.matchMedia = jest.fn(query => {
+    matchMediaSpy = window.matchMedia = jest.fn((query) => {
       return {
         matches: true,
         media: query,
@@ -22,7 +22,7 @@ describe("breakpoint ssr", () => {
         removeListener: jest.fn(), // deprecated
         addEventListener: jest.fn(),
         removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn()
+        dispatchEvent: jest.fn(),
       };
     });
   });
@@ -47,7 +47,7 @@ describe("breakpoint ssr", () => {
       template: "<div></div>",
       setup() {
         return useBreakpoint({ L: 100 });
-      }
+      },
     });
     expect(addEventListenerMock).not.toHaveBeenCalled();
     expect(removeEventListenerMock).not.toHaveBeenCalled();

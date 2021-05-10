@@ -1,6 +1,6 @@
 import { createVue, nextTick } from "../utils";
-import { useLockScroll, SCROLL_LOCK_CLASS, NO_OP, wrap } from "../../src";
-import { ref, Ref } from "../../src/api";
+import { NO_OP, SCROLL_LOCK_CLASS, useLockScroll, wrap } from "../../src";
+import { Ref, ref } from "../../src/api";
 
 describe("lockscroll", () => {
   it("should work", async () => {
@@ -14,9 +14,9 @@ describe("lockscroll", () => {
         locked = useLockScroll(element, { auto: true }).locked;
 
         return {
-          element
+          element,
         };
-      }
+      },
     });
 
     expect(element.value).toBeUndefined();
@@ -40,9 +40,9 @@ describe("lockscroll", () => {
         useLockScroll(element);
 
         return {
-          element
+          element,
         };
-      }
+      },
     });
     mount();
 
@@ -64,9 +64,9 @@ describe("lockscroll", () => {
         remove = sl.remove;
 
         return {
-          element
+          element,
         };
-      }
+      },
     });
 
     expect(element.value).toBeUndefined();
@@ -96,9 +96,9 @@ describe("lockscroll", () => {
         locked = sl.locked;
 
         return {
-          element
+          element,
         };
-      }
+      },
     });
 
     expect(element.value).toBeUndefined();
@@ -131,9 +131,9 @@ describe("lockscroll", () => {
         locked = useLockScroll(element, lockedClass).locked;
 
         return {
-          element
+          element,
         };
-      }
+      },
     });
 
     expect(element.value).toBeUndefined();
@@ -154,7 +154,7 @@ describe("lockscroll", () => {
     it("should allow passing an array", () => {
       const array = ref([
         document.createElement("div"),
-        ref<Element | undefined>(document.createElement("div"))
+        ref<Element | undefined>(document.createElement("div")),
       ]);
 
       let lock: () => void = NO_OP;
@@ -173,9 +173,9 @@ describe("lockscroll", () => {
           unlock = sl.unlock;
 
           return {
-            element
+            element,
           };
-        }
+        },
       });
 
       if (!__VUE_2__) {
@@ -186,24 +186,24 @@ describe("lockscroll", () => {
       expect(array.value).toHaveLength(3);
 
       expect(
-        array.value.every(x =>
+        array.value.every((x) =>
           wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-        )
+        ),
       ).toBe(true);
 
       unlock();
       expect(
-        array.value.every(x =>
+        array.value.every((x) =>
           wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-        )
+        ),
       ).toBe(false);
 
       lock();
 
       expect(
-        array.value.every(x =>
+        array.value.every((x) =>
           wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-        )
+        ),
       ).toBe(true);
 
       destroy();
@@ -228,18 +228,18 @@ describe("lockscroll", () => {
 
             return {
               elements,
-              len
+              len,
             };
-          }
+          },
         });
 
         mount();
         expect(elements.value).toHaveLength(len.value);
 
         expect(
-          elements.value.every(x =>
+          elements.value.every((x) =>
             wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-          )
+          ),
         ).toBe(true);
 
         len.value++;
@@ -248,24 +248,24 @@ describe("lockscroll", () => {
         expect(elements.value).toHaveLength(len.value);
 
         expect(
-          elements.value.every(x =>
+          elements.value.every((x) =>
             wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-          )
+          ),
         ).toBe(true);
 
         unlock();
         expect(
-          elements.value.every(x =>
+          elements.value.every((x) =>
             wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-          )
+          ),
         ).toBe(false);
 
         lock();
 
         expect(
-          elements.value.every(x =>
+          elements.value.every((x) =>
             wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-          )
+          ),
         ).toBe(true);
 
         len.value++;
@@ -274,9 +274,9 @@ describe("lockscroll", () => {
         expect(elements.value).toHaveLength(len.value);
 
         expect(
-          elements.value.every(x =>
+          elements.value.every((x) =>
             wrap(x).value.classList.contains(SCROLL_LOCK_CLASS)
-          )
+          ),
         ).toBe(true);
 
         destroy();
@@ -308,10 +308,10 @@ describe("lockscroll", () => {
     it("should get elements after mounting", async () => {
       const elements = [
         document.createElement("div"),
-        document.createElement("button")
+        document.createElement("button"),
       ];
 
-      elements.forEach(x => {
+      elements.forEach((x) => {
         x.classList.add("to-lock");
         document.body.appendChild(x);
       });
@@ -328,7 +328,7 @@ describe("lockscroll", () => {
           unlock = sl.unlock;
 
           return {};
-        }
+        },
       });
 
       if (!__VUE_2__) {
@@ -341,8 +341,8 @@ describe("lockscroll", () => {
       expect(onChange).toHaveBeenCalledTimes(6);
       expect(
         targetElements.every(
-          x => x.classList.contains(SCROLL_LOCK_CLASS) === true
-        )
+          (x) => x.classList.contains(SCROLL_LOCK_CLASS) === true,
+        ),
       ).toBe(true);
 
       unlock();
@@ -350,8 +350,8 @@ describe("lockscroll", () => {
 
       expect(
         targetElements.every(
-          x => x.classList.contains(SCROLL_LOCK_CLASS) === false
-        )
+          (x) => x.classList.contains(SCROLL_LOCK_CLASS) === false,
+        ),
       ).toBe(true);
 
       lock();
@@ -359,14 +359,16 @@ describe("lockscroll", () => {
 
       expect(
         targetElements.every(
-          x => x.classList.contains(SCROLL_LOCK_CLASS) === true
-        )
+          (x) => x.classList.contains(SCROLL_LOCK_CLASS) === true,
+        ),
       ).toBe(true);
 
       destroy();
 
       expect(
-        elements.every(x => x.classList.contains(SCROLL_LOCK_CLASS) === false)
+        elements.every((x) =>
+          x.classList.contains(SCROLL_LOCK_CLASS) === false
+        ),
       ).toBe(true);
     });
   });

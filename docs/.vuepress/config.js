@@ -12,7 +12,12 @@ module.exports = {
       "@vuepress/pwa",
       {
         serviceWorker: true,
-        updatePopup: true,
+        updatePopup: {
+          "/": {
+            message: "New content is available.",
+            buttonText: "Refresh",
+          },
+        },
       },
     ],
   ],
@@ -145,6 +150,7 @@ module.exports = {
           children: [
             ["composable/misc/sharedRef", "SharedRef"],
             ["composable/misc/vmodel", "vModel"],
+            ["composable/misc/interval", "interval"],
             ["composable/misc/injectFactory", "injectFactory"],
             ["composable/misc/lockScroll", "lockScroll"],
             ["composable/misc/refDebounced", "refDebounced"],
@@ -210,6 +216,7 @@ module.exports = {
             ["composable/web/worker", "WebWorker API"],
             ["composable/web/workerFunction", "WebWorker Function"],
             ["composable/web/share", "WebShare API"],
+            ["composable/web/timeout", "Timeout"],
           ],
         },
         {
@@ -247,6 +254,7 @@ module.exports = {
           children: [
             ["composable/external/axios", "axios"],
             ["composable/external/makeAxios", "makeAxios"],
+            ["composable/external/cookie", "cookie"],
           ],
         },
       ],

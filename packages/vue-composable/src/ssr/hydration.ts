@@ -1,17 +1,19 @@
 import {
-  inject,
-  ref,
-  InjectionKey,
-  Ref,
-  readonly,
   computed,
-  Plugin
+  inject,
+  InjectionKey,
+  Plugin,
+  readonly,
+  Ref,
+  ref,
 } from "../api";
 
 // istanbul ignore next
-const HYDRATION_KEY: InjectionKey<Readonly<
-  Ref<Readonly<boolean>>
->> = /*#__PURE__*/ Symbol((__DEV__ && "VUE_COMPOSABLE_HYDRATION_KEY") || ``);
+const HYDRATION_KEY: InjectionKey<
+  Readonly<
+    Ref<Readonly<boolean>>
+  >
+> = /*#__PURE__*/ Symbol((__DEV__ && "VUE_COMPOSABLE_HYDRATION_KEY") || ``);
 
 export const hydrationPlugin: Plugin = {
   // @ts-ignore
@@ -22,7 +24,7 @@ export const hydrationPlugin: Plugin = {
       // TODO add mixin?
       if (__DEV__) {
         console.warn(
-          "[hydrationPlugin] HydrationPlugin is not supported in vue2"
+          "[hydrationPlugin] HydrationPlugin is not supported in vue2",
         );
         hydrating.value = false;
       }
@@ -37,7 +39,7 @@ export const hydrationPlugin: Plugin = {
         return component;
       };
     }
-  }
+  },
 };
 
 export function useHydration(): Ref<Boolean> {
@@ -46,12 +48,12 @@ export function useHydration(): Ref<Boolean> {
     const r = inject(HYDRATION_KEY, s as any);
     if (r === s) {
       console.warn(
-        "[useHydration] no hydration found, did you forget to `app.use(HydrationPlugin)`?"
+        "[useHydration] no hydration found, did you forget to `app.use(HydrationPlugin)`?",
       );
     }
   }
   return inject(
     HYDRATION_KEY,
-    computed(() => false)
+    computed(() => false),
   );
 }

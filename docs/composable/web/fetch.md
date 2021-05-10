@@ -33,7 +33,7 @@ interface UseFetchOptions {
 
 | Parameters  | Type                            | Required | Default     | Description                                                                                                       |
 | ----------- | ------------------------------- | -------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
-| request     | `Request|string`                | `false`  | `undefined` | [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) for the first request                         |
+| request     | `Request                        | string`  | `false`     | `undefined`                                                                                                       | [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) for the first request |
 | optionsInit | `UseFetchOptions & RequestInit` | `false`  | `undefined` | Options for useFetch and [RequestOptions](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) |
 
 ::: tip
@@ -57,24 +57,24 @@ const {
   blob,
   status,
   statusText,
-  jsonError
+  jsonError,
 } = useFetch();
 
 exec("./api/");
 ```
 
-| State      | Type                 | Description                             |
-| ---------- | -------------------- | --------------------------------------- |
-| promise    | `Ref<Promise>`       | Last result promise.                    |
-| result     | `Ref<Response>`      | The response.                           |
-| loading    | `Ref<Boolean>`       | If the request is loading.              |
-| error      | `Ref<any>`           | If the request threw exception.         |
-| json       | `Ref<T>`             | The response body as JSON.              |
-| text       | `Ref<string>`        | The response body as text.              |
-| blob       | `Ref<Blob>`          | The response body as BLOB.              |
-| status     | `Ref<number | null>` | The HTTP status code.                   |
-| statusText | `Ref<number | null>` | The HTTP status text, eg: "OK" for 200. |
-| jsonError  | `Ref<any>`           | Error parsing the `json`.               |
+| State      | Type            | Description                     |
+| ---------- | --------------- | ------------------------------- |
+| promise    | `Ref<Promise>`  | Last result promise.            |
+| result     | `Ref<Response>` | The response.                   |
+| loading    | `Ref<Boolean>`  | If the request is loading.      |
+| error      | `Ref<any>`      | If the request threw exception. |
+| json       | `Ref<T>`        | The response body as JSON.      |
+| text       | `Ref<string>`   | The response body as text.      |
+| blob       | `Ref<Blob>`     | The response body as BLOB.      |
+| status     | `Ref<number     | null>`                          | The HTTP status code. |
+| statusText | `Ref<number     | null>`                          | The HTTP status text, eg: "OK" for 200. |
+| jsonError  | `Ref<any>`      | Error parsing the `json`.       |
 
 ## Methods
 
@@ -110,9 +110,7 @@ You can pass `throwException` on the last argument of the `exec` to override the
       <button @click="id--">prev</button>
       <button @click="id++">next</button>
     </p>
-    <p v-if="loading">
-      loading...
-    </p>
+    <p v-if="loading">loading...</p>
     <div v-else>
       <p>Status: {{ status }}</p>
       {{ json }}
@@ -129,7 +127,7 @@ export default {
     const id = ref(1);
     const { json, loading, exec, status } = useFetch();
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec("https://reqres.in/api/user/" + id);
     });
 
@@ -137,9 +135,9 @@ export default {
       id,
       json,
       loading,
-      status
+      status,
     };
-  }
+  },
 };
 </script>
 ```

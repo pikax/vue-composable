@@ -1,4 +1,4 @@
-import { Ref, ref, onUnmounted } from "../api";
+import { onUnmounted, Ref, ref } from "../api";
 import { isClient, NO_OP, PASSIVE_EV } from "../utils";
 
 export function useMatchMedia(query: string) {
@@ -38,6 +38,6 @@ export function useMatchMedia(query: string) {
     mediaQueryList,
     matches,
 
-    remove
+    remove,
   };
 }

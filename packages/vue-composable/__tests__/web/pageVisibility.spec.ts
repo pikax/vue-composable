@@ -35,7 +35,7 @@ describe("pageVisibility", () => {
     expect(documentEventSpy).toHaveBeenCalledWith(
       "visibilitychange",
       expect.anything(),
-      expect.objectContaining({ passive: true })
+      expect.objectContaining({ passive: true }),
     );
   });
 

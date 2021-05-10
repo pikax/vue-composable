@@ -11,10 +11,10 @@ useIntlDateTimeFormat(locales?,options?);
 
 ```
 
-| Parameters | Type                              | Required | Default     | Description                                                                                                                                                          |
-| ---------- | --------------------------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| locales    | `Ref<string | string[]>`          | `false`  | `undefined` | Default locale passed to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat)  |
-| options    | `Ref<Intl.DateTimeFormatOptions>` | `false`  | `undefined` | Default options passed to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
+| Parameters | Type                              | Required   | Default     | Description                                                                                                                                                          |
+| ---------- | --------------------------------- | ---------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locales    | `Ref<string                       | string[]>` | `false`     | `undefined`                                                                                                                                                          | Default locale passed to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
+| options    | `Ref<Intl.DateTimeFormatOptions>` | `false`    | `undefined` | Default options passed to [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) |
 
 ## State
 
@@ -104,7 +104,7 @@ export default defineComponent({
     const options = ref({
       year: "numeric",
       month: "2-digit",
-      day: "2-digit"
+      day: "2-digit",
     });
 
     const { formatString, format } = useIntlDateTimeFormat(
@@ -125,9 +125,9 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>
 ```

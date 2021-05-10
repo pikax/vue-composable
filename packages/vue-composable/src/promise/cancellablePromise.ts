@@ -1,5 +1,5 @@
-import { Ref, ref, getCurrentInstance, onUnmounted } from "../api";
-import { usePromise, PromiseResultFactory, PromiseOptions } from "./promise";
+import { getCurrentInstance, onUnmounted, Ref, ref } from "../api";
+import { PromiseOptions, PromiseResultFactory, usePromise } from "./promise";
 import { isObject } from "../utils";
 
 export interface CancellablePromiseResult<TCancel = any> {
@@ -16,84 +16,84 @@ export interface CancellablePromiseOptions extends PromiseOptions {
 }
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
-  fn: (...args: TArgs) => Promise<T>
+  fn: (...args: TArgs) => Promise<T>,
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  lazy: boolean
+  lazy: boolean,
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any, TArgs extends Array<any>>(
   fn: (...args: TArgs) => Promise<T>,
-  options: CancellablePromiseOptions
+  options: CancellablePromiseOptions,
 ): PromiseResultFactory<Promise<T>, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any>(
-  fn: () => T
+  fn: () => T,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  lazy: boolean
+  lazy: boolean,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends any>(
   fn: () => T,
-  options: CancellablePromiseOptions
+  options: CancellablePromiseOptions,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<
   T extends Promise<TR>,
   TR,
-  TArgs extends Array<any>
+  TArgs extends Array<any>,
 >(
-  fn: (...args: TArgs) => T
+  fn: (...args: TArgs) => T,
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<
   T extends Promise<TR>,
   TR,
-  TArgs extends Array<any>
+  TArgs extends Array<any>,
 >(
   fn: (...args: TArgs) => T,
-  lazy: boolean
+  lazy: boolean,
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<
   T extends Promise<TR>,
   TR,
-  TArgs extends Array<any>
+  TArgs extends Array<any>,
 >(
   fn: (...args: TArgs) => T,
-  options: CancellablePromiseOptions
+  options: CancellablePromiseOptions,
 ): PromiseResultFactory<T, TArgs> & CancellablePromiseResult;
 
 export function useCancellablePromise<T = any>(
-  fn: () => T
+  fn: () => T,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  lazy: boolean
+  lazy: boolean,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T = any>(
   fn: () => T,
-  options: CancellablePromiseOptions
+  options: CancellablePromiseOptions,
 ): PromiseResultFactory<Promise<T>> & CancellablePromiseResult;
 
 export function useCancellablePromise<T extends Promise<TR>, TR>(
-  fn: () => T
+  fn: () => T,
 ): PromiseResultFactory<T> & CancellablePromiseResult;
 
 export function useCancellablePromise<
   T extends Promise<TR>,
   TR,
-  TArgs extends Array<any>
+  TArgs extends Array<any>,
 >(
   fn: (...args: TArgs) => T,
-  lazyOptions?: CancellablePromiseOptions | boolean
+  lazyOptions?: CancellablePromiseOptions | boolean,
 ): PromiseResultFactory<Promise<TR>, TArgs> & CancellablePromiseResult<TR> {
   const cancelled = ref(false);
   let _cancel: ((result?: TR) => void) | undefined = undefined;
@@ -103,7 +103,7 @@ export function useCancellablePromise<
       /* istanbul ignore else */
       if (__DEV__) {
         console.warn(
-          "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`"
+          "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`",
         );
       }
       return;
@@ -123,7 +123,7 @@ export function useCancellablePromise<
 
   const use = usePromise<TR, TArgs>(
     (...args: TArgs) => promise(fn(...args)),
-    lazyOptions as PromiseOptions
+    lazyOptions as PromiseOptions,
   );
 
   if (

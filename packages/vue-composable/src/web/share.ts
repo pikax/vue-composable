@@ -1,4 +1,4 @@
-import { ref, Ref } from "../api";
+import { Ref, ref } from "../api";
 import { FALSE_OP, isClient } from "../utils";
 
 interface NavigatorShareData {
@@ -57,23 +57,23 @@ export function useShare(data?: Partial<NavigatorShareData>): ShareReturn {
   let cancelled = ref(false);
 
   if (supported) {
-    share = data => {
+    share = (data) => {
       shared.value = false;
       cancelled.value = false;
       return navigator
         .share(data)
-        .then(x => {
+        .then((x) => {
           shared.value = true;
           return x;
         })
-        .catch(e => {
+        .catch((e) => {
           shared.value = false;
           cancelled.value = true;
           return false;
         });
     };
 
-    canShare = data => navigator.canShare(data);
+    canShare = (data) => navigator.canShare(data);
 
     if (data) {
       if (canShare(data)) {
@@ -88,6 +88,6 @@ export function useShare(data?: Partial<NavigatorShareData>): ShareReturn {
     share,
     canShare,
     shared,
-    cancelled
+    cancelled,
   };
 }

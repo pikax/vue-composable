@@ -17,8 +17,8 @@ export default {
 
     return {
       value,
-      list
+      list,
     };
-  }
+  },
 };
 </script>

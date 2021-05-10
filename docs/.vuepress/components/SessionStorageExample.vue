@@ -34,8 +34,8 @@ export default {
       supported,
       tabSync,
       storage,
-      remove
+      remove,
     };
-  }
+  },
 };
 </script>

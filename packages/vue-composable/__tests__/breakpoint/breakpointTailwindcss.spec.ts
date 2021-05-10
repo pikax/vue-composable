@@ -15,9 +15,9 @@ jest.mock("../../src/api", () => ({
 jest.mock("../../src/breakpoint/breakpoint");
 
 import {
-  isTailwind,
-  isRawScreen,
   isRangeScreen,
+  isRawScreen,
+  isTailwind,
   screenRangeToBreakpoint,
   screenToBreakpoint,
   setBreakpointTailwindCSS,
@@ -25,7 +25,7 @@ import {
 } from "../../src/breakpoint/breakpointTailwind";
 
 import { useBreakpoint } from "../../src/breakpoint/breakpoint";
-import { provide, inject } from "../../src/api";
+import { inject, provide } from "../../src/api";
 
 describe("breakpointTailwindcss", () => {
   describe("setBreakpoint", () => {
@@ -42,7 +42,7 @@ describe("breakpointTailwindcss", () => {
               sm: 123,
             },
           },
-        })
+        }),
       ).toBe(bk);
 
       expect(useBreakpoint).toHaveBeenCalledWith({ sm: 123 });
@@ -57,7 +57,7 @@ describe("breakpointTailwindcss", () => {
       expect(
         setBreakpointTailwindCSS({
           sm: 123,
-        })
+        }),
       ).toBe(bk);
 
       expect(useBreakpoint).toHaveBeenCalledWith({ sm: 123 });
@@ -93,7 +93,7 @@ describe("breakpointTailwindcss", () => {
               sm: 123,
             },
           },
-        })
+        }),
       ).toBe(bk);
 
       expect(useBreakpoint).toHaveBeenCalledWith({ sm: 123 });
@@ -111,7 +111,7 @@ describe("breakpointTailwindcss", () => {
           theme: {
             screens: {},
           },
-        })
+        }),
       ).toBe(true);
       expect(
         isTailwind({
@@ -120,7 +120,7 @@ describe("breakpointTailwindcss", () => {
               myScreen: "sadd",
             },
           },
-        })
+        }),
       ).toBe(true);
     });
 
@@ -129,7 +129,7 @@ describe("breakpointTailwindcss", () => {
       expect(
         isRawScreen({
           raw: "ddd",
-        })
+        }),
       ).toBe(true);
 
       expect(
@@ -137,7 +137,7 @@ describe("breakpointTailwindcss", () => {
           raw: {
             ss: "1",
           },
-        })
+        }),
       ).toBe(false);
 
       expect(isRawScreen("ddd")).toBe(false);
@@ -163,15 +163,15 @@ describe("breakpointTailwindcss", () => {
 
       expect(screenRangeToBreakpoint({ max: 12 })).toBe("(max-width: 12px)");
       expect(screenRangeToBreakpoint({ max: "12em" })).toBe(
-        "(max-width: 12em)"
+        "(max-width: 12em)",
       );
 
       expect(screenRangeToBreakpoint({ min: "12em" })).toBe(
-        "(min-width: 12em)"
+        "(min-width: 12em)",
       );
 
       expect(screenRangeToBreakpoint({ min: "1em", max: "2em" })).toBe(
-        "(max-width: 2em and min-width: 1em)"
+        "(max-width: 2em and min-width: 1em)",
       );
     });
 
@@ -184,7 +184,7 @@ describe("breakpointTailwindcss", () => {
           { max: "12px" },
           { min: "12px" },
           { max: "12px", min: "9em" },
-        ])
+        ]),
       ).toMatchObject([
         "(max-width: 12px)",
         "(min-width: 12px)",

@@ -11,13 +11,13 @@ describe("share", () => {
       writable: true,
       configurable: true,
 
-      value: shareSpy
+      value: shareSpy,
     });
 
     Object.defineProperty(navigator, "canShare", {
       writable: true,
       configurable: true,
-      value: canShareSpy
+      value: canShareSpy,
     });
     canShareSpy.mockClear();
     shareSpy.mockClear();
@@ -53,7 +53,7 @@ describe("share", () => {
 
   it("should set shared", async () => {
     let resCb: Function = {} as any;
-    shareSpy.mockReturnValueOnce(new Promise(res => (resCb = res)));
+    shareSpy.mockReturnValueOnce(new Promise((res) => (resCb = res)));
 
     const { share, shared, cancelled } = useShare();
 
@@ -71,7 +71,7 @@ describe("share", () => {
     expect(shared.value).toBe(true);
     expect(cancelled.value).toBe(false);
 
-    shareSpy.mockReturnValueOnce(new Promise(res => (resCb = res)));
+    shareSpy.mockReturnValueOnce(new Promise((res) => (resCb = res)));
     share({});
     // resets
     await nextTick();
@@ -106,7 +106,7 @@ describe("share", () => {
 
   it("should share if data is passed", () => {
     let resCb: Function = {} as any;
-    shareSpy.mockReturnValueOnce(new Promise(res => (resCb = res)));
+    shareSpy.mockReturnValueOnce(new Promise((res) => (resCb = res)));
     canShareSpy.mockReturnValue(true);
 
     const data = {};
@@ -118,7 +118,7 @@ describe("share", () => {
   });
   it("should not share if canShare is false", () => {
     let resCb: Function = {} as any;
-    shareSpy.mockReturnValueOnce(new Promise(res => (resCb = res)));
+    shareSpy.mockReturnValueOnce(new Promise((res) => (resCb = res)));
     canShareSpy.mockReturnValue(false);
 
     const data = {};

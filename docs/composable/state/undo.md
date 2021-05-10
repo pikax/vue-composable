@@ -43,7 +43,7 @@ useUndo(defaultValue?, options?);
 
 | Parameters   | Type        | Required | Default          | Description           |
 | ------------ | ----------- | -------- | ---------------- | --------------------- |
-| defaultValue | `Ref<T>|T`  | `false`  | `undefined`      | Default value         |
+| defaultValue | `Ref<T>     | T`       | `false`          | `undefined`           | Default value |
 | options      | `(x: T)=>T` | `false`  | `defaultOptions` | Configuration options |
 
 ::: tip
@@ -125,7 +125,7 @@ import { useUndo } from "vue-composable";
 export default {
   setup() {
     return useUndo();
-  }
+  },
 };
 </script>
 ```

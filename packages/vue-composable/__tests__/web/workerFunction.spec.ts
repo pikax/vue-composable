@@ -1,11 +1,11 @@
 jest.mock("../../src/promise/cancellablePromise", () => ({
-  useCancellablePromise: jest.fn()
+  useCancellablePromise: jest.fn(),
 }));
 
 import {
-  useWorkerFunction,
   createBlobUrl,
-  inlineWorkExecution
+  inlineWorkExecution,
+  useWorkerFunction,
 } from "../../src/web/workerFunction";
 import { NO_OP } from "../../src";
 import { ref } from "../../src/api";
@@ -26,12 +26,12 @@ const mockBlob = (fn: jest.Mock<any, any>) => {
   Object.defineProperty(window, "Blob", {
     writable: true,
     configurable: true,
-    value: BlobMocked
+    value: BlobMocked,
   });
   Object.defineProperty(global, "Blob", {
     writable: true,
     configurable: true,
-    value: BlobMocked
+    value: BlobMocked,
   });
 
   return fn;
@@ -47,8 +47,8 @@ const mockWorker = (
     constructor: jest.fn(),
     addEventListener: jest.fn(),
     postMessage: jest.fn(),
-    terminate: jest.fn()
-  }
+    terminate: jest.fn(),
+  },
 ) => {
   class WorkerMock {
     cb: {
@@ -61,7 +61,7 @@ const mockWorker = (
     addEventListener = c.addEventListener.mockImplementation(
       (s: keyof WorkerMock["cb"], cb: any) => {
         this.cb[s] = cb;
-      }
+      },
     );
     postMessage = c.postMessage;
     terminate = c.terminate;
@@ -73,12 +73,12 @@ const mockWorker = (
     Object.defineProperty(window, "Worker", {
       writable: true,
       configurable: true,
-      value: WorkerMock
+      value: WorkerMock,
     });
     Object.defineProperty(global, "Worker", {
       writable: true,
       configurable: true,
-      value: WorkerMock
+      value: WorkerMock,
     });
   });
 
@@ -86,12 +86,12 @@ const mockWorker = (
     Object.defineProperty(window, "Worker", {
       writable: true,
       configurable: true,
-      value: _worker
+      value: _worker,
     });
     Object.defineProperty(global, "Worker", {
       writable: true,
       configurable: true,
-      value: _worker
+      value: _worker,
     });
   });
 
@@ -101,20 +101,20 @@ const mockWorker = (
 
   return {
     ...c,
-    mockClear
+    mockClear,
   };
 };
 
 describe("worker function", () => {
   const postMessageFn = jest
     .spyOn(window, "postMessage")
-    .mockImplementation(x => x);
+    .mockImplementation((x) => x);
 
   const blobConstructorFn = mockBlob(
-    jest.fn()
+    jest.fn(),
   ).mockImplementation((script, type) => [script, type]);
-  const createObjectUrlSpy = jest.fn(x => x);
-  const revokeObjectURLSpy = jest.fn(x => x);
+  const createObjectUrlSpy = jest.fn((x) => x);
+  const revokeObjectURLSpy = jest.fn((x) => x);
 
   URL.createObjectURL = createObjectUrlSpy;
   URL.revokeObjectURL = revokeObjectURLSpy;
@@ -130,7 +130,7 @@ describe("worker function", () => {
 
     workerMock.mockClear();
     cancellablePromiseFn.mockClear();
-    cancellablePromiseFn.mockImplementation(p => ({ exec: p }));
+    cancellablePromiseFn.mockImplementation((p) => ({ exec: p }));
   });
 
   describe("inlineWorkExecution", () => {
@@ -145,7 +145,7 @@ describe("worker function", () => {
       const e = inlineWorkExecution((a: any) => a);
 
       const r = await e({
-        data: toArgs(v)
+        data: toArgs(v),
       } as any);
 
       expect(r).toMatchObject([true, v]);
@@ -157,7 +157,7 @@ describe("worker function", () => {
       const e = inlineWorkExecution((a: any) => Promise.resolve(a));
 
       const r = await e({
-        data: toArgs(v)
+        data: toArgs(v),
       } as any);
 
       expect(r).toMatchObject([true, v]);
@@ -166,11 +166,11 @@ describe("worker function", () => {
 
     it("should call factory with the `e.data`", async () => {
       const v = { a: 1 };
-      const factory = jest.fn(x => x);
+      const factory = jest.fn((x) => x);
       const e = inlineWorkExecution(factory);
 
       await e({
-        data: toArgs(v)
+        data: toArgs(v),
       } as any);
 
       expect(factory).toHaveBeenCalledWith(v);
@@ -181,7 +181,7 @@ describe("worker function", () => {
       const e = inlineWorkExecution(factory);
 
       await e({
-        data: toArgs(1, 2, 3)
+        data: toArgs(1, 2, 3),
       } as any);
 
       expect(factory).toHaveBeenCalledWith(1, 2, 3);
@@ -193,7 +193,7 @@ describe("worker function", () => {
       const e = inlineWorkExecution(factory);
 
       const r = await e({
-        data: undefined
+        data: undefined,
       } as any);
 
       expect(r).toStrictEqual([true, undefined]);
@@ -209,7 +209,7 @@ describe("worker function", () => {
       const e = inlineWorkExecution(factory);
 
       const r = await e({
-        data: toArgs(1, 2, 3)
+        data: toArgs(1, 2, 3),
       } as any);
 
       expect(r).toStrictEqual([false, error]);
@@ -223,12 +223,12 @@ describe("worker function", () => {
         () =>
           new Promise((_, rej) => {
             rej(error);
-          })
+          }),
       );
       const e = inlineWorkExecution(factory);
 
       const r = await e({
-        data: toArgs(1, 2, 3)
+        data: toArgs(1, 2, 3),
       } as any);
 
       expect(r).toStrictEqual([false, error]);
@@ -247,8 +247,8 @@ describe("worker function", () => {
       expect(createBlobUrl(fn, [])).toMatchObject({
         script: ["", "onmessage=", expect.stringContaining(fn.toString())],
         type: {
-          type: "text/javascript"
-        }
+          type: "text/javascript",
+        },
       });
     });
 
@@ -261,12 +261,12 @@ describe("worker function", () => {
           script: [
             `importScripts("https://mydep.mydepen.my-com");`,
             "onmessage=",
-            expect.stringContaining(fn.toString())
+            expect.stringContaining(fn.toString()),
           ],
           type: {
-            type: "text/javascript"
-          }
-        }
+            type: "text/javascript",
+          },
+        },
       );
     });
 
@@ -278,17 +278,17 @@ describe("worker function", () => {
         createBlobUrl(fn, [
           "https://mydep.mydepen.my-com",
           "https://mydep.mydepen.my-com",
-          "https://mydep.mydepen.my-com"
-        ])
+          "https://mydep.mydepen.my-com",
+        ]),
       ).toMatchObject({
         script: [
           `importScripts("https://mydep.mydepen.my-com","https://mydep.mydepen.my-com","https://mydep.mydepen.my-com");`,
           "onmessage=",
-          expect.stringContaining(fn.toString())
+          expect.stringContaining(fn.toString()),
         ],
         type: {
-          type: "text/javascript"
-        }
+          type: "text/javascript",
+        },
       });
     });
   });
@@ -301,7 +301,7 @@ describe("worker function", () => {
 
       expect(useCancellablePromise).toHaveBeenCalledWith(expect.any(Function), {
         lazy: true,
-        throwException: true
+        throwException: true,
       });
     });
 
@@ -340,7 +340,7 @@ describe("worker function", () => {
 
       // message
       workerMock.addEventListener.mock.calls[0][1]({
-        data: [true, expected]
+        data: [true, expected],
       });
 
       expect(p).resolves.toBe(expected);
@@ -349,7 +349,7 @@ describe("worker function", () => {
       expect(exec()).rejects.toBe(expected);
       // message
       workerMock.addEventListener.mock.calls[0][1]({
-        data: [false, expected]
+        data: [false, expected],
       });
 
       workerMock.mockClear();
@@ -369,7 +369,7 @@ describe("worker function", () => {
 
         // message
         workerMock.addEventListener.mock.calls[0][1]({
-          data: [true, expected]
+          data: [true, expected],
         });
         await p;
 
@@ -379,9 +379,9 @@ describe("worker function", () => {
 
       describe("cancel", () => {
         test("calling cancel()", async () => {
-          cancellablePromiseFn.mockImplementationOnce(p => ({
+          cancellablePromiseFn.mockImplementationOnce((p) => ({
             exec: p,
-            cancelled: ref(false)
+            cancelled: ref(false),
           }));
 
           const { exec, cancelled } = useWorkerFunction(NO_OP as any);
@@ -396,9 +396,9 @@ describe("worker function", () => {
         });
 
         test("if the last argument is ref<boolean> becomes false", async () => {
-          cancellablePromiseFn.mockImplementationOnce(p => ({
+          cancellablePromiseFn.mockImplementationOnce((p) => ({
             exec: p,
-            cancelled: ref(false)
+            cancelled: ref(false),
           }));
           const cancel = ref(false);
 
@@ -413,9 +413,9 @@ describe("worker function", () => {
         });
 
         test("last argument is boolean, not ref boolean", async () => {
-          cancellablePromiseFn.mockImplementationOnce(p => ({
+          cancellablePromiseFn.mockImplementationOnce((p) => ({
             exec: p,
-            cancelled: ref(false)
+            cancelled: ref(false),
           }));
           let cancel = false;
 
@@ -434,9 +434,9 @@ describe("worker function", () => {
         });
 
         test("last argument extra argument is ref<true>", async () => {
-          cancellablePromiseFn.mockImplementationOnce(p => ({
+          cancellablePromiseFn.mockImplementationOnce((p) => ({
             exec: p,
-            cancelled: ref(false)
+            cancelled: ref(false),
           }));
           const cancel = ref(true);
 
@@ -461,9 +461,9 @@ describe("worker function", () => {
         });
 
         test("last argument is ref<boolean>", async () => {
-          cancellablePromiseFn.mockImplementationOnce(p => ({
+          cancellablePromiseFn.mockImplementationOnce((p) => ({
             exec: p,
-            cancelled: ref(false)
+            cancelled: ref(false),
           }));
           const cancel = ref(false);
 
@@ -500,16 +500,16 @@ describe("worker function", () => {
           jest.useFakeTimers();
           try {
             const cancelled = ref(false);
-            cancellablePromiseFn.mockImplementationOnce(p => ({
+            cancellablePromiseFn.mockImplementationOnce((p) => ({
               exec: p,
               cancel: jest
                 .fn()
                 .mockImplementation(() => (cancelled.value = false)),
-              cancelled
+              cancelled,
             }));
 
             const { exec, cancel } = useWorkerFunction(NO_OP as any, {
-              timeout: 40
+              timeout: 40,
             });
 
             const p = exec();
@@ -522,7 +522,7 @@ describe("worker function", () => {
             expect(await p).toBeUndefined();
             expect(workerMock.terminate).toHaveBeenCalled();
             expect(cancel).toHaveBeenCalledWith(
-              `[WebWorker] timeout after 40ms`
+              `[WebWorker] timeout after 40ms`,
             );
           } finally {
             jest.useRealTimers();

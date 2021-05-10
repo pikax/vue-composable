@@ -1,12 +1,12 @@
 import { Ref, ref } from "../../src/api";
 import { createVue, nextTick } from "../utils";
-import { useEvent, NO_OP } from "../../src";
+import { NO_OP, useEvent } from "../../src";
 
 describe("event", () => {
   it("should add event listener", () => {
     const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
     } as any;
     const mockHandler = jest.fn();
     const options = {};
@@ -15,7 +15,7 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
-      }
+      },
     });
     if (__VUE_2__) {
       // vue 2 calls setup before mount
@@ -30,7 +30,7 @@ describe("event", () => {
     expect(element.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
-      options
+      options,
     );
 
     expect(element.addEventListener).toHaveBeenCalledTimes(1);
@@ -40,14 +40,14 @@ describe("event", () => {
 
     expect(element.removeEventListener).toHaveBeenCalledWith(
       "load",
-      mockHandler
+      mockHandler,
     );
   });
 
   it("should add event on window lifecycle", () => {
-    const element: Window = {
+    const element: Window & typeof globalThis = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
     } as any;
     const mockHandler = jest.fn();
     const options = {};
@@ -56,7 +56,7 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
-      }
+      },
     });
     if (__VUE_2__) {
       expect(element.addEventListener).toHaveBeenCalled();
@@ -69,21 +69,21 @@ describe("event", () => {
     expect(element.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
-      options
+      options,
     );
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
     destroy();
     expect(element.removeEventListener).toHaveBeenCalledWith(
       "load",
-      mockHandler
+      mockHandler,
     );
   });
 
   it("should add event on ref", () => {
     const element: Ref<Element> = ref({
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
     }) as any;
     const mockHandler = jest.fn();
     const options = {};
@@ -92,7 +92,7 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         useEvent(element, "load", mockHandler, options);
-      }
+      },
     });
     if (__VUE_2__) {
       expect(element.value.addEventListener).toHaveBeenCalled();
@@ -105,14 +105,14 @@ describe("event", () => {
     expect(element.value.addEventListener).toHaveBeenCalledWith(
       "load",
       mockHandler,
-      options
+      options,
     );
     expect(element.value.removeEventListener).not.toHaveBeenCalled();
 
     destroy();
     expect(element.value.removeEventListener).toHaveBeenCalledWith(
       "load",
-      mockHandler
+      mockHandler,
     );
   });
 
@@ -124,14 +124,14 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         useEvent(window, "load", mockHandler, options);
-      }
+      },
     });
   });
 
   it("should remove event listener when return function is called", () => {
     const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
     } as any;
     const mockHandler = jest.fn();
     const options = {};
@@ -142,7 +142,7 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         remove = useEvent(element, "load", mockHandler, options);
-      }
+      },
     }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
 
@@ -158,7 +158,7 @@ describe("event", () => {
   it("should remove event listener if ref changes", async () => {
     const element: Element = {
       addEventListener: jest.fn(),
-      removeEventListener: jest.fn()
+      removeEventListener: jest.fn(),
     } as any;
     const mockHandler = jest.fn();
     const options = {};
@@ -169,13 +169,13 @@ describe("event", () => {
       template: "<div></div>",
       setup() {
         useEvent(el, "load", mockHandler, options);
-      }
+      },
     }).mount();
     expect(element.removeEventListener).not.toHaveBeenCalled();
     expect(element.addEventListener).toHaveBeenCalled();
 
     el.value = {
-      ...element
+      ...element,
     };
 
     await nextTick();

@@ -7,19 +7,26 @@ module.exports = {
     __SSR__: true,
     __VERSION__: pkg.version,
     __VUE_2__: process.env.VUE === "2",
-    __COMMIT__: "none"
+    __COMMIT__: "none",
   },
   setupFiles: [
     "<rootDir>/__tests__/setupTest.js",
     "<rootDir>/packages/vue-composable/__tests__/setupTest.js",
-    "<rootDir>/packages/axios/__tests__/setupTest.js"
+    "<rootDir>/packages/axios/__tests__/setupTest.js",
+    "<rootDir>/packages/cookie/__tests__/setupTest.js",
   ],
+  moduleNameMapper:
+    process.env.VUE === "2"
+      ? {}
+      : {
+          "^vue$": "@vue/runtime-core",
+        },
   coverageDirectory: "coverage",
   coverageReporters: ["html", "lcov", "text"],
   collectCoverageFrom: ["src/**/*.ts", "packages/*/src/**/*.ts"],
   watchPathIgnorePatterns: ["/node_modules/"],
   moduleFileExtensions: ["ts", "tsx", "js", "json"],
   rootDir: __dirname,
-  testMatch: ["<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)"]
+  testMatch: ["<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)"],
   // testMatch: ["<rootDir>/packages/vue-composable/__tests__/**/*spec.[jt]s?(x)"]
 };

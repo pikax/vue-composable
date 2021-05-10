@@ -1,4 +1,4 @@
-import { useRetry, exponentialDelay } from "../../src/promise/retry";
+import { exponentialDelay, useRetry } from "../../src/promise/retry";
 import { promisedTimeout } from "../../src/utils";
 import { nextTick } from "../utils";
 
@@ -34,7 +34,7 @@ describe("retry", () => {
   it("should execute retry", async () => {
     const { exec, isRetrying, retryCount, nextRetry, retryErrors } = useRetry(
       { maxRetries: 1, retryDelay: () => 100 },
-      fnFactory
+      fnFactory,
     );
     fnFactory.mockImplementationOnce(() => {
       throw new Error();
@@ -65,7 +65,7 @@ describe("retry", () => {
   it("should retry until it fails", async () => {
     const { exec, isRetrying, retryCount, nextRetry } = useRetry(
       { maxRetries: 2 },
-      fnFactory
+      fnFactory,
     );
     fnFactory.mockImplementation(() => {
       throw new Error();
@@ -83,11 +83,11 @@ describe("retry", () => {
   it("should cancel the retry if other task is executed", async () => {
     const { exec, isRetrying, retryCount, nextRetry } = useRetry(
       { maxRetries: 20, retryDelay: () => 200 },
-      fnFactory
+      fnFactory,
     );
 
-    fnFactory.mockImplementation(arg => promisedTimeout(50).then(x => arg));
-    fnFactory.mockImplementationOnce(arg => Promise.reject(arg));
+    fnFactory.mockImplementation((arg) => promisedTimeout(50).then((x) => arg));
+    fnFactory.mockImplementationOnce((arg) => Promise.reject(arg));
 
     const a = exec("a");
     await nextTick();
@@ -110,10 +110,10 @@ describe("retry", () => {
   it("should resolve both executions but only track the last one", async () => {
     const { exec, isRetrying, retryCount, nextRetry } = useRetry(
       { maxRetries: 2 },
-      fnFactory
+      fnFactory,
     );
 
-    fnFactory.mockImplementation(arg => promisedTimeout(50).then(x => arg));
+    fnFactory.mockImplementation((arg) => promisedTimeout(50).then((x) => arg));
 
     const a = exec("a");
     const b = exec("b");
@@ -137,10 +137,10 @@ describe("retry", () => {
   it("should cancel retry after call cancel()", async () => {
     const { exec, isRetrying, retryErrors, nextRetry, cancel } = useRetry({
       maxRetries: 2,
-      retryDelay: () => 200
+      retryDelay: () => 200,
     });
 
-    fnFactory.mockImplementation(arg => promisedTimeout(50).then(x => arg));
+    fnFactory.mockImplementation((arg) => promisedTimeout(50).then((x) => arg));
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
     const r = exec(fnFactory);
@@ -156,7 +156,7 @@ describe("retry", () => {
 
     expect(isRetrying.value).toBe(false);
     expect(retryErrors.value[1]).toMatchObject({
-      message: "[useRetry] cancelled"
+      message: "[useRetry] cancelled",
     });
     expect(nextRetry.value).toBeUndefined();
 
@@ -166,10 +166,10 @@ describe("retry", () => {
   it("should cancel right after the value is resolved", () => {
     const { exec, cancel } = useRetry(
       { maxRetries: 2, retryDelay: () => 200 },
-      fnFactory
+      fnFactory,
     );
 
-    fnFactory.mockImplementation(async arg => {
+    fnFactory.mockImplementation(async (arg) => {
       await promisedTimeout(50);
       cancel();
       return arg;
@@ -181,7 +181,7 @@ describe("retry", () => {
   it("should cancel right after the retry delay", () => {
     const { exec, cancel } = useRetry(
       { maxRetries: 2, retryDelay: () => 200 },
-      fnFactory
+      fnFactory,
     );
 
     fnFactory.mockImplementation(() => {
@@ -194,13 +194,13 @@ describe("retry", () => {
 
   it("should throw if options is not an factory", () => {
     expect(() => useRetry(1 as any)).toThrowError(
-      "[useRetry] options needs to be 'object'"
+      "[useRetry] options needs to be 'object'",
     );
   });
 
   it("should throw if factory is not a function", () => {
     expect(() => useRetry({}, 1 as any)).toThrowError(
-      "[useRetry] factory needs to be 'function'"
+      "[useRetry] factory needs to be 'function'",
     );
   });
 
@@ -213,7 +213,7 @@ describe("retry", () => {
         new Array(10)
           .fill(1)
           .map((_, i) => i)
-          .map(exponentialDelay)
+          .map(exponentialDelay),
       ).toMatchObject([
         120,
         240,
@@ -224,7 +224,7 @@ describe("retry", () => {
         7680,
         15360,
         30720,
-        61440
+        61440,
       ]);
     } finally {
       Math.random = random;
@@ -237,9 +237,9 @@ describe("retry", () => {
 
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => untilDate },
-      fnFactory
+      fnFactory,
     );
-    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementation((arg) => arg);
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
     await expect(exec(1)).resolves.toBe(1);
@@ -253,9 +253,9 @@ describe("retry", () => {
 
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => new Date(untilDate) },
-      fnFactory
+      fnFactory,
     );
-    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementation((arg) => arg);
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
     await expect(exec(1)).resolves.toBe(1);
@@ -269,9 +269,9 @@ describe("retry", () => {
 
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => Promise.resolve(untilDate) },
-      fnFactory
+      fnFactory,
     );
-    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementation((arg) => arg);
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
     await expect(exec(1)).resolves.toBe(1);
@@ -285,9 +285,9 @@ describe("retry", () => {
 
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => promisedTimeout(50) },
-      fnFactory
+      fnFactory,
     );
-    fnFactory.mockImplementation(arg => arg);
+    fnFactory.mockImplementation((arg) => arg);
     fnFactory.mockImplementationOnce(() => Promise.reject());
 
     await expect(exec(1)).resolves.toBe(1);
@@ -299,12 +299,12 @@ describe("retry", () => {
     Date.now = dateNow;
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => "error" as any },
-      fnFactory
+      fnFactory,
     );
     fnFactory.mockImplementation(() => Promise.reject());
 
     return expect(exec()).rejects.toThrowError(
-      "[useRetry] invalid value received from options.retryDelay 'string'"
+      "[useRetry] invalid value received from options.retryDelay 'string'",
     );
   });
 
@@ -312,12 +312,12 @@ describe("retry", () => {
     Date.now = dateNow;
     const { exec } = useRetry(
       { maxRetries: 10, retryDelay: () => ({ foo: "error" } as any) },
-      fnFactory
+      fnFactory,
     );
     fnFactory.mockImplementation(() => Promise.reject());
 
     return expect(exec()).rejects.toThrowError(
-      "[useRetry] invalid value received from options.retryDelay 'object'"
+      "[useRetry] invalid value received from options.retryDelay 'object'",
     );
   });
 });

@@ -35,11 +35,11 @@ import {
   defineComponent,
   ref,
   computed,
-  watchEffect
+  watchEffect,
 } from "@vue/composition-api";
 import { useWorkerFunction, useDateNow } from "vue-composable";
 
-const bubbleSort = input => {
+const bubbleSort = (input) => {
   let swap;
   let n = input.length - 1;
   const sortedArray = input.slice();
@@ -81,12 +81,12 @@ export default defineComponent({
       exec,
       loading: working,
       error,
-      cancelled
+      cancelled,
     } = useWorkerFunction(bubbleSort, { timeout });
     const sortWorker = () => {
       exec(numbers)
-        .then(x => (sortedNumbers.value = x))
-        .catch(x => (sortedNumbers.value = ["error", x]));
+        .then((x) => (sortedNumbers.value = x))
+        .catch((x) => (sortedNumbers.value = ["error", x]));
     };
 
     return {
@@ -101,8 +101,8 @@ export default defineComponent({
       sortWorker,
       working,
       error,
-      cancelled
+      cancelled,
     };
-  }
+  },
 });
 </script>

@@ -1,8 +1,8 @@
-import { ref, Ref, computed, getCurrentInstance } from "../api";
+import { computed, getCurrentInstance, Ref } from "../api";
 
 export function useVModel<TProps, PropName extends keyof TProps>(
   props: TProps,
-  name: PropName
+  name: PropName,
 ): Ref<TProps[PropName]>;
 export function useVModel(props: Record<string, any>, name: string): Ref<any> {
   /* istanbul ignore if */
@@ -13,8 +13,11 @@ export function useVModel(props: Record<string, any>, name: string): Ref<any> {
 
   const instance = getCurrentInstance();
   if (!instance) {
-    return ref() as any;
+    throw new Error(
+      "useVModel must be called from the setup or lifecycle hook methods.",
+    );
   }
+
   return computed({
     get() {
       return props[name];
@@ -22,6 +25,6 @@ export function useVModel(props: Record<string, any>, name: string): Ref<any> {
     set(v) {
       // @ts-ignore when building v2 the instance doesn't have `emit`
       instance.emit(`update:${name}`, v);
-    }
+    },
   });
 }

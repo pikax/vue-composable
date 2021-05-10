@@ -18,16 +18,16 @@ describe("intl numberFormat", () => {
     writable: true,
     configurable: true,
     value: {
-      NumberFormat: Test
-    }
+      NumberFormat: Test,
+    },
   });
 
   Object.defineProperty(global, "Intl", {
     writable: true,
     configurable: true,
     value: {
-      NumberFormat: Test
-    }
+      NumberFormat: Test,
+    },
   });
 
   beforeEach(() => {
@@ -103,7 +103,7 @@ describe("intl numberFormat", () => {
     const { format } = useIntlNumberFormat();
 
     expect(format(111)).toMatchObject({
-      value: "test"
+      value: "test",
     });
   });
 });

@@ -11,11 +11,11 @@ useValueSync(main, list?);
 useValueSync(main, arg1, arg2, arg3)
 ```
 
-| Parameters | Type                       | Required | Default     | Description                             |
-| ---------- | -------------------------- | -------- | ----------- | --------------------------------------- |
-| main       | `Ref<T>`                   | `true`   |             | Main variable to keep the other synched |
-| list       | `Ref<Ref<T[]>> | Ref<T>[]` | `false`  | `[]`        | List of `ref` to keep values synched    |
-| arg1, arg2 | `Ref<T>`                   | `true`   | `undefined` | `ref` to keep values synched            |
+| Parameters | Type           | Required  | Default     | Description                             |
+| ---------- | -------------- | --------- | ----------- | --------------------------------------- |
+| main       | `Ref<T>`       | `true`    |             | Main variable to keep the other synched |
+| list       | `Ref<Ref<T[]>> | Ref<T>[]` | `false`     | `[]`                                    | List of `ref` to keep values synched |
+| arg1, arg2 | `Ref<T>`       | `true`    | `undefined` | `ref` to keep values synched            |
 
 ## State
 
@@ -57,9 +57,9 @@ export default {
 
     return {
       value,
-      list
+      list,
     };
-  }
+  },
 };
 </script>
 ```

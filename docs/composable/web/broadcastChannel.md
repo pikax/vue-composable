@@ -28,7 +28,7 @@ const {
   messageEvent,
   errorEvent,
   errored,
-  isClosed
+  isClosed,
 } = useBroadcastChannel();
 ```
 
@@ -106,9 +106,9 @@ export default {
       supported,
       data,
       message,
-      submitMessage
+      submitMessage,
     };
-  }
+  },
 };
 </script>
 ```

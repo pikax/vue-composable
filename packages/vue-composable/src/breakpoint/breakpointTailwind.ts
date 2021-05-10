@@ -1,15 +1,15 @@
 import { InjectionKey, provide } from "../api";
 import {
-  BreakpointReturn,
   BreakpointObject,
-  useBreakpoint
+  BreakpointReturn,
+  useBreakpoint,
 } from "./breakpoint";
-import { isArray, isString, isObject, isNumber } from "../utils";
+import { isArray, isNumber, isObject, isString } from "../utils";
 import { injectFactory } from "../misc";
 
 // istanbul ignore next
 const BREAKPOINT_TAILWIND_KEY: InjectionKey<any> = /*#__PURE__*/ Symbol(
-  (__DEV__ && "TAILWIND_BREAKPOINTS") || ``
+  (__DEV__ && "TAILWIND_BREAKPOINTS") || ``,
 );
 
 export interface DefaultTailwindBreakpoints {
@@ -23,7 +23,7 @@ const defaultTailwindBreakpoint: BreakpointObject = ({
   sm: 640,
   md: 768,
   lg: 1024,
-  xl: 1280
+  xl: 1280,
 } as DefaultTailwindBreakpoints) as any;
 
 export interface TailwindScreenBreakpointRaw {
@@ -58,9 +58,8 @@ export interface TailwindConfig extends TailwindConfigEmpty {
 }
 
 export type ExtractTailwindScreens<
-  T extends TailwindConfigEmpty
-> = keyof T["theme"]["screens"] extends never
-  ? DefaultTailwindBreakpoints
+  T extends TailwindConfigEmpty,
+> = keyof T["theme"]["screens"] extends never ? DefaultTailwindBreakpoints
   : T["theme"]["screens"];
 
 export function isTailwind(t: any): t is TailwindConfig {
@@ -91,14 +90,14 @@ export function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
     // istanbul ignore else
     if (__DEV__) {
       console.warn(
-        "[useBreakpointTailwind] screen range provided is not valid"
+        "[useBreakpointTailwind] screen range provided is not valid",
       );
     }
     return "";
   }
   const condition = [
     s.max && `max-width: ${sanitizeWidth(s.max)}`,
-    s.min && `min-width: ${sanitizeWidth(s.min)}`
+    s.min && `min-width: ${sanitizeWidth(s.min)}`,
   ]
     .filter(Boolean)
     .join(" and ");
@@ -125,7 +124,7 @@ export function screenToBreakpoint(s: TailwindScreen): string[] {
     // istanbul ignore else
     if (__DEV__) {
       console.warn(
-        "[useBreakpointTailwind] unknown type used for the breakpoint`"
+        "[useBreakpointTailwind] unknown type used for the breakpoint`",
       );
     }
   }
@@ -133,13 +132,13 @@ export function screenToBreakpoint(s: TailwindScreen): string[] {
 }
 
 export function setBreakpointTailwindCSS<T extends TailwindConfigEmpty>(
-  tailwindConfig: T
+  tailwindConfig: T,
 ): BreakpointReturn<ExtractTailwindScreens<T>>;
 export function setBreakpointTailwindCSS<T extends BreakpointObject>(
-  breakpoints: T
+  breakpoints: T,
 ): BreakpointReturn<T>;
 export function setBreakpointTailwindCSS<T extends BreakpointObject>(
-  breakpoints: T | TailwindConfig
+  breakpoints: T | TailwindConfig,
 ): BreakpointReturn<any> {
   const bk = isTailwind(breakpoints) ? breakpoints.theme.screens : breakpoints;
 
@@ -166,19 +165,20 @@ export function setBreakpointTailwindCSS<T extends BreakpointObject>(
 }
 
 export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(
-  tailwindConfig: T
+  tailwindConfig: T,
 ): BreakpointReturn<ExtractTailwindScreens<T>>;
 export function useBreakpointTailwindCSS<
-  T extends TailwindConfigEmpty
+  T extends TailwindConfigEmpty,
 >(): BreakpointReturn<ExtractTailwindScreens<T>>;
 export function useBreakpointTailwindCSS(): BreakpointReturn<
   DefaultTailwindBreakpoints
 >;
 export function useBreakpointTailwindCSS<
-  T extends BreakpointObject
+  T extends BreakpointObject,
 >(): BreakpointReturn<T>;
 export function useBreakpointTailwindCSS(config?: any): any {
-  return injectFactory(BREAKPOINT_TAILWIND_KEY, () =>
-    setBreakpointTailwindCSS(config || defaultTailwindBreakpoint)
+  return injectFactory(
+    BREAKPOINT_TAILWIND_KEY,
+    () => setBreakpointTailwindCSS(config || defaultTailwindBreakpoint),
   );
 }

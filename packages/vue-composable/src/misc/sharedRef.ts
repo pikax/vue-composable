@@ -1,14 +1,14 @@
 import {
-  ref,
-  Ref,
-  watch,
-  onUnmounted,
   computed,
-  getCurrentInstance,
   ComputedRef,
+  getCurrentInstance,
+  onUnmounted,
+  Ref,
+  ref,
+  watch,
 } from "../api";
-import { PASSIVE_EV, isObject, RefTyped, isClient } from "../utils";
-import { useBroadcastChannel, BroadcastMessageEvent } from "../web";
+import { isClient, isObject, PASSIVE_EV, RefTyped } from "../utils";
+import { BroadcastMessageEvent, useBroadcastChannel } from "../web";
 
 export const enum RefSharedMessageType {
   INIT,
@@ -83,13 +83,13 @@ export interface SharedRefReturn<T = any> {
   setMind: (t: SharedRefMind) => void;
   addListener: (
     cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ) => void;
 }
 
 export function useSharedRef<T = any>(
   name: string,
-  defaultValue?: T
+  defaultValue?: T,
 ): SharedRefReturn<T> {
   const { addListener, send, close, supported } = useBroadcastChannel<
     RefSharedMessage<T>
@@ -181,8 +181,8 @@ export function useSharedRef<T = any>(
       }
       case RefSharedMessageType.SET_MIND: {
         mind.value = e.data.mind;
-        masterId =
-          (e.data.mind === SharedRefMind.MASTER && e.data.id) || undefined;
+        masterId = (e.data.mind === SharedRefMind.MASTER && e.data.id) ||
+          undefined;
         master.value = masterId === id;
         if (master.value) {
           targets.value = [];
@@ -228,7 +228,7 @@ export function useSharedRef<T = any>(
       });
       updateState = false;
     },
-    { deep: true, immediate: false }
+    { deep: true, immediate: false },
   );
 
   if (isClient) {
@@ -256,7 +256,7 @@ export function useSharedRef<T = any>(
 
     addListener: addListener as (
       cb: (ev: BroadcastMessageEvent<RefSharedMessage<T>>) => void,
-      options?: boolean | AddEventListenerOptions
+      options?: boolean | AddEventListenerOptions,
     ) => void,
   };
 }
@@ -265,7 +265,7 @@ let shared: Set<string> | undefined = undefined;
 
 export function refShared<T = any>(
   defaultValue?: RefTyped<T>,
-  id?: string
+  id?: string,
 ): Ref<RefTyped<T>> {
   const vm = getCurrentInstance()!;
   const name = id
@@ -288,7 +288,7 @@ export function refShared<T = any>(
     }
     if (shared.has(name)) {
       console.warn(
-        "[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)"
+        "[refShared] You can only have one refShared per component, if you need more please assign pass an id refShared(defaultValue, id)",
       );
     }
     shared.add(name);

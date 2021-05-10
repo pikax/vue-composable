@@ -1,7 +1,7 @@
 import { usePromiseLazy } from "../../src";
 
 jest.mock("../../src/promise/promise", () => ({
-  usePromise: jest.fn()
+  usePromise: jest.fn(),
 }));
 
 import { usePromise } from "../../src/promise/promise";
@@ -15,8 +15,8 @@ describe("lazyPromise", () => {
       factory,
       expect.objectContaining({
         lazy: true,
-        throwException: false
-      })
+        throwException: false,
+      }),
     );
   });
 
@@ -28,8 +28,8 @@ describe("lazyPromise", () => {
       factory,
       expect.objectContaining({
         lazy: true,
-        throwException: true
-      })
+        throwException: true,
+      }),
     );
   });
 });

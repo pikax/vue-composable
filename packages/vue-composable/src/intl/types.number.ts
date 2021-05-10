@@ -19,7 +19,6 @@ export type IntNumberFormatOptionStyle =
    * A currency style format that uses the currency symbol defined by the number formatter locale.
    */
   | "currency"
-
   /**
    * A unit format
    */

@@ -1,9 +1,9 @@
 jest.mock("../../src/intl/numberFormat", () => ({
-  useIntlNumberFormat: jest.fn()
+  useIntlNumberFormat: jest.fn(),
 }));
 
 import { useIntlNumberFormat } from "../../src/intl/numberFormat";
-import { useCurrencyFormat, IntlNumberFormatOptions } from "../../src";
+import { IntlNumberFormatOptions, useCurrencyFormat } from "../../src";
 import { computed } from "../../src/api";
 
 describe("currencyFormat", () => {
@@ -19,7 +19,7 @@ describe("currencyFormat", () => {
     const r = { a: 1 };
     const expected = {
       formatString: expect.any(Function),
-      format: expect.any(Function)
+      format: expect.any(Function),
     };
     mock.mockReturnValue(r);
 
@@ -38,48 +38,48 @@ describe("currencyFormat", () => {
     // currency + locales
     expect(useCurrencyFormat("GBP", "en-GB")).toMatchObject(expected);
     expect(mock).toHaveBeenLastCalledWith(
-      expect.objectContaining({ value: "en-GB" })
+      expect.objectContaining({ value: "en-GB" }),
     );
 
     // currency + locales + options
     expect(
-      useCurrencyFormat("GBP", "pt-PT", { currencyDisplay: "symbol" })
+      useCurrencyFormat("GBP", "pt-PT", { currencyDisplay: "symbol" }),
     ).toMatchObject(expected);
     expect(mock).toHaveBeenLastCalledWith(
-      expect.objectContaining({ value: "pt-PT" })
+      expect.objectContaining({ value: "pt-PT" }),
     );
 
     // currency + options
     expect(
-      useCurrencyFormat("GBP", { currencyDisplay: "symbol" })
+      useCurrencyFormat("GBP", { currencyDisplay: "symbol" }),
     ).toMatchObject(expected);
     expect(mock).toHaveBeenLastCalledWith(undefined);
 
     // currency + options
     expect(
-      useCurrencyFormat("GBP", { currencyDisplay: "symbol" })
+      useCurrencyFormat("GBP", { currencyDisplay: "symbol" }),
     ).toMatchObject(expected);
     expect(mock).toHaveBeenLastCalledWith(undefined);
 
     // options
     expect(useCurrencyFormat({ currencyDisplay: "symbol" })).toMatchObject(
-      expected
+      expected,
     );
     expect(mock).toHaveBeenLastCalledWith(undefined);
 
     // options + locales
     expect(
-      useCurrencyFormat({ currencyDisplay: "symbol" }, "pt-PT")
+      useCurrencyFormat({ currencyDisplay: "symbol" }, "pt-PT"),
     ).toMatchObject(expected);
     expect(mock).toHaveBeenLastCalledWith(
-      expect.objectContaining({ value: "pt-PT" })
+      expect.objectContaining({ value: "pt-PT" }),
     );
   });
 
   it("should numberFormat.formatString", () => {
     const formatStringMock = jest.fn().mockReturnValue("test");
     mock.mockReturnValue({
-      formatString: formatStringMock
+      formatString: formatStringMock,
     });
 
     let format = useCurrencyFormat("GBP");
@@ -90,9 +90,9 @@ describe("currencyFormat", () => {
       amount,
       expect.objectContaining({
         style: "currency",
-        currency: "GBP"
+        currency: "GBP",
       }),
-      undefined
+      undefined,
     );
 
     // pass currency
@@ -101,9 +101,9 @@ describe("currencyFormat", () => {
       amount,
       expect.objectContaining({
         style: "currency",
-        currency: "EUR"
+        currency: "EUR",
       }),
-      undefined
+      undefined,
     );
 
     // pass currency + display
@@ -113,15 +113,15 @@ describe("currencyFormat", () => {
       expect.objectContaining({
         style: "currency",
         currency: "USD",
-        currencyDisplay: "code"
+        currencyDisplay: "code",
       }),
-      undefined
+      undefined,
     );
     // pass currency + display + opts
     expect(
       format.formatString(amount, undefined, undefined, {
-        minimumIntegerDigits: 1
-      })
+        minimumIntegerDigits: 1,
+      }),
     ).toBe("test");
     expect(formatStringMock).toHaveBeenLastCalledWith(
       amount,
@@ -129,30 +129,30 @@ describe("currencyFormat", () => {
         style: "currency",
         currency: "GBP",
         currencyDisplay: undefined,
-        minimumIntegerDigits: 1
+        minimumIntegerDigits: 1,
       }),
-      undefined
+      undefined,
     );
 
     // pass currency + display + opts + locales
     expect(
-      format.formatString(amount, undefined, undefined, undefined, "pt-PT")
+      format.formatString(amount, undefined, undefined, undefined, "pt-PT"),
     ).toBe("test");
     expect(formatStringMock).toHaveBeenLastCalledWith(
       amount,
       expect.objectContaining({
         style: "currency",
         currency: "GBP",
-        currencyDisplay: undefined
+        currencyDisplay: undefined,
       }),
-      "pt-PT"
+      "pt-PT",
     );
 
     // with currency and options
     const defaultOptions: IntlNumberFormatOptions = {
       maximumFractionDigits: 1,
       maximumSignificantDigits: 1,
-      currency: "JPY"
+      currency: "JPY",
     };
     format = useCurrencyFormat("GBP", defaultOptions);
 
@@ -162,9 +162,9 @@ describe("currencyFormat", () => {
       expect.objectContaining({
         ...defaultOptions,
         style: "currency",
-        currency: "GBP"
+        currency: "GBP",
       }),
-      undefined
+      undefined,
     );
 
     // with default options
@@ -175,9 +175,9 @@ describe("currencyFormat", () => {
       amount,
       expect.objectContaining({
         ...defaultOptions,
-        style: "currency"
+        style: "currency",
       }),
-      undefined
+      undefined,
     );
 
     // pass currency
@@ -187,9 +187,9 @@ describe("currencyFormat", () => {
       expect.objectContaining({
         ...defaultOptions,
         style: "currency",
-        currency: "EUR"
+        currency: "EUR",
       }),
-      undefined
+      undefined,
     );
 
     // pass currency + display
@@ -200,15 +200,15 @@ describe("currencyFormat", () => {
         ...defaultOptions,
         style: "currency",
         currency: "USD",
-        currencyDisplay: "code"
+        currencyDisplay: "code",
       }),
-      undefined
+      undefined,
     );
     // pass currency + display + opts
     expect(
       format.formatString(amount, undefined, undefined, {
-        minimumIntegerDigits: 1
-      })
+        minimumIntegerDigits: 1,
+      }),
     ).toBe("test");
     expect(formatStringMock).toHaveBeenLastCalledWith(
       amount,
@@ -216,32 +216,32 @@ describe("currencyFormat", () => {
         ...defaultOptions,
         style: "currency",
         currencyDisplay: undefined,
-        minimumIntegerDigits: 1
+        minimumIntegerDigits: 1,
       }),
-      undefined
+      undefined,
     );
   });
 
   it("should call format", () => {
     const formatStringMock = jest.fn().mockReturnValue("test");
     mock.mockReturnValue({
-      formatString: formatStringMock
+      formatString: formatStringMock,
     });
 
     const format = useCurrencyFormat("GBP");
 
     const amount = 1115;
     expect(
-      format.format(amount, undefined, undefined, undefined, "pt-PT")
+      format.format(amount, undefined, undefined, undefined, "pt-PT"),
     ).toMatchObject({ value: "test" });
     expect(formatStringMock).toHaveBeenLastCalledWith(
       amount,
       expect.objectContaining({
         style: "currency",
         currency: "GBP",
-        currencyDisplay: undefined
+        currencyDisplay: undefined,
       }),
-      "pt-PT"
+      "pt-PT",
     );
   });
 
@@ -249,11 +249,11 @@ describe("currencyFormat", () => {
     const errorSpy = jest.spyOn(console, "error");
 
     useCurrencyFormat({
-      currencyDisplay: "code"
+      currencyDisplay: "code",
     }).formatString(1);
 
     expect(errorSpy).toHaveBeenLastCalledWith(
-      "[useCurrencyFormat] No currency provided."
+      "[useCurrencyFormat] No currency provided.",
     );
   });
 
@@ -262,10 +262,10 @@ describe("currencyFormat", () => {
 
     useCurrencyFormat({
       currency: "JPY",
-      style: "percent"
+      style: "percent",
     }).formatString(1);
     expect(warnSpy).toHaveBeenLastCalledWith(
-      "[useCurrencyFormat] invalid style passed in options, please leave it undefined."
+      "[useCurrencyFormat] invalid style passed in options, please leave it undefined.",
     );
   });
 });

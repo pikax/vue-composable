@@ -77,7 +77,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 ### MISC
 
 - [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
-- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
+- [VModel](https://pikax.me/vue-composable/composable/misc/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
 - [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
 - [interval](https://pikax.me/vue-composable/composable/misc/interval) - self-remove `setInterval` on unmount
 - [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) - `lock-scroll` component
@@ -141,6 +141,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 - [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
 - [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
 - [share](https://pikax.me/vue-composable/composable/web/share) - WebShare API
+- [Clipboard](https://pikax.me/vue-composable/composable/web/clipboard) - Clipboard API
 
 ### External
 
@@ -148,6 +149,7 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 - [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
 - [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
+- [useCookie](https://pikax.me/vue-composable/composable/external/useCookie) - [@vue-composable/cookie](https://www.npmjs.com/package/@vue-composable/cookie) `js-cookie` wrapper
 
 ## Information
 
@@ -320,6 +322,10 @@ useDevtoolsInspector(
   ]
 );
 ```
+
+## Typescript
+
+`Typescript@3.x` is not supported, the supported version can be checked on [package.json](./package.json), usually is the latest version or the same major as `vue-3`
 
 ## Contributing
 

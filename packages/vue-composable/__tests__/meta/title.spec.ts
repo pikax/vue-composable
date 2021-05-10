@@ -1,5 +1,5 @@
 import { useTitle } from "../../src";
-import { nextTick, createVue } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { Ref } from "../../src/api";
 
 describe("title", () => {
@@ -11,12 +11,12 @@ describe("title", () => {
     Object.defineProperty(window, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: _mutationObserver
+      value: _mutationObserver,
     });
     Object.defineProperty(global, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: _mutationObserver
+      value: _mutationObserver,
     });
   };
 
@@ -31,12 +31,12 @@ describe("title", () => {
     Object.defineProperty(window, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: MutationObserver
+      value: MutationObserver,
     });
     Object.defineProperty(global, "MutationObserver", {
       writable: true,
       configurable: true,
-      value: MutationObserver
+      value: MutationObserver,
     });
   };
 
@@ -50,7 +50,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle("test");
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -68,7 +68,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle("test");
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -88,7 +88,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle();
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -102,7 +102,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle("test");
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -118,7 +118,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle("test");
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -134,7 +134,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle("test");
-      }
+      },
     }).mount();
 
     expect(document.title).toBe(title.value);
@@ -153,7 +153,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         title = useTitle();
-      }
+      },
     }).mount();
 
     expect(title.value).toBe("test");
@@ -165,7 +165,7 @@ describe("title", () => {
       template: `<p></p>`,
       setup() {
         useTitle("test");
-      }
+      },
     });
 
     mount();

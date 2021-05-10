@@ -1,7 +1,7 @@
 jest.mock("../../src/utils", () => ({
   //@ts-ignore
   ...jest.requireActual("../../src/utils"),
-  isClient: false
+  isClient: false,
 }));
 import { useShare } from "../../src/web/share";
 
@@ -14,13 +14,13 @@ describe("useShare SSR", () => {
       writable: true,
       configurable: true,
 
-      value: shareSpy
+      value: shareSpy,
     });
 
     Object.defineProperty(navigator, "canShare", {
       writable: true,
       configurable: true,
-      value: canShareSpy
+      value: canShareSpy,
     });
     canShareSpy.mockClear();
     shareSpy.mockClear();

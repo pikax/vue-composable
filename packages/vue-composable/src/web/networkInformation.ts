@@ -1,6 +1,6 @@
 import { Ref, ref } from "../api";
 import { RemoveEventFunction, useEvent } from "../event";
-import { NO_OP, isClient, PASSIVE_EV } from "../utils";
+import { isClient, NO_OP, PASSIVE_EV } from "../utils";
 
 interface NetworkInformationEventMap {
   change: Event;
@@ -32,27 +32,27 @@ export interface NetworkInformation {
     type: K,
     listener: (
       this: NetworkInformation,
-      ev: NetworkInformationEventMap[K]
+      ev: NetworkInformationEventMap[K],
     ) => any,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
   removeEventListener<K extends keyof NetworkInformationEventMap>(
     type: K,
     listener: (
       this: NetworkInformation,
-      ev: NetworkInformationEventMap[K]
+      ev: NetworkInformationEventMap[K],
     ) => any,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
@@ -128,7 +128,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
       connection,
       "change",
       handler,
-      PASSIVE_EV
+      PASSIVE_EV,
     );
 
     handler();
@@ -136,7 +136,7 @@ export function useNetworkInformation(): NetworkInformationReturn {
     /* istanbul ignore else */
     if (__DEV__) {
       console.warn(
-        "[navigator.connection] not found, networkInformation not available."
+        "[navigator.connection] not found, networkInformation not available.",
       );
     }
   }
@@ -150,6 +150,6 @@ export function useNetworkInformation(): NetworkInformationReturn {
     saveData,
     type,
 
-    remove
+    remove,
   };
 }

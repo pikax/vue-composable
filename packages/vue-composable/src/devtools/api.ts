@@ -1,10 +1,10 @@
 import { DevtoolsPluginApi } from "@vue/devtools-api";
-import { App, InjectionKey, inject } from "../api";
+import { App, inject, InjectionKey } from "../api";
 import { isFunction } from "../utils";
 
 // istanbul ignore next
 const DEVTOOLS_KEY: InjectionKey<DevtoolsPluginApi> = /*#__PURE__*/ Symbol(
-  (__DEV__ && "DEVTOOLS_KEY") || ``
+  (__DEV__ && "DEVTOOLS_KEY") || ``,
 );
 
 /**
@@ -28,7 +28,7 @@ export function getDevtools(): DevtoolsPluginApi | undefined {
   const devtools = inject(DEVTOOLS_KEY, empty) as DevtoolsPluginApi;
   if (devtools === empty) {
     console.warn(
-      `[vue-composable] devtools not found, please run app.use(VueComposableDevtools)`
+      `[vue-composable] devtools not found, please run app.use(VueComposableDevtools)`,
     );
     return undefined;
   }

@@ -1,4 +1,4 @@
-import { ComputedRef, computed, Ref } from "../api";
+import { computed, ComputedRef, Ref } from "../api";
 import { RemoveEventFunction, useOnMouseMove } from "../event";
 import { isClient, NO_OP, RefTyped, unwrap } from "../utils";
 
@@ -9,30 +9,30 @@ export interface MouseDistanceReturn {
 
 export function useMouseDistanceFromElement(
   el: RefTyped<HTMLElement>,
-  wait: number
+  wait: number,
 ): MouseDistanceReturn;
 
 export function useMouseDistanceFromElement<T extends HTMLElement>(
   el: Ref<T> | Ref<T | null>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseDistanceReturn;
 
 export function useMouseDistanceFromElement<T extends HTMLElement>(
   el: Ref<T | null>,
-  wait: number
+  wait: number,
 ): MouseDistanceReturn;
 
 export function useMouseDistanceFromElement(
   el: RefTyped<HTMLElement>,
   options?: boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseDistanceReturn;
 
 export function useMouseDistanceFromElement(
   el: any,
   options?: number | boolean | AddEventListenerOptions,
-  wait?: number
+  wait?: number,
 ): MouseDistanceReturn {
   let distance: ComputedRef<number> | undefined = undefined;
   let remove: RemoveEventFunction = NO_OP;
@@ -42,7 +42,7 @@ export function useMouseDistanceFromElement(
     const { pageX, pageY, remove: removeMouseEvent } = useOnMouseMove(
       window,
       options,
-      wait
+      wait,
     );
 
     distance = computed(() => {
@@ -52,8 +52,8 @@ export function useMouseDistanceFromElement(
       return Math.floor(
         Math.sqrt(
           Math.pow(pageX.value - (elem.offsetLeft + elem.clientWidth / 2), 2) +
-            Math.pow(pageY.value - (elem.offsetTop + elem.clientHeight / 2), 2)
-        )
+            Math.pow(pageY.value - (elem.offsetTop + elem.clientHeight / 2), 2),
+        ),
       );
     });
 

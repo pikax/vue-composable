@@ -4,6 +4,7 @@ import ts from "rollup-plugin-typescript2";
 import replace from "@rollup/plugin-replace";
 import json from "@rollup/plugin-json";
 import resolvePlugin from "@rollup/plugin-node-resolve";
+import alias from "@rollup/plugin-alias";
 
 if (!process.env.TARGET) {
   throw new Error("TARGET package must be specified via --environment flag.");
@@ -36,7 +37,7 @@ const configs = {
     format: `iife`,
     globals: {
       "@vue/composition-api": "vueCompositionApi",
-      "@vue/runtime-core": "VueRuntimeCore",
+      "@vue/runtime-core": "Vue", // this is replaced with the Vue3 instance
       axios: "axios",
       vue: "Vue",
     },
@@ -44,7 +45,13 @@ const configs = {
   esm: {
     file: resolve(`dist/v${vueVersion}/${name}.esm.js`),
     format: `es`,
-    external: ["vue", "@vue/composition-api", "axios", "@vue/devtools-api"],
+    external: [
+      "vue",
+      "@vue/composition-api",
+      "axios",
+      "@vue/devtools-api",
+      "js-cookie",
+    ],
   },
 };
 
@@ -56,6 +63,7 @@ const setup = {
       "axios",
       "@vue/runtime-core",
       "@vue/devtools-api",
+      "js-cookie",
     ],
     plugins: [
       resolvePlugin({
@@ -148,6 +156,11 @@ function createConfig(output, plugins = [], config = {}) {
           ),
     plugins: [
       ...(config.plugins || []),
+      ...[
+        alias({
+          entries: [{ find: "@vue/runtime-core", replacement: "vue" }],
+        }),
+      ],
 
       json({
         namedExports: false,
@@ -173,31 +186,34 @@ function createReplacePlugin(
   isRuntimeCompileBuild
 ) {
   return replace({
-    __COMMIT__: `"${process.env.COMMIT}"`,
-    __VERSION__: `"${process.env.VERSION}"`,
-    __DEV__: isBundlerESMBuild
-      ? // preserve to be handled by bundlers
-        `(process.env.NODE_ENV !== 'production')`
-      : // hard coded dev/prod builds
-        !isProduction,
-    __SSR__: isBrowserBuild
-      ? false
-      : isBundlerESMBuild
-      ? `(process.env.SSR === 'true')`
-      : true,
-    // this is only used during tests
-    __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
-    // If the build is expected to run directly in the browser (global / esm builds)
-    __BROWSER__: isBrowserBuild,
-    // support compile in browser?
-    __RUNTIME_COMPILE__: isRuntimeCompileBuild,
-    // support options?
-    // the lean build drops options related code with buildOptions.lean: true
-    "process.env.NODE_ENV": isBundlerESMBuild
-      ? `process.env.NODE_ENV`
-      : "'production'",
+    preventAssignment: true,
+    values: {
+      __COMMIT__: `"${process.env.COMMIT}"`,
+      __VERSION__: `"${process.env.VERSION}"`,
+      __DEV__: isBundlerESMBuild
+        ? // preserve to be handled by bundlers
+          `(process.env.NODE_ENV !== 'production')`
+        : // hard coded dev/prod builds
+          !isProduction,
+      __SSR__: isBrowserBuild
+        ? false
+        : isBundlerESMBuild
+        ? `((globalThis.import ? globalThis.import.meta.env.SSR : process.env.SSR ))`
+        : true,
+      // this is only used during tests
+      __TEST__: isBundlerESMBuild ? `(process.env.NODE_ENV === 'test')` : false,
+      // If the build is expected to run directly in the browser (global / esm builds)
+      __BROWSER__: isBrowserBuild,
+      // support compile in browser?
+      __RUNTIME_COMPILE__: isRuntimeCompileBuild,
+      // support options?
+      // the lean build drops options related code with buildOptions.lean: true
+      "process.env.NODE_ENV": isBundlerESMBuild
+        ? `process.env.NODE_ENV`
+        : "'production'",
 
-    __VUE_2__: process.env.VUE_VERSION === "2",
+      __VUE_2__: process.env.VUE_VERSION === "2",
+    },
   });
 }
 

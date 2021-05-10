@@ -1,5 +1,5 @@
 import { isBoolean, isString } from "../utils";
-import { ref, computed, Ref, onUnmounted, getCurrentInstance } from "../api";
+import { computed, getCurrentInstance, onUnmounted, Ref, ref } from "../api";
 import { PromiseResultFactory, usePromise } from "../promise";
 import { useDevtoolsTimelineLayer } from "../devtools";
 
@@ -33,8 +33,8 @@ type ExtractArguments<T = any> = T extends (...args: infer TArgs) => void
   ? TArgs
   : never;
 
-interface FetchReturn<T>
-  extends PromiseResultFactory<
+interface FetchReturn<T> extends
+  PromiseResultFactory<
     Promise<Response>,
     ExtractArguments<(request: RequestInfo, init?: RequestInit) => void>
   > {
@@ -62,14 +62,14 @@ function isFetchOptions(v: any): v is UseFetchOptions {
 
 export function useFetch<T = any>(
   request?: Partial<RequestInfo>,
-  init?: RequestInit & UseFetchOptions
+  init?: RequestInit & UseFetchOptions,
 ): FetchReturn<T>;
 export function useFetch<T = any>(
-  init?: RequestInit & UseFetchOptions
+  init?: RequestInit & UseFetchOptions,
 ): FetchReturn<T>;
 export function useFetch<T = any>(
   options?: Partial<RequestInfo> | (UseFetchOptions & RequestInit),
-  requestInitOptions?: RequestInit & UseFetchOptions
+  requestInitOptions?: RequestInit & UseFetchOptions,
 ): FetchReturn<T> {
   // TODO move to computeAsync
   const json: Ref<T | null> = ref(null);
@@ -80,16 +80,16 @@ export function useFetch<T = any>(
 
   const [isJson, parseImmediate, unmountCancel] = isFetchOptions(options)
     ? [
-        options.isJson !== false,
-        options.parseImmediate !== false,
-        options.unmountCancel !== false,
-      ]
+      options.isJson !== false,
+      options.parseImmediate !== false,
+      options.unmountCancel !== false,
+    ]
     : isFetchOptions(requestInitOptions)
     ? [
-        requestInitOptions.isJson !== false,
-        requestInitOptions.parseImmediate !== false,
-        requestInitOptions.unmountCancel !== false,
-      ]
+      requestInitOptions.isJson !== false,
+      requestInitOptions.parseImmediate !== false,
+      requestInitOptions.unmountCancel !== false,
+    ]
     : [true, true, true];
 
   const requestInit = options
@@ -118,7 +118,7 @@ export function useFetch<T = any>(
     const layer = useDevtoolsTimelineLayer(
       `useFetch:${devtoolId}`,
       devtoolId,
-      0x32a2bf
+      0x32a2bf,
     );
     addTimelineEvent = (time, request, extra) =>
       layer.addEvent({
@@ -146,7 +146,7 @@ export function useFetch<T = any>(
             {
               type: "cancel_error",
               error: "No request has been made yet",
-            }
+            },
           );
         }
         throw new Error("Cannot cancel because no request has been made");
@@ -164,7 +164,7 @@ export function useFetch<T = any>(
         { message },
         {
           type: "cancel",
-        }
+        },
       );
     }
   };
@@ -176,7 +176,7 @@ export function useFetch<T = any>(
       addTimelineEvent(
         Date.now(),
         isString(request) ? { url: request } : request,
-        { type: "request", init }
+        { type: "request", init },
       );
     }
 
@@ -199,13 +199,13 @@ export function useFetch<T = any>(
         // JSON
         isJson
           ? response
-              .clone()
-              .json()
-              .then((x) => (json.value = x))
-              .catch((x) => {
-                json.value = null;
-                jsonError.value = x;
-              })
+            .clone()
+            .json()
+            .then((x) => (json.value = x))
+            .catch((x) => {
+              json.value = null;
+              jsonError.value = x;
+            })
           : Promise.resolve(),
         // BLOB
         response
@@ -236,7 +236,7 @@ export function useFetch<T = any>(
               blob: blob.value,
               text: text.value,
               request,
-            }
+            },
           );
         }
       }
@@ -245,10 +245,10 @@ export function useFetch<T = any>(
   }, true);
 
   const status = computed(
-    () => (use.result.value && use.result.value.status) || null
+    () => (use.result.value && use.result.value.status) || null,
   );
   const statusText = computed(
-    () => (use.result.value && use.result.value.statusText) || null
+    () => (use.result.value && use.result.value.statusText) || null,
   );
 
   // if not options are provided in the config, execute it straight away

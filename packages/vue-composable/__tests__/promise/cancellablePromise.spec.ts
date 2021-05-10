@@ -1,6 +1,6 @@
 import { useCancellablePromise } from "../../src/promise/cancellablePromise";
 import { promisedTimeout } from "../../src/utils";
-import { nextTick, createVue } from "../utils";
+import { createVue, nextTick } from "../utils";
 import { Ref } from "../../src/api";
 
 describe("cancellablePromise", () => {
@@ -66,7 +66,7 @@ describe("cancellablePromise", () => {
     cancel(true);
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`"
+      "[useCancellablePromise] There's no promise to cancel. Please make sure to call `exec`",
     );
 
     expect(cancelled.value).toBe(false);
@@ -111,7 +111,7 @@ describe("cancellablePromise", () => {
 
   it("should reset cancelled if you call the exec after cancel", () => {
     const { exec, cancel, cancelled } = useCancellablePromise(
-      () => new Promise(() => {})
+      () => new Promise(() => {}),
     );
 
     expect(cancelled.value).toBe(false);

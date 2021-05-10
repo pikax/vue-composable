@@ -10,12 +10,12 @@ import { usePath } from "vue-composable";
 const value = usePath(source, path, separator?, notFoundReturn);
 ```
 
-| Parameters     | Type                 | Required | Default | Description                       |
-| -------------- | -------------------- | -------- | ------- | --------------------------------- |
-| source         | `Object|Ref<Object>` | `true`   |         | `Object` source                   |
-| path           | `String|Ref<String>` | `true`   |         | string `path` to value            |
-| separator      | `String`             | `false`  | `.`     | path separator                    |
-| notFoundReturn | `Function`           | `false`  |         | Not found or invalid path handler |
+| Parameters     | Type       | Required     | Default | Description                       |
+| -------------- | ---------- | ------------ | ------- | --------------------------------- |
+| source         | `Object    | Ref<Object>` | `true`  |                                   | `Object` source |
+| path           | `String    | Ref<String>` | `true`  |                                   | string `path` to value |
+| separator      | `String`   | `false`      | `.`     | path separator                    |
+| notFoundReturn | `Function` | `false`      |         | Not found or invalid path handler |
 
 ## State
 
@@ -45,11 +45,11 @@ const o = {
       2,
       {
         c: {
-          ["a-b-c-d"]: 3
-        }
-      }
-    ]
-  }
+          ["a-b-c-d"]: 3,
+        },
+      },
+    ],
+  },
 };
 
 usePath(o, "a[a]"); // result: 1 | equivalent: a.a
@@ -116,9 +116,9 @@ export default defineComponent({
     return {
       inputPath,
       json,
-      inputValue
+      inputValue,
     };
-  }
+  },
 });
 </script>
 ```

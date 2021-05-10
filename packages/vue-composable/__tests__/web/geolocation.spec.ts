@@ -51,7 +51,7 @@ describe("geolocation", () => {
           expect(watchPositionFn).toHaveBeenCalledWith(
             expect.anything(),
             expect.anything(),
-            expect.objectContaining(opts)
+            expect.objectContaining(opts),
           );
         });
 

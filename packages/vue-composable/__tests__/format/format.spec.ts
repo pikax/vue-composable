@@ -1,4 +1,4 @@
-import { useFormat, unwrap } from "../../src";
+import { unwrap, useFormat } from "../../src";
 import { ref } from "../../src/api";
 import { nextTick } from "../utils";
 
@@ -12,8 +12,8 @@ describe("format", () => {
     expect(
       useFormat("hello {name} the number is {n}, please {name}", {
         name: "pikax",
-        n: 42
-      }).value
+        n: 42,
+      }).value,
     ).toBe("hello pikax the number is 42, please pikax");
   });
 
@@ -25,7 +25,7 @@ describe("format", () => {
   it("should format with ref<array>", () => {
     const arr = ref(["hello", "world", ref("how"), "you"]);
     expect(useFormat("{0}{1}{2}{3}", arr).value).toBe(
-      arr.value.map(unwrap).join("")
+      arr.value.map(unwrap).join(""),
     );
   });
 

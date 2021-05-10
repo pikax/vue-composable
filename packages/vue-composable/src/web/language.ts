@@ -1,4 +1,4 @@
-import { ref, Ref } from "../api";
+import { Ref, ref } from "../api";
 import { isClient, PASSIVE_EV } from "../utils";
 
 let language: Ref<string> | undefined = undefined;
@@ -25,6 +25,6 @@ export function useLanguage() {
 
   return {
     language,
-    languages
+    languages,
   };
 }

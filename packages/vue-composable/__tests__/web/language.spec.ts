@@ -35,7 +35,7 @@ describe("language", () => {
     expect(windowEventSpy).toHaveBeenCalledWith(
       "languagechange",
       expect.anything(),
-      expect.objectContaining({ passive: true })
+      expect.objectContaining({ passive: true }),
     );
   });
 

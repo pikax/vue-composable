@@ -6,9 +6,9 @@ export const VueComposableDevtools = {
     app: App,
     options: { id: string; label: string } = {
       id: "vue-composable",
-      label: "Vue-composable devtools plugin"
-    }
+      label: "Vue-composable devtools plugin",
+    },
   ) {
     return UseDevtoolsApp(app, options.id, options.label);
-  }
+  },
 };

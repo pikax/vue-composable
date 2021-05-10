@@ -16,7 +16,8 @@
 
 ## Introduction
 
-This library aim is to be one stop shop for many real-world composable functions, with aggressive tree-shaking to keep it light on your end code.
+This library aim is to be one stop shop for many real-world composable
+functions, with aggressive tree-shaking to keep it light on your end code.
 
 ## Installing
 
@@ -46,108 +47,174 @@ Check our [documentation](https://pikax.me/vue-composable/)
 
 ### Event
 
-- [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event listener to a DOM element
-- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) - Attach `mousemove` listener to a DOM element
-- [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach `resize` listener to a DOM element
-- [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach `scroll` listener to a DOM element
-- [onOutsidePress](https://pikax.me/vue-composable/composable/event/onOutsidePress) - Execute callback when click is outside of element
+- [Event](https://pikax.me/vue-composable/composable/event/event) - Attach event
+  listener to a DOM element
+- [Mouse Move](https://pikax.me/vue-composable/composable/event/onMouseMove) -
+  Attach `mousemove` listener to a DOM element
+- [Resize](https://pikax.me/vue-composable/composable/event/onResize) - Attach
+  `resize` listener to a DOM element
+- [Scroll](https://pikax.me/vue-composable/composable/event/onScroll) - Attach
+  `scroll` listener to a DOM element
+- [onOutsidePress](https://pikax.me/vue-composable/composable/event/onOutsidePress) -
+  Execute callback when click is outside of element
 
 ### Dom
 
-- [Mouse distance from Element](https://pikax.me/vue-composable/composable/dom/mouseDistanceFromElement) - Distance in pixels from an element center
+- [Mouse distance from Element](https://pikax.me/vue-composable/composable/dom/mouseDistanceFromElement) -
+  Distance in pixels from an element center
 
 ### Date
 
-- [useNow](https://pikax.me/vue-composable/composable/date/now) : Return reactive custom timer with specified refresh rate
-- [useDateNow](https://pikax.me/vue-composable/composable/date/dateNow) : Returns reactive `Date.now()` with custom refresh rate
-- [usePerformanceNow](https://pikax.me/vue-composable/composable/date/performanceNow) : Returns reactive `performance.now()` with custom refresh rate
+- [useNow](https://pikax.me/vue-composable/composable/date/now) : Return
+  reactive custom timer with specified refresh rate
+- [useDateNow](https://pikax.me/vue-composable/composable/date/dateNow) :
+  Returns reactive `Date.now()` with custom refresh rate
+- [usePerformanceNow](https://pikax.me/vue-composable/composable/date/performanceNow)
+  : Returns reactive `performance.now()` with custom refresh rate
 
 ### Format
 
-- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive string format
-- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve object value based on string path
+- [format](https://pikax.me/vue-composable/composable/format/format) - Reactive
+  string format
+- [path](https://pikax.me/vue-composable/composable/format/path) - Retrieve
+  object value based on string path
 
 ### Breakpoint
 
-- [MatchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) - reactive `MatchMedia`
-- [Breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint) - reactive `breakpoints` based on `window.innerWidth`
-- [Chrome](https://pikax.me/vue-composable/composable/breakpoint/breakpointChrome) - reactive chrome breakpoints
-- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) - reactive TailwindCSS breakpoints
+- [MatchMedia](https://pikax.me/vue-composable/composable/breakpoint/matchMedia) -
+  reactive `MatchMedia`
+- [Breakpoint](https://pikax.me/vue-composable/composable/breakpoint/breakpoint) -
+  reactive `breakpoints` based on `window.innerWidth`
+- [Chrome](https://pikax.me/vue-composable/composable/breakpoint/breakpointChrome) -
+  reactive chrome breakpoints
+- [TailwindCSS](https://pikax.me/vue-composable/composable/breakpoint/breakpointTailwindCSS) -
+  reactive TailwindCSS breakpoints
 
 ### MISC
 
-- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) - cross-tab reactive `ref`
-- [VModel](https://pikax.me/vue-composable/composable/meta/vmodel) - helper to wrap model update into a `ref` `[vue3 only]`
-- [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) - same as [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection) but allows you to have a factory as default value
-- [interval](https://pikax.me/vue-composable/composable/misc/interval) - self-remove `setInterval` on unmount
-- [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) - `lock-scroll` component
-- [refDebounced](https://pikax.me/vue-composable/composable/misc/refDebounced) - debounces the update value of a `ref`
+- [sharedRef](https://pikax.me/vue-composable/composable/misc/sharedRef) -
+  cross-tab reactive `ref`
+- [VModel](https://pikax.me/vue-composable/composable/misc/vmodel) - helper to
+  wrap model update into a `ref` `[vue3 only]`
+- [injectFactory](https://pikax.me/vue-composable/composable/misc/injectFactory) -
+  same as
+  [inject](https://vue-composition-api-rfc.netlify.app/api.html#dependency-injection)
+  but allows you to have a factory as default value
+- [interval](https://pikax.me/vue-composable/composable/misc/interval) -
+  self-remove `setInterval` on unmount
+- [lockScroll](https://pikax.me/vue-composable/composable/misc/lockScroll) -
+  `lock-scroll` component
+- [refDebounced](https://pikax.me/vue-composable/composable/misc/refDebounced) -
+  debounces the update value of a `ref`
 
 ### Storage
 
-- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) - Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage` use this
-- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses `localStorage` or on safari private it uses `sessionStorage`
-- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) - Reactive access to a `localStorage`
-- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) - Reactive access to a `sessionStorage`
+- [WebStorage](https://pikax.me/vue-composable/composable/storage/webStorage) -
+  Reactive access to `Storage API`, `useLocalStorage` and `useSessionStorage`
+  use this
+- [storage](https://pikax.me/vue-composable/composable/storage/storage) - uses
+  `localStorage` or on safari private it uses `sessionStorage`
+- [localStorage](https://pikax.me/vue-composable/composable/storage/localStorage) -
+  Reactive access to a `localStorage`
+- [sessionStorage](https://pikax.me/vue-composable/composable/storage/sessionStorage) -
+  Reactive access to a `sessionStorage`
 
 ### Pagination
 
-- [Pagination](https://pikax.me/vue-composable/composable/pagination/pagination) - Generic reactive pagination controls
-- [Array Pagination](https://pikax.me/vue-composable/composable/pagination/arrayPagination) - Array pagination
+- [Pagination](https://pikax.me/vue-composable/composable/pagination/pagination) -
+  Generic reactive pagination controls
+- [Array Pagination](https://pikax.me/vue-composable/composable/pagination/arrayPagination) -
+  Array pagination
 
 ### Validation
 
-- [Validation](https://pikax.me/vue-composable/composable/validation/validation) - model based validation inspired by [vuelidate](https://vuelidate.js.org/)
+- [Validation](https://pikax.me/vue-composable/composable/validation/validation) -
+  model based validation inspired by [vuelidate](https://vuelidate.js.org/)
 
 ### i18n
 
-- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n implementation with API inspired by [vue-i18n](https://github.com/kazupon/vue-i18n)
+- [i18n](https://pikax.me/vue-composable/composable/i18n/i18n) - Simple i18n
+  implementation with API inspired by
+  [vue-i18n](https://github.com/kazupon/vue-i18n)
 
 ### Intl
 
-- [dateTimeFormat](https://pikax.me/vue-composable/composable/Intl/dateTimeFormat) - Intl.DateTimeFormat
-- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) - Intl.NumberFormat
-- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) - CurrencyFormat with Intl.NumberFormat
+- [dateTimeFormat](https://pikax.me/vue-composable/composable/Intl/dateTimeFormat) -
+  Intl.DateTimeFormat
+- [numberFormat](https://pikax.me/vue-composable/composable/Intl/numberFormat) -
+  Intl.NumberFormat
+- [currencyFormat](https://pikax.me/vue-composable/composable/Intl/currencyFormat) -
+  CurrencyFormat with Intl.NumberFormat
 
 ### Promise
 
-- [Promise](https://pikax.me/vue-composable/composable/promise/promise) - `Promise` reactive resolve and reject
-- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) - Sugar for [usePromise](https://pikax.me/vue-composable/composable/promise/promise) `lazy:true`
-- [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) - Allow to cancel promises
-- [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides functionality to retry `promise`
+- [Promise](https://pikax.me/vue-composable/composable/promise/promise) -
+  `Promise` reactive resolve and reject
+- [promiseLazy](https://pikax.me/vue-composable/composable/promise/promiseLazy) -
+  Sugar for
+  [usePromise](https://pikax.me/vue-composable/composable/promise/promise)
+  `lazy:true`
+- [Cancellable Promise](https://pikax.me/vue-composable/composable/promise/cancellablePromise) -
+  Allow to cancel promises
+- [Retry](https://pikax.me/vue-composable/composable/promise/retry) - Provides
+  functionality to retry `promise`
 
 ### Meta
 
-- [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive `document.title`
+- [Title](https://pikax.me/vue-composable/composable/meta/title) - reactive
+  `document.title`
 
 ### State
 
-- [Timeline](https://pikax.me/vue-composable/composable/state/timeline) - Tracks variable history
-- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks variable history, to allow `undo` and `redo`
-- [valueSync](https://pikax.me/vue-composable/composable/state/valueSync) - syncs variables value, across multiple `ref`s
+- [Timeline](https://pikax.me/vue-composable/composable/state/timeline) - Tracks
+  variable history
+- [Undo](https://pikax.me/vue-composable/composable/state/undo) - Tracks
+  variable history, to allow `undo` and `redo`
+- [valueSync](https://pikax.me/vue-composable/composable/state/valueSync) -
+  syncs variables value, across multiple `ref`s
 
 ### Web
 
-- [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive `fetch` wrapper
-- [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) - reactive `WebSocket` wrapper
-- [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) - reactive `IntersectionObserver`
-- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) - reactive `NetworkInformation` wrapper
-- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) - reactive `navigator.onLine` wrapper
-- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) - reactive `Page Visibility API`
-- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive `NavigatorLanguage`
-- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) - reactive `BroadcastChannel API`
+- [Fetch](https://pikax.me/vue-composable/composable/web/fetch) - reactive
+  `fetch` wrapper
+- [WebSocket](https://pikax.me/vue-composable/composable/web/webSocket) -
+  reactive `WebSocket` wrapper
+- [IntersectionObserver](https://pikax.me/vue-composable/composable/web/intersectionObserver) -
+  reactive `IntersectionObserver`
+- [NetworkInformation](https://pikax.me/vue-composable/composable/web/networkInformation) -
+  reactive `NetworkInformation` wrapper
+- [Online](<[composable/web](https://pikax.me/vue-composable/composable/web)/online>) -
+  reactive `navigator.onLine` wrapper
+- [PageVisibility](https://pikax.me/vue-composable/composable/web/pageVisibility) -
+  reactive `Page Visibility API`
+- [Language](https://pikax.me/vue-composable/composable/web/language) - reactive
+  `NavigatorLanguage`
+- [BroadcastChannel](https://pikax.me/vue-composable/composable/web/broadcastChannel) -
+  reactive `BroadcastChannel API`
 - [Geolocation API](https://pikax.me/vue-composable/composable/web/geolocation)
-- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) - reactive `CSS variables`
-- [Worker](https://pikax.me/vue-composable/composable/web/worker) - `Web Worker API`
-- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) - Webworker Function, offload a function to webworker
+- [CSS variables](https://pikax.me/vue-composable/composable/web/cssVariables) -
+  reactive `CSS variables`
+- [Worker](https://pikax.me/vue-composable/composable/web/worker) -
+  `Web Worker API`
+- [WorkerFunction](https://pikax.me/vue-composable/composable/web/workerFunction) -
+  Webworker Function, offload a function to webworker
 - [share](https://pikax.me/vue-composable/composable/web/share) - WebShare API
+- [Clipboard](https://pikax.me/vue-composable/composable/web/clipboard) -
+  Clipboard API
 
 ### External
 
 > New packages needed
 
-- [Axios](https://pikax.me/vue-composable/composable/external/axios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) reactive `axios` wrapper client
-- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) - [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios) wrap your `axios` instance
+- [Axios](https://pikax.me/vue-composable/composable/external/axios) -
+  [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios)
+  reactive `axios` wrapper client
+- [makeAxios](https://pikax.me/vue-composable/composable/external/makeAxios) -
+  [@vue-composable/axios](https://www.npmjs.com/package/@vue-composable/axios)
+  wrap your `axios` instance
+- [useCookie](https://pikax.me/vue-composable/composable/external/useCookie) -
+  [@vue-composable/cookie](https://www.npmjs.com/package/@vue-composable/cookie)
+  `js-cookie` wrapper
 
 ## Information
 
@@ -155,7 +222,8 @@ This is a monorepo project, please check [packages](packages/)
 
 ## Devtools
 
-There's some experimental devtools support starting from `1.0.0-beta.6`, only available for `vue-next` and `devtools beta 6`.
+There's some experimental devtools support starting from `1.0.0-beta.6`, only
+available for `vue-next` and `devtools beta 6`.
 
 - [devtools beta chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg)
 
@@ -291,7 +359,8 @@ pushEvent({
 
 Allows to create a new inspector for your data.
 
-> I'm still experimenting on how to expose this API on a composable, this will likely to change in the future, suggestions are welcome.
+> I'm still experimenting on how to expose this API on a composable, this will
+> likely to change in the future, suggestions are welcome.
 
 ```ts
 useDevtoolsInspector(
@@ -321,13 +390,21 @@ useDevtoolsInspector(
 );
 ```
 
+## Typescript
+
+`Typescript@3.x` is not supported, the supported version can be checked on
+[package.json](./package.json), usually is the latest version or the same major
+as `vue-3`
+
 ## Contributing
 
 You can contribute raising issues and by helping out with code.
 
-Tests and Documentation are the most important things for me, because good documentation is really useful!
+Tests and Documentation are the most important things for me, because good
+documentation is really useful!
 
-I really appreciate some tweaks or changes on how the documentation is displayed and how to make it easier to read.
+I really appreciate some tweaks or changes on how the documentation is displayed
+and how to make it easier to read.
 
 Twitter: [@pikax_dev](https://twitter.com/pikax_dev)
 
@@ -350,7 +427,8 @@ yarn test
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feat/new-composable`
-3. Commit your changes: `git commit -am 'feat(composable): add a new composable'`
+3. Commit your changes:
+   `git commit -am 'feat(composable): add a new composable'`
 4. Push to the branch: `git push origin feat/new-composable`
 5. Submit a pull request
 

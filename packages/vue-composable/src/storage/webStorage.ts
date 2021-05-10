@@ -1,5 +1,5 @@
 import { Ref, ref, watch } from "../api";
-import { wrap, isString, isClient } from "../utils";
+import { isClient, isString, RefTyped, unwrap, wrap } from "../utils";
 import { debounce } from "../debounce";
 
 type WebStorageType = "localStorage" | "sessionStorage";
@@ -53,6 +53,8 @@ export interface WebStorage {
 
   setSync(key: string, sync: boolean): void;
 
+  save(key: string, value: any): void;
+
   /**
    * Returns the number of key/value pairs currently present in the list associated with the object.
    */
@@ -65,6 +67,11 @@ export interface WebStorage {
    * Returns the current value associated with the given key, or null if the given key does not exist in the list associated with the object.
    */
   getItem<T = any>(key: string): Ref<T> | null;
+
+  /**
+   * Returns the current associated value with the given key, similar to `getItem` but if the key changes it will update accordingly
+   */
+  getRef<T = any>(key: RefTyped<string>): Ref<T>;
 
   /**
    * Returns the name of the nth key in the list, or null if n is greater than or equal to the number of key/value pairs in the object.
@@ -98,7 +105,7 @@ let storageMap: Map<WebStorageType, WebStorage> | undefined = undefined;
 export function useWebStorage(
   type: WebStorageType,
   serializer: StorageSerializer = JSON,
-  ms = 10
+  ms = 10,
 ) {
   const storage = isClient ? window[type] : undefined;
   const supported = storageAvailable(storage);
@@ -109,7 +116,7 @@ export function useWebStorage(
     storageMap = new Map();
 
     if (isClient) {
-      window.addEventListener("storage", e => {
+      window.addEventListener("storage", (e) => {
         if (e.newValue === e.oldValue) {
           return;
         }
@@ -139,6 +146,7 @@ export function useWebStorage(
   if (supported && storage) {
     if (!store) {
       quotaError = ref(false);
+
       store = {
         $refMap: new Map<string, Ref<any>>(),
         $watchHandlers: new Map<string, Function>(),
@@ -153,6 +161,25 @@ export function useWebStorage(
             this.$syncKeys[key] = true;
           } else {
             delete this.$syncKeys[key];
+          }
+        },
+
+        save(key: string, value: any) {
+          try {
+            const oldValue = storage.getItem(key);
+            const data = isString(value) ? value : serializer.stringify(value);
+            storage.setItem(key, data);
+            if (oldValue !== data && isClient && store.$syncKeys[key]) {
+              window.dispatchEvent(
+                new StorageEvent(key, {
+                  newValue: data,
+                  oldValue,
+                  storageArea: storage,
+                }),
+              );
+            }
+          } catch (e) {
+            quotaError.value = isQuotaExceededError(e, storage);
           }
         },
 
@@ -180,54 +207,66 @@ export function useWebStorage(
            * NOTE seems if the element who created the `ref` gets destroyed all the watchers assigned will be also disposed
            * making returning of the cached `ref` invalid
            */
-
-          // let r = this.$refMap.get(k);
-          // if (r) {
-          //   return r;
-          // }
           const data = storage.getItem(k);
           if (!data) {
             return null;
           }
           return this.setItem(k, safeParse(serializer, data));
         },
+
+        getRef(k) {
+          const item = ref();
+
+          let keyWatch = watch(
+            wrap(k),
+            (k) => {
+              const data = storage.getItem(k);
+              if (!data) {
+                return (item.value = null);
+              }
+              item.value = safeParse(serializer, data);
+            },
+            {
+              immediate: true,
+              flush: "sync",
+            },
+          );
+
+          let valueWatch = watch(
+            item,
+            debounce((i) => {
+              this.save(unwrap(k), i);
+            }, ms),
+            { deep: true, flush: "sync" },
+          );
+
+          // used to reference to this ref, since `k` change change we need to generate one
+          const fakeKey = Math.random().toString();
+          this.$watchHandlers.set(fakeKey, () => {
+            keyWatch();
+            valueWatch();
+          });
+          this.$refMap.set(fakeKey, item);
+
+          return item;
+        },
+
         setItem(k, v) {
           const reference = wrap(v);
           this.$refMap.set(k, reference);
 
-          const save = (key: string, value: any) => {
-            try {
-              const oldValue = storage.getItem(key);
-              const data = isString(value)
-                ? value
-                : serializer.stringify(value);
-              storage.setItem(key, data);
-              if (oldValue !== data && isClient && this.$syncKeys[key]) {
-                window.dispatchEvent(
-                  new StorageEvent(key, {
-                    newValue: data,
-                    oldValue,
-                    storageArea: storage
-                  })
-                );
-              }
-            } catch (e) {
-              quotaError.value = isQuotaExceededError(e, storage);
-            }
-          };
-
-          save(k, v);
+          this.save(k, v);
 
           // @ts-ignore
           const stop = watch(
             reference,
-            debounce(r => {
-              save(k, r);
+            debounce((r) => {
+              this.save(k, r);
             }, ms),
             {
               immediate: false,
-              deep: true
-            }
+              deep: true,
+            },
           );
 
           this.$watchHandlers.set(k, stop);
@@ -239,7 +278,7 @@ export function useWebStorage(
           if (r) {
             r.value = safeParse(serializer, data);
           }
-        }
+        },
       } as WebStorage;
 
       storageMap.set(type, store);
@@ -256,6 +295,6 @@ export function useWebStorage(
 
     quotaError,
     store,
-    remove
+    remove,
   };
 }

@@ -56,7 +56,7 @@ const {
   promise,
   result,
   loading,
-  error
+  error,
 } = useAxios();
 ```
 
@@ -83,10 +83,10 @@ import { useAxios } from "@vue-composable/axios";
 const { exec, cancel } = useAxios();
 ```
 
-| Signature                   | Description              |
-| --------------------------- | ------------------------ |
-| `exec(AxiosRequest|string)` | Executes axios request   |
-| `cancel(message?)`          | Cancels the last request |
+| Signature          | Description              |
+| ------------------ | ------------------------ |
+| `exec(AxiosRequest | string)`                 | Executes axios request |
+| `cancel(message?)` | Cancels the last request |
 
 ::: tip
 You can pass `throwException` on the last argument of the `exec` to override the default behaviour
@@ -124,10 +124,10 @@ export default {
     const id = ref(1);
     const { data, loading, exec, error, status } = useAxios();
 
-    watch(id, id => {
+    watch(id, (id) => {
       exec({
         method: "GET",
-        url: "https://reqres.in/api/user/" + id
+        url: "https://reqres.in/api/user/" + id,
       });
     });
 
@@ -135,9 +135,9 @@ export default {
       id,
       data,
       loading,
-      status
+      status,
     };
-  }
+  },
 };
 </script>
 ```

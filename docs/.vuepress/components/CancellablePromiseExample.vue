@@ -34,9 +34,9 @@ export default {
       cancel,
       error,
       cancelled,
-      result
-    } = useCancellablePromise(delay =>
-      fetch(`https://reqres.in/api/users?delay=${delay}`).then(x => x.json())
+      result,
+    } = useCancellablePromise((delay) =>
+      fetch(`https://reqres.in/api/users?delay=${delay}`).then((x) => x.json())
     );
 
     const delay = ref(1);
@@ -47,8 +47,8 @@ export default {
       loading,
       cancel,
       cancelled,
-      result
+      result,
     };
-  }
+  },
 };
 </script>

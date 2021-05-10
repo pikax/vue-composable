@@ -11,10 +11,10 @@ useIntlNumberFormat(locales?,options?);
 
 ```
 
-| Parameters | Type                            | Required | Default     | Description                                                                                                                                  |
-| ---------- | ------------------------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| locales    | `Ref<string | string[]>`        | `false`  | `undefined` | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat)  |
-| options    | `Ref<Intl.NumberFormatOptions>` | `false`  | `undefined` | Default options passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| Parameters | Type                            | Required   | Default     | Description                                                                                                                                  |
+| ---------- | ------------------------------- | ---------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| locales    | `Ref<string                     | string[]>` | `false`     | `undefined`                                                                                                                                  | Default locale passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| options    | `Ref<Intl.NumberFormatOptions>` | `false`    | `undefined` | Default options passed to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 
 ## State
 
@@ -118,7 +118,7 @@ export default defineComponent({
     const options = ref({
       style: "currency",
       currency: "USD",
-      currencyDisplay: "symbol"
+      currencyDisplay: "symbol",
     });
 
     const { formatString, format } = useIntlNumberFormat(
@@ -139,9 +139,9 @@ export default defineComponent({
       options,
 
       value,
-      formattedValue
+      formattedValue,
     };
-  }
+  },
 });
 </script>
 ```

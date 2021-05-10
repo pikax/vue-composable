@@ -4,11 +4,9 @@
 
     <p>Scroll down</p>
 
-    <div style="height:500px" />
+    <div style="height: 500px" />
 
-    <div ref="el" style="background:lightgreen">
-      Hide me
-    </div>
+    <div ref="el" style="background: lightgreen">Hide me</div>
 
     <p>Scroll up</p>
   </div>
@@ -25,8 +23,8 @@ export default {
     const o = useIntersectionObserver(el);
     return {
       ...o,
-      el
+      el,
     };
-  }
+  },
 };
 </script>

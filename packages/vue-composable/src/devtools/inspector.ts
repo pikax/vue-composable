@@ -1,9 +1,9 @@
 import type {
-  CustomInspectorOptions,
   CustomInspectorNode,
+  CustomInspectorOptions,
   CustomInspectorState,
 } from "@vue/devtools-api";
-import { reactive, Ref, computed, toRaw, watch, ref } from "../api";
+import { computed, reactive, Ref, ref, toRaw, watch } from "../api";
 import { RefTyped } from "../utils";
 import { getDevtools } from "./api";
 
@@ -37,11 +37,11 @@ export interface DevtoolInspectorNodeState {
 
 export type DevtoolsInspectorNodeFilter = (
   search: string,
-  nodes: DevtoolInspectorNode[]
+  nodes: DevtoolInspectorNode[],
 ) => DevtoolInspectorNode[];
 export type DevtoolsInspectorStateFilter = (
   search: string,
-  state: CustomInspectorState
+  state: CustomInspectorState,
 ) => CustomInspectorState;
 
 export function useDevtoolsInspector(
@@ -49,7 +49,7 @@ export function useDevtoolsInspector(
     nodeFilter?: DevtoolsInspectorNodeFilter;
     stateFilter?: DevtoolsInspectorStateFilter;
   },
-  nodeList: DevtoolInspectorNode[] = []
+  nodeList: DevtoolInspectorNode[] = [],
 ): { nodes: Ref<DevtoolInspectorNode[]> } {
   const api = getDevtools();
   const nodes: Ref<DevtoolInspectorNode[]> = ref(nodeList) as any;
@@ -82,7 +82,7 @@ export function useDevtoolsInspector(
         } else {
           // TODO better filtering, only currently filtering root nodes
           m = m.filter(
-            (x) => x.id.indexOf(filter) >= 0 || x.label.indexOf(filter) >= 0
+            (x) => x.id.indexOf(filter) >= 0 || x.label.indexOf(filter) >= 0,
           );
         }
       }
@@ -108,7 +108,7 @@ export function useDevtoolsInspector(
       {
         immediate: true,
         deep: true,
-      }
+      },
     );
   }
 

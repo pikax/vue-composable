@@ -11,7 +11,7 @@ export type IntlNumberFormatLocales =
 export type IntNumberFormatterFormat<T> = (
   value: Readonly<RefTyped<Readonly<number>>>,
   overrideOpts?: RefTyped<Intl.NumberFormatOptions>,
-  overrideLocale?: RefTyped<IntlNumberFormatLocales>
+  overrideLocale?: RefTyped<IntlNumberFormatLocales>,
 ) => T;
 
 export interface NumberFormatReturn {
@@ -24,25 +24,25 @@ export interface NumberFormatReturn {
 export function useIntlNumberFormat(): NumberFormatReturn;
 
 export function useIntlNumberFormat(
-  locales: IntlNumberFormatLocales
+  locales: IntlNumberFormatLocales,
 ): NumberFormatReturn;
 
 export function useIntlNumberFormat(
-  options: RefTyped<IntlNumberFormatOptions>
+  options: RefTyped<IntlNumberFormatOptions>,
 ): NumberFormatReturn;
 
 export function useIntlNumberFormat(
-  options: RefTyped<Intl.NumberFormatOptions>
+  options: RefTyped<Intl.NumberFormatOptions>,
 ): NumberFormatReturn;
 
 export function useIntlNumberFormat(
   locales: IntlNumberFormatLocales,
-  options?: RefTyped<IntlNumberFormatOptions | undefined>
+  options?: RefTyped<IntlNumberFormatOptions | undefined>,
 ): NumberFormatReturn;
 
 export function useIntlNumberFormat(
   locales: IntlNumberFormatLocales,
-  options: RefTyped<Intl.NumberFormatOptions | undefined>
+  options: RefTyped<Intl.NumberFormatOptions | undefined>,
 ): NumberFormatReturn;
 
 export function useIntlNumberFormat(
@@ -50,34 +50,33 @@ export function useIntlNumberFormat(
     | IntlNumberFormatLocales
     | RefTyped<IntlNumberFormatOptions>
     | RefTyped<Intl.NumberFormatOptions>,
-  opts?: any
+  opts?: any,
 ) {
   const [locales, options] = intlDateFormatExtractArguments(
     localesOptions as any,
-    opts
+    opts,
   );
 
   const formatter = computed(
     () =>
       new Intl.NumberFormat(
         unwrap(locales as Ref<string | string[]> | undefined),
-        unwrap(options)
-      )
+        unwrap(options),
+      ),
   );
 
   const formatString = (
     value: RefTyped<number>,
     overrideOpts?: RefTyped<Intl.NumberFormatOptions>,
-    overrideLocale?: RefTyped<IntlNumberFormatLocales>
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>,
   ) => {
-    const f =
-      overrideOpts || overrideLocale
-        ? new Intl.NumberFormat(
-            unwrap(overrideLocale as RefTyped<string>) ||
-              unwrap(locales as Ref<string | string[]>),
-            { ...unwrap(options), ...unwrap(overrideOpts) }
-          )
-        : formatter.value;
+    const f = overrideOpts || overrideLocale
+      ? new Intl.NumberFormat(
+        unwrap(overrideLocale as RefTyped<string>) ||
+          unwrap(locales as Ref<string | string[]>),
+        { ...unwrap(options), ...unwrap(overrideOpts) },
+      )
+      : formatter.value;
 
     return f.format(unwrap(value));
   };
@@ -85,13 +84,13 @@ export function useIntlNumberFormat(
   const format = (
     value: RefTyped<number>,
     overrideOpts?: RefTyped<Intl.NumberFormatOptions>,
-    overrideLocale?: RefTyped<IntlNumberFormatLocales>
+    overrideLocale?: RefTyped<IntlNumberFormatLocales>,
   ) => computed(() => formatString(value, overrideOpts, overrideLocale));
 
   return {
     format,
     formatString,
 
-    formatter
+    formatter,
   };
 }

@@ -121,7 +121,7 @@ export default defineComponent({
     const data = reactive({
       url: "https://pikax.me/vue-composable",
       text: "Built with ❤️",
-      title: "You need to use this, just amazing"
+      title: "You need to use this, just amazing",
     });
 
     const { supported, share, canShare, shared, cancelled } = useShare();
@@ -133,9 +133,9 @@ export default defineComponent({
       share,
       canShare,
       shared,
-      cancelled
+      cancelled,
     };
-  }
+  },
 });
 </script>
 ```
