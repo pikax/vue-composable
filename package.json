@@ -50,7 +50,7 @@
       "git add"
     ],
     "*.ts?(x)": [
-      "prettier --parser=typescript --write",
+      "deno fmt packages/",
       "git add"
     ]
   },
