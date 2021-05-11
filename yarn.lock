@@ -10599,10 +10599,10 @@ ts-jest@^26.5.6:
     semver "7.x"
     yargs-parser "20.x"
 
-tsd@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/tsd/-/tsd-0.14.0.tgz#9bd1c93e925408846949d59fe4754655749a5f2b"
-  integrity sha512-fl1gS5orAwqIb0P2xMdppgCrwv1BfCJn67wBzRBCV9OUaWHVXHqiIqL6yX/519xFgT1ZOaLMhr5W9XDo8kuuRA==
+tsd@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/tsd/-/tsd-0.15.0.tgz#9a8376c5998744816366790d61274ccd54e0e088"
+  integrity sha512-3K5Y6SiISTGOaYnNZMdcPiCIjnaU3Ir3uQUuJizMOLjH/Th7FgutI+8hdDyQV9RtBEOoOf6GHLKxKXUcUk7ETQ==
   dependencies:
     eslint-formatter-pretty "^4.0.0"
     globby "^11.0.1"
