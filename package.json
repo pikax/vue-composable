@@ -64,7 +64,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^15.12.4",
     "@vue/compiler-sfc": "^3.1.1",
-    "@vue/composition-api": "^1.0.0-rc.11",
+    "@vue/composition-api": "^1.0.0-rc.12",
     "@vue/reactivity": "^3.0.7",
     "@vue/runtime-core": "^3.0.7",
     "@vue/runtime-dom": "^3.0.7",
