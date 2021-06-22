@@ -67,7 +67,7 @@
     "@vue/composition-api": "^1.0.0-rc.12",
     "@vue/reactivity": "^3.0.7",
     "@vue/runtime-core": "^3.0.7",
-    "@vue/runtime-dom": "^3.0.7",
+    "@vue/runtime-dom": "^3.1.1",
     "@vuepress/plugin-back-to-top": "^1.8.2",
     "@vuepress/plugin-pwa": "^1.8.2",
     "axios": "^0.21.1",
