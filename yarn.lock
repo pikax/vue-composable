@@ -1676,12 +1676,19 @@
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.0-beta.8.tgz#0dbb2d21b13818c04b7f70b1b0c3f7aae95e4fb4"
   integrity sha512-I2QYmUYvuJnMMX/4/i+fbCf2nlAkjfw58siw0whFlUT7LTvTc5Xv7jcLP5XS3+8LkHd7UtVhU7EBGMfA7jkXXg==
 
-"@vue/reactivity@3.0.11", "@vue/reactivity@^3.0.7":
+"@vue/reactivity@3.0.11":
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.0.11.tgz#07b588349fd05626b17f3500cbef7d4bdb4dbd0b"
   integrity sha512-SKM3YKxtXHBPMf7yufXeBhCZ4XZDKP9/iXeQSC8bBO3ivBuzAi4aZi0bNoeE2IF2iGfP/AHEt1OU4ARj4ao/Xw==
   dependencies:
     "@vue/shared" "3.0.11"
+
+"@vue/reactivity@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.1.2.tgz#66fa530dd726d2fef285ae55d02106a727db463b"
+  integrity sha512-glJzJoN2xE7I2lRvwKM5u1BHRPTd1yc8iaf//Lai/78/uYAvE5DXp5HzWRFOwMlbRvMGJHIQjOqoxj87cDAaag==
+  dependencies:
+    "@vue/shared" "3.1.2"
 
 "@vue/runtime-core@3.0.11", "@vue/runtime-core@^3.0.7":
   version "3.0.11"
