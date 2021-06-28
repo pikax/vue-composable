@@ -62,7 +62,7 @@
     "@rollup/plugin-replace": "^2.4.1",
     "@types/jest": "26.0.23",
     "@types/js-cookie": "^2.2.6",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@vue/compiler-sfc": "^3.1.2",
     "@vue/composition-api": "^1.0.0-rc.12",
     "@vue/reactivity": "^3.0.7",
