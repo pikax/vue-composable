@@ -1,0 +1,52 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: vue
+    versions:
+    - ">= 3.0.a, < 3.1"
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.41
+  - dependency-name: "@vue/composition-api"
+    versions:
+    - 1.0.0-rc.7
+  - dependency-name: chalk
+    versions:
+    - 4.1.1
+  - dependency-name: "@microsoft/api-extractor"
+    versions:
+    - 7.14.0
+  - dependency-name: "@vue/runtime-core"
+    versions:
+    - 3.0.10
+    - 3.0.11
+    - 3.0.6
+    - 3.0.7
+    - 3.0.9
+  - dependency-name: "@vue/reactivity"
+    versions:
+    - 3.0.10
+    - 3.0.11
+    - 3.0.6
+    - 3.0.7
+    - 3.0.9
+  - dependency-name: "@vue/runtime-dom"
+    versions:
+    - 3.0.10
+    - 3.0.11
+    - 3.0.6
+    - 3.0.7
+    - 3.0.9
+  - dependency-name: typescript
+    versions:
+    - 4.2.2
+  - dependency-name: "@vue/devtools-api"
+    versions:
+    - 6.0.0-beta.5
+    - 6.0.0-beta.6
+    - 6.0.0-beta.7
