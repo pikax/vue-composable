@@ -12,15 +12,24 @@ export function useMatchMedia(query: string) {
   if (supported) {
     mediaQueryList = ref<MediaQueryList>(matchMedia(query));
     matches = ref(mediaQueryList.value.matches);
+    const hasAddEventListener = !!mediaQueryList.value.addEventListener;
 
     const process = (e: MediaQueryListEvent) => {
       matches.value = e.matches;
     };
+    if (hasAddEventListener) {
+      mediaQueryList.value.addEventListener("change", process, PASSIVE_EV);
+    } else {
+      mediaQueryList.value.addListener(process);
+    }
 
-    mediaQueryList.value.addEventListener("change", process, PASSIVE_EV);
-
-    const remove = () =>
-      mediaQueryList.value.removeEventListener("change", process);
+    const remove = () => {
+      if (hasAddEventListener) {
+        mediaQueryList.value.removeEventListener("change", process);
+      } else {
+        mediaQueryList.value.removeListener(process);
+      }
+    };
 
     onUnmounted(remove);
   } else {
@@ -38,6 +47,6 @@ export function useMatchMedia(query: string) {
     mediaQueryList,
     matches,
 
-    remove
+    remove,
   };
 }
