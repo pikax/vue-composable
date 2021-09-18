@@ -1,12 +1,35 @@
 import { RefTyped, NO_OP, unwrap } from "../utils";
-import { ref } from "../api";
+import { ref, Ref } from "../api";
 import { useWebStorage } from "./webStorage";
+
+export interface sessionStorageReturn<T> {
+  /**
+   * returns true is `sessionStorage` is available
+   */
+  supported: boolean;
+
+  /**
+   * handler with `sessionStorage` value
+   */
+
+  storage: Ref<T | undefined>;
+
+  /**
+   * Removes current item from the store
+   */
+  remove: () => void;
+
+  /**
+   * Clears all tracked `sessionStorage` items
+   */
+  clear: () => void;
+}
 
 export function useSessionStorage<T = string>(
   key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
   useDebounce = true
-) {
+): sessionStorageReturn<T> {
   const { supported, store } = useWebStorage("sessionStorage");
 
   let remove = NO_OP;

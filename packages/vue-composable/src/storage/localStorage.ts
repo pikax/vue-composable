@@ -3,22 +3,29 @@ import { RefTyped, NO_OP, unwrap } from "../utils";
 import { useWebStorage } from "./webStorage";
 
 export interface LocalStorageReturn<T> {
+  /**
+   * returns true is `localStorage` is available
+   */
   supported: boolean;
+
+  /**
+   * handler with `localStorage` value
+   */
 
   storage: Ref<T | undefined>;
 
   /**
-   * @description Removes current item from the store
+   * Removes current item from the store
    */
   remove: () => void;
 
   /**
-   * @description Clears all tracked localStorage items
+   * Clears all tracked `localStorage` items
    */
   clear: () => void;
 
   /**
-   * @description Enable cross tab syncing
+   * Enable cross tab syncing
    */
   setSync: (sync: boolean) => void;
 }
