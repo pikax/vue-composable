@@ -14,6 +14,55 @@ describe("sessionStorage", () => {
     consoleWarnSpy.mockClear();
   });
 
+  it("should remove value from sessionStorage when ref is set to undefined", async () => {
+    const key = "test";
+    const value = "value";
+    const { storage } = useSessionStorage<string | undefined>(key, value);
+
+    expect(storage.value).toEqual(value);
+    expect(sessionStorage.getItem(key)).toEqual(value);
+
+    storage.value = undefined;
+
+    await promisedTimeout(100);
+
+    expect(storage.value).toEqual(undefined);
+    expect(sessionStorage.getItem(key)).toEqual(null);
+  });
+
+  it("should not set value in sessionStorage when defaultValue is undefined", async () => {
+    const key = "test";
+    const { storage } = useSessionStorage(key);
+
+    await nextTick();
+
+    expect(storage.value).toEqual(undefined);
+    expect(sessionStorage.getItem(key)).toEqual(null);
+  });
+
+  it("should handle ref value", async () => {
+    const key = "test";
+    const value = ref(5);
+    const { storage } = useSessionStorage(key, value);
+
+    await nextTick();
+
+    expect(storage.value).toEqual(value.value);
+    expect(sessionStorage.getItem(key)).toEqual(JSON.stringify(value.value));
+  });
+
+  it("should update sessionStorage immediately if we\re not using debounce", async () => {
+    const key = "test";
+    let value = 5;
+    const { storage } = useSessionStorage(key, value, false);
+
+    expect(sessionStorage.getItem(key)).toEqual(JSON.stringify(value));
+
+    storage.value = 10;
+
+    expect(sessionStorage.getItem(key)).toEqual(JSON.stringify(storage.value));
+  });
+
   it("should store object in sessionStorage if default is passed", async () => {
     const obj = { a: 1 };
     const { storage } = useSessionStorage("test", obj);
@@ -32,7 +81,7 @@ describe("sessionStorage", () => {
     expect(storage.value).toMatchObject(obj);
     expect(setItemSpy).toHaveBeenLastCalledWith("test", JSON.stringify(obj));
 
-    storage.value.a = 33;
+    storage.value!.a = 33;
     await nextTick();
 
     expect(storage.value).toMatchObject({ a: 33 });
@@ -93,17 +142,6 @@ describe("sessionStorage", () => {
     expect(storage.value).toMatchObject({ k: 1 });
   });
 
-  it("should warn if you try to sync", () => {
-    const key = "hello";
-    const { setSync } = useSessionStorage(key, { k: 10 });
-
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
-    setSync(true);
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "sync is not supported, please `useLocalStorage` instead"
-    );
-  });
-
   it("should warn if sessionStorage is not supported", () => {
     setItemSpy.mockImplementationOnce(() => {
       throw new Error("random");
@@ -127,10 +165,8 @@ describe("sessionStorage", () => {
     key.value = "hey";
     jest.runAllTimers();
 
-    // key not created yet
-    // expect(localStorage.length).toBe(1);
-    // key doesn't exist so it's null
-    expect(storage.value).toBeNull();
+    // key doesn't exist so it's undefined
+    expect(storage.value).toBeUndefined();
     jest.runAllTimers();
 
     storage.value = { k: 0 };

@@ -5,7 +5,7 @@ import { useWebStorage } from "./webStorage";
 export interface LocalStorageReturn<T> {
   supported: boolean;
 
-  storage: Ref<T>;
+  storage: Ref<T | undefined>;
 
   /**
    * @description Removes current item from the store
@@ -23,41 +23,32 @@ export interface LocalStorageReturn<T> {
   setSync: (sync: boolean) => void;
 }
 
-export function useLocalStorage(
-  key: RefTyped<string>,
-  defaultValue?: RefTyped<string>,
-  sync?: boolean
-): LocalStorageReturn<string>;
-export function useLocalStorage<T>(
+export function useLocalStorage<T = string>(
   key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
-): LocalStorageReturn<T>;
-export function useLocalStorage(
-  key: RefTyped<string>,
-  defaultValue?: RefTyped<any>,
-  sync?: boolean
-) {
+  sync = true,
+  useDebounce = true
+): LocalStorageReturn<T> {
   const { supported, store } = useWebStorage("localStorage");
 
   let remove = NO_OP;
   let clear = NO_OP;
   let setSync: LocalStorageReturn<any>["setSync"] = NO_OP;
-  let storage = undefined;
+  let storage = ref<T>();
 
   if (supported && store) {
     setSync = (s) => store.setSync(unwrap(key), s);
     remove = () => store.removeItem(unwrap(key));
     clear = () => store.clear();
 
-    storage = store.getRef(key);
-    if (storage.value == null) {
+    storage = store.getRef<T>(key, useDebounce);
+    if (storage.value === undefined) {
       store.save(unwrap(key), defaultValue);
-      storage.value = defaultValue;
+      storage.value = unwrap(defaultValue);
     }
 
     watchEffect(() => {
-      if (sync !== false) {
+      if (sync) {
         setSync(true);
       }
     });
@@ -67,7 +58,7 @@ export function useLocalStorage(
       console.warn("[localStorage] is not available");
     }
 
-    storage = ref(defaultValue);
+    storage.value = unwrap(defaultValue);
   }
 
   return {
