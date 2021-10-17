@@ -145,6 +145,10 @@ export function usePromise<T extends Promise<any>, TArgs extends Array<any>>(
         error.value = er;
         result.value = null;
       }
+      // if(throwExp){
+      //   throw er
+      // }
+      // return undefined
       return throwExp ? currentPromise : undefined;
     } finally {
       if (promise.value === currentPromise) {
