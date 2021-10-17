@@ -17,12 +17,12 @@ export const UseDevtoolsApp = (
   id = "vue-composable",
   label = "Vue-composable devtools plugin"
 ) => {
-  const promise = new Promise<DevtoolsPluginApi>(res => {
+  const promise = new Promise<DevtoolsPluginApi<unknown>>((res) => {
     setupDevtoolsPlugin(
       {
         id,
         label,
-        app
+        app,
       },
       res
     );
