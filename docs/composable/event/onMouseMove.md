@@ -56,14 +56,14 @@ const { remove } = useOnMouseMove();
 
 <script>
 import { reactive, ref } from "@vue/composition-api";
-import { useMouseMove } from "vue-composable";
+import { useOnMouseMove } from "vue-composable";
 
 export default {
   name: "on-mouse-move-example",
   setup(_) {
     const elref = ref(null);
 
-    const { mouseX, mouseY, pageX, pageY, remove } = useMouseMove(elref);
+    const { mouseX, mouseY, pageX, pageY, remove } = useOnMouseMove(elref);
 
     return {
       elref,
