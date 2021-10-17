@@ -2,7 +2,7 @@ import { InjectionKey, provide } from "../api";
 import {
   BreakpointReturn,
   BreakpointObject,
-  useBreakpoint
+  useBreakpoint,
 } from "./breakpoint";
 import { isArray, isString, isObject, isNumber } from "../utils";
 import { injectFactory } from "../misc";
@@ -19,12 +19,12 @@ export interface DefaultTailwindBreakpoints {
   xl: 1280;
 }
 
-const defaultTailwindBreakpoint: BreakpointObject = ({
+const defaultTailwindBreakpoint: BreakpointObject = {
   sm: 640,
   md: 768,
   lg: 1024,
-  xl: 1280
-} as DefaultTailwindBreakpoints) as any;
+  xl: 1280,
+} as DefaultTailwindBreakpoints as any;
 
 export interface TailwindScreenBreakpointRaw {
   raw: string;
@@ -57,11 +57,10 @@ export interface TailwindConfig extends TailwindConfigEmpty {
   };
 }
 
-export type ExtractTailwindScreens<
-  T extends TailwindConfigEmpty
-> = keyof T["theme"]["screens"] extends never
-  ? DefaultTailwindBreakpoints
-  : T["theme"]["screens"];
+export type ExtractTailwindScreens<T extends TailwindConfigEmpty> =
+  keyof T["theme"]["screens"] extends never
+    ? DefaultTailwindBreakpoints
+    : T["theme"]["screens"];
 
 export function isTailwind(t: any): t is TailwindConfig {
   return isObject(t) && isObject(t.theme) && isObject(t.theme.screens);
@@ -98,7 +97,7 @@ export function screenRangeToBreakpoint(s: TailwindScreenBreakpointRange) {
   }
   const condition = [
     s.max && `max-width: ${sanitizeWidth(s.max)}`,
-    s.min && `min-width: ${sanitizeWidth(s.min)}`
+    s.min && `min-width: ${sanitizeWidth(s.min)}`,
   ]
     .filter(Boolean)
     .join(" and ");
@@ -160,7 +159,7 @@ export function setBreakpointTailwindCSS<T extends BreakpointObject>(
     }
   }
 
-  const bp = useBreakpoint(bk);
+  const bp = useBreakpoint<any>(bk);
   provide(BREAKPOINT_TAILWIND_KEY, bp);
   return bp;
 }
@@ -171,9 +170,7 @@ export function useBreakpointTailwindCSS<T extends TailwindConfigEmpty>(
 export function useBreakpointTailwindCSS<
   T extends TailwindConfigEmpty
 >(): BreakpointReturn<ExtractTailwindScreens<T>>;
-export function useBreakpointTailwindCSS(): BreakpointReturn<
-  DefaultTailwindBreakpoints
->;
+export function useBreakpointTailwindCSS(): BreakpointReturn<DefaultTailwindBreakpoints>;
 export function useBreakpointTailwindCSS<
   T extends BreakpointObject
 >(): BreakpointReturn<T>;

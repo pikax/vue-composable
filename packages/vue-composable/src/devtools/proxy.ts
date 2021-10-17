@@ -1,29 +1,29 @@
-import { DevtoolsPluginApi, Hooks } from "@vue/devtools-api";
+import type { DevtoolsPluginApi, Hooks } from "@vue/devtools-api/lib/esm";
 import { promisedTimeout } from "../utils";
 
 type OnEvent = { type: Hooks; args: any[] };
-type ApiEvent = { type: keyof DevtoolsPluginApi; args: any[] };
+type ApiEvent = { type: keyof DevtoolsPluginApi<unknown>; args: any[] };
 
 let apiProxyFactory: (
-  promiseApi: Promise<DevtoolsPluginApi>
-) => DevtoolsPluginApi = undefined as any;
+  promiseApi: Promise<DevtoolsPluginApi<unknown>>
+) => DevtoolsPluginApi<unknown> = undefined as any;
 
 async function pushEventsToApi(
-  api: DevtoolsPluginApi,
+  api: DevtoolsPluginApi<unknown>,
   EventQueue: OnEvent[],
   ApiQueue: ApiEvent[]
 ) {
   setTimeout(async () => {
-    const priority: (keyof DevtoolsPluginApi)[] = [
+    const priority: (keyof DevtoolsPluginApi<unknown>)[] = [
       "addTimelineLayer",
       "addInspector",
       "sendInspectorTree",
       "sendInspectorState",
-      "addTimelineEvent"
+      "addTimelineEvent",
     ];
 
     for (const k of priority) {
-      for (const it of ApiQueue.filter(x => x.type === k)) {
+      for (const it of ApiQueue.filter((x) => x.type === k)) {
         // @ts-ignore
         api[k](...it.args);
       }
@@ -31,13 +31,13 @@ async function pushEventsToApi(
     }
 
     new Set(
-      ApiQueue.filter(x => x.type === "notifyComponentUpdate").map(
-        x => x.args[0]
+      ApiQueue.filter((x) => x.type === "notifyComponentUpdate").map(
+        (x) => x.args[0]
       )
-    ).forEach(x => api.notifyComponentUpdate(x));
+    ).forEach((x) => api.notifyComponentUpdate(x));
 
     // @ts-ignore
-    EventQueue.forEach(x => api.on[x.type](...x.args));
+    EventQueue.forEach((x) => api.on[x.type](...x.args));
 
     EventQueue.length = 0;
     ApiQueue.length = 0;
@@ -45,12 +45,12 @@ async function pushEventsToApi(
 }
 
 if (__VUE_2__) {
-  apiProxyFactory = promiseApi => {
+  apiProxyFactory = (promiseApi) => {
     const EventQueue: OnEvent[] = [];
     const ApiQueue: ApiEvent[] = [];
-    let api: DevtoolsPluginApi;
+    let api: DevtoolsPluginApi<unknown>;
 
-    function queueEvent(type: keyof DevtoolsPluginApi, args: any) {
+    function queueEvent(type: keyof DevtoolsPluginApi<unknown>, args: any) {
       if (api) {
         //@ts-ignore
         api[type](...args);
@@ -59,12 +59,12 @@ if (__VUE_2__) {
       }
     }
 
-    promiseApi.then(x => {
+    promiseApi.then((x) => {
       api = x;
       pushEventsToApi(api, EventQueue, ApiQueue);
     });
 
-    const proxyApi: DevtoolsPluginApi = {
+    const proxyApi: DevtoolsPluginApi<unknown> = {
       notifyComponentUpdate(): any {
         queueEvent("notifyComponentUpdate", arguments);
       },
@@ -97,6 +97,16 @@ if (__VUE_2__) {
       },
       unhighlightElement(): any {
         queueEvent("unhighlightElement", arguments);
+      },
+
+      selectInspectorNode(): any {
+        queueEvent("selectInspectorNode", arguments);
+      },
+      getSettings(): any {
+        queueEvent("getSettings", arguments);
+      },
+      setSettings(): any {
+        queueEvent("setSettings", arguments);
       },
 
       on: {
@@ -203,7 +213,7 @@ if (__VUE_2__) {
             EventQueue.push({
               //@ts-expect-error
               type: "getComponentRootElements",
-              arg: arguments
+              arg: arguments,
             });
           }
         },
@@ -222,7 +232,7 @@ if (__VUE_2__) {
             EventQueue.push({
               //@ts-expect-error
               type: "getComponentDevtoolsOptions",
-              arg: arguments
+              arg: arguments,
             });
           }
         },
@@ -257,15 +267,39 @@ if (__VUE_2__) {
             //@ts-expect-error
             EventQueue.push({ type: "editInspectorState", arg: arguments });
           }
-        }
-      }
+        },
+        setPluginSettings(handler) {
+          if (api) {
+            api.on.setPluginSettings(handler);
+          } else {
+            //@ts-expect-error
+            EventQueue.push({ type: "setPluginSettings", arg: arguments });
+          }
+        },
+        getComponentRenderCode(handler) {
+          if (api) {
+            api.on.getComponentRenderCode(handler);
+          } else {
+            //@ts-expect-error
+            EventQueue.push({ type: "getComponentRenderCode", arg: arguments });
+          }
+        },
+        timelineCleared(handler) {
+          if (api) {
+            api.on.timelineCleared(handler);
+          } else {
+            //@ts-expect-error
+            EventQueue.push({ type: "timelineCleared", arg: arguments });
+          }
+        },
+      },
     };
 
     return proxyApi;
   };
 } else {
-  apiProxyFactory = promiseApi => {
-    let api: DevtoolsPluginApi;
+  apiProxyFactory = (promiseApi) => {
+    let api: DevtoolsPluginApi<unknown>;
     const EventQueue: OnEvent[] = [];
     const ApiQueue: ApiEvent[] = [];
 
@@ -284,19 +318,19 @@ if (__VUE_2__) {
             return (target[prop] = (...args) => {
               EventQueue.push({
                 type: prop,
-                args
+                args,
               });
             });
           }
-        }
+        },
       }
     );
     const proxy = new Proxy(
       {
-        on: onProxy
+        on: onProxy,
       },
       {
-        get: (target, prop: keyof DevtoolsPluginApi) => {
+        get: (target, prop: keyof DevtoolsPluginApi<unknown>) => {
           if (prop === "on") {
             return target.on;
           }
@@ -313,14 +347,14 @@ if (__VUE_2__) {
           return (target[prop] = (...args) => {
             ApiQueue.push({
               type: prop,
-              args
+              args,
             });
           });
-        }
+        },
       }
     );
 
-    promiseApi.then(x => {
+    promiseApi.then((x) => {
       api = x;
       pushEventsToApi(api, EventQueue, ApiQueue);
     });
