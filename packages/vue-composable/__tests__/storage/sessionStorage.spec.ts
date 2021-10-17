@@ -97,6 +97,7 @@ describe("sessionStorage", () => {
     const { storage: storage1 } = useSessionStorage(key, { a: 1 });
     const { storage: storage2 } = useSessionStorage(key, { b: 1 });
 
+    // @ts-ignore
     expect(storage1.value).toMatchObject(storage2.value);
   });
 

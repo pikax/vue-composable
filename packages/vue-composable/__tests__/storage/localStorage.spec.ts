@@ -99,6 +99,7 @@ describe("localStorage", () => {
     const { storage: storage1 } = useLocalStorage(key, { a: 1 });
     const { storage: storage2 } = useLocalStorage(key, { b: 1 });
 
+    // @ts-ignore
     expect(storage1.value).toMatchObject(storage2.value);
   });
 
