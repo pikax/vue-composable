@@ -46,9 +46,9 @@ describe("localStorage", () => {
   it("should get the same object if the same key is used", () => {
     const key = "test";
     const { storage: storage1 } = useLocalStorage(key, { a: 1 });
-    const { storage: storage2 } = useLocalStorage(key, { a: 1 });
+    const { storage: storage2 } = useLocalStorage(key, { b: 1 });
 
-    expect(storage1).toMatchObject(storage2);
+    expect(storage1.value).toMatchObject(storage2.value);
   });
 
   it("should remove from localStorage", async () => {

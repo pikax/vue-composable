@@ -46,9 +46,9 @@ describe("sessionStorage", () => {
   it("should get the same object if the same key is used", () => {
     const key = "test";
     const { storage: storage1 } = useSessionStorage(key, { a: 1 });
-    const { storage: storage2 } = useSessionStorage(key, { a: 1 });
+    const { storage: storage2 } = useSessionStorage(key, { b: 1 });
 
-    expect(storage1).toMatchObject(storage2);
+    expect(storage1.value).toMatchObject(storage2.value);
   });
 
   it("should remove from sessionStorage", async () => {

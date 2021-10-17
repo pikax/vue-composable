@@ -52,7 +52,7 @@ export function useBreakpoint<T extends BreakpointObject>(
       result[key] = r;
       map.set(width, {
         name: key,
-        valid: r
+        valid: r,
       });
       sorted.push(width);
     } else {
@@ -67,7 +67,7 @@ export function useBreakpoint<T extends BreakpointObject>(
   const resize = isClient
     ? () => {
         const width = window.innerWidth;
-        let c = undefined;
+        let c: keyof T | undefined = undefined;
         for (let i = 0; i < sorted.length; i++) {
           const bp = sorted[i];
           const r = map.get(bp)!;
@@ -94,13 +94,13 @@ export function useBreakpoint<T extends BreakpointObject>(
 
     onUnmounted(() => {
       remove();
-      removeMedia.forEach(x => x());
+      removeMedia.forEach((x) => x());
     });
   }
 
   return {
     ...result,
     remove,
-    current
+    current,
   };
 }
