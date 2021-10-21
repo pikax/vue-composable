@@ -1,3 +1,15 @@
+# [1.0.0-beta.24](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.23...v1.0.0-beta.24) (2021-10-17)
+
+### Bug Fixes
+
+- pnpm support ([50986c8](https://github.com/pikax/vue-composable/commit/50986c8bf10c952d72b6ab5381655b1e6a40fbeb))
+
+# [1.0.0-beta.24](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.23...v1.0.0-beta.24) (2021-10-17)
+
+### Bug Fixes
+
+- pnpm support ([50986c8](https://github.com/pikax/vue-composable/commit/50986c8bf10c952d72b6ab5381655b1e6a40fbeb))
+
 # [1.0.0-beta.23](https://github.com/pikax/vue-composable/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-04-24)
 
 ### Bug Fixes
