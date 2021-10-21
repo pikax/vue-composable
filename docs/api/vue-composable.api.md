@@ -5,21 +5,22 @@
 ```ts
 /// <reference types="node" />
 
+import { App } from "@vue/runtime-core";
 import type { ComponentState } from "@vue/devtools-api";
-import { ComputedRef } from "@vue/composition-api";
+import { ComputedRef } from "@vue/runtime-core";
 import { Context } from "vm";
 import type { CustomInspectorNode } from "@vue/devtools-api";
 import type { CustomInspectorOptions } from "@vue/devtools-api";
 import type { CustomInspectorState } from "@vue/devtools-api";
+import { DeepReadonly } from "@vue/runtime-core";
 import { DevtoolsPluginApi } from "@vue/devtools-api";
-import { InjectionKey } from "@vue/composition-api";
+import { InjectionKey } from "@vue/runtime-core";
 import type { InspectedComponentData } from "@vue/devtools-api";
-import { PluginFunction } from "vue";
-import { provide } from "@vue/composition-api";
-import { Ref } from "@vue/composition-api";
+import { Plugin as Plugin_2 } from "@vue/runtime-core";
+import { provide } from "@vue/runtime-core";
+import { Ref } from "@vue/runtime-core";
 import { TimelineEvent } from "@vue/devtools-api";
-import { UnwrapRef } from "@vue/composition-api";
-import { VueConstructor } from "vue";
+import { UnwrapRef } from "@vue/runtime-core";
 
 // @public (undocumented)
 export interface ArrayPaginationResult<T extends Array<any>>
@@ -472,8 +473,6 @@ export function getCssVariableFor(
 // @public
 export function getDevtools(): DevtoolsPluginApi<unknown> | undefined;
 
-// Warning: (ae-forgotten-export) The symbol "Plugin" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export const hydrationPlugin: Plugin_2;
 
@@ -1093,10 +1092,7 @@ export function setCssVariableFor(
 ): void;
 
 // @public
-export function setDevtools(
-  app: VueConstructor,
-  api: DevtoolsPluginApi<unknown>
-): void;
+export function setDevtools(app: App, api: DevtoolsPluginApi<unknown>): void;
 
 // @public
 export function setI18n<
@@ -1427,11 +1423,7 @@ export function useDebounce<T extends Procedure>(
 ): T;
 
 // @public (undocumented)
-export const UseDevtoolsApp: (
-  app: VueConstructor,
-  id?: string,
-  label?: string
-) => void;
+export const UseDevtoolsApp: (app: App, id?: string, label?: string) => void;
 
 // @public (undocumented)
 export function useDevtoolsComponentState(
@@ -2219,8 +2211,6 @@ export function useStorage<T>(
   sync?: boolean
 ): LocalStorageReturn<T>;
 
-// Warning: (ae-forgotten-export) The symbol "DeepReadonly" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function useTimeline<T>(
   value: Ref<T>,
@@ -2317,7 +2307,7 @@ export const VUE_VERSION: "2" | "3";
 // @public (undocumented)
 export const VueComposableDevtools: {
   install(
-    app: VueConstructor,
+    app: App,
     options?: {
       id: string;
       label: string;
@@ -2411,7 +2401,7 @@ export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
 
 // Warnings were encountered during analysis:
 //
-// dist/v2/packages/vue-composable/src/validation/validation.d.ts:72:5 - (ae-forgotten-export) The symbol "ToObjectOutput" needs to be exported by the entry point index.d.ts
+// dist/v3/packages/vue-composable/src/validation/validation.d.ts:72:5 - (ae-forgotten-export) The symbol "ToObjectOutput" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 ```

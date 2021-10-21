@@ -12,7 +12,7 @@ const AgentCommands = {
   npm: "npm i",
   yarn: "yarn add",
   pnpm: "pnpm add",
-  cnpm: "cnpm i"
+  cnpm: "cnpm i",
 };
 
 function loadModule(name) {
@@ -28,7 +28,7 @@ function installModules(names) {
   names = Array.isArray(names) ? names : [names];
   execSync(`${command} ${names.join(" ")}`, {
     stdio: "inherit",
-    cwd: userRoot
+    cwd: userRoot,
   });
 }
 
@@ -52,8 +52,13 @@ function switchVersion(version) {
     }
     const files = fs.readdirSync(versionPath);
 
-    files.forEach(f => {
-      fs.copyFileSync(path.join(versionPath, f), path.join(dist, f));
+    files.forEach((f) => {
+      const dfile = path.join(dist, f);
+      try {
+        // pnpm fix
+        fs.unlinkSync(dfile);
+      } catch (_) {}
+      fs.copyFileSync(path.join(versionPath, f), dfile);
     });
 
     switchPeerdependencies(version);
