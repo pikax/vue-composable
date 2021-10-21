@@ -270,6 +270,7 @@ export function useWebStorage(
 
           this.save(k, v);
 
+          // @ts-ignore
           const stop = watch(
             reference,
             debounce((r) => {
