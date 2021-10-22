@@ -4,7 +4,7 @@
 
 ```ts
 import { default as Cookies_2 } from "js-cookie";
-import { Ref } from "@vue/composition-api";
+import { Ref } from "@vue/runtime-core";
 
 // Warning: (ae-forgotten-export) The symbol "UseCookieReturn" needs to be exported by the entry point index.d.ts
 //
