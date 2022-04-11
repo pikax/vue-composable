@@ -85,7 +85,7 @@
     "js-cookie": "^2.2.1",
     "lint-staged": "^11.1.1",
     "lodash.camelcase": "^4.3.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mock-socket": "^9.0.3",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
