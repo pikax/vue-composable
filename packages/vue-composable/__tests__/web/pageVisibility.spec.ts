@@ -9,7 +9,7 @@ describe("pageVisibility", () => {
   const visibilityGetter = jest.spyOn(document, "visibilityState", "get");
   const hiddenGetter = jest.spyOn(document, "hidden", "get");
 
-  const updateVisibility = (v: VisibilityState, hidden: boolean) => {
+  const updateVisibility = (v: DocumentVisibilityState, hidden: boolean) => {
     visibilityGetter.mockImplementation(() => v);
     hiddenGetter.mockImplementation(() => hidden);
 
