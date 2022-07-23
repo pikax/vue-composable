@@ -1,5 +1,8 @@
 # vue-composable
 
+> Notice: I don't have much time to maintain and build this library further,
+> I recommend using the amazing [VueUse](https://vueuse.org/) composables.
+
 <p align="center"><a href="https://pikax.me/vue-composable/" target="_blank" rel="noopener noreferrer"><img width="250" src="https://pikax.me/vue-composable/assets/logo.svg" alt="vue-composable logo"></a></p>
 
 [![CircleCI](https://circleci.com/gh/pikax/vue-composable.svg?style=svg)](https://circleci.com/gh/pikax/vue-composable)
@@ -12,7 +15,6 @@
 - **🌴 TreeShakable**
 - **🧙‍♂️ Fully Typescript**
 - **💚 Vue 3 and 2 support**
-- **🔨 Vue Devtools support**
 
 ## Introduction
 
@@ -175,7 +177,7 @@ app.use(VueComposableDevtools);
 // or
 app.use(VueComposableDevtools, {
   id: "vue-composable",
-  label: "devtool composables"
+  label: "devtool composables",
 });
 
 app.mount("#app");
@@ -190,10 +192,10 @@ To add properties to the component inspector tab
 const bar = "bar";
 useDevtoolsComponentState(
   {
-    bar
+    bar,
   },
   {
-    type: "custom composable" // change group
+    type: "custom composable", // change group
   }
 );
 
@@ -221,14 +223,14 @@ useDevtoolsComponentState([
     key: "_bar",
     type: "direct",
     value: "bar",
-    editable: true
+    editable: true,
   },
   {
     key: "_baz",
     type: "direct",
     value: "baz",
-    editable: false
-  }
+    editable: false,
+  },
 ]);
 
 // raw change
@@ -239,14 +241,14 @@ useDevtoolsComponentState((payload, ctx) => {
         key: "_bar",
         type: "raw",
         value: "bar",
-        editable: true
+        editable: true,
       },
       {
         key: "_baz",
         type: "raw",
         value: "baz",
-        editable: false
-      }
+        editable: false,
+      },
     ]
   );
 });
@@ -275,7 +277,7 @@ addEvent({
   },
   meta: {
     // meta object
-  }
+  },
 });
 
 // adds event with `time: Date.now()`
@@ -285,7 +287,7 @@ pushEvent({
   },
   meta: {
     // meta object
-  }
+  },
 });
 ```
 
@@ -299,7 +301,7 @@ Allows to create a new inspector for your data.
 useDevtoolsInspector(
   {
     id: "vue-composable",
-    label: "test vue-composable"
+    label: "test vue-composable",
   },
   // list of nodes, this can be reactive
   [
@@ -314,11 +316,11 @@ useDevtoolsInspector(
             key: "count",
             objectType: "Ref",
             type: "setup",
-            value: myRefValue
-          }
-        ]
-      }
-    }
+            value: myRefValue,
+          },
+        ],
+      },
+    },
   ]
 );
 ```
