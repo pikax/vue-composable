@@ -1,46 +1,49 @@
-import { RefTyped, NO_OP, FALSE_OP, unwrap } from "../utils";
-import { ref } from "../api";
+import { RefTyped, NO_OP, unwrap } from "../utils";
+import { ref, Ref } from "../api";
 import { useWebStorage } from "./webStorage";
-import { LocalStorageReturn } from "./localStorage";
 
-export function useSessionStorage(
-  key: RefTyped<string>,
-  defaultValue?: RefTyped<string>,
-  sync?: boolean
-): LocalStorageReturn<string>;
-export function useSessionStorage<T>(
+export interface sessionStorageReturn<T> {
+  /**
+   * returns true is `sessionStorage` is available
+   */
+  supported: boolean;
+
+  /**
+   * handler with `sessionStorage` value
+   */
+
+  storage: Ref<T | undefined>;
+
+  /**
+   * Removes current item from the store
+   */
+  remove: () => void;
+
+  /**
+   * Clears all tracked `sessionStorage` items
+   */
+  clear: () => void;
+}
+
+export function useSessionStorage<T = string>(
   key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
-): LocalStorageReturn<T>;
-export function useSessionStorage(
-  key: RefTyped<string>,
-  defaultValue?: any,
-  sync?: boolean
-) {
+  useDebounce = true
+): sessionStorageReturn<T> {
   const { supported, store } = useWebStorage("sessionStorage");
 
   let remove = NO_OP;
   let clear = NO_OP;
-  let setSync: LocalStorageReturn<any>["setSync"] = FALSE_OP;
-  let storage = undefined;
+  let storage = ref<T>();
 
   if (supported && store) {
-    /* istanbul ignore else */
-    if (__DEV__) {
-      setSync = () =>
-        console.warn("sync is not supported, please `useLocalStorage` instead");
-      if (sync) {
-        setSync(sync);
-      }
-    }
     remove = () => store.removeItem(unwrap(key));
     clear = () => store.clear();
 
-    storage = store.getRef(key);
-    if (storage.value == null) {
+    storage = store.getRef<T>(key, useDebounce);
+    if (storage.value === undefined) {
       store.save(unwrap(key), defaultValue);
-      storage.value = defaultValue;
+      storage.value = unwrap(defaultValue);
     }
   } else {
     /* istanbul ignore else */
@@ -48,7 +51,7 @@ export function useSessionStorage(
       console.warn("[sessionStorage] is not available");
     }
 
-    storage = ref(defaultValue);
+    storage.value = unwrap(defaultValue);
   }
 
   return {
@@ -57,6 +60,5 @@ export function useSessionStorage(
     storage,
     clear,
     remove,
-    setSync,
   };
 }
