@@ -7,14 +7,15 @@
 ```js
 import { useLocalStorage } from "vue-composable";
 
-const localStorage = useLocalStorage(key, defaultValue?, sync?);
+const localStorage = useLocalStorage<T=string>(key, defaultValue?, sync?, useDebounce?);
 ```
 
 | Parameters   | Type                  | Required | Default     | Description                                         |
 | ------------ | --------------------- | -------- | ----------- | --------------------------------------------------- |
-| key          | `string, ref<string>` | `true`   |             | Key that will be used to store in localStorage      |
-| defaultValue | `object`              | `false`  | `undefined` | default value stored in the localStorage            |
+| key          | `string, Ref<string>` | `true`   |             | Key that will be used to store in localStorage      |
+| defaultValue | `T, Ref<T>`           | `false`  | `undefined` | default value stored in the localStorage            |
 | sync         | `Boolean`             | `false`  | `true`      | sets the storage to sync automatically between tabs |
+| useDebounce  | `Boolean`             | `false`  | `true`      | updates value in localStorage once every 10ms       |
 
 ## State
 
@@ -26,10 +27,10 @@ import { useLocalStorage } from "vue-composable";
 const { supported, storage } = useLocalStorage(key);
 ```
 
-| State     | Type       | Description                                 |
-| --------- | ---------- | ------------------------------------------- |
-| supported | `boolean`  | returns true is `localStorage` is available |
-| storage   | `Ref<any>` | handler with localStorage value             |
+| State     | Type                  | Description                                 |
+| --------- | --------------------- | ------------------------------------------- |
+| supported | `boolean`             | returns true is `localStorage` is available |
+| storage   | `Ref<T \| undefined>` | handler with localStorage value             |
 
 ## Methods
 

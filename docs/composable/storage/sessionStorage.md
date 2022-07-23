@@ -7,14 +7,14 @@
 ```js
 import { useSessionStorage } from "vue-composable";
 
-const SessionStorage = useSessionStorage(key, defaultValue?, sync?);
+const SessionStorage = useSessionStorage<T=string>(key, defaultValue?, useDebounce?);
 ```
 
-| Parameters   | Type                  | Required | Default     | Description                                         |
-| ------------ | --------------------- | -------- | ----------- | --------------------------------------------------- |
-| key          | `string, ref<string>` | `true`   |             | Key that will be used to store in SessionStorage    |
-| defaultValue | `object`              | `false`  | `undefined` | default value stored in the SessionStorage          |
-| sync         | `Boolean`             | `false`  | `true`      | sets the storage to sync automatically between tabs |
+| Parameters   | Type                  | Required | Default     | Description                                      |
+| ------------ | --------------------- | -------- | ----------- | ------------------------------------------------ |
+| key          | `string, Ref<string>` | `true`   |             | Key that will be used to store in SessionStorage |
+| defaultValue | `T, Ref<T>`           | `false`  | `undefined` | default value stored in the SessionStorage       |
+| useDebounce  | `Boolean`             | `false`  | `true`      | updates value in sessionStorage once every 10ms  |
 
 ## State
 
@@ -26,10 +26,10 @@ import { useSessionStorage } from "vue-composable";
 const { supported, storage } = useSessionStorage(key);
 ```
 
-| State     | Type       | Description                                   |
-| --------- | ---------- | --------------------------------------------- |
-| supported | `boolean`  | returns true is `SessionStorage` is available |
-| storage   | `Ref<any>` | handler with SessionStorage value             |
+| State     | Type                  | Description                                   |
+| --------- | --------------------- | --------------------------------------------- |
+| supported | `boolean`             | returns true is `SessionStorage` is available |
+| storage   | `Ref<T \| undefined>` | handler with SessionStorage value             |
 
 ## Methods
 
@@ -38,14 +38,13 @@ The `useSessionStorage` function exposes the following methods:
 ```js
 import { useSessionStorage } from "vue-composable";
 
-const { remove, clear, setSync } = useSessionStorage(key);
+const { remove, clear } = useSessionStorage(key);
 ```
 
-| Signature          | Description                                                                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `remove()`         | Removes key from the SessionStorage, equivalent as `storage.value = undefined`                                                         |
-| `clear()`          | Clears all used SessionStorage used so far                                                                                             |
-| `setSync(boolean)` | Does nothing, since the session is only available on the tab, this is here to allow the same API as `useLocalStorage`. Returns `false` |
+| Signature  | Description                                                                    |
+| ---------- | ------------------------------------------------------------------------------ |
+| `remove()` | Removes key from the SessionStorage, equivalent as `storage.value = undefined` |
+| `clear()`  | Clears all used SessionStorage used so far                                     |
 
 ## Example
 

@@ -10,10 +10,22 @@ This library is inspired by [@LinusBorg](https://github.com/LinusBorg) work and 
 
 ## Installing
 
+### Via `@vue/composition-api` (Vue 2)
+
 ```bash
-# install with yarn
+# yarn
 yarn add @vue/composition-api vue-composable
 
-# install with npm
+# npm
 npm install @vue/composition-api vue-composable
+```
+
+### Vue 3
+
+```bash
+# yarn
+yarn add vue-composable
+
+# npm
+npm install vue-composable
 ```

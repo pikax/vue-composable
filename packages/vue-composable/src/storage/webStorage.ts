@@ -71,7 +71,7 @@ export interface WebStorage {
   /**
    * Returns the current associated value with the given key, similar to `getItem` but if the key changes it will update accordingly
    */
-  getRef<T = any>(key: RefTyped<string>): Ref<T>;
+  getRef<T = any>(key: RefTyped<string>, useDebounce?: boolean): Ref<T>;
 
   /**
    * Returns the name of the nth key in the list, or null if n is greater than or equal to the number of key/value pairs in the object.
@@ -165,18 +165,29 @@ export function useWebStorage(
         },
 
         save(key: string, value: any) {
+          value = unwrap(value);
+
+          if (value === undefined) {
+            storage.removeItem(key);
+            return;
+          }
+
           try {
             const oldValue = storage.getItem(key);
             const data = isString(value) ? value : serializer.stringify(value);
-            storage.setItem(key, data);
-            if (oldValue !== data && isClient && store.$syncKeys[key]) {
-              window.dispatchEvent(
-                new StorageEvent(key, {
-                  newValue: data,
-                  oldValue,
-                  storageArea: storage,
-                })
-              );
+
+            if (oldValue !== data && isClient) {
+              storage.setItem(key, data);
+
+              if (store.$syncKeys[key]) {
+                window.dispatchEvent(
+                  new StorageEvent(key, {
+                    newValue: data,
+                    oldValue,
+                    storageArea: storage,
+                  })
+                );
+              }
             }
           } catch (e) {
             quotaError.value = isQuotaExceededError(e, storage);
@@ -214,15 +225,15 @@ export function useWebStorage(
           return this.setItem(k, safeParse(serializer, data));
         },
 
-        getRef(k) {
-          const item = ref();
+        getRef<T>(k: RefTyped<string>, useDebounce = true) {
+          const item = ref<T>();
 
           let keyWatch = watch(
             wrap(k),
             (k) => {
               const data = storage.getItem(k);
               if (!data) {
-                return (item.value = null);
+                return (item.value = undefined);
               }
               item.value = safeParse(serializer, data);
             },
@@ -232,11 +243,13 @@ export function useWebStorage(
             }
           );
 
+          const updateFn = (i: T | undefined): void => {
+            this.save(unwrap(k), i);
+          };
+
           let valueWatch = watch(
             item,
-            debounce((i) => {
-              this.save(unwrap(k), i);
-            }, ms),
+            useDebounce ? debounce(updateFn, ms) : updateFn,
             { deep: true, flush: "sync" }
           );
 

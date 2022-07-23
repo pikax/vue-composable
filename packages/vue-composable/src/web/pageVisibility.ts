@@ -1,7 +1,7 @@
 import { ref, Ref } from "../api";
 import { isClient, PASSIVE_EV } from "../utils";
 
-let visibility: Ref<VisibilityState> | undefined = undefined;
+let visibility: Ref<DocumentVisibilityState> | undefined = undefined;
 let hidden: Ref<boolean> | undefined = undefined;
 
 export function usePageVisibility() {
@@ -21,7 +21,7 @@ export function usePageVisibility() {
         PASSIVE_EV
       );
     } else {
-      visibility = ref<VisibilityState>("visible");
+      visibility = ref<DocumentVisibilityState>("visible");
     }
   }
   return {
