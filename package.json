@@ -18,12 +18,14 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:vue2": "yarn build --version=2",
+    "build:vue2.7": "yarn build --version=2.7",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
     "release": "node scripts/publish.js",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "test:vue2": "cross-env VUE=2 yarn test",
+    "test:vue2.7": "cross-env VUE=2.7 yarn test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "lint": "prettier \"packages/**/*.ts\" \"docs/(.vuepress|Examples|composable)/**/*.md\" \"docs/.vuepress/*.js\" \"docs/**/*.vue\" --write"
@@ -98,6 +100,7 @@
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
+    "vue2.7": "npm:vue@^2.7.0",
     "vuepress": "^1.8.2",
     "yorkie": "^2.0.0",
     "zlib": "^1.0.5"

@@ -7,6 +7,7 @@ module.exports = {
     __SSR__: true,
     __VERSION__: pkg.version,
     __VUE_2__: process.env.VUE === "2",
+    __VUE_2Dot7__: process.env.VUE === "2.7",
     __COMMIT__: "none",
   },
   setupFiles: [

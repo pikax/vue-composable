@@ -37,7 +37,7 @@ async function buildAll(targets, targetVersion = version) {
 }
 
 async function build(target, targetVersion) {
-  assert([2, 3].includes(targetVersion));
+  assert([2, 2.7, 3].includes(targetVersion));
 
   const mainPkg = require(path.resolve("package.json"));
 
@@ -59,7 +59,7 @@ async function build(target, targetVersion) {
       pkg.dependencies && pkg.dependencies["vue-composable"]
         ? {
             ...pkg.dependencies,
-            "vue-composable": `^${mainPkg.version}`
+            "vue-composable": `^${mainPkg.version}`,
           }
         : pkg.dependencies;
 
@@ -91,10 +91,10 @@ async function build(target, targetVersion) {
             buildTypes ? `TYPES:true` : ``,
             prodOnly ? `PROD_ONLY:true` : ``,
             `VERSION:${mainPkg.version}`,
-            `VUE_VERSION:${targetVersion}`
+            `VUE_VERSION:${targetVersion}`,
           ]
             .filter(Boolean)
-            .join(",")
+            .join(","),
         ],
         { stdio: "inherit" }
       );
@@ -116,19 +116,18 @@ async function build(target, targetVersion) {
       // build types
       const {
         Extractor,
-        ExtractorConfig
+        ExtractorConfig,
       } = require("@microsoft/api-extractor");
 
       const extractorConfigPath = path.resolve(
         pkgDir,
         `api-extractor.v${targetVersion}.json`
       );
-      const extractorConfig = ExtractorConfig.loadFileAndPrepare(
-        extractorConfigPath
-      );
+      const extractorConfig =
+        ExtractorConfig.loadFileAndPrepare(extractorConfigPath);
       const result = Extractor.invoke(extractorConfig, {
         localBuild: true,
-        showVerboseMessages: true
+        showVerboseMessages: true,
       });
 
       if (result.succeeded) {
@@ -137,7 +136,7 @@ async function build(target, targetVersion) {
           const dtsPath = path.resolve(pkgDir, pkg.types);
           const existing = await fs.readFile(dtsPath, "utf-8");
           const toAdd = await Promise.all(
-            pkg.buildOptions.dts.map(file => {
+            pkg.buildOptions.dts.map((file) => {
               return fs.readFile(path.resolve(pkgDir, file), "utf-8");
             })
           );
@@ -181,7 +180,7 @@ function checkAllSizes(targets) {
   console.log();
 }
 
-const resolvePkgDir = target => path.resolve(`packages/${target}`);
+const resolvePkgDir = (target) => path.resolve(`packages/${target}`);
 
 function checkSize(target) {
   const pkgDir = path.resolve(`packages/${target}`);
@@ -202,7 +201,7 @@ function checkSize(target) {
 }
 
 async function apiRename(target, targetVersion) {
-  assert([2, 3].includes(targetVersion));
+  assert([2, 2.7, 3].includes(targetVersion));
 
   const pkgDir = path.resolve(`packages/${target}`);
   // await fs.rename(`${pkgDir}/src/api.ts`, `${pkgDir}/src/api.N.ts`);
@@ -214,7 +213,7 @@ async function apiRename(target, targetVersion) {
 
   const restore = async () => {
     await fs.copy(`${pkgDir}/src/api.3.ts`, `${pkgDir}/src/api.ts`, {
-      overwrite: true
+      overwrite: true,
     });
     // await fs.rename(`${pkgDir}/src/api.N.ts`, `${pkgDir}/src/api.ts`);
   };
@@ -229,7 +228,7 @@ async function removeFiles(from) {
   }
   const files = await fs.readdir(from);
   await Promise.all(
-    files.map(async x => {
+    files.map(async (x) => {
       const fp = path.join(from, x);
       const s = await fs.lstat(fp);
       if (!s.isFile()) return Promise.resolve();
@@ -245,7 +244,7 @@ async function copyFolder(from, to) {
   }
   const files = await fs.readdir(from);
   await Promise.all(
-    files.map(async x => {
+    files.map(async (x) => {
       const fp = path.join(from, x);
       const s = await fs.lstat(fp);
       if (!s.isFile()) return Promise.resolve();
