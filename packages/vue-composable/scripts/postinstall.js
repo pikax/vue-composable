@@ -73,6 +73,8 @@ if (!Vue || typeof Vue.version !== "string") {
   console.warn(
     "[vue-composable] Vue is not detected in the dependencies. Please install Vue first."
   );
+} else if (Vue.version.startsWith("2.7")) {
+  switchVersion(2.7);
 } else if (Vue.version.startsWith("2.")) {
   const VCA = loadModule("@vue/composition-api");
   if (!VCA) {

@@ -729,9 +729,7 @@ export interface LocalStorageReturn<T> {
   clear: () => void;
   remove: () => void;
   setSync: (sync: boolean) => void;
-  // (undocumented)
-  storage: Ref<T>;
-  // (undocumented)
+  storage: Ref<T | undefined>;
   supported: boolean;
 }
 
@@ -1069,6 +1067,14 @@ export interface ScrollResult {
   scrollTop: Ref<number>;
   // (undocumented)
   scrollTopTo: (y: number) => void;
+}
+
+// @public (undocumented)
+export interface sessionStorageReturn<T> {
+  clear: () => void;
+  remove: () => void;
+  storage: Ref<T | undefined>;
+  supported: boolean;
 }
 
 // Warning: (ae-forgotten-export) The symbol "TailwindConfigEmpty" needs to be exported by the entry point index.d.ts
@@ -1749,17 +1755,11 @@ export function useLanguage(): {
 };
 
 // @public (undocumented)
-export function useLocalStorage(
-  key: RefTyped<string>,
-  defaultValue?: RefTyped<string>,
-  sync?: boolean
-): LocalStorageReturn<string>;
-
-// @public (undocumented)
-export function useLocalStorage<T>(
+export function useLocalStorage<T = string>(
   key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
+  sync?: boolean,
+  useDebounce?: boolean
 ): LocalStorageReturn<T>;
 
 // @public (undocumented)
@@ -2169,18 +2169,11 @@ export function useRetry<T, TArgs extends Array<any>>(
 ): RetryReturnFactory<T, TArgs>;
 
 // @public (undocumented)
-export function useSessionStorage(
-  key: RefTyped<string>,
-  defaultValue?: RefTyped<string>,
-  sync?: boolean
-): LocalStorageReturn<string>;
-
-// @public (undocumented)
-export function useSessionStorage<T>(
+export function useSessionStorage<T = string>(
   key: RefTyped<string>,
   defaultValue?: RefTyped<T>,
-  sync?: boolean
-): LocalStorageReturn<T>;
+  useDebounce?: boolean
+): sessionStorageReturn<T>;
 
 // Warning: (ae-forgotten-export) The symbol "NavigatorShareData" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "ShareReturn" needs to be exported by the entry point index.d.ts
@@ -2302,7 +2295,7 @@ export function useWorkerFunction<T, TArgs extends Array<any>>(
 export const VERSION: string;
 
 // @public (undocumented)
-export const VUE_VERSION: "2" | "3";
+export const VUE_VERSION: "2" | "2.7" | "3";
 
 // @public (undocumented)
 export const VueComposableDevtools: {
@@ -2351,7 +2344,7 @@ export interface WebStorage {
   $watchHandlers: Map<string, Function>;
   clear(): void;
   getItem<T = any>(key: string): Ref<T> | null;
-  getRef<T = any>(key: RefTyped<string>): Ref<T>;
+  getRef<T = any>(key: RefTyped<string>, useDebounce?: boolean): Ref<T>;
   key(index: number): string | null;
   readonly length: number;
   removeItem(key: string): void;
@@ -2401,7 +2394,7 @@ export type WrapRef<T> = T extends Ref<any> ? T : Ref<T>;
 
 // Warnings were encountered during analysis:
 //
-// dist/v3/packages/vue-composable/src/validation/validation.d.ts:72:5 - (ae-forgotten-export) The symbol "ToObjectOutput" needs to be exported by the entry point index.d.ts
+// src/validation/validation.ts:397:46 - (ae-forgotten-export) The symbol "ToObjectOutput" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 ```

@@ -213,6 +213,7 @@ function createReplacePlugin(
         : "'production'",
 
       __VUE_2__: process.env.VUE_VERSION === "2",
+      __VUE_2Dot7__: process.env.VUE_VERSION === "2.7",
     },
   });
 }
